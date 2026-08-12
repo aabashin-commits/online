@@ -1,0 +1,53 @@
+/* mobile-cta.css — липкая плашка с CTA у нижнего края экрана на телефоне (≤767).
+   По образцу клиента: белая полоса, внутри одна широкая кнопка «оставить заявку».
+   Кнопка открывает форму через общий data-open-form (делегатор в main.js →
+   window.openForm, переопределён в bitrix.js) — своего клика у плашки нет.
+   Появляется только когда CTA hero-баннера пролистан вверх за экран — этим
+   управляет js/mobile-cta.js (IntersectionObserver за .hero__cta), переключая
+   класс .is-visible. По умолчанию плашка спрятана (уехала вниз).
+   На десктопе плашка скрыта совсем: там CTA живёт в самой шапке (.header__cta). */
+
+.mobile-cta { display: none; }
+
+@media (max-width: 767px) {
+  .mobile-cta {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Ниже мобильного меню (100) и модалки формы (110) — они перекрывают плашку;
+       выше контента страницы. */
+    z-index: 40;
+    background: var(--color-white);
+    /* Тень вверх отделяет плашку от контента, который скроллится под ней */
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+    /* Поле как у мобильных карточек (--page-gap = 10); снизу добор под
+       жест-бар iPhone, чтобы кнопка не уходила под индикатор. */
+    padding: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    /* Спрятана, пока hero-CTA виден: уезжает вниз, гаснет, не ловит клики.
+       visibility в переходе убирает её из a11y-дерева после анимации. */
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+  }
+
+  /* JS вешает .is-visible, когда .hero__cta ушёл за верх экрана */
+  .mobile-cta.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Кнопка растягивается на всю ширину общим правилом .btn (layout.css, ≤767).
+     Здесь только гасим возможные внешние отступы от сбросов. */
+  .mobile-cta .btn { margin: 0; }
+
+  /* Резервируем место под плашку, чтобы она не перекрывала низ футера. Держим
+     всегда (а не только при .is-visible): зазор лежит у самого низа страницы,
+     докуда доскроллить можно лишь пройдя hero — там плашка уже видна, скачка нет.
+     Высота = кнопка (~50) + поля плашки (10+10) + safe-area. */
+  body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
+}

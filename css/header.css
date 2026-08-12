@@ -1,0 +1,277 @@
+/* header.css — шапка по скрину клиента: лого слева, якоря справа, CTA справа;
+   мобильное меню по «фото тз/360 меню.png».
+   Липкая при скролле (решение клиента 28.07.2026): position: sticky. */
+
+.header {
+  position: sticky;
+  top: 0;
+  /* Выше контента секций (максимум там — info-cards z-index: 5), ниже мобильного
+     меню (100) и модалки формы (110). sticky не создаёт containing block для
+     position: fixed, поэтому мобильное меню по-прежнему раскрывается на весь экран. */
+  z-index: 50;
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+/* Якорь не должен прятаться под липкой шапкой — отступ = высоте шапки (88 → 64 → 49) */
+html { scroll-padding-top: 88px; }
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Зазор между блоком якорей, тумблером, телефоном и CTA. Равен шагу между
+     самими ссылками (тот же clamp у .header__nav) — так просил клиент.
+     ⚠️ Стал РЕЗИНОВЫМ (было фикс. 40): 40 на 1920 → 24 на 1281. Причина —
+     тумблер городов; чтобы полная шапка помещалась до 1280 без сворачивания
+     в бургер и без горизонтального скролла, пункты и зазоры пропорционально
+     ужимаются (просьба клиента: на десктопе всегда полное меню). Логотип↔якоря
+     задаётся margin-left: auto у nav, на него gap не влияет. */
+  gap: clamp(24px, 2.5vw - 8px, 40px);
+  height: 88px;
+  /* Шапка НЕ следует общему полю страницы (--page-gap): в Figma у неё собственный
+     padding 16px 30px 16px 20px, одинаковый на 1920, 1600 и 1200 (ноды 1:7109,
+     1:22822, 1:21397). Поэтому поля заданы явно и перекрывают .container. */
+  padding-inline: 20px 30px;
+}
+
+.header__logo { flex: none; }
+
+.header__logo img { height: 29px; width: auto; }
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  /* Растянут на всю высоту шапки (не по высоте текста): от него наследуют
+     высоту группы-выпадашки, а панель списка позиционируется от их низа
+     (top: 100%). Без этого панель начиналась бы внутри шапки — на y=54
+     при высоте шапки 88. Сами пункты остаются по центру (align-items). */
+  align-self: stretch;
+  /* Резиновый зазор (тот же, что у .header__inner): 40 на 1920 → 24 на 1281.
+     Вместе с резиновым кеглем --fs-btn (20→14) это и есть «пропорциональное
+     уменьшение пунктов», чтобы полное меню влезало до 1280. */
+  gap: clamp(24px, 2.5vw - 8px, 40px);
+  margin-left: auto;
+  font-size: var(--fs-btn);
+}
+
+/* Ховер пунктов не показан в макетах — синий как временное решение.
+   nowrap — короткие пункты («О нас») не должны ломаться на две строки,
+   когда флексу тесно (появилось с тумблером городов). */
+.header__link { transition: color 0.25s ease; white-space: nowrap; }
+.header__link:hover { color: var(--color-blue); }
+
+/* ===== Выпадающие списки в шапке (решение клиента 31.07.2026) =====
+   7 якорей объединены в 3 группы: «О школе» (О нас, Преимущества),
+   «Обучение» (Классы, Программы, Факультативы), «Полезное» (FAQ, Отзывы).
+   Причина — с возвратом блока «Отзывы» семь пунктов + тумблер городов +
+   телефон + CTA перестали помещаться в полосе 1281–1312 (перелив 17px на 1281).
+   Три кнопки занимают втрое меньше места, запас вернулся с большим избытком.
+
+   ⚠️ Группе нужен align-self: stretch (высота всей шапки), а НЕ только высота
+   текста: панель позиционируется от неё (top: 100%), и без растяжения между
+   кнопкой и панелью остался бы «мёртвый» зазор — курсор, идущий к списку,
+   пересекал бы ненаводимую зону, и список закрывался бы на полпути. */
+.header__group {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+/* font: inherit — кнопка не наследует системный шрифт браузера, а берёт
+   Onest и резиновый --fs-btn от .header__nav (как обычные якоря). */
+.header__group-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  color: inherit;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.header__group-btn:hover,
+.header__group.is-open .header__group-btn { color: var(--color-blue); }
+
+.header__chevron {
+  flex: none;
+  transition: transform 0.25s ease;
+}
+
+.header__group.is-open .header__chevron { transform: rotate(180deg); }
+
+/* Панель списка. top: 100% = низ шапки (группа растянута на всю её высоту).
+   Закрытая смещена на 6px вниз и «проявляется» вверх — тот же приём, что у
+   ховеров по сайту. visibility (а не только opacity) убирает панель из-под
+   курсора и из таб-порядка, пока она закрыта. */
+.header__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 100%;
+  width: max-content;
+  padding: 18px 24px;
+  border-radius: var(--radius-btn);
+  background: var(--color-white);
+  box-shadow: var(--shadow-bubble);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.header__group.is-open .header__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* Телефон в крайней правой точке шапки. flex: none — не сжимается;
+   nowrap — номер не переносится. Кегль как у якорей, ховер — фирменный синий. */
+.header__phone {
+  flex: none;
+  font-size: var(--fs-btn);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.header__phone:hover { color: var(--color-blue); }
+
+/* CTA «оставить заявку» справа от телефона (виден >1280, на ≤1280 уходит
+   в бургер-меню, где CTA уже есть). flex: none + nowrap — кнопка не сжимается
+   и текст не переносится на узких десктопах. */
+.header__cta {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* Бургер (виден ≤1280) */
+.header__burger {
+  display: none;
+  color: var(--color-pink);
+  padding: 8px;
+  margin-right: -8px;
+}
+
+/* Мобильное меню (360 меню.png): белая плашка с лого и крестиком, ниже — градиент */
+.header__menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  background: var(--gradient-accent);
+  overflow-y: auto;
+}
+
+.header__menu.is-open { display: flex; }
+
+/* Замеры по «360 меню.png»: белая плашка 49px, лого от x=10,
+   пункты 16px с шагом 30 от левого края 20, CTA 320×48 с отступом 20. */
+.header__menu-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 49px;
+  padding-inline: 10px;
+  background: var(--color-white);
+}
+
+.header__menu-bar img { height: 29px; width: auto; }
+
+.header__menu-close {
+  color: var(--color-pink);
+  padding: 8px;
+}
+
+.header__menu-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* шаг между пунктами 30px = строка 16×1.4 (22.4) + 8 */
+  gap: 8px;
+  /* Верхнее поле 56 = прежние 20 (отступ тумблера городов) + 36: тумблера
+     в онлайн-версии нет, но зазор «белая плашка → первый пункт» остаётся
+     таким же, как в макете бургер-меню. */
+  padding: 56px 20px 0;
+  color: var(--color-white);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Телефон в бургер-меню (виден ≤1280 — на десктопе он в самой шапке).
+   Крупнее пунктов меню, у левого края 20, отбивка 30 от последнего пункта. */
+.header__menu-phone {
+  flex: none;
+  margin: 30px 20px 0;
+  color: var(--color-white);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Плашка 320×48 с полем 20 («360 меню.png»). Высота задаётся явно, а не
+   отступами общего .btn, — поэтому здесь же padding: 0.
+   flex: none обязателен: кнопка — элемент колонки-меню с overflow-y: auto,
+   и на низком экране флексбокс сжал бы её по высоте. */
+.header__menu-cta {
+  flex: none;
+  width: calc(100% - 40px);
+  height: 48px;
+  padding: 0;
+  margin: 56px 20px 40px;
+}
+
+/* Порог сворачивания в бургер — канонические 1280 (решение клиента 30.07.2026:
+   на десктопе всегда полное меню, без раннего бургера). Резиновые зазоры
+   .header__inner/.header__nav и кегль --fs-btn оставлены как в офлайн-версии:
+   без тумблера городов (у онлайн-школы городов нет) шапка стала свободнее
+   на ~220px, и к 1281 всё помещается с запасом. */
+@media (max-width: 1280px) {
+  html { scroll-padding-top: 64px; }
+
+  .header__inner { height: 64px; }
+
+  /* Якоря, телефон и CTA уходят в бургер-меню — в шапке остаются лого и бургер */
+  .header__nav,
+  .header__phone,
+  .header__cta { display: none; }
+
+  .header__burger { display: block; }
+}
+
+/* Телефоны 360–767: шапка 49px, лого 108×29 от левого края 10,
+   бургер 30×30 у правого края 10 (ноды 1:8340 и 1:14450) */
+@media (max-width: 767px) {
+  html { scroll-padding-top: 49px; }
+
+  .header__inner {
+    height: 49px;
+    gap: 16px;
+    padding-inline: 10px;
+  }
+
+  .header__logo img { height: 29px; }
+
+  .header__burger {
+    padding: 0;
+    margin-right: 0;
+  }
+
+  .header__burger svg { width: 30px; height: 30px; }
+
+  /* ⚠️ Здесь НЕТ переопределения .header__menu-cta (жалоба клиента 21.07.2026
+     «в бургер-меню кнопка узкого размера»). Стояло `width: auto; height: auto`
+     в расчёте на то, что размеры даст общий .btn, — но `padding: 0` из базового
+     правила блока перебивает резиновые отступы .btn (специфичность равная,
+     header.css подключён после layout.css). Высота схлопывалась до строки
+     текста: 335×22 вместо макетных 48 — и в Safari, и в Chrome.
+     Базовое правило и так даёт ровно макет: на 360 это 320×48. */
+}

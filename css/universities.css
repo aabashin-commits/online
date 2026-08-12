@@ -1,0 +1,279 @@
+/* universities.css — блок 7 «Наши выпускники поступают в самые престижные вузы».
+   Замеры по Figma 1:221 (баннер 1880×393, Y 3795–4188 в 1920.png):
+   padding 60, radius 30, градиент + тень; слева колонка (заголовок 48/0.9 + CTA),
+   справа группа логотипов 1:890 — 804.21×273.
+   Шаг строк заголовка проверен по 1920.png: ровно 43px (= 48 × 0.9). */
+
+.universities {
+  padding-block: 20px;
+}
+
+/* ⚠️ container-type здесь БОЛЬШЕ НЕ СТОИТ — и это исправление давнего дефекта
+   (был отмечен в PLAN.md как «поправить при ревизии блока»).
+   cqw считается от content-box, а у баннера padding 60: единица выходила
+   1760/100 вместо 1880/100, то есть весь фон был на 6.4% мельче и левее.
+   Пока padding был константой, это лечилось подгонкой значений «под неверную
+   базу». Но теперь padding резиновый (60 → 20), и доля content-box/ширина
+   баннера МЕНЯЕТСЯ с шириной экрана — подогнанные значения поехали бы.
+   Контейнером служит .container (объявлен в layout.css): его content-box
+   равен ширине баннера на всех ширинах. Все cqw-значения в этом файле
+   пересчитаны с базы 1760 на 1880 умножением на 0.93617. */
+.universities__banner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(20px, 2.128cqw, 40px);
+  padding: var(--card-pad);
+  background: var(--gradient-accent);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* --- Фоновые слои (экспорты Figma), координаты в долях от ширины 1880 --- */
+.universities__decor {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Сетка. В Figma (1:222) это картинка на 1276×390, которая покрывает лишь
+   правую часть баннера и вдобавок гасится градиентами внутри самого файла —
+   до нижнего и правого края она не дотягивается в принципе. Поэтому рисуем
+   сетку прямо в CSS: шаг клетки и толщина линии те же (52.4 / 1px), но она
+   растянута на весь баннер и упирается во все четыре края.
+   Слева гасится маской — там заголовок, в макете сетка на него не заходит. */
+.universities__banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 52.4px),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 52.4px);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 35%);
+  mask-image: linear-gradient(to right, transparent 0, #000 35%);
+}
+
+/* Волна-«лента» 1:279. В Figma нода стоит на (−160, −140) при 2084×704,
+   но при такой ширине её правый торец (скруглённый конец) обрывается
+   внутри баннера на x≈1841 — виден срез. Растянута так, чтобы оба конца
+   ушли за края: лента входит слева и уходит вправо, как в 1920.png.
+   top поднят вместе с ростом высоты, иначе лента съезжает вниз. */
+/* Значения пересчитаны с прежней базы 1760 на 1880 (×0.93617), чтобы волна
+   встала ровно там же, где стояла на 1920 до переноса контейнера. */
+.universities__decor--wave {
+  left: -9.362cqw;
+  top: -10.298cqw;
+  width: 126.383cqw;
+}
+
+/* --- Левая колонка: заголовок + CTA --- */
+.universities__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(20px, 2.128cqw, 40px);
+  /* Ширина текстового блока из макета (707 = 37.6% баннера) — задаёт разбивку
+     на 3 строки. В долях, а не в px: раньше ниже 1600 колонка вытесняла сетку
+     логотипов из баннера, и это лечила отдельная ступень с max-width 471. */
+  max-width: 37.6cqw;
+}
+
+.universities__title {
+  font-size: var(--fs-h3);
+  line-height: 0.9;
+  color: var(--color-white);
+}
+
+/* Приглушённые части: «Наши выпускники» и «страны и мира» */
+.universities__muted {
+  color: var(--color-light-blue);
+}
+
+/* Маркер-подсветка средней части заголовка. Цвет — общий с H1 в hero.
+   ⚠️ Обычный `background` инлайну не годится: он заливает content area
+   шрифта (~1.15em ≈ 55px), а строки идут с шагом line-height 0.9em (43px),
+   поэтому плашки соседних строк наезжают друг на друга светлой полосой.
+   Поэтому заливка задана картинкой с явной высотой в 0.9em (= шаг строк):
+   плашки встают ровно встык, как в макете, и высота едет вместе с
+   font-size на брейкпоинтах. Скругления нет — в Figma у плашек оно 0.
+   Выступ по бокам 3px — по макету (плашка от x=56.6 при тексте от x=60).
+   ⚠️ backdrop-filter здесь применять нельзя, хотя в Figma у плашек стоит
+   blur(20): у многострочного инлайна браузер берёт общий бокс всех строк,
+   и блюр съедает соседний текст той же строки («Наши выпускники»). */
+.universities__hl {
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--color-light-blue) 40%, transparent),
+    color-mix(in srgb, var(--color-light-blue) 40%, transparent)
+  );
+  background-size: 100% 0.9em;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  padding: 0 3px;
+  margin-left: -3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* --- Правая колонка: сетка логотипов 6×2 ---
+   Вся геометрия выводится из ширины колонки --u (113.75 в макете):
+   шаг по X = 0.214u (24.34), по Y = 0.3u (34.13), общий бокс 7.07u × 2.4u
+   = 804.21 × 273 — совпадает с группой 1:890. */
+.universities__logos {
+  /* Резиновая единица: 113.75 = 6.05% ширины баннера. Раньше здесь стояли
+     две ступени (113.75 на десктопе и 88 на планшете), между которыми сетка
+     логотипов прыгала; теперь она едет вместе с баннером непрерывно.
+     ⚠️ Пола в px здесь нет намеренно: с полом 76 сетка ниже ~1256 переставала
+     сжиматься, две колонки упирались друг в друга — и блок приходилось
+     разворачивать в столбик уже на 1280 (заголовок растягивался в одну строку
+     на всю ширину, логотипы падали вниз). Теперь это чистая доля: логотипы
+     уменьшаются вместе с баннером, и раскладка в две колонки держится
+     до планшетного 1024. Пол возвращается ниже 1024, где сетка перестраивается. */
+  --u: min(6.05cqw, 113.75px);
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(6, var(--u));
+  grid-template-rows: repeat(2, var(--u));
+  column-gap: calc(var(--u) * 0.214);
+  row-gap: calc(var(--u) * 0.3);
+  /* 2.4u — высота с учётом «Оксфорда», который выступает ниже своей ячейки */
+  min-height: calc(var(--u) * 2.4);
+  align-content: start;
+  justify-items: center;
+}
+
+.universities__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ряд 1 в макете прижат к верху ячейки, ряд 2 — центрирован по ней */
+.universities__logo:nth-child(-n + 6) { align-self: start; }
+.universities__logo:nth-child(n + 7) { align-self: center; }
+
+.universities__logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* «Оксфорд» единственный выше ячейки — 136.5 = 1.2u (лента под гербом),
+   центрирован в строке и симметрично выходит за её границы */
+.universities__logo--tall img {
+  max-height: none;
+  height: calc(var(--u) * 1.2);
+}
+
+/* --- Адаптив ---
+   Ступень 1600 (max-width колонки 471) убрана: ширина текста задана долей
+   баннера и сужается сама. Ступень 1280 тоже убрана: логотипы уменьшаются
+   в долях, поэтому две колонки помещаются рядом вплоть до планшетной
+   раскладки — перестроение в столбик слито с 1024. */
+
+/* Планшет: столбик + 4 колонки в три ряда, выравнивание по центру для всех.
+   Здесь --u снова получает пол 76px: сетка перестала быть соседкой текста,
+   место под неё есть, и мельчить логотипы дальше незачем. */
+@media (max-width: 1024px) {
+  .universities__banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .universities__content { max-width: 100%; }
+
+  .universities__logos {
+    --u: clamp(76px, 8.5cqw, 113.75px);
+    align-self: center;
+    grid-template-columns: repeat(4, var(--u));
+    grid-template-rows: none;
+    min-height: 0;
+  }
+
+  .universities__logo:nth-child(-n + 6) { align-self: center; }
+}
+
+/* Телефоны 360–767 (Figma 1:9775): секция типа A — во всю ширину экрана,
+   без скруглений и бокового поля, внутренний отступ 50/20, gap 30.
+   Логотипы — сетка 4×3 по 79px с зазором 2 (сверено с растровым эталоном:
+   4 колонки, а не 3 — 4×79 + 3×2 = 322 ≈ контент 320). */
+@media (max-width: 767px) {
+  .universities { padding: 0; }
+
+  .universities > .container { padding-inline: 0; }
+
+  .universities__banner {
+    gap: 30px;
+    padding: var(--section-pad-y) var(--section-pad-x);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .universities__content { gap: 20px; }
+
+  /* Единый кегль заголовков на телефоне — 32 (решение клиента 20.07.2026);
+     в мобильном фрейме 1:9775 у этого баннера тоже 32, а --fs-h3 давал 28 */
+  .universities__title { font-size: var(--fs-h2); }
+
+  /* Ширину и радиус 10 даёт общий .btn из layout.css */
+  .universities__btn { align-self: stretch; }
+
+  /* Колонки в 1fr, а не в фиксированных --u: раскладка 360 тянется до 767
+     (решение по адаптиву), и логотипы растут вместе с шириной экрана.
+     На 360 ячейка выходит (320 − 3×2)/4 = 78.5 ≈ макетные 79.
+     Квадрат ячейке задаёт aspect-ratio: проценты в grid-auto-rows считались бы
+     от высоты контейнера, а она auto. */
+  .universities__logos {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-template-rows: none;
+    column-gap: 2px;
+    row-gap: 10px;
+    min-height: 0;
+    width: 100%;
+    /* ⚠️ Базовое правило ставит justify-items: center — тогда ячейка обнимает
+       картинку, а логотипы ленивые: пока они не загрузились, ширина 0, и вместе
+       с aspect-ratio весь блок схлопывался в 20px (сдвиг вёрстки при догрузке).
+       stretch фиксирует размер ячейки по колонке независимо от картинки. */
+    justify-items: stretch;
+  }
+
+  .universities__logo {
+    aspect-ratio: 1;
+    align-self: center;
+  }
+
+  /* Логотип заполняет ячейку: в макете круги почти касаются друг друга */
+  .universities__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* «Оксфорд» на телефоне не выступает — в мобильном макете все ячейки равные */
+  .universities__logo--tall img {
+    max-height: 100%;
+    height: auto;
+  }
+
+  /* В мобильном фрейме сетки нет (в Figma она стоит на x=603 и в кадр
+     не попадает); волна остаётся и обрезается левым краем, как в макете.
+     Значения в px, а не cqw: container-type висит на баннере с padding,
+     и на телефоне единица cqw считалась бы от 320, а не от 360. */
+  .universities__banner::before { display: none; }
+
+  .universities__decor--wave {
+    left: -160px;
+    top: -140px;
+    width: 2084px;
+    max-width: none;
+  }
+}

@@ -1,0 +1,227 @@
+/* layout.css — контейнер и общие компоненты: кнопки, пиллы, заголовки секций.
+   Кнопки — по «фото тз/Состояние кнопок.png»: три вида, на ховере заливка розовым,
+   стрелка поворачивается из → в ↗. */
+
+.container {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  /* Боковое поле страницы: 20 на 1920, 10 начиная с 1600 — см. --page-gap в base.css.
+     Отдельное правило для телефонов не нужно: 10px наследуется сверху. */
+  padding-inline: var(--page-gap);
+}
+
+/* Единая база для резиновой геометрии блоков.
+   content-box контейнера = ширине секции-карточки (1880 на 1920, 1580 на 1600,
+   1180 на 1200), поэтому 1cqw внутри любого блока — это ровно 1% ширины его
+   карточки на ЛЮБОЙ ширине экрана. Вся декоративная и композиционная геометрия
+   блоков считается от этой единицы.
+
+   ⚠️ Почему не на все .container и не на body:
+   1. В шапке внутри `.container header__inner` лежит .header__menu с
+      position: fixed — container-type создаёт containment context, и меню
+      начало бы позиционироваться от контейнера вместо экрана.
+   2. По той же причине контейнер нельзя вешать на body: под ним лежат
+      модалка формы и лайтбокс, оба position: fixed.
+   Лайтбокс main.js добавляет в body (не в main), поэтому он не задет. */
+main .container,
+footer .container {
+  container-type: inline-size;
+}
+
+/* Кнопки.
+   Отступы резиновые по тем же контрольным точкам, что и остальная геометрия:
+   на 1920 — 22/40 (макет 1:219), на 1600 и ниже — 14/30 (CTA hero 1:22915,
+   он же в мобильном фрейме 1:8377). Раньше это были три ступени
+   (22/40 → 18/32 на 1024 → 14/30 на 767) с рывками между ними. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 0.625vw, 12px);
+  font-size: var(--fs-btn);
+  font-weight: 500;
+  line-height: 1.4;
+  padding: clamp(14px, 2.5vw - 26px, 22px) clamp(30px, 3.125vw - 20px, 40px);
+  border-radius: var(--radius-btn);
+  border: 1px solid transparent;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn__arrow {
+  flex: none;
+  transition: transform 0.25s ease;
+}
+
+.btn:hover .btn__arrow { transform: rotate(-45deg); }
+
+.btn--primary {
+  background: var(--color-pink);
+  color: var(--color-white);
+}
+
+/* Синяя заливка (CTA в шапке). Ховер — на тон темнее из палитры
+   (--color-blue-chip #2F54D8), точной спеки ховера в макете нет. */
+.btn--blue {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.btn--blue:hover { background: var(--color-blue-chip); }
+
+.btn--outline {
+  border-color: var(--color-pink);
+  color: var(--color-pink);
+}
+
+.btn--white {
+  background: var(--color-white);
+  color: var(--color-pink);
+}
+
+.btn--outline:hover,
+.btn--white:hover {
+  background: var(--color-pink);
+  color: var(--color-white);
+}
+
+/* Компактная кнопка (шапка, мелкие CTA): 14/24 на 1920 → 10/20 на 1600 и ниже
+   (пилла-стикер 1:22919 и чипы 1:24346 — padding 10/20) */
+.btn--small {
+  padding: clamp(10px, 1.25vw - 10px, 14px) clamp(20px, 1.25vw, 24px);
+}
+
+/* Телефоны: в мобильном макете все CTA — во всю ширину контейнера.
+   Сами отступы (14/30), радиус (10) и зазор (10) резиновые токены уже дали —
+   здесь остаётся только растяжка на всю ширину. */
+@media (max-width: 767px) {
+  .btn { width: 100%; }
+
+  .btn__arrow {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lightbox { padding: 10px; }
+  .lightbox__close { top: -46px; }
+}
+
+/* Стрелки горизонтальных лент (педсостав в «О нас», факультативы).
+   В макете 360 эти блоки превращаются в карусели со своей строкой навигации:
+   две кнопки 40×40, обводка --color-light-blue, радиус 1000, шеврон 7.66×13.29
+   цветом --color-blue-2 (ноды 1:9770 и 1:14311).
+   На десктопе ленты не нужны, поэтому строка скрыта и включается только ≤767.
+   Поведение — createScroller() в main.js. */
+.scroll-nav {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.scroll-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-light-blue);
+  border-radius: var(--radius-pill);
+  color: var(--color-blue-2);
+  transition: border-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.scroll-nav__btn:hover:not(:disabled) {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+/* Край ленты: кнопка гасится, но остаётся на месте — иначе строка «прыгает» */
+.scroll-nav__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (max-width: 767px) {
+  .scroll-nav { display: flex; }
+}
+
+/* Лайтбокс — общий оверлей (видео-отзывы, модалки). Разметку строит main.js.
+   Затемнение и блюр — по макету поп-апа формы (Figma #1:7268). */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  /* Как и у формы: прокрутка не перетекает на страницу под оверлеем */
+  overscroll-behavior: contain;
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* dvh, а не vh: на мобильных браузерах vh считается по «развёрнутому» экрану
+   без адресной строки, поэтому при свёрнутой строке окно вылезало за экран
+   и низ видео оказывался под браузерным UI. */
+.lightbox__window {
+  position: relative;
+  width: min(1100px, 100%);
+  max-height: 90dvh;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -52px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.25s ease;
+}
+
+.lightbox__close:hover { background: rgba(255, 255, 255, 0.3); }
+
+.lightbox__content {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.lightbox__content video,
+.lightbox__content iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  background: #000;
+}
+
+/* Скрытый прокси-элемент для CRM-формы Битрикс24 (см. js/bitrix.js).
+   Визуально скрыт, но остаётся в потоке — так лоадер Битрикса гарантированно
+   к нему привяжется (элемент с display:none он мог бы пропустить). */
+.b24-trigger {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}

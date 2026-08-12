@@ -1,0 +1,149 @@
+/* electives.css — блок 16 «Факультативы/профориентация».
+   Бенто 3+2+3 по Figma (#1:7013): ряды gap 20, карточки белые, padding 30, radius 30,
+   высоты 287 / 289 / 287. Во втором ряду правая карточка фиксированная (909px),
+   левая занимает остаток. Кнопки открывают форму с предзаполненной темой. */
+
+.electives {
+  padding-block: 40px;
+}
+
+.electives__title {
+  margin-bottom: var(--gap-cards);
+}
+
+.electives__title-muted {
+  color: var(--color-gray-2);
+}
+
+.electives__row {
+  display: flex;
+  gap: var(--gap-cards);
+  margin-bottom: var(--gap-cards);
+}
+
+.electives__row:last-child {
+  margin-bottom: 0;
+}
+
+.electives__card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(16px, 1.596cqw, 30px);
+  /* Высоты бенто (287 / 289 на 1920) — резиновые минимумы в долях ширины
+     страницы: карточки держат пропорцию макета, а если текст на узкой ширине
+     не влезает, растут сами. Раньше это были жёсткие px, и на промежуточных
+     ширинах бенто то распирало, то оставляло пустоты. */
+  min-height: clamp(180px, 15.266cqw, 287px);
+  padding: clamp(16px, 1.596cqw, 30px);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Второй ряд: «Каллиграфия» шире левой карточки.
+   Доля (909 при ряде 1880 = 48.4%), а не 909px: с фиксированной шириной ряд
+   переставал помещаться уже на 1280 и там его приходилось ломать ступенью. */
+.electives__card--wide {
+  flex: 0 0 48.4%;
+  min-height: clamp(180px, 15.372cqw, 289px);
+}
+
+.electives__card--grow {
+  min-height: clamp(180px, 15.372cqw, 289px);
+}
+
+.electives__name {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  margin-bottom: clamp(8px, 0.638cqw, 12px);
+}
+
+/* Кегль на 2 пункта выше общего мелкого текста (просьба клиента 22.07.2026):
+   описания появились во всех восьми карточках и на 12px читались тяжело.
+   Не отдельным clamp, а calc от токена — прибавка держится на всех ширинах
+   и едет вместе с общей шкалой: 18 на 1920, 14 на 1600 и 1280. */
+.electives__sub {
+  font-size: calc(var(--fs-small) + 2px);
+  color: var(--color-gray-2);
+}
+
+/* Кнопка прижата к низу карточки и не растягивается на всю ширину */
+.electives__btn {
+  align-self: flex-start;
+  font-size: var(--fs-text);
+}
+
+/* ⚠️ Ступень 1280 («Каллиграфия» переставала помещаться) больше не нужна:
+   её ширина задана долей ряда и сжимается вместе с ним. */
+
+@media (max-width: 1024px) {
+  .electives__row {
+    flex-wrap: wrap;
+  }
+
+  .electives__card,
+  .electives__card--wide,
+  .electives__card--grow {
+    flex: 1 1 calc(50% - 10px);
+    min-height: 240px;
+  }
+}
+
+/* ═══════════ Телефоны 360–767 — ноды 1:14252…1:14311 ═══════════
+   Бенто превращается в горизонтальную карусель: карточка 340×229 (тип B),
+   лента с шагом 20, под ней строка стрелок 40×40 по центру.
+   Заголовок стоит от x=20 при поле контейнера 10. */
+@media (max-width: 767px) {
+  /* Сверху 40 — отбивка заголовка от розового низа FAQ (было 20, увеличено
+     22.07.2026); снизу 50 до футера (у футера на телефоне margin-top снят) */
+  .electives { padding: 40px 0 50px; }
+
+  .electives__title {
+    padding-inline: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Лента: ряды бенто раскрываются в общий трек через display: contents,
+     поэтому все 8 карточек становятся её прямыми детьми и разметку
+     под мобильную карусель перестраивать не пришлось. */
+  .electives__grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-bottom: 20px;
+  }
+
+  .electives__grid::-webkit-scrollbar { display: none; }
+
+  .electives__row { display: contents; }
+
+  /* Карточка 1:14254 — 340×229 при экране 360, то есть во всю ширину
+     контейнера; на широких телефонах тянется вместе с ним */
+  .electives__card,
+  .electives__card--wide,
+  .electives__card--grow {
+    flex: 0 0 100%;
+    min-height: 229px;
+    gap: 20px;
+    padding: 20px;
+    scroll-snap-align: start;
+  }
+
+  .electives__name {
+    font-size: var(--fs-h3);   /* 28 */
+    line-height: 0.9;
+    margin-bottom: 10px;
+  }
+
+  /* Те же +2 пункта, что и на десктопе: 16 вместо 14 */
+  .electives__sub { font-size: calc(var(--fs-text) + 2px); }
+
+  /* Кнопка во всю ширину карточки (ширину и радиус 10 даёт общий .btn) */
+  .electives__btn { align-self: stretch; }
+}

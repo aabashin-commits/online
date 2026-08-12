@@ -1,0 +1,343 @@
+/* footer.css — футер на градиенте. Пока каркас: лого + якоря + копирайт.
+   По блоку 17 позже: бейджи Яндекс 5.0 / 2ГИС 5.0, плашка лицензии,
+   реквизиты, политика/согласие. */
+
+.footer {
+  /* Фиксированный отступ от предыдущего блока, каким бы он ни был */
+  margin-top: clamp(60px, 5.319cqw, 100px);
+  background: var(--gradient-accent);
+  color: var(--color-white);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.128cqw, 40px);
+  padding-block: clamp(32px, 3.191cqw, 60px);
+}
+
+/* Верхний ряд: слева колонка (бренд + мелкий юр-блок), меню по центру, справа бейджи+контакты.
+   align-items: stretch — правая колонка тянется на высоту левой, чтобы прижать контакты к низу */
+.footer__top {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: clamp(24px, 2.128cqw, 40px);
+}
+
+/* Левая колонка: бренд сверху, мелкий юр-блок (ИП, дисклеймер, копирайт+документы) снизу.
+   max-width жёстко ограничивает ширину колонки — строка копирайта (в одну строку) выходит
+   за неё вправо в пустую зону, но саму колонку не расширяет и меню не смещает */
+.footer__side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3cqw, 56px);
+  max-width: 25.5cqw;
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Мелкий юр-блок под брендом: ИП/ИНН/ОГРНИП, дисклеймер, копирайт+документы.
+   Всё приглушённым мелким текстом; ширину ограничиваем, чтобы длинный дисклеймер
+   не растягивал левую колонку и не смещал меню */
+.footer__fine {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  max-width: 25.5cqw;   /* ≈480 при контейнере 1880 */
+}
+
+.footer__fine p {
+  color: var(--color-blue-2);
+  font-size: var(--fs-small);
+}
+
+/* Лого 296×81 на 1920 — в долях ширины страницы, чтобы не выглядело
+   непропорционально крупным на узком десктопе. Пропорцию держит aspect-ratio. */
+.footer__logo img {
+  width: clamp(180px, 15.745cqw, 296px);
+  height: auto;
+  aspect-ratio: 296 / 81;
+}
+
+/* Плашка «государственная лицензия», 259×90 по макету */
+.footer__license {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  width: clamp(200px, 13.777cqw, 259px);
+  min-height: clamp(70px, 4.787cqw, 90px);
+  gap: clamp(10px, 0.851cqw, 16px);
+  padding-inline: clamp(12px, 0.957cqw, 18px);
+  border-radius: var(--radius-btn);
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.footer__license img { width: clamp(36px, 2.553cqw, 48px); height: auto; }
+
+.footer__license-text {
+  font-size: var(--fs-text);
+  line-height: 1.2;
+}
+
+/* Меню: строго 2 колонки, заполнение сверху вниз.
+   Многоколоночная раскладка (не грид) — она сама делит пункты поровну:
+   5 видимых → 3+2, а если вернуть «Тарифы»/«Отзывы», 7 → 4+3.
+   У грида пришлось бы вручную пересчитывать grid-template-rows,
+   а при неверном числе строк колонок становилось бы три.
+   Пока бейджей нет, центрируется в свободном пространстве */
+.footer__nav {
+  column-count: 2;
+  column-gap: 96px;
+  margin-inline: auto;
+  font-size: var(--fs-btn);
+}
+
+/* В многоколоночном потоке вертикальный gap не работает — шаг задаём
+   отступом самих ссылок; блочными они становятся ради этого же */
+.footer__link {
+  display: block;
+  margin-bottom: 28px;
+  transition: opacity 0.25s ease;
+}
+
+.footer__link:last-child { margin-bottom: 0; }
+.footer__link:hover { opacity: 0.7; }
+
+/* Чипсы рейтингов Яндекс / 2ГИС */
+.footer__badges {
+  display: flex;
+  gap: 16px;
+}
+
+.footer__badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 24px 10px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-black);
+  font-size: var(--fs-h4);
+}
+
+.footer__badge img { width: 52px; height: 52px; }
+
+.footer__badge .footer__badge-star { width: 30px; height: 30px; }
+
+/* Правая колонка верхнего ряда: бейджи, а под ними каналы связи.
+   Реквизиты подняты сюда из нижнего ряда — иначе под короткими бейджами
+   до самого низа зияло пустое место (высокая колонка лого/лицензии слева
+   растягивала весь ряд). Оба блока прижаты вправо. */
+.footer__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(20px, 1.7cqw, 32px);
+}
+
+/* Копирайт + политика/согласие — последняя строка мелкого юр-блока (в .footer__fine).
+   width: max-content + nowrap держат все три пункта в ОДНУ строку; строка выходит за
+   узкий .footer__fine вправо (max-width: none снимает ограничение), но левую колонку не
+   расширяет — её ширину держит max-width у .footer__side. Цвет — «синий 2» по скрину клиента */
+.footer__bottom {
+  width: max-content;
+  max-width: none;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: clamp(16px, 1.7cqw, 32px);
+  font-size: var(--fs-small);
+  color: var(--color-blue-2);
+}
+
+.footer__doc { transition: opacity 0.25s ease; }
+.footer__doc:hover { opacity: 0.7; }
+
+/* Правый блок контактов — мессенджеры/соцсети + телефон (реквизиты ИП — влево, в .footer__fine).
+   margin-top: auto прижимает контакты к низу правой колонки (она тянется на высоту левой),
+   чтобы телефон встал на одну линию со строкой копирайта/политики слева */
+.footer__legal {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  max-width: 25.5cqw;   /* 480 при контейнере 1880; cqw от .footer__inner */
+  margin-top: auto;
+  text-align: right;
+}
+
+/* Телефон: белый (заметнее мелкого синего дисклеймера),
+   nowrap; наследует выравнивание блока (справа на десктопе, слева на ≤1024). */
+.footer__phone {
+  color: var(--color-white);
+  font-size: var(--fs-text);
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+
+.footer__phone:hover { opacity: 0.7; }
+
+/* Каналы связи — кликабельные ссылки в Telegram, WhatsApp и ВКонтакте
+   (в офлайн-версии здесь были адреса филиалов; у онлайн-школы адресов нет).
+   Название канала выделено светлым, значение — белым; наследуют
+   выравнивание блока (справа на десктопе, слева ≤1024) */
+.footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.638cqw, 12px);
+}
+
+.footer__contact {
+  display: block;
+  color: var(--color-white);
+  line-height: 1.3;
+  transition: opacity 0.25s ease;
+}
+
+.footer__contact:hover { opacity: 0.7; }
+
+.footer__contact-name {
+  display: block;
+  color: var(--color-light-blue);
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .footer { margin-top: 60px; }
+
+  .footer__inner {
+    gap: 32px;
+    padding-block: 40px;
+  }
+
+  .footer__top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Обёртки колонок раскрываются: их дети становятся прямыми элементами
+     колонки футера и встают в общий вертикальный поток; порядок задаёт order.
+     Лого/лицензия (из .footer__brand) и ИП+дисклеймер держатся отдельными
+     блоками, чтобы разложить их по макету: лого → бейджи → меню → лицензия →
+     контакты → юр-блок */
+  .footer__side,
+  .footer__brand,
+  .footer__aside { display: contents; }
+
+  .footer__logo { order: 1; }
+  .footer__badges { order: 2; }
+  .footer__nav { order: 3; }
+  .footer__license { order: 4; }
+  .footer__legal { order: 5; }                 /* контакты + телефон */
+  .footer__fine { order: 6; max-width: none; }  /* ИП, дисклеймер, копирайт+документы */
+
+  /* Футер встаёт в колонку — меню тоже в один столбец */
+  .footer__nav {
+    column-count: 1;
+    margin-inline: 0;
+  }
+
+  .footer__link { margin-bottom: 16px; }
+
+  /* Копирайт+документы — столбиком (сбрасываем десктопные max-content/nowrap) */
+  .footer__bottom {
+    width: auto;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* max-width: none обязателен: на десктопе блок реквизитов ограничен 25.5%
+     (480 при контейнере 1880), но в колоночной раскладке эта доля превращается
+     в узкую полоску (~85px на 375) — реквизиты и дисклеймер переносились по
+     несколько символов. Здесь блок занимает всю ширину. text-align — влево. */
+  .footer__legal {
+    max-width: none;
+    margin-top: 0;   /* сброс десктопного прижима к низу */
+    text-align: left;
+  }
+}
+
+/* ═══════════ Телефоны 360–767 — ноды 1:14317…1:14358 ═══════════
+   Футер во всю ширину на градиенте, всё от x=20 (контейнер даёт 10, ещё 10 здесь).
+   Порядок в макете: лого → бейджи → меню → лицензия → низ. */
+@media (max-width: 767px) {
+  /* Отступ до футера даёт нижний padding секции факультативов */
+  .footer { margin-top: 0; }
+
+  .footer__inner {
+    gap: 30px;
+    padding-block: 20px 40px;
+    padding-inline: 20px;
+  }
+
+  .footer__top { gap: 30px; }
+
+  /* Раскрытие обёрток колонок и порядок элементов (лого→бейджи→меню→лицензия→
+     контакты→юр-блок) заданы выше, в блоке ≤1024 */
+
+  /* Лого 1:14318 — 129×36 */
+  .footer__logo img {
+    width: 129px;
+    height: 36px;
+  }
+
+  /* Бейджи 1:14344 — плашка 135×50: лого 40 с полем 5, «5.0» 20/1.2, звезда 21 */
+  .footer__badges { gap: 10px; }
+
+  .footer__badge {
+    gap: 10px;
+    padding: 5px 15px 5px 5px;
+    font-size: var(--fs-h4);
+  }
+
+  .footer__badge img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer__badge .footer__badge-star {
+    width: 21px;
+    height: 21px;
+  }
+
+  /* Меню 1:14335 — в ОДНУ колонку, шаг 10, кегль 14 */
+  .footer__nav {
+    column-count: 1;
+    font-size: var(--fs-text);
+  }
+
+  .footer__link { margin-bottom: 10px; }
+
+  /* Плашка лицензии 1:14355 — padding 20, gap 20, иконка 31×40.
+     Радиус 10 приходит сам: базовое правило берёт --radius-btn, а он на телефоне 10 */
+  /* min-height: 0 обязателен — на десктопе у плашки резиновый минимум высоты
+     (до 90px), и без сброса он держал бы её выше макетных 40 на телефоне */
+  .footer__license {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .footer__license img {
+    width: 31px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  /* Низ 1:14328 — 12px, шаг 10 */
+  .footer__bottom {
+    gap: 10px;
+    font-size: 12px;
+  }
+}

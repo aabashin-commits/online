@@ -1,0 +1,163 @@
+/* classes.css — секция «Выберите класс, в котором учитесь» */
+.classes {
+  /* сверху 0 — зазор 20px даёт нижний padding секции «Аттестат»; по бокам 20px.
+     Снизу 20: раньше здесь было 80 — запас под заголовок «О нас», который шёл
+     следом. Сейчас после секции стоит ЕГЭ-баннер, и запас переехал в .about. */
+  padding: 0 var(--page-gap) 20px;
+}
+
+/* Внутреннее поле: 56 на 1920 (замер по 1920.png) → 20 по бокам на 1600 и ниже.
+   В макете вертикальное и горизонтальное поле расходятся: на 1600 (1:23578) это
+   60/20/20, на 1200 (1:22152) — 50/20/20, то есть сверху остаётся разгон под
+   заголовок, а с боков поле схлопывается до 20. */
+.classes__inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--gradient-accent);
+  padding: clamp(50px, 1.875vw + 20px, 56px) var(--card-pad) clamp(20px, 11.25vw - 160px, 56px);
+}
+
+/* Декор-вихрь: растянут на весь баннер (заполняет всю синюю карточку) */
+.classes__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.classes__title {
+  position: relative;
+  z-index: 1;
+  color: var(--color-white);
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  /* 40 на 1920 → 30 на 1600 → 20 на 1200 (в макете gap колонки 30 и 20) */
+  margin-bottom: clamp(20px, 2.128cqw, 40px);
+}
+
+.classes__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-cards);
+}
+
+.classes__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border-radius: var(--radius-btn);
+  padding: clamp(20px, 1.489cqw, 28px);
+  /* Резиновый минимум (280 на 1920): карточки в ряду держат общую высоту,
+     но при длинном тексте на узкой ширине растут сами */
+  min-height: clamp(180px, 14.894cqw, 280px);
+}
+
+.classes__card-title {
+  font-size: var(--fs-h4);
+  line-height: 1.1;
+  margin-bottom: clamp(10px, 0.851cqw, 16px);
+}
+
+.classes__card-text {
+  font-size: var(--fs-small);
+  color: var(--color-black);
+  line-height: 1.5;
+  /* прижимает кнопку к низу карточки */
+  margin-bottom: auto;
+}
+
+.classes__muted { color: var(--color-gray-2); }
+
+.classes__btn {
+  align-self: flex-start;
+  margin-top: clamp(14px, 1.277cqw, 24px);
+}
+
+/* Розовая карточка «Экстернат» */
+.classes__card--accent {
+  background: var(--color-pink);
+}
+
+.classes__card--accent .classes__card-title,
+.classes__card--accent .classes__card-text {
+  color: var(--color-white);
+}
+
+/* --- Адаптив ---
+   Ступень 1280 (padding 40) убрана: поле карточки теперь резиновое.
+   Два одинаковых запроса ≤1024 объединены в один. */
+@media (max-width: 1024px) {
+  .classes { padding: 0 var(--page-gap) 48px; }
+  .classes__grid { grid-template-columns: repeat(2, 1fr); }
+  .classes__inner { padding: 28px 20px; }
+  .classes__card { min-height: 0; }
+}
+
+/* Телефоны 360–767 — секция 1:9026: во всю ширину без скруглений,
+   внутренний отступ 50/10 (единственная секция типа A с полем 10, а не 20),
+   заголовок 32 по центру, карточки 1:9631 в один столбец: 340, padding 20,
+   gap 10 внутри, радиус 20, заголовок 28/0.9, кнопка во всю ширину. */
+@media (max-width: 767px) {
+  .classes { padding: 0; }
+
+  .classes__inner {
+    padding: var(--section-pad-y) 10px;
+    border-radius: 0;
+    /* На телефоне секция становится очень высокой (360×1676), и диагональ 135deg
+       вырождается: переход укладывается в верхний правый угол, там появляется
+       тёмное пятно, а низ остаётся светлым — в макете наоборот. Берём
+       вертикальный вариант «Фонового синего» (тот же, что у hero на телефоне). */
+    background: var(--gradient-accent-v);
+  }
+
+  /* ⚠️ object-fit: cover на телефоне не годится: секция становится очень высокой
+     (360×1676), широкий вихрь при cover увеличивается в разы, и вместо мягкого
+     перелива вверху появляется тёмное пятно. В макете верх — чистый градиент,
+     а вихрь проступает только внизу, поэтому прижимаем его к низу
+     в натуральных пропорциях. */
+  .classes__bg {
+    top: auto;
+    bottom: 0;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+  }
+
+  .classes__title {
+    text-align: center;
+    line-height: 0.9;
+    margin-bottom: 20px;
+  }
+
+  /* Ряд карточек в макете — wrap с gap 10 (не 20, как между секциями) */
+  .classes__grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .classes__card {
+    min-height: 0;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .classes__card-title {
+    font-size: var(--fs-h3);
+    line-height: 0.9;
+    margin-bottom: 0;
+  }
+
+  .classes__card-text { line-height: 1.4; }
+
+  .classes__btn {
+    align-self: stretch;
+    margin-top: 10px;
+  }
+}

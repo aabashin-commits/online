@@ -1,0 +1,301 @@
+/* hero.css — первый экран: скруглённая панель на градиенте с сеткой-текстурой,
+   слева пиллы локаций, H1 с подсветкой, сабтекст и CTA со стикером; справа дети.
+   Десктоп — по скрину клиента (17.07.2026); мобильного макета нет,
+   адаптив ниже 1280 приблизительный, сверить при получении макета. */
+
+/* Панель hero стоит от края на общее поле страницы: 20 на 1920, 10 с 1600
+   (Figma 1:3496 x=20 ширина 1880; фреймы адаптива 1:22842 и 1:21417 — x=10) */
+.hero { padding: 20px var(--page-gap) 0; }
+
+/* Внутреннее поле панели: 30 на 1200 (H1 при x=32, пиллы при x=30 — фрейм 1:21417),
+   50 на 1600 (H1 при x=50 — 1:22902), 60 на 1920.
+   ⚠️ Здесь min(), а не max(), как у большинства токенов: наклон отрезков падает
+   (5 → 3.125), кривая вогнутая, и кусочную функцию даёт именно минимум. */
+.hero {
+  --hero-pad: clamp(30px, min(5vw - 30px, 3.125vw), 60px);
+  padding: 20px var(--page-gap) 0;
+}
+
+.hero__panel {
+  position: relative;
+  overflow: hidden;
+  /* Высота панели: 470 на 1200 (1:21417), дальше растёт круто по 55vw−190
+     до ~642 на 1510, затем — по более пологому 36.4vw+91 с потолком 790 на 1920.
+     ⚠️ Верхний отрезок изменён 29.07.2026 по просьбе клиента. В макете панель
+     на 1920 = 695, но при этой высоте зазор «стикер → инфо-карточки» схлопывался
+     с ~115px (на ноутбучных ширинах) до 18px: между 1510 и 1920 контент hero
+     (кегль H1, поле-верх, вертикальные отступы) прибавляет ~125px, наезд карточек
+     ещё ~25px, а прежний потолок 695 не давал панели подрасти — синее поле под
+     стикером съедалось. Новый отрезок поднимает панель ровно на эту прибавку,
+     поэтому зазор держится ~115px на всём диапазоне 1510–1920 (и выше — потолок).
+     Линия пересекает 55vw−190 на ~1510, поэтому ниже 1510 всё как было.
+     ⚠️ Пол поднят с 470 до 540 (просьба клиента 30.07.2026): на узком десктопе
+     (1025–1327) панель упиралась в 470, а контент hero фиксирован сверху →
+     белый стикер CTA свисал на 26–27px в зону наезда инфо-карточек (наезд 70).
+     Пол 540 опускает низ панели, зона наезда карточек уходит под стикер —
+     зазор «стикер → карточки» стал ~43px. Пол встречает кривую 55vw−190 на
+     ~1327, выше всё как было (до 1327 панель ровно 540). */
+  min-height: clamp(540px, min(55vw - 190px, 36.4vw + 91px), 790px);
+  padding: calc(var(--hero-pad) * 0.667) var(--hero-pad) var(--hero-pad);
+  /* Радиус: 20 на 1200, 30 на 1600 (оба замерены), 40 на 1920 (по 1920.png).
+     У панели он свой, крупнее общего --radius-card. */
+  border-radius: clamp(20px, max(2.5vw - 10px, 3.125vw - 20px), 40px);
+  background:
+    url('../assets/img/hero/hero-line.svg') right top / cover no-repeat,
+    var(--gradient-accent);
+}
+
+/* Ширина текстовой колонки: 720 на десктопе, но не больше 48% ширины панели —
+   иначе на 1200, где вырезка детей начинается уже с x=630 (1:21504),
+   текст залезал бы под неё. cqw — от .container (см. layout.css). */
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: min(720px, 48cqw);
+  /* Доп. отступ контента слева 30px (просьба клиента 30.07.2026): двигает разом
+     пиллы, заголовок, подзаголовок и CTA. На ≤767 сбрасывается — там пиксельная
+     раскладка мобильного макета. */
+  padding-left: 30px;
+  color: var(--color-white);
+}
+
+/* Пиллы локаций */
+.hero__locations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hero__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px 10px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-blue);
+  font-size: var(--fs-small);
+}
+
+.hero__location img { width: 24px; height: 24px; }
+
+/* Вертикальный ритм колонки — резиновый: на 1200 отступы сжимаются примерно
+   вдвое, как в 1:21417 (пиллы 30 → H1 93 → текст 183 → примечание 213 → CTA 284) */
+/* Кегль H1 поднят на 4px относительно токена (просьба клиента 30.07.2026):
+   46 → 68 → 100 вместо 42 → 64 → 96. */
+.hero__title {
+  margin-top: clamp(20px, 1.667vw, 32px);
+  font-size: calc(var(--fs-h1) + 4px);
+}
+
+/* Подсветка строки в H1 */
+.hero__hl {
+  display: inline-block;
+  padding-inline: 12px;
+  margin-left: -12px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+}
+
+/* Кегль подписи и примечания — фикс. по просьбе клиента (28.07.2026):
+   на ноутбучных ширинах токены давали 14–15px у desc и 12px у note, читалось мелко.
+   desc поднят до 24px (+4 кегля, просьба клиента 30.07.2026); note остаётся 20px.
+   .hero__note-hl наследует размер от .hero__note. */
+.hero__desc {
+  margin-top: clamp(16px, 1.458vw, 28px);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.hero__note {
+  margin-top: clamp(10px, 0.833vw, 16px);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.hero__cta {
+  position: relative;
+  display: inline-block;
+  margin-top: clamp(20px, 1.667vw, 32px);
+}
+
+/* Стикер у правого нижнего угла кнопки, заходит на неё по диагонали */
+.hero__sticker {
+  position: absolute;
+  left: calc(100% - 23px);
+  bottom: -27px;
+  white-space: nowrap;
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-pink);
+  font-size: var(--fs-btn);
+  transform: rotate(-8deg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Декоративные палочки у кнопки и стикера */
+.hero__spark { position: absolute; }
+
+.hero__spark--btn {
+  top: -18px;
+  left: -16px;
+}
+
+.hero__spark--sticker {
+  right: -22px;
+  bottom: -10px;
+}
+
+/* Дети: пара из двух вырезок (розовая слева, жёлтая справа), прижатая к правому
+   нижнему углу панели. Обёртка — флекс с выравниванием по низу, дети «стоят»
+   на кромке. Высота задаётся обёрткой (93% панели), ширину каждой вырезки даёт
+   её пропорция, так пара едет вместе с панелью на всех ширинах. */
+.hero__kids {
+  position: absolute;
+  right: 30px;
+  bottom: 0;
+  z-index: 0;
+  display: flex;
+  align-items: flex-end;
+  height: 93%;
+}
+
+.hero__kid {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* Розовая перекрывает жёлтую — как девочка перекрывала мальчика в исходной паре */
+.hero__kid--left { position: relative; z-index: 1; }
+.hero__kid--right { margin-left: -7%; }
+
+@media (max-width: 1024px) {
+  .hero { padding: 12px var(--page-gap) 0; }
+
+  .hero__panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 24px 20px 0;
+    border-radius: 24px;
+  }
+
+  /* Пара встаёт в поток под текст, по центру во всю ширину; десктопные
+     ограничения по высоте снимаем */
+  .hero__kids {
+    position: static;
+    align-self: stretch;
+    justify-content: center;
+    height: auto;
+    margin-top: 24px;
+  }
+
+  .hero__kid {
+    height: auto;
+    width: min(48%, 320px);
+  }
+}
+
+/* Телефоны 360–767 — фрейм 1:8279, синее поле 1:8280 (360×1448 от y=49).
+   Панель во всю ширину без скруглений, внутренний отступ 20.
+   Y-координаты нод пересчитаны в отступы относительно верха панели (49):
+   пиллы 69→20, H1 185, текст 277, примечание 327, CTA 397, дети 471. */
+@media (max-width: 767px) {
+  /* Градиент переехал на .hero-group (см. ниже) — панель прозрачная,
+     иначе на стыке с инфо-карточками была бы видна вторая заливка */
+  .hero-group { background: var(--gradient-accent-v); }
+
+  .hero { padding: 0; }
+
+  .hero__panel {
+    padding: 20px var(--section-pad-x) 0;
+    border-radius: 0;
+    background: url('../assets/img/hero/hero-line.svg') right top / cover no-repeat;
+  }
+
+  .hero__content { max-width: none; padding-left: 0; }
+
+  .hero__locations { gap: 10px; }
+
+  /* Пилла 1:8366: padding 8/14, радиус 30, иконка 20 */
+  .hero__location {
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: var(--fs-text);
+  }
+
+  .hero__location img { width: 20px; height: 20px; }
+
+  .hero__title { margin-top: 40px; }
+
+  /* Текстовые ноды 1:8375 и 1:8376 — 280 при контенте 320: по этой ширине
+     ложатся переносы макета. Доля, а не px, чтобы тянулось до 767. */
+  .hero__desc {
+    max-width: 87.5%;
+    margin-top: 16px;
+  }
+
+  .hero__note {
+    max-width: 87.5%;
+    margin-top: 10px;
+  }
+
+  .hero__cta {
+    display: block;
+    margin-top: 30px;
+  }
+
+  /* Стикер 1:8381 стоит от x=149 при контенте 20…340, то есть прижат вправо
+     с полем ~21 и свисает под кнопку. Десктопное `left: 100%` увело бы его
+     за экран: там кнопка узкая, а на телефоне она во всю ширину. */
+  .hero__sticker {
+    left: auto;
+    right: 20px;
+    bottom: -32px;
+    padding: 10px 20px;
+    font-size: var(--fs-text);
+  }
+
+  .hero__spark--btn {
+    top: -11px;
+    left: -9px;
+    width: 14px;
+    height: 16px;
+  }
+
+  .hero__spark--sticker {
+    right: -14px;
+    bottom: -8px;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Пара во всю ширину секции с выносом по 10px за поле контента (как исходная
+     вырезка): бликует до кромок панели. Каждая девочка — по половине ширины.
+     Верхний отступ 60px — чтобы белый стикер CTA не наезжал на голову девочки. */
+  .hero__kids {
+    width: calc(100% + 20px);
+    margin: 60px -10px 0;
+  }
+
+  .hero__kid { width: 50%; }
+
+  /* Подсветка второй строки примечания (1:8338, 283×20).
+     ⚠️ Только на телефоне: в десктопном макете её нет (проверено по 1920.png).
+     Заливка картинкой с явной высотой — как у остальных маркеров проекта,
+     обычный фон инлайна залил бы content area шрифта и вышел бы выше макетных 20. */
+  .hero__note-hl {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    background-size: 100% 1.35em;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+    padding-inline: 3px;
+    margin-left: -3px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+}

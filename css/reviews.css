@@ -1,0 +1,223 @@
+/* reviews.css — блок 14 «Отзывы».
+   Замеры по 1920.png: розовая карточка 1880×892 (Y 7697–8588), padding 60, radius 30;
+   сетка 4×2 карточек 425×300, gap 20. Заливки — белый с прозрачностью поверх розового:
+   карточка 15%, круг play 10%, треугольник 62% (посчитано по альфе). */
+
+.reviews {
+  padding-block: 20px;
+}
+
+.reviews__card {
+  padding: 60px;
+  background: var(--color-pink);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.reviews__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: clamp(20px, 2.128cqw, 40px);
+  margin-bottom: clamp(20px, 2.128cqw, 40px);
+}
+
+.reviews__title {
+  color: var(--color-white);
+}
+
+.reviews__note {
+  /* 45.53% = 856 при карточке 1880 (макет). ⚠️ Пол 460px — из-за кегля 28:
+     на 1025–1100 доля давала ~405–437px, и подсветка первой строки ломалась
+     надвое (341 + 107 на 1030). Заголовку слева места хватает с запасом:
+     на 1030 ему остаётся 410 при нужных ~330. */
+  width: max(45.53%, 460px);
+  min-width: min(100%, 320px);
+  /* Кегль 28 на 1920 (просьба клиента 31.07.2026; было 18 — наследовался общий
+     --fs-text). Взят готовый токен --fs-h4: он даёт ровно 28 на 1920 и дальше
+     сам едет по шкале макета (24 на 1600, 20 на 1280 и ниже). */
+  font-size: var(--fs-h4);
+  color: var(--color-white);
+}
+
+/* Маркер первой строки — белый 20%, как в блоке «Приходите познакомиться» */
+.reviews__hl {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 0 6px;
+  margin-left: -6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ── Пагинатор ──────────────────────────────────────────────────
+   Роликов 15, на экран влезает 8 — листаем страницами. Прокрутка нативная
+   со scroll-snap: на телефоне бесплатно получаем свайп, а стрелки просто
+   прокручивают трек на ширину вьюпорта (механика в createPager, main.js).
+   --per-page читает JS: сколько карточек класть на страницу, решает CSS,
+   чтобы брейкпоинты остались в файле блока. */
+.reviews__viewport { overflow: hidden; }
+
+.reviews__track {
+  --per-page: 8;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* Иначе горизонтальный свайп по ленте уводит браузер «назад» по истории */
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.reviews__track::-webkit-scrollbar { display: none; }
+
+.reviews__page {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-cards);
+  /* Последняя страница неполная (15 = 8 + 7). Без явных строк её единственный
+     ряд растянулся бы на всю высоту и плитки стали бы вдвое выше соседних. */
+  grid-auto-rows: min-content;
+}
+
+/* Стрелки. Синие, как в «Обучайтесь комфортно», на розовом читались бы плохо,
+   поэтому взят язык самого блока — полупрозрачный белый (плитка 15%,
+   кружок play 10%, маркер заголовка 20%). Геометрия — как у .staff__arrow. */
+.reviews__arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(6px, 0.532cqw, 10px);
+  margin-top: clamp(20px, 2.128cqw, 40px);
+}
+
+.reviews__arrows[hidden] { display: none; }
+
+.reviews__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: clamp(40px, 2.66cqw, 50px);
+  height: clamp(40px, 2.66cqw, 50px);
+  /* Заливка, а не одна рамка (просьба клиента 31.07.2026): пустая кнопка
+     на розовом читалась слабо и терялась под сеткой плиток */
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-pill);
+  color: var(--color-white);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.reviews__arrow:hover:not(:disabled) {
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-pink);
+}
+
+.reviews__arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.reviews__item {
+  position: relative;
+  aspect-ratio: 425 / 300;
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Кнопка — на всю карточку: кликается любая точка плитки */
+.reviews__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.reviews__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+/* Затемнение под кружком: на светлых постерах белый треугольник
+   поверх 10%-белого круга полностью терялся */
+.reviews__item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.reviews__play-circle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius-pill);
+  /* Ярче макета (просьба клиента 31.07.2026): в 1920.png плитки пустые и кружок
+     на ровной розовой заливке читался при 10% белого. Поверх фотокадра он терялся —
+     заливка поднята до 30%, треугольник со сплошного 62% белого до чистого белого. */
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--color-white);
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+/* Оптическая центровка треугольника. Флексбокс центрирует иконку по её
+   габаритному прямоугольнику, но центр тяжести треугольника лежит на трети
+   ширины — из-за этого он визуально уезжал влево.
+   10%, а не «честные» 16% до центра тяжести: полная поправка на глаз даёт
+   перелёт вправо (сверено рендером вариантов 0/6/8/10/14/16%).
+   Проценты — от ширины самой иконки, поэтому поправка едет вместе
+   с кружком при 90 → 70px и не требует значения на каждой ступени. */
+.reviews__play-circle svg { transform: translateX(10%); }
+
+.reviews__play:hover .reviews__play-circle {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.06);
+}
+
+.reviews__play:hover .reviews__poster { transform: scale(1.04); }
+
+@media (max-width: 1280px) {
+  .reviews__track { --per-page: 6; }
+  .reviews__page { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  /* Шапка блока в столбик: в строку заголовок и примечание уже не помещаются
+     (раньше это была отдельная ступень 1100 — сведена к каноническому 1024) */
+  .reviews__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .reviews__note { width: auto; }
+
+  .reviews__card { padding: 40px; }
+  .reviews__track { --per-page: 4; }
+  .reviews__page { grid-template-columns: repeat(2, 1fr); }
+  .reviews__play-circle { width: 70px; height: 70px; }
+}
+
+@media (max-width: 767px) {
+  .reviews__card { padding: 30px; }
+  /* По одной карточке на страницу — получается свайп-карусель,
+     тот же паттерн, что у факультативов на телефоне */
+  .reviews__track { --per-page: 1; }
+  .reviews__page { grid-template-columns: 1fr; }
+  .reviews__arrows { justify-content: center; }
+}

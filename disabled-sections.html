@@ -1,0 +1,183 @@
+<!--
+  ХРАНИЛИЩЕ ОТКЛЮЧЁННЫХ СЕКЦИЙ. НЕ подключается и НЕ заливается на сервер
+  (в игноре .vscode/sftp.json). Раньше эти секции лежали в index.html
+  закомментированными — но HTML-комментарии видны в DOM продакшена, поэтому
+  разметку вынесли сюда. Вернуть блок: вставить нужную <section> обратно в
+  index.html на её место по нумерации и раскомментировать ссылки меню
+  (шапка / мобильное меню / футер).
+  CSS/JS этих блоков остаются подключёнными в index.html всегда.
+
+  31.07.2026: блок 14 «Отзывы» возвращён в index.html (ролики ещё не пришли,
+  плитки пустые и по клику ничего не открывают — js/reviews.js это стережёт).
+  Здесь остались только «Тарифы».
+-->
+
+<!-- Пункты меню (сняты из index.html) -->
+<!-- Шапка .header__nav:      <a class="header__link" href="#pricing">Тарифы</a> -->
+<!-- Мобильное меню:          <a href="#pricing">Тарифы</a> -->
+<!-- Футер .footer__nav:      <a class="footer__link" href="#pricing">Тарифы</a> -->
+
+<!-- ===== 9. Тарифы (скрыто: ждём реальные тарифы; сейчас заглушки из макета) ===== -->
+    <section class="pricing" id="pricing">
+      <div class="container pricing__inner">
+        <div class="pricing__head">
+          <div>
+            <h2 class="pricing__title"><span class="pricing__title-muted">Наши</span> тарифы</h2>
+          </div>
+        </div>
+
+        <ul class="pricing__grid">
+          <li class="pricing__card">
+            <div class="pricing__top">
+              <span class="pricing__pill">до&nbsp;12 уч-ков</span>
+              <span class="pricing__pill pricing__pill--ghost">ФГОС<img class="pricing__pill-check" src="assets/img/green%20checkmark.svg" alt="" aria-hidden="true"></span>
+            </div>
+            <h3 class="pricing__name">Тариф 1</h3>
+            <p class="pricing__desc">Тут должно быть описание</p>
+            <ul class="pricing__features">
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Тщательный учебный план по&nbsp;каждому предмету
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Личные консультации куратора и&nbsp;психолога
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Дополнительная подготовка к&nbsp;ЕГЭ и&nbsp;ОГЭ
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Онлайн-дневник и&nbsp;обратная связь для&nbsp;родителей
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Индивидуальная адаптация учебной программы
+              </li>
+            </ul>
+            <div class="pricing__price-row">
+              <span class="pricing__price">25&nbsp;000</span>
+              <span class="pricing__price-unit">₽/мес</span>
+            </div>
+            <a class="btn btn--primary pricing__btn" href="#form" data-open-form>оставить заявку
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="pricing__card">
+            <div class="pricing__top">
+              <span class="pricing__pill">до&nbsp;12 уч-ков</span>
+              <span class="pricing__pill pricing__pill--ghost">ФГОС<img class="pricing__pill-check" src="assets/img/green%20checkmark.svg" alt="" aria-hidden="true"></span>
+            </div>
+            <h3 class="pricing__name">Тариф 2</h3>
+            <p class="pricing__desc">Тут должно быть описание</p>
+            <ul class="pricing__features">
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Занятия в&nbsp;мини-группах до&nbsp;12 учеников
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Программа по&nbsp;государственному стандарту
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Поддержка репетиторов по&nbsp;запросу
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Доступ к&nbsp;электронному расписанию
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Встречи с&nbsp;психологом и&nbsp;куратором
+              </li>
+            </ul>
+            <div class="pricing__price-row">
+              <span class="pricing__price">25&nbsp;000</span>
+              <span class="pricing__price-unit">₽/мес</span>
+            </div>
+            <a class="btn btn--primary pricing__btn" href="#form" data-open-form>оставить заявку
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="pricing__card">
+            <div class="pricing__top">
+              <span class="pricing__pill">до&nbsp;12 уч-ков</span>
+              <span class="pricing__pill pricing__pill--ghost">ФГОС<img class="pricing__pill-check" src="assets/img/green%20checkmark.svg" alt="" aria-hidden="true"></span>
+            </div>
+            <h3 class="pricing__name">Тариф 3</h3>
+            <p class="pricing__desc">Тут должно быть описание</p>
+            <ul class="pricing__features">
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Расширенные занятия по&nbsp;профильным предметам
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Индивидуальная подготовка к&nbsp;экзаменам
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Участие в&nbsp;проектах и&nbsp;олимпиадах
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Обратная связь для&nbsp;родителей каждый месяц
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Отдельный коворкинг для&nbsp;подготовки к&nbsp;сочинению
+              </li>
+            </ul>
+            <div class="pricing__price-row">
+              <span class="pricing__price">25&nbsp;000</span>
+              <span class="pricing__price-unit">₽/мес</span>
+            </div>
+            <a class="btn btn--primary pricing__btn" href="#form" data-open-form>оставить заявку
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="pricing__card">
+            <div class="pricing__top">
+              <span class="pricing__pill">до&nbsp;12 уч-ков</span>
+              <span class="pricing__pill pricing__pill--ghost">ФГОС<img class="pricing__pill-check" src="assets/img/green%20checkmark.svg" alt="" aria-hidden="true"></span>
+            </div>
+            <h3 class="pricing__name">Тариф 4</h3>
+            <p class="pricing__desc">Тут должно быть описание</p>
+            <ul class="pricing__features">
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Лучшая подготовка для&nbsp;выпускных классов
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Тестирование и&nbsp;индивидуальная аналитика
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Дневной доступ ко&nbsp;всем учебным материалам
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Студенческая поддержка и&nbsp;репетиции экзаменов
+              </li>
+              <li class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6.5 13 14 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Помощь в&nbsp;выборе профильных предметов
+              </li>
+            </ul>
+            <div class="pricing__price-row">
+              <span class="pricing__price">25&nbsp;000</span>
+              <span class="pricing__price-unit">₽/мес</span>
+            </div>
+            <a class="btn btn--primary pricing__btn" href="#form" data-open-form>оставить заявку
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>

@@ -1,0 +1,181 @@
+/* pricing.css — секция тарифов: карточки с ценой и преимуществами */
+.pricing {
+  /* Горизонтальные отступы убраны: их даёт .container (20px), иначе двойной
+     отступ сузил бы полезную ширину и карточки не встали бы по 455px */
+  padding: 40px 0;
+}
+
+.pricing__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.pricing__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pricing__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.pricing__title-muted { color: var(--color-gray-2); }
+
+.pricing__grid {
+  display: grid;
+  /* Колонка максимум 455px (точный размер на 1920), ниже 1920 плавно ужимается.
+     Зазор 20px: 4×455 + 3×20 = 1880 = полезная ширина контейнера на 1920 */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-cards);
+  justify-content: center;
+}
+
+.pricing__card {
+  display: flex;
+  flex-direction: column;
+  /* Резиновый минимум (648 на 1920): при фиксированной высоте карточки
+     на промежуточных ширинах либо распирались списком, либо пустовали */
+  min-height: clamp(420px, 34.468cqw, 648px);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  /* Паддинги по макету: 32 сверху/по бокам, 30 снизу — чтобы контент уложился в 648px */
+  padding: clamp(20px, 1.702cqw, 32px) clamp(20px, 1.702cqw, 32px) clamp(20px, 1.596cqw, 30px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pricing__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(60, 130, 236, 0.14);
+}
+
+.pricing__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pricing__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-small);
+  color: var(--color-blue-chip);
+  background: var(--color-light-blue);
+}
+
+.pricing__pill--ghost {
+  color: var(--color-gray-1);
+  background: var(--color-gray-3);
+}
+
+.pricing__pill-check {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.pricing__name {
+  margin-bottom: 28px;
+  font-size: var(--fs-h3);
+}
+
+.pricing__desc {
+  color: var(--color-gray-2);
+  margin-bottom: 30px;
+}
+
+.pricing__features {
+  display: grid;
+  gap: 14px;
+  /* margin-bottom не нужен: свободное пространство до цены даёт margin-top:auto у прайс-строки */
+  margin-bottom: 0;
+}
+
+.pricing__feature {
+  display: flex;
+  align-items: start;
+  gap: 14px;
+  color: var(--color-gray-2);
+  line-height: 1.5;
+}
+
+.pricing__feature svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--color-pink);
+}
+
+.pricing__price-row {
+  /* margin-top: auto — прижимает цену и кнопку к низу карточки высотой 648px */
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  /* 12px по вертикали: прайс-бокс ~60px по высоте, как в макете */
+  padding: 12px 20px;
+  background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.pricing__price {
+  /* Замер по 1920.png: высота цифр 34px → кегль ≈48 = --fs-h3.
+     Токен сам уменьшается на 1600/1200, отдельное правило не нужно. */
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.pricing__price-unit {
+  font-size: var(--fs-text);
+  color: var(--color-gray-1);
+}
+
+.pricing__btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 1280px) {
+  .pricing__grid {
+    grid-template-columns: repeat(2, minmax(0, 455px));
+  }
+}
+
+@media (max-width: 767px) {
+  .pricing {
+    padding: 32px 0;
+  }
+
+  .pricing__head {
+    flex-direction: column;
+  }
+
+  .pricing__title {
+    font-size: var(--fs-h3);
+  }
+
+  .pricing__grid {
+    grid-template-columns: minmax(0, 455px);
+  }
+
+  .pricing__card {
+    /* На мобильном высота по содержимому — фиксированные 648px тут не нужны */
+    min-height: 0;
+    padding: 28px 22px;
+  }
+}
+
+/* ⚠️ Ступень 480 удалена: отступы пиллов и строки цены и так на своих
+   резиновых минимумах, а переопределять здесь общий .btn нельзя —
+   на телефоне его габарит задаёт layout.css по мобильному макету. */

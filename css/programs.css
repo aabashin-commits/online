@@ -1,0 +1,423 @@
+/* programs.css — блок «Образовательные программы».
+   Замеры: Figma 1:4445 (белая карточка) и 1:4536 (синяя), сверено с 1920.png (y 5364–6287)
+   и скриншотами клиента Tz/1921.png, Tz/1922.png. Данные расписаний — Tz/raspisanie.md. */
+
+.programs {
+  padding-block: 20px;
+}
+
+/* Две карточки в ряд: 20 + 1167 + 20 + 693 + 20 = 1920.
+   Обе тянутся на одну высоту (stretch по умолчанию для grid). */
+.programs__inner {
+  display: grid;
+  grid-template-columns: 1167fr 693fr;
+  gap: var(--gap-cards);
+}
+
+/* ---------- Белая карточка с расписанием ---------- */
+
+.programs__card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.128cqw, 40px);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.programs__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3.191cqw, 60px);
+}
+
+/* В макете заголовок всегда в две строки, поэтому перенос принудительный:
+   на широкой карточке «Образовательные программы» встало бы в одну. */
+.programs__title-muted {
+  display: block;
+  color: var(--color-gray-2);
+}
+
+/* Три таба равной ширины на всю ширину карточки (335 при content-box 1047) */
+.programs__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+}
+
+.programs__tab {
+  padding: clamp(8px, 0.585cqw, 11px) clamp(14px, 1.596cqw, 30px);
+  border: 1px solid var(--color-light-blue);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-btn);
+  line-height: 1.4;
+  color: var(--color-blue-2);
+  text-align: center;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.programs__tab:hover {
+  border-color: var(--color-blue-2);
+  color: var(--color-blue);
+}
+
+.programs__tab--active,
+.programs__tab--active:hover {
+  background: var(--color-blue);
+  border-color: transparent;
+  color: var(--color-white);
+}
+
+.programs__body {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.programs__subtitle {
+  font-size: var(--fs-h4);
+}
+
+/* Сетка не растягивается на всю карточку: в макете она 875 (5×167 + 4×10)
+   и прижата влево, справа остаётся белое поле — так же на скриншоте клиента. */
+.programs__schedule {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(6px, 0.532cqw, 10px);
+  /* 875 при карточке 1167 на 1920 = 75% — доля, а не px: сетка прижата влево,
+     и белое поле справа должно сохраняться пропорционально, а не съедаться */
+  max-width: 75%;
+}
+
+.programs__day {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.programs__day-name {
+  font-size: var(--fs-text);
+  line-height: 1.4;
+  color: var(--color-gray-2);
+  text-align: center;
+}
+
+/* Плашка урока: 45px в одну строку (10 + 18×1.4 + 10), 70px в две.
+   Боковой padding 20, а не 30 как пишет Figma: там текст стоит в режиме hug
+   и спокойно вылезает за собственный padding. 167 − 2×20 = 127 — единственное
+   окно, при котором «Русский язык» встаёт в строку, а «Английский язык» — в две,
+   как в макете. */
+.programs__lesson {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(34px, 2.394cqw, 45px);
+  padding: clamp(6px, 0.532cqw, 10px) clamp(10px, 1.064cqw, 20px);
+  border-radius: clamp(6px, 0.532cqw, 10px);
+  font-size: var(--fs-text);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.programs__lesson--empty { background: var(--color-surface); }
+
+.programs__lesson--peach   { background: var(--chip-peach-bg);   color: var(--chip-peach-fg); }
+.programs__lesson--green   { background: var(--chip-green-bg);   color: var(--chip-green-fg); }
+.programs__lesson--cyan    { background: var(--chip-cyan-bg);    color: var(--chip-cyan-fg); }
+.programs__lesson--blue    { background: var(--chip-blue-bg);    color: var(--chip-blue-fg); }
+.programs__lesson--pink    { background: var(--chip-pink-bg);    color: var(--chip-pink-fg); }
+.programs__lesson--purple  { background: var(--chip-purple-bg);  color: var(--chip-purple-fg); }
+.programs__lesson--magenta { background: var(--chip-magenta-bg); color: var(--chip-magenta-fg); }
+.programs__lesson--lime    { background: var(--chip-lime-bg);    color: var(--chip-lime-fg); }
+.programs__lesson--mint    { background: var(--chip-mint-bg);    color: var(--chip-mint-fg); }
+.programs__lesson--violet  { background: var(--chip-violet-bg);  color: var(--chip-violet-fg); }
+
+.programs__routine {
+  max-width: 75%;
+  color: var(--color-gray-1);
+}
+
+/* ---------- Синяя карточка «пробные 2 дня» ---------- */
+
+/* В потоке только заголовок и кнопка (space-between), остальное — абсолютом,
+   как в Figma 1:4536. Высоту карточке задаёт соседняя белая через stretch. */
+.programs__promo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  background: var(--gradient-accent);
+  box-shadow: var(--shadow-card);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+/* Сетка-декор — собственный экспорт этой карточки (Figma 1:4537, обрезка группы
+   векторов 1:4538 по рамке карточки). В Figma лежит от (0,0) на всю карточку,
+   поэтому `left top / cover` — слой закрывает блок целиком при любой его высоте.
+   Вшитую в экспорт opacity 0.15 убрали, прозрачность задаётся здесь. */
+.programs__promo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('../assets/img/programs/grid.svg') left top / cover no-repeat;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.programs__promo-title {
+  position: relative;
+  z-index: 2;
+  max-width: 78.5%;   /* 544 при карточке 693 на 1920 */
+  font-size: var(--fs-h2);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.programs__promo-muted { color: var(--color-light-blue); }
+
+/* Два «стикера» с лёгким наклоном в разные стороны — замер по 1920.png:
+   светлый уходит вправо-вниз (+4.6°), тёмный вправо-вверх (−6°). */
+.programs__promo-labels {
+  position: absolute;
+  z-index: 3;
+  left: 60px;
+  top: 45.5%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.programs__promo-label {
+  padding: 10px 30px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-text);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.programs__promo-label--light {
+  margin-left: 7px;
+  background: var(--chip-blue-bg);
+  color: var(--color-blue-chip);
+  transform: rotate(4.6deg);
+}
+
+.programs__promo-label--dark {
+  margin-top: -6px;
+  background: var(--color-blue-chip);
+  color: var(--color-white);
+  transform: rotate(-6deg);
+}
+
+/* Мальчик — экспорт из Figma (нода 1:4594), вырезка с прозрачностью.
+   В макете он вылезает за нижний и правый край, лишнее срезает overflow карточки. */
+.programs__promo-image {
+  position: absolute;
+  z-index: 1;
+  left: 22.7%;
+  top: 18.2%;
+  width: 99.3%;
+  height: auto;
+}
+
+.programs__promo-btn {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Адаптив ----------
+   Ступень 1600 (padding 40, зазоры 40/30) убрана: padding карточек и зазоры
+   резиновые и на 1600 дают те же значения. */
+
+/* Карточки перестают помещаться в ряд — синяя уходит под белую.
+   ⚠️ Обе при этом надо ПЕРЕСТРОИТЬ, а не растянуть: их композиция снята
+   с узких вертикальных карточек макета и на всю ширину экрана разваливается.
+   У белой сетка была прижата влево долей 75% (осмысленной только в колонке
+   1167) — на широкой карточке это ~300px пустоты справа и раздутые до 177px
+   плашки. У синей вертикальная композиция «заголовок сверху — кнопка снизу»
+   держалась хардкодом min-height: 560 — получался пустой синий прямоугольник
+   с ~250px воздуха посередине. */
+@media (max-width: 1280px) {
+  .programs__inner { grid-template-columns: 1fr; }
+
+  /* Сетка и распорядок занимают всю ширину карточки: доля из макета здесь
+     больше не работает, пустое поле справа нечем оправдать */
+  .programs__schedule,
+  .programs__routine { max-width: none; }
+
+  /* Синяя карточка становится горизонтальным баннером (как «нет ДЗ»):
+     слева колонка «заголовок → бабблы → кнопка», справа мальчик.
+     Высоту задаёт контент; min-height нужен только чтобы вырезка не мельчала. */
+  .programs__promo {
+    gap: clamp(20px, 2.5vw, 40px);
+    /* поле под мальчика, чтобы длинный заголовок не заезжал ему на лицо */
+    padding-right: clamp(190px, 22%, 280px);
+    min-height: clamp(300px, 29vw, 380px);
+  }
+
+  /* Заголовок больше не ограничен долей узкой карточки — ширину даёт padding */
+  .programs__promo-title { max-width: none; }
+
+  /* Бабблы возвращаются в поток, между заголовком и кнопкой */
+  .programs__promo-labels {
+    position: static;
+    z-index: auto;
+  }
+
+  /* Мальчик прижат к правому нижнему углу, размер — по высоте карточки */
+  .programs__promo-image {
+    left: auto;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: 88%;
+    max-width: none;
+  }
+}
+
+/* Зазоры сетки и табов здесь уже равны своим резиновым минимумам —
+   остаются только боковые отступы, которые надо ужать сильнее минимума:
+   иначе длинные названия программ и предметов не помещаются в колонку. */
+@media (max-width: 1024px) {
+  .programs__tab { padding: 11px 12px; }
+  .programs__lesson { padding: 10px 8px; }
+}
+
+/* Ровно 768 (планшет в портрете): раскладка ещё десктопная, но карточкам
+   нужен более тесный шаг. Порог оставлен на 768, а не поднят до 1024, —
+   выше уже есть свой блок ≤1024 с настройками табов и плашек. */
+@media (max-width: 768px) {
+  .programs__card,
+  .programs__promo { padding: 30px 20px; }
+
+  .programs__head { gap: 30px; }
+  .programs__body { gap: 20px; }
+
+  /* Мальчику остаётся меньше места — поле под него ужимаем, иначе колонка
+     текста схлопывается и заголовок ломается на 4 строки */
+  .programs__promo { padding-right: 170px; }
+}
+
+/* Телефоны 360–767 — фреймы 1:14359 (белая, 360×625) и 1:11797 (синяя, 360×510).
+   Обе карточки — секции типа A: во всю ширину, без скруглений и бокового поля,
+   внутренний отступ 50/20. В макете они стыкуются вплотную (7503+625 = 8128),
+   поэтому зазора между ними нет. */
+@media (max-width: 767px) {
+  .programs { padding-block: 0; }
+
+  .programs__inner {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-inline: 0;
+  }
+
+  .programs__card {
+    gap: 30px;
+    padding: var(--section-pad-y) var(--section-pad-x);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* 1:14360 — заголовок и табы с зазором 20 */
+  .programs__head { gap: 20px; }
+
+  /* Табы столбиком во всю ширину: padding 14/30, радиус 89, текст 14/1.2 */
+  .programs__tabs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .programs__tab {
+    padding: 14px 30px;
+    line-height: 1.2;
+  }
+
+  /* 1:14369 — подзаголовок, сетка и распорядок с зазором 10 */
+  .programs__body { gap: 10px; }
+
+  /* Сетка 1:14373: 5 колонок 61.07 с шагом 3.657 (5×61.07 + 4×3.657 = 320).
+     Колонки в 1fr — раскладка тянется от 360 до 767 вместе с экраном.
+
+     ⚠️ Кегли из макета не переносятся: там день 5.12px, а предмет 4.39px —
+     это следствие того, что десктопную таблицу уменьшили в 0.366 раза, текст
+     плашек сливается в пятно (проверено по «Мобайл целый.png»). Геометрия взята
+     из макета, кегль поднят до читаемого минимума и растёт с шириной экрана.
+     Из-за этого плашки выше макетных, и карточка выходит выше 625.
+     Вынесено на согласование — см. PLAN.md и Tz/mobile-360.md. */
+  .programs__schedule {
+    gap: 4px;
+    max-width: none;
+  }
+
+  .programs__day { gap: 4px; }
+
+  .programs__day-name {
+    font-size: clamp(8px, 2.28vw, 16px);
+    line-height: 1.4;
+  }
+
+  .programs__lesson {
+    min-height: 0;
+    padding: 4px 5px;
+    border-radius: 4px;
+    font-size: clamp(7px, 1.95vw, 14px);
+    line-height: 1.4;
+  }
+
+  /* Распорядок — сплошным абзацем 14/1.4 (1:14449) */
+  .programs__routine {
+    max-width: none;
+    font-size: var(--fs-text);
+  }
+
+  /* ---- Синяя карточка 1:11797 (360×510) ---- */
+  .programs__promo {
+    min-height: 510px;
+    padding: var(--section-pad-y) var(--section-pad-x);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Мальчик 1:11855 — 326×465 в точке (124, 45): низ вровень с карточкой,
+     правым краем (450) вылезает за неё на 90 и срезается overflow.
+     Размер задан по ВЫСОТЕ карточки (465/510), а не по ширине: карточка
+     фиксированной высоты, и ширина в % раздула бы вырезку на широких экранах.
+
+     ⚠️ Вылет — через translateX, а не через `right: -25%`. Проценты у `right`
+     считаются от ширины КАРТОЧКИ: на 360 это макетные −90, но на 700 уже −175,
+     и мальчика срезало больше чем наполовину. Проценты у `translateX` берутся
+     от ширины самого элемента, а он ~326 на любой ширине экрана (размер задан
+     по высоте) — доля обрезки 90/326 = 27.6% держится везде. */
+  .programs__promo-image {
+    left: auto;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: 91.176%;
+    max-width: none;
+    transform: translateX(27.6%);
+  }
+
+  /* Бабблы 1:11861 — (20, 229) при карточке 510: 229 сверху = 183 снизу.
+     ⚠️ position возвращаем явно: в ≤1280 бабблы уходят в поток (static),
+     и без сброса left/bottom здесь бы не сработали. */
+  .programs__promo-labels {
+    position: absolute;
+    z-index: 3;
+    left: var(--section-pad-x);
+    top: auto;
+    bottom: 35.88%;
+  }
+
+  .programs__promo-label {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+}

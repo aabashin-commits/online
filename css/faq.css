@@ -1,0 +1,229 @@
+/* faq.css — блок 15 «FAQ».
+   Замеры по Figma 1:5930 + сверка пиксель-в-пиксель с 1920.png:
+   белая карточка 1880×1192 (Y 8609–9800), padding 60, radius 30, тень.
+   Колонки: заголовок 617 + зазор 38 + список 1105 (617+38+1105 = 1760 = 1880−120).
+   Айтем: #F8F8F8, radius 20, padding 30. Закрытый — ровно 100 (высоту задаёт
+   кнопка-шеврон 40), открытый — 164 (28×1.2 + 20 + две строки 18×1.4).
+   Кнопка-шеврон 40×40: закрыт — обводка #D8E6FB, открыт — заливка #366EDF. */
+
+.faq {
+  padding-block: 20px;
+}
+
+/* ⚠️ container-type висит на .container, а не на карточке: cqw считается от
+   content-box, а у карточки padding 60 — единица уехала бы на 6%.
+   content-box контейнера равен ширине карточки на всех брейкпоинтах.
+   1cqw = 18.8px на 1920. */
+.faq .container {
+  container-type: inline-size;
+}
+
+.faq__card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  /* Зазор колонок фиксированный, сами колонки сжимаются пропорционально базису:
+     на 1920 сумма 617+38+1105 совпадает с шириной точно, ниже — ужимается,
+     сохраняя пропорцию макета. */
+  gap: clamp(20px, 2.021cqw, 38px);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Розовый вихрь. Экспорт Figma 1:5931 (2175×994), в макете лежит без поворота
+   со смещением −746 / +514 от левого верхнего угла карточки — подобрано
+   совмещением с 1920.png. Обрезается скруглением карточки. */
+.faq__decor {
+  position: absolute;
+  left: -39.681cqw;   /* −746 / 18.8 */
+  top: 27.340cqw;     /*  514 / 18.8 */
+  width: 115.691cqw;  /* 2175 / 18.8 */
+  height: 52.872cqw;  /*  994 / 18.8 */
+  max-width: none;
+  pointer-events: none;
+}
+
+.faq__title {
+  position: relative;
+  z-index: 1;
+  /* Доли макета: 617 и 1105 при карточке 1880 — колонки сжимаются
+     пропорционально на любой ширине */
+  flex: 0 1 32.82%;
+  align-self: flex-start;
+}
+
+.faq__muted {
+  color: var(--color-gray-2);
+}
+
+.faq__list {
+  position: relative;
+  z-index: 1;
+  flex: 0 1 58.78%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq__item {
+  position: relative;
+  padding: clamp(16px, 1.596cqw, 30px);
+  background: var(--color-surface);
+  border-radius: var(--radius-btn);
+}
+
+/* Закрытый айтем: строка вопроса тянется до высоты шеврона (40) и текст в ней
+   центрируется — отсюда ровные 100px. У открытого высоту задаёт сам текст. */
+.faq__question {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  width: 100%;
+  padding-right: 70px;   /* шеврон 40 + отбивка 30 */
+  text-align: left;
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  color: var(--color-black);
+}
+
+.faq__item--open .faq__question {
+  align-items: flex-start;
+  min-height: 0;
+}
+
+/* Шеврон вынесен из потока: иначе его 40px не дали бы открытому айтему
+   сойтись с макетом (164). Абсолют считается от .faq__item, но клик
+   ловит кнопка-родитель. */
+.faq__toggle {
+  position: absolute;
+  top: clamp(16px, 1.596cqw, 30px);
+  right: clamp(16px, 1.596cqw, 30px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-light-blue);
+  border-radius: var(--radius-pill);
+  color: var(--color-blue-2);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+/* Иконка в экспорте смотрит вверх — закрытому айтему разворачиваем вниз */
+.faq__toggle svg {
+  transform: rotate(180deg);
+  transition: transform 0.25s ease;
+}
+
+/* Ховер — только у закрытого айтема. У раскрытого кружок синий солид, а этот
+   селектор специфичнее (`:hover` даёт 0,3,0 против 0,2,0 у `.faq__item--open
+   .faq__toggle`) и перекрашивал стрелку в цвет фона — она пропадала. */
+.faq__item:not(.faq__item--open) .faq__question:hover .faq__toggle {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.faq__item--open .faq__toggle {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.faq__item--open .faq__toggle svg {
+  transform: rotate(0deg);
+}
+
+/* Раскрытие через grid-template-rows: работает с любой высотой текста,
+   в отличие от max-height с «на глаз» подобранным потолком */
+.faq__answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.faq__item--open .faq__answer-wrap {
+  grid-template-rows: 1fr;
+}
+
+.faq__answer {
+  overflow: hidden;
+}
+
+.faq__answer p {
+  max-width: 86.3%;      /* 954 при колонке 1105 — ширина текста в открытом айтеме (Figma 1:6934) */
+  padding-top: 20px;     /* gap 20 между вопросом и ответом */
+  color: var(--color-gray-2);
+}
+
+/* Телефоны 360–767: секция во всю ширину, белая, без скруглений и тени;
+   заголовок над списком. Фрейм 1:13211 — `padding: 215px 10px 30px`, gap 20.
+   215 сверху — это не отступ до заголовка: заголовок (1:14251, 330×145) в макете
+   лежит ВЫШЕ списка и внутрь этого отступа не входит. У нас он обычный флекс-ребёнок
+   карточки, поэтому те же 215 набираются сами: 50 (padding-top) + 145 (заголовок)
+   + 20 (gap) = 215 — первая плашка встаёт ровно как в макете.
+   Розовый вихрь на телефоне уходит за нижнюю половину списка (сверено с растром),
+   поэтому его координаты — в px и не масштабируются от ширины. */
+@media (max-width: 767px) {
+  .faq {
+    padding-block: 0;
+  }
+
+  /* Поле 10px даёт сама карточка, поэтому у контейнера его снимаем —
+     заодно content-box контейнера снова равен ширине карточки (для cqw) */
+  .faq .container {
+    padding-inline: 0;
+  }
+
+  .faq__card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 10px 30px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* На телефоне вихрь не масштабируем от ширины карточки: при 360 это ровно
+     макетные 2175×994, а cqw на 768 раздул бы его в 6 раз */
+  .faq__decor {
+    left: -746px;
+    top: 535px;
+    width: 2175px;
+    height: 994px;
+  }
+
+  .faq__title {
+    flex: none;
+    padding-inline: 10px;  /* заголовок в макете от x=20, плашки — от x=10 */
+  }
+
+  .faq__list {
+    flex: none;
+  }
+
+  .faq__item {
+    padding: 20px;
+  }
+
+  .faq__question {
+    padding-right: 50px;   /* шеврон 40 + отбивка 10 */
+  }
+
+  /* Колонка текста айтема в макете — фикс. 227 (1:14214), и ответу это
+     ограничение нужно обязательно: растекаясь на все 300, он ложится в 5 строк
+     вместо 6, открытый айтем проседает с 262 до 196, а следом уезжает вверх
+     весь список и низ вихря. Вопросу те же 227 не ставим: в браузере Onest
+     набирается чуть шире фигмовского, и вопросы 6 и 9 ломаются на лишнюю
+     строку (160 и 136 против макетных 135 и 111) — по переносам сходится 250. */
+  .faq__answer p { max-width: 227px; }
+
+  .faq__toggle {
+    top: 20px;
+    right: 20px;
+  }
+
+  .faq__answer p {
+    padding-top: 10px;
+  }
+}

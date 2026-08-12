@@ -1,0 +1,467 @@
+/* form.css — блок 18: форма заявки. В макете это только поп-ап (отдельной секции
+   на странице нет), см. Figma #1:7139 и «фото тз/Форма.png».
+   Окно 1405×760, padding 60/30, radius 30, фон — синий градиент.
+   Поля — без рамки, только нижняя линия; чекбокс согласия включён по умолчанию. */
+
+.form-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  /* none, а не contain: contain гасит только прокрутку страницы под модалкой,
+     но оставляет «резинку» — на телефоне ленту можно оттянуть за край, и в зазоре
+     видно страницу. none убирает и её. */
+  overscroll-behavior: none;
+}
+
+.form-modal[hidden] { display: none; }
+
+/* Короткий экран (ноутбук 1440×720, планшет в ландшафте, телефон боком).
+   Та же ловушка, что описана ниже для телефонов: при центрировании окно выше
+   экрана уезжает верхом в минус, доскроллить туда нельзя — крестик становится
+   недоступен. Порог по ВЫСОТЕ, а не по ширине: окно формы высокое (~760),
+   и на 1440×720 проблема ровно та же, что на 360×691. */
+@media (max-height: 860px) {
+  .form-modal {
+    align-items: flex-start;
+    padding-block: 20px;
+  }
+}
+
+/* fixed, а не absolute: контейнер прокручивается, и абсолютная подложка ехала бы
+   вместе с контентом — при оттягивании ленты за край из-под неё показывалась
+   страница. Фиксированная всегда закрывает экран целиком. */
+.form-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.form-modal__window {
+  position: relative;
+  overflow: hidden;
+  /* 73% ширины экрана до 1920, дальше замирает на макетных 1405 (см. комментарий
+     в конце файла — это одна доля во всех трёх фреймах макета) */
+  width: min(1405px, 73vw);
+  max-width: 100%;
+  margin: auto;
+  padding: 60px 30px;
+  background: var(--gradient-accent);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Мягкие блики вместо декоративной ленты из макета:
+   вырезать её из «Форма.png» нельзя — поверх напечатаны поля.
+   Заменить на экспорт от клиента, когда пришлёт. */
+.form-modal__window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 88% 8%, rgba(255, 255, 255, 0.28), transparent 70%),
+    radial-gradient(75% 60% at 78% 96%, rgba(255, 255, 255, 0.16), transparent 70%);
+}
+
+.form-modal__window > * {
+  position: relative;
+  z-index: 1;
+}
+
+.form-modal__close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-pill);
+  color: var(--color-white);
+  transition: background-color 0.25s ease;
+}
+
+.form-modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Доля окна, а не 902px: окно теперь тянется, и фиксированная ширина заголовка
+   на узком экране упиралась бы в max-width, ломая центровку переносов */
+.form-modal__title {
+  width: 67%;
+  min-width: min(100%, 320px);
+  margin: 0 auto 40px;
+  font-size: var(--fs-h3);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--color-white);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* 739 при контенте окна 1345 на 1920 = 55% — доля сохраняется на любой ширине */
+.form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 55%;
+  min-width: min(100%, 280px);
+}
+
+.form__field {
+  width: 100%;
+}
+
+/* Поле — только нижняя линия, как в макете */
+.form__input {
+  width: 100%;
+  padding: 0 0 12px;
+  font: inherit;
+  font-size: var(--fs-text);
+  color: var(--color-white);
+  background: none;
+  border: 0;
+  /* линия поля — белый 30% (замер по «Форма.png») */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+/* Состояния поля — по «Эффекты.png»:
+   спокойное — текст #D8E6FB, линия белая 30%;
+   активное — белый текст и белая линия;
+   неактивное — приглушённое;
+   ошибка — #FF6E6E и текст, и линия. */
+.form__input::placeholder {
+  color: var(--color-light-blue);
+}
+
+.form__input:focus {
+  outline: none;
+  border-bottom-color: var(--color-white);
+}
+
+.form__input:disabled {
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.form__input:disabled::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form__field--error .form__input,
+.form__field--error .form__input:focus {
+  color: var(--color-error);
+  border-bottom-color: var(--color-error);
+}
+
+.form__field--error .form__input::placeholder {
+  color: var(--color-error);
+}
+
+.form__error {
+  margin-top: 8px;
+  font-size: var(--fs-small);
+  color: var(--color-error);
+}
+
+/* Ошибка выбора школы: подсвечиваем сами переключатели — как рамку у поля ввода.
+   Отступ у сообщения снимаем: его уже даёт gap списка. */
+.form__schools--error .form__radio-mark {
+  border-color: var(--color-error);
+}
+
+.form__schools .form__error {
+  margin-top: 0;
+}
+
+.form__error:empty {
+  display: none;
+}
+
+.form__bottom {
+  width: 55%;
+  min-width: min(100%, 280px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__schools {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* «Выберите школу» — #D8E6FB, как спокойное состояние поля */
+.form__legend {
+  padding: 0;
+  margin-bottom: 10px;
+  color: var(--color-light-blue);
+}
+
+.form__radio,
+.form__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* Нативные input'ы прячем, но оставляем доступными с клавиатуры */
+.form__radio input,
+.form__consent input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.form__radio-mark,
+.form__consent-mark {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.form__radio-mark {
+  border-radius: var(--radius-pill);
+}
+
+.form__consent-mark {
+  position: relative;
+  border-radius: 6px;
+}
+
+.form__radio input:checked + .form__radio-mark {
+  border-color: var(--color-white);
+  background:
+    radial-gradient(circle at center, var(--color-white) 0 5px, transparent 5px);
+}
+
+.form__consent input:checked + .form__consent-mark::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.form__radio input:focus-visible + .form__radio-mark,
+.form__consent input:focus-visible + .form__consent-mark {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.form__consent-text {
+  font-size: var(--fs-small);
+}
+
+.form__consent-text a {
+  text-decoration: underline;
+}
+
+.form__submit[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Экран успеха показывается вместо формы в том же окне */
+.form-modal__success {
+  text-align: center;
+  color: var(--color-white);
+}
+
+.form-modal__success[hidden] { display: none; }
+
+.form-modal__success-title {
+  font-size: var(--fs-h3);
+  margin-bottom: 16px;
+}
+
+.form-modal__success-text {
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+
+/* ⚠️ Ступени ширины окна (1405 / 1165 / 879) удалены — они оказались одной
+   и той же долей экрана. Проверка по фреймам Figma: 1405/1920 = 73.2%,
+   1165/1600 (1:24377) = 72.8%, 879/1200 (1:26440) = 73.25%. Ровно это
+   и задаёт `width: min(1405px, 73vw)` в .form-modal__window: до 1920 окно
+   тянется вместе с экраном, выше — замирает на макетных 1405.
+   Внутренние отступы (60px 30px) в макете одинаковы на всех трёх ширинах. */
+
+/* Телефоны 360–767 — по «Форма мобайл.png» и фрейму 1:14452: модалка занимает
+   весь экран, без скруглений и внешних отступов; поля и кнопка во всю ширину
+   при отступе 20 (на 360 это макетные 320). */
+@media (max-width: 767px) {
+  /* ⚠️ align-items: flex-start обязателен. У контейнера центрирование
+     (`align-items: center` из базовых правил), и когда форма выше экрана,
+     флексбокс уводит её верх в минус — доскроллить туда нельзя, эта часть
+     просто обрезается. На 360×691 окно вставало на top: -44, и крестик
+     (top 5, высота 40) уезжал за верхний край: пользователь его не видел.
+     На десктопе от этого спасает `margin: auto` у окна, но здесь margin: 0. */
+  .form-modal {
+    align-items: flex-start;
+    padding: 0;
+    /* ⚠️ Высота — по ВИДИМОЙ области (dvh), а не по inset: 0.
+       В iOS Safari `position: fixed` растягивается на «развёрнутый» экран
+       (large viewport), нижнюю и верхнюю часть которого закрывают панели
+       браузера: контейнер получался выше того, что реально видно, и его края
+       уходили под интерфейс. 100dvh пересчитывается при сворачивании панелей
+       и всегда равен видимому окну. Старым Safari (<15.4) свойство неизвестно —
+       у них отработает inset: 0, как раньше. */
+    height: 100dvh;
+    /* Прокрутка формы на телефоне — явно (жалоба клиента 22.07.2026).
+       overflow-y: auto стоит и в базовом правиле, но здесь это ключевое
+       поведение: окно формы выше экрана, и всё, что не поместилось (включая
+       крестик, если верх перекрыт панелью браузера), должно доставаться
+       прокруткой. -webkit-overflow-scrolling: touch — для старых iOS,
+       где вложенные ленты без него прокручивались рывками. */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Форма здесь во весь экран, затемнение под ней не видно. Отдаём контейнеру
+       её же градиент: если система всё-таки отработает «резинку» (iOS Safari
+       игнорирует overscroll-behavior у вложенных лент), в зазоре будет цвет
+       формы, а не тёмная полоса и не страница. */
+    background: var(--gradient-accent);
+  }
+
+  .form-modal__backdrop { display: none; }
+
+  .form-modal__window {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    /* Боковое поле 30: в «Форма мобайл.png» линии полей идут от x=30 до 329,
+       то есть контент 300, а не 320.
+       Сверху и снизу к макетным отступам добавлены системные зоны айфона
+       (чёлка/Dynamic Island и полоса-«домой»): без них заголовок лез под
+       статус-бар, а кнопка «отправить» пряталась под полосой жеста. */
+    padding:
+      calc(89px + env(safe-area-inset-top)) 30px
+      calc(40px + env(safe-area-inset-bottom));
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Крестик в макете — 14×14 с центром в (334.5, 24.5), то есть прижат к углу
+     плотнее нашей кнопки. Саму кнопку оставляем 40×40 (тач-зона), но сдвигаем
+     так, чтобы видимый крест попал в макетную точку.
+     ⚠️ История: 21.07.2026 по жалобе «не видно крестик» кнопку перевели на
+     position: fixed (чтобы не уезжала при прокрутке формы). На реальном
+     айфоне это не помогло, поэтому 22.07.2026 вернули absolute — предсказуемое
+     положение в правом верхнем углу окна, ровно как в макете. Доступность
+     теперь держит прокрутка самой формы (см. overflow-y выше): что не влезло
+     на экран — доступно свайпом.
+     Отступ сверху — с учётом системной зоны (чёлка), как и у окна. */
+  .form-modal__close {
+    position: absolute;
+    top: calc(5px + env(safe-area-inset-top));
+    right: 6px;
+    width: 40px;
+    height: 40px;
+    /* Полупрозрачный кружок: белый крест 2px попадал ровно на светлый блик
+       (радиальная подсветка окна в точке 88% 8%) и на солнце терялся.
+       Подложка даёт контраст и заодно обозначает тач-зону. */
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  /* Радио в макете 20×20 с отбивкой 10 и шагом строк 30 (у общих правил 22/12).
+     Строка однострочная, поэтому кружок центрируем и снимаем общий margin-top: 2
+     — иначе строка 22 и шаг 32 вместо 30. */
+  .form__radio {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .form__radio-mark {
+    width: 20px;
+    height: 20px;
+    margin-top: 0;
+  }
+
+  /* Чекбокс согласия крупнее радио — 25×25, отбивка 13 */
+  .form__consent { gap: 13px; }
+
+  .form__consent-mark {
+    width: 25px;
+    height: 25px;
+  }
+
+  .form__consent input:checked + .form__consent-mark::after {
+    left: 8px;
+    top: 4px;
+  }
+
+  /* Заголовок в макете — 32/0.9 в колонке 253 (замер по растру: x 54…307,
+     высота 198 на 7 строк). На всю ширину 300 он ложится в 6 строк и кегль
+     занижен до 28 — от макета отличается и раскладкой, и размером. */
+  .form-modal__title {
+    /* 260, а не макетные 253: в браузере Onest набирается чуть шире, и на 253
+       заголовок ломается в 8 строк вместо 7 (та же история, что в FAQ) */
+    width: 260px;
+    max-width: 100%;
+    margin-inline: auto;
+    margin-bottom: 51px;
+    font-size: 32px;
+    line-height: 0.9;
+  }
+
+  /* ⚠️ 16px, а не макетные 14 (решение клиента 22.07.2026, жалоба «в Safari
+     при нажатии на поле идёт фокус»). iOS Safari ПРИНУДИТЕЛЬНО зумит страницу,
+     когда фокус попадает в поле с кеглем меньше 16px, — тап по полю давал
+     скачок масштаба, форма уезжала, крестик пропадал из вида. Порог жёсткий:
+     15.9px уже зумит. Отключить это поведение иначе нельзя: `user-scalable=no`
+     в meta viewport Safari намеренно игнорирует ради доступности, а запретить
+     сам фокус — значит запретить ввод. Плейсхолдеру тот же кегль: зум
+     срабатывает по font-size поля, но без этого плейсхолдер был бы мельче
+     набираемого текста. */
+  .form__input,
+  .form__input::placeholder {
+    font-size: 16px;
+  }
+
+  .form {
+    gap: 30px;
+  }
+
+  .form__fields {
+    gap: 24px;
+  }
+
+  /* Своего отступа сверху у кнопки нет (решение клиента 22.07.2026): расстояние
+     до неё задаёт только gap формы — 30px вместо прежних 50 (gap 30 + margin 20). */
+  .form__submit {
+    width: 100%;
+    height: 48px;
+    padding: 0;
+  }
+}
