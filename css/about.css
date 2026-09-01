@@ -1,9 +1,8 @@
 /* about.css — блок 6: «Моя школа LS — о нас».
    Замеры: Figma `1:3599` (ряд колонок) и сверка с 1920.png (блок y 2747–3775).
    Две колонки по 930 с зазором 20 (930 + 20 + 929 = 1879 ≈ 1880):
-   • слева  — «Руководящий состав» и «Педагогический состав» (круглые фото + бейджи);
+   • слева  — «Руководящий состав» и «Полноценное обучение онлайн» (текст + плашки);
    • справа — плитка «Учимся онлайн» с вырезкой ученицы и «Государственная лицензия».
-   Поведение в блоке одно — слайдер обзорных роликов (js/about.js).
    Все цвета/радиусы/тени — только переменные из base.css. */
 
 /* Сверху 100: заголовку «Моя школа LS — о нас» нужен разгон ~120px от предыдущей
@@ -140,221 +139,99 @@
   height: auto;
 }
 
-/* ── Карточка с обзорными роликами о школе ────────────────────
-   Заменила карточку «Педагогический состав» (решение клиента 31.07.2026):
-   заголовок и подпись убраны, внутри — слайдер из 3 роликов по одному на экран.
-
-   Высота — прежний резиновый минимум карточки педсостава (603 на 1920 =
-   32.074cqw). Ролик 16:9 в колонке 930 даёт как раз ~489 + подпись, поэтому
-   соседняя карточка «Руководящий состав» и высоты колонок грида не едут.
-
-   padding: 0 — видео заливает карточку целиком, без белой рамки вокруг
-   тёмного кадра; скругление режет постер по углам карточки. */
+/* ── Карточка «Полноценное обучение онлайн» ───────────────────
+   Раньше здесь был слайдер из 3 обзорных роликов о школе (заменил карточку
+   «Педагогический состав», решение клиента 31.07.2026). Клиент решил убрать
+   видео (решение 01.09.2026) — вместо него заголовок, абзац и список из 5
+   плашек-преимуществ. Высота карточки больше не фиксируется — держится на
+   контенте, как у «Руководящего состава» рядом. */
 .school-video {
-  position: relative;
-  padding: 0;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  min-height: clamp(360px, 32.074cqw, 603px);
-}
-
-.school-video__viewport {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-/* Механика листания — как у отзывов: нативный scroll-snap (см. createPager
-   в main.js). Здесь всегда по одному ролику на страницу. */
-.school-video__track {
-  --per-page: 1;
   display: flex;
-  height: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
+  flex-direction: column;
+  gap: clamp(12px, 1.064cqw, 20px);
 }
 
-.school-video__track::-webkit-scrollbar { display: none; }
-
-.school-video__page {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  height: 100%;
+.school-video__chips {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.851cqw, 16px);
 }
 
-.school-video__item {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-align: left;
-}
-
-.school-video__poster {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.35s ease;
-}
-
-.school-video__item:hover .school-video__poster { transform: scale(1.03); }
-
-/* Кружок play по центру кадра */
-.school-video__play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.school-video__chip {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: clamp(64px, 6.9cqw, 90px);
-  height: clamp(64px, 6.9cqw, 90px);
-  border-radius: var(--radius-pill);
-  /* Плотнее и с белой обводкой (просьба клиента 31.07.2026): полупрозрачный
-     кружок на пёстром кадре класса читался слабо */
-  background: rgba(0, 0, 0, 0.55);
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  color: var(--color-white);
-  transition: background-color 0.25s ease;
+  gap: clamp(8px, 0.851cqw, 16px);
+  color: var(--color-blue);
+  font-size: var(--fs-text);
+  line-height: 1.3;
 }
 
-/* Та же оптическая поправка, что у отзывов: центр тяжести треугольника
-   лежит на трети ширины, поэтому геометрическая центровка кажется сдвинутой
-   влево. Процент от ширины иконки — чтобы поправка ехала вместе с кружком. */
-.school-video__play svg { transform: translateX(10%); }
-
-.school-video__item:hover .school-video__play { background: rgba(0, 0, 0, 0.8); }
-
-/* Подпись ролика по низу кадра. Градиентная подложка обязательна:
-   заголовка у карточки больше нет, и на светлых кадрах (класс у окна)
-   белый текст без затемнения не читается. */
-.school-video__caption {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: clamp(40px, 5cqw, 80px) clamp(16px, 1.596cqw, 30px)
-           clamp(16px, 1.596cqw, 30px);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
-  color: var(--color-white);
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  line-height: 1.2;
-  pointer-events: none;
-}
-
-/* Стрелки лежат поверх произвольного фотокадра, поэтому здесь плотная
-   тёмная подложка, а не рамка, как у отзывов на ровном розовом фоне. */
-.school-video__arrows {
-  position: absolute;
-  right: clamp(16px, 1.596cqw, 30px);
-  bottom: clamp(16px, 1.596cqw, 30px);
-  z-index: 1;
-  display: flex;
-  gap: clamp(6px, 0.532cqw, 10px);
-}
-
-.school-video__arrows[hidden] { display: none; }
-
-.school-video__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: clamp(40px, 2.66cqw, 50px);
-  height: clamp(40px, 2.66cqw, 50px);
-  border-radius: var(--radius-pill);
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  color: var(--color-white);
-  transition: background-color 0.25s ease;
-}
-
-.school-video__arrow:hover:not(:disabled) { background: rgba(0, 0, 0, 0.8); }
-
-.school-video__arrow:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
+.school-video__chip img { width: 18px; height: 18px; flex: none; }
 
 /* ── Плитка «Учимся онлайн» ───────────────────────────────────
-   Онлайн-версия: у школы нет филиалов, поэтому вместо карты с пинами здесь
-   карточка на фирменном градиенте — заголовок и чипы слева, вырезка ученицы
-   справа. Геометрия плитки прежняя (пропорция 929×677 по макету, тот же радиус
-   и тень), чтобы правая колонка блока «О нас» не поехала относительно левой.
-   container-type → единицы cqw внутри = % ширины плитки: и текст, и чипы,
-   и вырезка масштабируются вместе с ней. */
+   Решение клиента (01.09.2026): вместо короткого заголовка и вырезки
+   ученицы — блок про московскую медаль (доп. баллы к ЕГЭ при поступлении
+   в вуз), с фото медали в наградной коробочке, приколоченным к правому
+   нижнему углу тем же приёмом, что .manager__photo/.license__img — часть
+   фото уходит за край и срезается overflow: hidden. Текста стало больше
+   (заголовок + подзаголовок + абзац), высота плитки больше не фиксируется
+   аспектом — как у .manager/.school-video, её задаёт контент, а разницу
+   с левой колонкой дотягивает .license (flex: 1 1 auto). */
 .about-online {
   position: relative;
   container-type: inline-size;
-  aspect-ratio: 929 / 677;
-  border-radius: var(--radius-card);
   overflow: hidden;
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   background: var(--gradient-accent);
+  /* ⚠️ cqw здесь считался бы от ancestor .container (для СВОИХ properties
+     элемент не является себе ближайшим контейнером — им остаётся внешний
+     main .container), а не от ширины самой плитки, поэтому паддинг взят
+     тем же приёмом, что у .about-card (клемп от ширины секции). */
+  padding: clamp(16px, 1.596cqw, 30px);
 }
 
-/* Заголовок в левом верхнем углу. Кегль в cqw с полом: плитка на узком
-   десктопе ужимается до ~460px, и чистая доля увела бы текст ниже читаемого. */
+.about-online__text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.29cqw, 14px);
+  max-width: 62%;
+}
+
 .about-online__title {
-  position: absolute;
-  top: 6.5cqw;
-  left: 6.5cqw;
-  z-index: 1;
-  max-width: 52%;
   color: var(--color-white);
-  font-size: max(18px, 5cqw);
+  font-size: max(17px, 2.9cqw);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-/* Ученица стоит на низу плитки, справа.
-   ⚠️ Вырезка НЕ должна упираться в правый край: у неё кремовая обводка-стикер,
-   и обрезанная краем плитки она читается как дефект картинки, а не как приём.
-   Правое поле = 6.5cqw — ТО ЖЕ, что левый отступ заголовка и чипов, поэтому
-   синие поля по краям плитки одинаковые и композиция не заваливается вправо
-   (просьба клиента 13.08.2026: «чуть левее, чтобы слева и справа было
-   равномерно синего пространства»). Высота 96% — сверху остаётся воздух. */
-.about-online__girl {
-  position: absolute;
-  right: 6.5cqw;
-  bottom: 0;
-  height: 96%;
-  width: auto;
-  max-width: none;   /* глобальное img { max-width: 100% } сплющило бы вырезку */
+.about-online__subtitle {
+  color: var(--color-white);
+  opacity: 0.85;
+  font-size: max(15px, 2.15cqw);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-/* Чипы — белые пилюли с галкой. Размеры унаследованы от прежних меток карты
-   (padding 10/20, gap 10, иконка 24, текст 18, радиус 30 в долях ширины 929).
-   ⚠️ Пол 11px обязателен: на узком десктопе (плитка ~460 при экране 1100)
-   чистая доля давала кегль 9–10 — ниже порога читаемости. */
-.about-online__chip {
-  position: absolute;
-  left: 6.5cqw;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: max(6px, 1.08cqw);
-  padding: max(6px, 1.08cqw) max(10px, 2.15cqw);
-  border-radius: max(14px, 3.23cqw);
-  background: var(--color-white);
-  color: var(--color-blue);
-  font-size: max(11px, 1.94cqw);
-  line-height: 1.2;
-  white-space: nowrap;
-  box-shadow: 0 0.6cqw 2.4cqw rgba(33, 27, 201, 0.25);
+.about-online__desc {
+  color: var(--color-white);
+  opacity: 0.85;
+  font-size: max(14px, 1.72cqw);
+  line-height: 1.4;
 }
 
-.about-online__chip img { width: max(13px, 2.58cqw); height: max(13px, 2.58cqw); flex: none; }
-
-/* Столбик из трёх чипов под заголовком, шаг ~9.5% высоты плитки */
-.about-online__chip--live    { top: 45%; }
-.about-online__chip--record  { top: 61%; }
-.about-online__chip--curator { top: 77%; }
+/* Медаль в коробочке стоит по диагонали уже в самом фото (прозрачный фон,
+   поля вокруг коробочки неравномерные) — сдвигаем её за оба края плитки,
+   overflow: hidden срезает лишнее, а сама коробочка «торчит» из угла. */
+.about-online__medal {
+  position: absolute;
+  right: -8cqw;
+  bottom: -8cqw;
+  width: 43cqw;
+  height: auto;
+  max-width: none;
+}
 
 /* ── Карточка «Государственная лицензия» ──────────────────────
    Padding 50 (у остальных карточек 60). Скан 348×450 стоит абсолютом от верха
@@ -467,17 +344,6 @@
 
   .about-card { padding: 20px; }
 
-  /* Карточке роликов на телефоне задаём пропорцию вместо унаследованной
-     от педсостава высоты 360: при ширине 355 она давала почти квадрат, и
-     кадр 16:9 обрезался по бокам почти вдвое. 4:3 — компромисс: обрезка
-     умеренная, но под кружок play, подпись и стрелки места хватает
-     (16:9 дало бы всего ~200px высоты, и они бы налезли друг на друга).
-     Выравнивать высоты колонок здесь не нужно — грид уже в одну колонку. */
-  .school-video {
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
   /* Подсветка-маркер под заголовками карточек (1:9718, 1:9724, 1:9699).
      ⚠️ Только на телефоне: на десктопе её нет (проверено кропом 1920.png).
      Заливка картинкой с явной высотой, а не обычным фоном: у фона высота равна
@@ -547,36 +413,14 @@
   }
 
   /* ── Плитка «Учимся онлайн» (на месте карты, нода 1:9703) ──
-     Пропорция плитки та же, что была у карты: 340×247. Вырезка ученицы
-     в такой низкой плитке выходит узкой, поэтому текстовая колонка сужена
-     до 60%, а сама вырезка чуть выше плитки — стоит на дне и обрезается
-     верхом, как остальной декор блока. */
-  .about-online { aspect-ratio: 340 / 247; }
+     На узкой карточке (340) текст в одну колонку почти во всю ширину не
+     помещается рядом с медалью — сужаем текстовую колонку сильнее, чем
+     на десктопе, и уменьшаем медаль, чтобы она не наезжала на абзац. */
+  .about-online { padding: 20px; }
 
-  .about-online__title {
-    top: 5.88cqw;                     /* 20/340 */
-    left: 5.88cqw;
-    max-width: 60%;
-    font-size: 18px;
-  }
+  .about-online__text { max-width: 58%; }
 
-  /* Правое поле, как и на десктопе, равно левому отступу заголовка и чипов
-     (5.88cqw = 20px на 340) — синие поля по краям одинаковые. */
-  .about-online__girl { height: 88%; right: 5.88cqw; }
-
-  .about-online__chip {
-    left: 5.88cqw;
-    gap: 4px;
-    padding: 5px 10px 5px 6px;
-    border-radius: 20px;
-    font-size: 11px;
-  }
-
-  .about-online__chip img { width: 14px; height: 14px; }
-
-  .about-online__chip--live    { top: 42%; }
-  .about-online__chip--record  { top: 61%; }
-  .about-online__chip--curator { top: 80%; }
+  .about-online__medal { right: -10cqw; bottom: -10cqw; width: 50cqw; }
 
   /* ── Лицензия (1:9697) — карточка 340, padding 20, скан абсолютом ──
      Контейнер для cqw вешаем на колонку, а не на саму карточку: у карточки

@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="css/attestat.css">
   <link rel="stylesheet" href="css/classes.css">
   <link rel="stylesheet" href="css/ege-banner.css">
-  <link rel="stylesheet" href="css/about.css?v=5">
+  <link rel="stylesheet" href="css/about.css?v=7">
   <link rel="stylesheet" href="css/universities.css">
   <link rel="stylesheet" href="css/pricing.css">
   <link rel="stylesheet" href="css/programs.css">
@@ -62,7 +62,6 @@
   <script src="js/header.js?v=2" defer></script>
   <script src="js/mobile-cta.js" defer></script>
   <script src="js/attestat.js?v=3" defer></script>
-  <script src="js/about.js?v=4" defer></script>
   <script src="js/programs.js?v=2" defer></script>
   <script src="js/staff.js?v=3" defer></script>
   <script src="js/reviews.js?v=4" defer></script>
@@ -252,9 +251,9 @@
         <div class="attestat__tabs">
           <button class="pill pill--active" aria-current="true">Аттестат гос.&nbsp;образца</button>
           <button class="pill">Группа до&nbsp;12&nbsp;человек</button>
-          <button class="pill">Не перегружаем</button>
-          <button class="pill">Не нужны репетиторы</button>
-          <button class="pill">Школа без стресса</button>
+          <button class="pill">Прогресс под контролем</button>
+          <button class="pill">Удобный формат</button>
+          <button class="pill">Уроки в записи</button>
         </div>
 
         <div class="attestat__row">
@@ -382,7 +381,7 @@
 
     <section class="about" id="about">
       <div class="container">
-        <h2 class="about__title">Моя школа&nbsp;LS <span class="about__title-muted">— о&nbsp;нас</span></h2>
+        <h2 class="about__title">Моя школа&nbsp;LS <span class="about__title-muted">— полноценная онлайн-школа</span></h2>
 
         <div class="about__grid">
           <div class="about__col">
@@ -396,29 +395,27 @@
             </article>
 
             <article class="about-card school-video">
-              <div class="school-video__viewport">
-                <div class="school-video__track"></div>
-              </div>
-
-              <div class="school-video__arrows">
-                <button class="school-video__arrow" type="button" data-pager="prev" aria-label="Предыдущий ролик">
-                  <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <button class="school-video__arrow" type="button" data-pager="next" aria-label="Следующий ролик">
-                  <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-              </div>
+              <h3 class="about-card__title">Полноценное обучение онлайн</h3>
+              <p class="about-card__desc">Ребёнок не&nbsp;остаётся один на&nbsp;один с&nbsp;записями и&nbsp;учебными материалами. Он&nbsp;занимается с&nbsp;преподавателями в&nbsp;прямом эфире, общается с&nbsp;одноклассниками и&nbsp;получает поддержку куратора.</p>
+              <ul class="school-video__chips">
+                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Живые уроки с&nbsp;преподавателем</li>
+                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">До&nbsp;10–15 учеников в&nbsp;классе</li>
+                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Запись каждого занятия</li>
+                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Куратор всегда на&nbsp;связи</li>
+                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Электронный журнал и&nbsp;обратная связь</li>
+              </ul>
             </article>
           </div>
 
 
           <div class="about__col about__col--right">
             <div class="about-online">
-              <h3 class="about-online__title">Учимся онлайн<br>из&nbsp;любой точки</h3>
-              <img class="about-online__girl" src="assets/img/about/girl-online.webp" alt="Ученица онлайн-школы «Моя школа LS»" width="1100" height="2800" loading="lazy" decoding="async">
-              <span class="about-online__chip about-online__chip--live"><img src="assets/img/green checkmark.svg" alt="" width="24" height="24" loading="lazy" decoding="async">уроки в&nbsp;прямом эфире</span>
-              <span class="about-online__chip about-online__chip--record"><img src="assets/img/green checkmark.svg" alt="" width="24" height="24" loading="lazy" decoding="async">запись каждого урока</span>
-              <span class="about-online__chip about-online__chip--curator"><img src="assets/img/green checkmark.svg" alt="" width="24" height="24" loading="lazy" decoding="async">куратор на&nbsp;связи</span>
+              <div class="about-online__text">
+                <h3 class="about-online__title">Учитесь онлайн из&nbsp;любого региона с&nbsp;возможностью получить московскую медаль</h3>
+                <p class="about-online__subtitle">Дополнительные возможности при&nbsp;поступлении в&nbsp;вуз</p>
+                <p class="about-online__desc">Выпускник получает аттестат государственного образца московской школы-партнёра. При&nbsp;выполнении установленных требований он&nbsp;может претендовать на&nbsp;московскую медаль «За особые успехи в&nbsp;обучении». Медаль может дать до&nbsp;10 дополнительных баллов при&nbsp;поступлении — точное количество определяет выбранный вуз.</p>
+              </div>
+              <img class="about-online__medal" src="assets/img/about/medal.webp" alt="Медаль «За особые успехи в учении»" width="700" height="700" loading="lazy" decoding="async">
             </div>
 
             <article class="about-card license">
@@ -500,7 +497,7 @@
         <div class="no-homework__card">
           <img class="no-homework__wave" src="assets/img/no-homework/wave.webp" alt="" width="1224" height="616" aria-hidden="true" loading="lazy" decoding="async">
 
-          <p class="no-homework__text">В&nbsp;«Моей школе&nbsp;LS» <span class="no-homework__accent">нет домашних заданий на&nbsp;вечер</span>: весь материал отрабатывается на&nbsp;уроках и&nbsp;самоподготовке с&nbsp;куратором. Творческие работы ученики тоже выполняют самостоятельно&nbsp;— нам важен результат ребёнка, а&nbsp;не&nbsp;помощь родителей.</p>
+          <p class="no-homework__text">Весь материал отрабатывается на&nbsp;уроках и&nbsp;самоподготовке с&nbsp;куратором. Творческие работы ученики тоже выполняют самостоятельно&nbsp;— нам важен результат ребёнка, а&nbsp;не&nbsp;помощь родителей.</p>
 
           <picture class="no-homework__boy">
             <source media="(max-width: 1024px)" srcset="assets/img/no-homework/boy-mobile.webp" width="424" height="272">
