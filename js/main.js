@@ -16,15 +16,36 @@
   window.schoolChoice = {
     school_stage: '',
     education_format: '',
+    price: '',
     cta_location: '',
   };
 
+  // Блоки не знают друг о друге: «Выберите класс» и «Выберите формат» просто
+  // пишут выбор, а «Стоимость» слушает событие и подстраивается. Так связь
+  // остаётся односторонней и любой из блоков можно снять со страницы.
+  const notify = (key) => {
+    document.dispatchEvent(new CustomEvent('school-choice', {
+      detail: { key, value: window.schoolChoice[key], choice: window.schoolChoice },
+    }));
+  };
+
   window.setSchoolStage = (stage) => {
-    window.schoolChoice.school_stage = stage || '';
+    const value = stage || '';
+    if (window.schoolChoice.school_stage === value) return;
+    window.schoolChoice.school_stage = value;
+    notify('school_stage');
   };
 
   window.setEducationFormat = (format) => {
-    window.schoolChoice.education_format = format || '';
+    const value = format || '';
+    if (window.schoolChoice.education_format === value) return;
+    window.schoolChoice.education_format = value;
+    notify('education_format');
+  };
+
+  // Цену пишет карточка тарифа перед открытием формы (ТЗ §13)
+  window.setPrice = (price) => {
+    window.schoolChoice.price = price || '';
   };
 
   // Блокировка прокрутки страницы под модалками (форма, лайтбокс).

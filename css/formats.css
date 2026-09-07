@@ -1,0 +1,242 @@
+/* formats.css — блок «Выберите формат обучения» (ТЗ 06.09.2026, §12).
+   Макета у блока нет: собран из паттернов проекта (белая карточка, кнопки base.css).
+
+   Одна разметка держит три раскладки, перестраивает её только CSS:
+   • десктоп — сравнительная таблица «критерий | с прикреплением | без»;
+   • планшет — те же ячейки в двух колонках-карточках, подпись критерия
+     подставляется из data-crit (::before), сам столбец критериев скрыт;
+   • телефон — видна колонка одного формата, вторая скрыта; кнопка
+     «Сравнить оба варианта» разворачивает таблицу на весь экран.
+
+   Строки — .formats__row { display: contents }: ячейки попадают прямо в сетку
+   .formats__rows, поэтому одна и та же разметка раскладывается и по строкам
+   (десктоп), и по колонкам (планшет) без перестановки узлов в JS. */
+
+.formats { padding-block: 20px; }
+
+.formats__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.128cqw, 40px);
+}
+
+.formats__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+}
+
+.formats__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.formats__subtitle {
+  max-width: 62%;
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  color: var(--color-gray-1);
+}
+
+/* Сегментированный переключатель — только телефон */
+.formats__switch { display: none; }
+
+/* --- Таблица --- */
+
+.formats__table {
+  /* Ширина столбца критериев и двух колонок форматов. Держим переменной:
+     шапка и строки — две разные сетки, и они обязаны совпадать. */
+  --formats-cols: minmax(140px, 0.8fr) 1fr 1fr;
+  position: relative;
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.formats__cols,
+.formats__rows {
+  display: grid;
+  grid-template-columns: var(--formats-cols);
+  gap: 0 var(--gap-cards);
+}
+
+.formats__cols { margin-bottom: clamp(10px, 0.851cqw, 16px); }
+
+.formats__col-title {
+  font-size: var(--fs-h4);
+  line-height: 1.1;
+}
+
+/* Формат с прикреплением — полный вариант услуги, выделяем его заголовок */
+.formats__col-title[data-col='with'] { color: var(--color-blue); }
+
+/* Ячейки лежат в общей сетке .formats__rows, поэтому сама строка
+   не образует бокса — линии-разделители рисуют ячейки. */
+.formats__row { display: contents; }
+
+.formats__crit,
+.formats__cell {
+  padding-block: clamp(12px, 1.064cqw, 20px);
+  border-top: 1px solid var(--color-gray-3);
+  font-size: var(--fs-text);
+  line-height: 1.5;
+}
+
+.formats__crit {
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.formats__cell { color: var(--color-gray-1); }
+
+/* Подпись критерия внутри ячейки нужна только там, где столбец критериев скрыт */
+.formats__cell::before { display: none; }
+
+/* Кнопка «Сравнить оба варианта» и крестик полного экрана — только телефон */
+.formats__compare,
+.formats__compare-close { display: none; }
+
+/* --- CTA и подпись --- */
+
+.formats__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-cards);
+}
+
+.formats__note {
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+/* --- Планшет: две колонки-карточки --- */
+
+@media (max-width: 1024px) {
+  .formats__subtitle { max-width: none; }
+
+  .formats__table {
+    --formats-cols: 1fr 1fr;
+    padding: 20px;
+  }
+
+  /* Столбец критериев уходит: подпись переезжает внутрь каждой ячейки,
+     иначе на узкой ширине он съедал бы треть таблицы. */
+  .formats__crit-head,
+  .formats__crit { display: none; }
+
+  .formats__cols,
+  .formats__rows { gap: 10px; }
+
+  .formats__cell {
+    padding: 16px;
+    border-top: 0;
+    border-radius: var(--radius-btn);
+    background: var(--color-surface);
+  }
+
+  .formats__cell::before {
+    content: attr(data-crit);
+    display: block;
+    margin-bottom: 6px;
+    font-size: var(--fs-small);
+    line-height: 1.3;
+    color: var(--color-gray-2);
+  }
+}
+
+/* --- Телефон: один формат + полноэкранное сравнение --- */
+
+@media (max-width: 767px) {
+  .formats__switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+    background: var(--color-surface);
+    border-radius: var(--radius-pill);
+  }
+
+  .formats__switch-btn {
+    /* ТЗ §21: зона нажатия не меньше 44px */
+    min-height: 44px;
+    padding: 10px 12px;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-pill);
+    color: var(--color-gray-1);
+    font: inherit;
+    font-size: var(--fs-btn);
+    cursor: pointer;
+  }
+
+  .formats__switch-btn--active {
+    background: var(--color-blue);
+    color: var(--color-white);
+  }
+
+  .formats__table { --formats-cols: 1fr; }
+
+  /* Видна колонка выбранного формата. Исключение — полный экран сравнения:
+     там показываются обе, поэтому скрытие снимается через :not(). */
+  .formats[data-format='with']:not(.formats--compare) [data-col='without'],
+  .formats[data-format='without']:not(.formats--compare) [data-col='with'] {
+    display: none;
+  }
+
+  .formats__compare {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 10px 20px;
+    background: none;
+    border: 1px solid var(--color-blue);
+    border-radius: var(--radius-pill);
+    color: var(--color-blue);
+    font: inherit;
+    font-size: var(--fs-btn);
+    cursor: pointer;
+  }
+
+  .formats__ctas { flex-direction: column; }
+
+  .formats__cta { justify-content: center; }
+
+  /* Полноэкранное сравнение: таблица вынимается из потока и накрывает экран.
+     z-index 90 — выше липкой шапки (50), ниже мобильного меню (100) и формы (110). */
+  .formats--compare .formats__table {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    --formats-cols: 1fr 1fr;
+    overflow-y: auto;
+    padding: 56px 10px 20px;
+    border-radius: 0;
+    background: var(--color-white);
+  }
+
+  .formats--compare .formats__cols,
+  .formats--compare .formats__rows { gap: 10px; }
+
+  .formats--compare .formats__col-title { font-size: var(--fs-btn); }
+
+  .formats--compare .formats__compare-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--color-surface);
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-black);
+    cursor: pointer;
+  }
+}

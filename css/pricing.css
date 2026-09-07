@@ -1,21 +1,29 @@
-/* pricing.css — секция тарифов: карточки с ценой и преимуществами */
-.pricing {
-  /* Горизонтальные отступы убраны: их даёт .container (20px), иначе двойной
-     отступ сузил бы полезную ширину и карточки не встали бы по 455px */
-  padding: 40px 0;
-}
+/* pricing.css — блок «Стоимость обучения» (ТЗ 06.09.2026, §13).
+   Файл переписан 07.09.2026: прежние стили описывали карточки-заглушки
+   «Тариф 1/2/3», которых в разметке больше нет. Старая версия —
+   `git show 416a29f:css/pricing.css`.
+
+   Раскладка по ТЗ:
+   • десктоп — переключатель ступени сверху, ниже общая часть и две карточки;
+   • планшет — две карточки в ряд, уже 800px — одна под другой;
+   • телефон — ступени сегментированным контролом, карточки accordion,
+     цена и CTA видны до раскрытия состава.
+   Горизонтальной прокрутки у тарифов нет ни на одной ширине. */
+
+/* Отступ под липкую шапку при прокрутке сюда из блока форматов даёт
+   глобальный scroll-padding-top у html (css/header.css) — своего не заводим. */
+.pricing { padding-block: 20px; }
 
 .pricing__inner {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: clamp(24px, 2.128cqw, 40px);
 }
 
 .pricing__head {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
 }
 
 .pricing__title {
@@ -23,159 +31,234 @@
   line-height: 1.05;
 }
 
-.pricing__title-muted { color: var(--color-gray-2); }
-
-.pricing__grid {
-  display: grid;
-  /* Колонка максимум 455px (точный размер на 1920), ниже 1920 плавно ужимается.
-     Зазор 20px: 4×455 + 3×20 = 1880 = полезная ширина контейнера на 1920 */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--gap-cards);
-  justify-content: center;
+.pricing__subtitle {
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  color: var(--color-gray-1);
 }
 
-.pricing__card {
+/* --- Переключатель ступеней --- */
+
+.pricing__stages {
   display: flex;
-  flex-direction: column;
-  /* Резиновый минимум (648 на 1920): при фиксированной высоте карточки
-     на промежуточных ширинах либо распирались списком, либо пустовали */
-  min-height: clamp(420px, 34.468cqw, 648px);
+  flex-wrap: wrap;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-surface);
+  border-radius: var(--radius-pill);
+}
+
+.pricing__stage {
+  /* ТЗ §21: зона нажатия не меньше 44px */
+  min-height: 44px;
+  padding: 10px clamp(16px, 1.596cqw, 30px);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--color-gray-1);
+  font: inherit;
+  font-size: var(--fs-btn);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pricing__stage--active {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* --- Общее для всех тарифов --- */
+
+.pricing__common {
+  padding: var(--card-pad);
   background: var(--color-white);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-  /* Паддинги по макету: 32 сверху/по бокам, 30 снизу — чтобы контент уложился в 648px */
-  padding: clamp(20px, 1.702cqw, 32px) clamp(20px, 1.702cqw, 32px) clamp(20px, 1.596cqw, 30px);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.pricing__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(60, 130, 236, 0.14);
+.pricing__common-title {
+  margin-bottom: clamp(12px, 1.064cqw, 20px);
+  font-size: var(--fs-h4);
+  line-height: 1.1;
 }
 
-.pricing__top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.pricing__pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
-  border-radius: var(--radius-pill);
-  font-size: var(--fs-small);
-  color: var(--color-blue-chip);
-  background: var(--color-light-blue);
-}
-
-.pricing__pill--ghost {
-  color: var(--color-gray-1);
-  background: var(--color-gray-3);
-}
-
-.pricing__pill-check {
-  width: 22px;
-  height: 22px;
-  flex: none;
-}
-
-.pricing__name {
-  margin-bottom: 28px;
-  font-size: var(--fs-h3);
-}
-
-.pricing__desc {
-  color: var(--color-gray-2);
-  margin-bottom: 30px;
-}
-
-.pricing__features {
+.pricing__common-list {
   display: grid;
-  gap: 14px;
-  /* margin-bottom не нужен: свободное пространство до цены даёт margin-top:auto у прайс-строки */
-  margin-bottom: 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px var(--gap-cards);
+  list-style: none;
 }
 
+.pricing__common-item,
 .pricing__feature {
-  display: flex;
-  align-items: start;
-  gap: 14px;
-  color: var(--color-gray-2);
+  position: relative;
+  padding-left: 20px;
+  font-size: var(--fs-text);
   line-height: 1.5;
+  color: var(--color-gray-1);
 }
 
-.pricing__feature svg {
-  flex: none;
-  margin-top: 4px;
-  color: var(--color-pink);
+/* Маркер рисуем сами: у list-style нет управления цветом и отступом */
+.pricing__common-item::before,
+.pricing__feature::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-blue);
 }
 
-.pricing__price-row {
-  /* margin-top: auto — прижимает цену и кнопку к низу карточки высотой 648px */
-  margin-top: auto;
+/* --- Карточки тарифов --- */
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-cards);
+  list-style: none;
+}
+
+.pricing__plan {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: clamp(16px, 1.276cqw, 24px);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  /* Прозрачная рамка держит место: без неё карточка «подпрыгивает» при выборе */
+  border: 2px solid transparent;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Формат, выбранный в блоке форматов или здесь же (data-format пишет JS) */
+.pricing[data-format='with'] .pricing__plan[data-format='with'],
+.pricing[data-format='without'] .pricing__plan[data-format='without'] {
+  border-color: var(--color-blue);
+}
+
+.pricing__plan-head {
+  display: flex;
   align-items: center;
-  gap: 16px;
-  /* 12px по вертикали: прайс-бокс ~60px по высоте, как в макете */
-  padding: 12px 20px;
-  background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
-  border-radius: 4px;
-  margin-bottom: 24px;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pricing__plan-headtext {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pricing__plan-title {
+  font-size: var(--fs-h4);
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .pricing__price {
-  /* Замер по 1920.png: высота цифр 34px → кегль ≈48 = --fs-h3.
-     Токен сам уменьшается на 1600/1200, отдельное правило не нужно. */
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.pricing__price-value {
   font-size: var(--fs-h3);
-  font-weight: 700;
-  line-height: 1;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--color-blue);
+}
+
+.pricing__price-period {
+  font-size: var(--fs-text);
+  color: var(--color-gray-2);
+}
+
+/* Стрелка accordion нужна только на телефоне */
+.pricing__chevron {
+  display: none;
+  flex: 0 0 auto;
+  color: var(--color-blue);
+  transition: transform 0.2s ease;
+}
+
+.pricing__plan-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing__plan-intro {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  font-weight: 500;
   color: var(--color-black);
 }
 
-.pricing__price-unit {
-  font-size: var(--fs-text);
-  color: var(--color-gray-1);
+.pricing__features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
 }
 
-.pricing__btn {
-  width: 100%;
+/* Прижимаем кнопку к низу: у соседних карточек состав разной длины,
+   а CTA должны стоять на одной линии. */
+.pricing__cta {
+  margin-top: auto;
   justify-content: center;
 }
 
-@media (max-width: 1280px) {
-  .pricing__grid {
-    grid-template-columns: repeat(2, minmax(0, 455px));
-  }
+.pricing__payment {
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--color-black);
 }
+
+/* --- Планшет --- */
+
+@media (max-width: 1024px) {
+  .pricing__common { padding: 20px; }
+  .pricing__plan { padding: 20px; }
+}
+
+/* Ступень канона проекта здесь не подходит: §13 задаёт перелом ровно на 800px
+   («при ширине менее 800 px — одна под другой»). */
+@media (max-width: 800px) {
+  .pricing__grid { grid-template-columns: 1fr; }
+  .pricing__common-list { grid-template-columns: 1fr; }
+}
+
+/* --- Телефон: accordion, цена и CTA видны всегда --- */
 
 @media (max-width: 767px) {
-  .pricing {
-    padding: 32px 0;
+  .pricing__stages {
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .pricing__head {
-    flex-direction: column;
+  .pricing__stage {
+    padding: 10px 6px;
+    font-size: var(--fs-small);
   }
 
-  .pricing__title {
-    font-size: var(--fs-h3);
-  }
+  .pricing__plan-head { min-height: 44px; }
 
-  .pricing__grid {
-    grid-template-columns: minmax(0, 455px);
-  }
+  .pricing__chevron { display: block; }
 
-  .pricing__card {
-    /* На мобильном высота по содержимому — фиксированные 648px тут не нужны */
-    min-height: 0;
-    padding: 28px 22px;
-  }
+  .pricing__plan-head[aria-expanded='true'] .pricing__chevron { transform: rotate(180deg); }
+
+  .pricing__plan-head[aria-expanded='false'] + .pricing__plan-body { display: none; }
 }
-
-/* ⚠️ Ступень 480 удалена: отступы пиллов и строки цены и так на своих
-   резиновых минимумах, а переопределять здесь общий .btn нельзя —
-   на телефоне его габарит задаёт layout.css по мобильному макету. */
