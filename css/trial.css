@@ -1,4 +1,8 @@
-/* invite.css — блок 13 «Приходите познакомиться».
+/* trial.css — блок 12 «Два пробных дня» (ТЗ 06.09.2026, §16).
+   07.09.2026: файл был css/invite.css, блок назывался «Приходите познакомиться»
+   (класс .invite). Переименован по ТЗ; вёрстка баннера и замеры по Figma
+   не менялись — §16 просит ровно эту раскладку (текст слева, фото справа;
+   на телефоне текст → CTA → фото). Изображения остались прежними.
 
    Эталон — Figma 1:5362 (в 1920.png баннер лежит на x=20, y=7357):
    1880×320, padding 60, radius 30, «Фоновый синий», контент по вертикали по центру.
@@ -18,18 +22,18 @@
      1920.png: посчитанный левый край вихря совпадает с макетом (расхождение — только
      ширина мягкой кромки). */
 
-.invite {
+.trial {
   padding-block: 20px;
 }
 
 /* container-type вешаем на .container — у него нет внутренних отступов, поэтому его
    content-box равен ширине баннера и 1cqw = 1% ширины баннера на всех брейкпоинтах.
    На саму карточку с padding 60 вешать нельзя — единица уехала бы на 6%. */
-.invite .container {
+.trial .container {
   container-type: inline-size;
 }
 
-.invite__banner {
+.trial__banner {
   position: relative;
   display: flex;
   align-items: center;
@@ -44,7 +48,7 @@
 
 /* ——— декор ——— */
 
-.invite__decor {
+.trial__decor {
   position: absolute;
   pointer-events: none;
   user-select: none;
@@ -52,7 +56,7 @@
 
 /* Сетка прижата к правому краю баннера (643 + 1237 = 1880) и тянется на всю высоту:
    если текст переносится и баннер растёт, сетка не должна обрываться. */
-.invite__decor--grid {
+.trial__decor--grid {
   top: 0;
   right: 0;
   width: 65.7979cqw;  /* 1237/1880 */
@@ -61,7 +65,7 @@
 }
 
 /* Вихрь лежит поверх сетки (порядок слоёв как в Figma) и выходит за верх баннера */
-.invite__decor--wave {
+.trial__decor--wave {
   left: 46.1545cqw;   /* 867.7/1880 */
   top: -7.1753cqw;    /* −134.9/1880 */
   width: 31.1569cqw;  /* 585.75/1880 */
@@ -70,7 +74,7 @@
 
 /* ——— контент ——— */
 
-.invite__content {
+.trial__content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -79,7 +83,7 @@
   gap: clamp(20px, 2.128cqw, 40px);
 }
 
-.invite__title {
+.trial__title {
   max-width: 63.8298cqw;  /* 1200/1880 — ширина текстовой ноды 1:5924 */
   font-size: var(--fs-h3);
   line-height: 0.9;
@@ -89,7 +93,30 @@
   color: var(--color-white);
 }
 
-.invite__muted {
+.trial__muted {
+  color: var(--color-light-blue);
+}
+
+/* Заголовок и два абзаца §16 идут одной группой: между собой у них шаг меньше,
+   чем расстояние от группы до кнопки (gap самого .trial__content). */
+.trial__text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  max-width: 63.8298cqw;  /* та же ширина текстовой ноды, что у заголовка */
+}
+
+.trial__subtitle {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+/* Строка про консультацию — второстепенная, поэтому светло-голубым,
+   как .trial__muted в заголовке */
+.trial__extra {
+  font-size: var(--fs-text);
+  line-height: 1.5;
   color: var(--color-light-blue);
 }
 
@@ -100,7 +127,7 @@
    друг на друга и в зоне переноса дают двойную тёмную заливку. При 0.9em плашки
    встают встык, как в макете. backdrop-filter из Figma не переносим: на
    многострочном инлайне он съедает соседний текст. */
-.invite__hl {
+.trial__hl {
   padding-inline: 3px;
   margin-inline-start: -3px;
   background-image: linear-gradient(
@@ -116,13 +143,13 @@
 
 /* Кнопка 1:5925 — общий .btn плюс два уточнения из макета: gap 10 (а не 12)
    и рамка иконки 30×30 (а не 20×20). Вместе они дают ровно 340×74. */
-.invite__btn {
+.trial__btn {
   gap: 10px;
 }
 
 /* Рамка иконки 30×30 на 1920 — резиновая, чтобы на узком десктопе стрелка
    не оставалась непропорционально крупной (на телефоне layout.css даёт 20) */
-.invite__btn .btn__arrow {
+.trial__btn .btn__arrow {
   width: clamp(20px, 1.596cqw, 30px);
   height: clamp(20px, 1.596cqw, 30px);
 }
@@ -134,7 +161,7 @@
    прежний был 602×308 = 1.95). Он выше, поэтому ширину слота ужали с 32 до 20cqw —
    иначе при height:auto высота вырастала до ~480 и overflow баннера срезал головы.
    На 20cqw высота ≈ 300 (16cqw) и вписывается в баннер 320 с зазором сверху. */
-.invite__media {
+.trial__media {
   position: absolute;
   z-index: 1;
   /* Сдвинуты влево от правого края, чтобы заходить на синюю волну-декор
@@ -158,11 +185,11 @@
    за левый край. Все координаты декора — в cqw, поэтому раскладка тянется
    до 767 без пересчёта (1cqw = 1% ширины экрана: у .container снят padding). */
 @media (max-width: 767px) {
-  .invite { padding-block: 0; }
+  .trial { padding-block: 0; }
 
-  .invite .container { padding-inline: 0; }
+  .trial .container { padding-inline: 0; }
 
-  .invite__banner {
+  .trial__banner {
     display: block;
     min-height: 0;
     padding: var(--section-pad-y) var(--section-pad-x) 0;
@@ -182,7 +209,7 @@
        половину экрана, а из-за object-fit: fill ещё и сминалась по горизонтали.
      CSS-градиенты покрывают карточку целиком при любой высоте, ячейка остаётся
      квадратной 52.4 (как на десктопе), и слой лежит под фото детей — «на фоне». */
-  .invite__decor--grid { display: none; }
+  .trial__decor--grid { display: none; }
 
   /* ⚠️ Сетка задаётся слоями background-image самого баннера, а НЕ отдельным
      слоем через ::before (жалоба клиента 31.07.2026 «сетка опять на детях,
@@ -194,7 +221,7 @@
      containment), отрицательный слой ушёл бы ПОД собственный фон баннера
      и сетка пропала бы под градиентом. Фоновые слои гарантированно лежат под
      любым контентом, и порядок больше не зависит от position у соседей. */
-  .invite__banner {
+  .trial__banner {
     background-image:
       repeating-linear-gradient(to right,
         color-mix(in srgb, var(--color-white) 15%, transparent) 0 1px, transparent 1px 52.4px),
@@ -205,19 +232,21 @@
 
   /* Вихрь в мобильном фрейме остаётся на десктопных координатах, то есть
      целиком за правым краем экрана — просто убираем его */
-  .invite__decor--wave { display: none; }
+  .trial__decor--wave { display: none; }
 
   /* Ширина текстовой ноды 1:13185 — 300 при контенте 320, по ней ложатся переносы.
      Задана долей, а не в px: иначе на 767 заголовок остался бы узкой колонкой слева.
      Кегль 32 — единый для заголовков на телефоне (решение клиента 20.07.2026);
      в мобильном фрейме 1:12621 у баннера тоже 32, а --fs-h3 давал 28. */
-  .invite__title {
+  .trial__title {
     max-width: 93.75%;
     font-size: var(--fs-h2);
   }
 
+  .trial__text { max-width: 93.75%; }
+
   /* Радиус кнопок на телефоне 10, а не 20 (см. Tz/mobile-360.md, п. 1) */
-  .invite__btn {
+  .trial__btn {
     align-self: stretch;
     width: 100%;
     border-radius: 10px;
@@ -243,13 +272,13 @@
      высоту по чужой пропорции — блок дёргался бы при догрузке.
      ⚠️ margin-top положительный (был −15px): по просьбе клиента голова больше
      не заходит на кнопку — между CTA и макушкой мальчика 30px. */
-  .invite__picture { display: contents; }
+  .trial__picture { display: contents; }
 
   /* ⚠️ position: static обязателен — базовое правило блока держит вырезку
      абсолютом в правом нижнем углу баннера (right: 8cqw; bottom: 0). Без сброса
      фото выпадает из потока: баннер не считает его высоту (замер на 535: 235
      вместо 610), а само оно висит в правом углу вместо центра. */
-  .invite__media {
+  .trial__media {
     position: static;
     display: block;
     width: min(83.333cqw, 300px);

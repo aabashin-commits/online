@@ -45,18 +45,18 @@
   <link rel="stylesheet" href="css/who-fits.css">
   <link rel="stylesheet" href="css/school-day.css">
   <link rel="stylesheet" href="css/classes.css?v=2">
-  <link rel="stylesheet" href="css/ege-banner.css">
   <link rel="stylesheet" href="css/about.css?v=8">
-  <link rel="stylesheet" href="css/universities.css">
   <link rel="stylesheet" href="css/formats.css">
   <link rel="stylesheet" href="css/pricing.css?v=2">
-  <link rel="stylesheet" href="css/invite.css?v=5">
-  <link rel="stylesheet" href="css/reviews.css?v=4">
+  <link rel="stylesheet" href="css/additional.css">
+  <link rel="stylesheet" href="css/reviews.css?v=5">
+  <link rel="stylesheet" href="css/trial.css">
   <link rel="stylesheet" href="css/faq.css">
-  <link rel="stylesheet" href="css/electives.css?v=3">
   <link rel="stylesheet" href="css/footer.css?v=10">
   <link rel="stylesheet" href="css/form.css?v=4">
   <link rel="stylesheet" href="css/mobile-cta.css">
+  <link rel="stylesheet" href="css/ege-banner.css">
+  <link rel="stylesheet" href="css/universities.css">
 
   <script src="js/main.js?v=7" defer></script>
   <script src="js/header.js?v=2" defer></script>
@@ -67,9 +67,9 @@
   <script src="js/about.js" defer></script>
   <script src="js/formats.js" defer></script>
   <script src="js/pricing.js" defer></script>
-  <script src="js/reviews.js?v=4" defer></script>
+  <script src="js/additional.js" defer></script>
+  <script src="js/reviews.js?v=5" defer></script>
   <script src="js/faq.js?v=2" defer></script>
-  <script src="js/electives.js" defer></script>
   <script src="js/form.js?v=3" defer></script>
   <script src="js/bitrix.js?v=2" defer></script>
 </head>
@@ -132,7 +132,7 @@
           <div class="header__dropdown" id="nav-learning">
             <a class="header__link" href="#classes">Классы</a>
             <a class="header__link" href="#school-day">Как проходит обучение</a>
-            <a class="header__link" href="#electives">Факультативы</a>
+            <a class="header__link" href="#additional">Дополнительные&nbsp;занятия</a>
           </div>
         </div>
 
@@ -169,7 +169,7 @@
           <a href="#advantages">Преимущества</a>
           <a href="#classes">Классы</a>
           <a href="#school-day">Как проходит обучение</a>
-          <a href="#electives">Факультативы</a>
+          <a href="#additional">Дополнительные&nbsp;занятия</a>
           <a href="#faq">FAQ</a>
           <a href="#reviews">Отзывы</a>
         </nav>
@@ -457,25 +457,6 @@
       </div>
     </section>
 
-    <section class="ege-banner" id="ege-banner">
-      <div class="container">
-        <div class="ege-banner__banner">
-          <img class="ege-banner__wave" src="assets/img/ege/wave.webp" alt="" width="1899" height="676" loading="lazy" decoding="async">
-
-          <h2 class="ege-banner__title">70%&nbsp;наших выпускников <br> получают <span class="ege-banner__hl">240 и&nbsp;более <br> баллов за&nbsp;3&nbsp;предмета</span> <br> ЕГЭ без репетиторов</h2>
-
-          <div class="ege-banner__media">
-            <picture class="ege-banner__girl">
-              <source media="(max-width: 1024px)" srcset="assets/img/ege/girl-mobile.webp">
-              <img src="assets/img/ege/girl.webp" alt="Ученица онлайн-школы «Моя школа LS»" width="387" height="292" loading="lazy" decoding="async">
-            </picture>
-
-            <img class="ege-banner__badge ege-banner__badge--fgos" src="assets/img/ege/fgos.webp" alt="ФГОС обновлённые" width="143" height="143" loading="lazy" decoding="async">
-            <img class="ege-banner__badge ege-banner__badge--fipi" src="assets/img/ege/fipi.webp" alt="ФИПИ" width="117" height="126" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="about" id="about">
       <div class="container about__inner">
@@ -646,49 +627,98 @@
       </div>
     </section>
 
+    <section class="additional" id="additional">
+      <div class="container additional__inner">
+        <div class="additional__head">
+          <h2 class="additional__title">Больше, чем&nbsp;школьная программа</h2>
+          <p class="additional__subtitle">Дополнительные занятия, языки, подготовка к&nbsp;экзаменам и&nbsp;профориентация.</p>
+        </div>
 
-    <section class="invite">
-      <div class="container">
-        <div class="invite__banner">
-          <img class="invite__decor invite__decor--grid" src="assets/img/invite/grid.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <img class="invite__decor invite__decor--wave" src="assets/img/invite/wave.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <ul class="additional__cards">
+          <li class="additional__card">
+            <button class="additional__card-head" type="button" aria-expanded="false" aria-controls="additional-exams">
+              <span class="additional__card-title">Подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ</span>
+              <svg class="additional__card-chevron" width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M1 1.5 8 8.5l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="additional__card-text" id="additional-exams">Теория, практика и&nbsp;разбор сложных заданий. В&nbsp;старшей школе углублённая подготовка на&nbsp;групповых дополнительных занятиях входит в&nbsp;тариф с&nbsp;прикреплением.</p>
+          </li>
 
-          <div class="invite__content">
-            <h2 class="invite__title"><span class="invite__hl">Приходите на&nbsp;2&nbsp;пробных дня в&nbsp;«Моей школе&nbsp;LS»,</span><br><span class="invite__muted">мы будем рады показать, как&nbsp;проходят наши онлайн-уроки</span></h2>
+          <li class="additional__card">
+            <button class="additional__card-head" type="button" aria-expanded="false" aria-controls="additional-langs">
+              <span class="additional__card-title">Языки и&nbsp;элективы</span>
+              <svg class="additional__card-chevron" width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M1 1.5 8 8.5l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="additional__card-text" id="additional-langs">Дополнительные занятия для&nbsp;развития предметных и&nbsp;практических навыков.</p>
+          </li>
 
-            <a class="btn btn--primary invite__btn" href="#form" data-open-form>хочу на&nbsp;2&nbsp;пробных дня!
-              <svg class="btn__arrow" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M9.3 15h11.4m0 0-5.4-5.4m5.4 5.4-5.4 5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
+          <li class="additional__card">
+            <button class="additional__card-head" type="button" aria-expanded="false" aria-controls="additional-career">
+              <span class="additional__card-title">Профориентация</span>
+              <svg class="additional__card-chevron" width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M1 1.5 8 8.5l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="additional__card-text" id="additional-career">Занятия по&nbsp;финансовой грамотности, проектной работе и&nbsp;выбору дальнейшего направления.</p>
+          </li>
+        </ul>
 
-          <picture class="invite__picture">
-            <source media="(max-width: 767px)" srcset="assets/img/invite/kids-mobile.webp">
-            <img class="invite__media" src="assets/img/invite/kids.webp?v=2" alt="Ученики онлайн-школы «Моя школа LS»" width="952" height="760" loading="lazy" decoding="async">
-          </picture>
+        <button class="additional__toggle" type="button" aria-expanded="false" aria-controls="additional-list">Посмотреть все направления</button>
+
+        <div class="additional__list" id="additional-list" hidden></div>
+
+        <p class="additional__paid">Занятия из&nbsp;полного списка оплачиваются отдельно.</p>
+
+        <p class="additional__note">Дополнительные занятия доступны не&nbsp;только ученикам «Моей школы&nbsp;LS».</p>
+
+        <div class="additional__ctas">
+          <a class="btn btn--primary additional__cta" href="#form" data-open-form="Дополнительные занятия" data-cta-location="additional">Узнать подробнее
+            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </section>
+
+
+
 
     <section class="reviews" id="reviews">
       <div class="container">
         <div class="reviews__card">
           <div class="reviews__head">
             <h2 class="reviews__title">Отзывы учеников<br>и&nbsp;родителей</h2>
-            <p class="reviews__note"><span class="reviews__hl">Свыше 7&nbsp;000 родителей, которые доверяют</span><br>нам самое ценное&nbsp;— будущее своего ребёнка</p>
+            <p class="reviews__note"><span class="reviews__hl">Свыше 7&nbsp;000 родителей доверяют нам</span><br>образование своих детей</p>
           </div>
 
-          <div class="reviews__viewport">
-            <div class="reviews__track"></div>
+          <ul class="reviews__list" id="reviews-list"></ul>
+
+          <div class="reviews__foot">
+            <button class="reviews__more" type="button" aria-expanded="false" aria-controls="reviews-list">Показать ещё отзывы</button>
+            <p class="reviews__counter" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trial" id="trial">
+      <div class="container">
+        <div class="trial__banner">
+          <img class="trial__decor trial__decor--grid" src="assets/img/invite/grid.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <img class="trial__decor trial__decor--wave" src="assets/img/invite/wave.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+          <div class="trial__content">
+            <div class="trial__text">
+              <h2 class="trial__title"><span class="trial__hl">Попробуйте 2&nbsp;учебных дня онлайн</span></h2>
+              <p class="trial__subtitle">Ребёнок познакомится с&nbsp;форматом живых уроков, а&nbsp;вы&nbsp;сможете понять, подходит&nbsp;ли онлайн-школа вашей семье.</p>
+              <p class="trial__extra">Перед началом проведём консультацию и&nbsp;поможем выбрать подходящий класс и&nbsp;формат.</p>
+            </div>
+
+            <a class="btn btn--primary trial__btn" href="#form" data-open-form="2 пробных дня" data-cta-location="trial">Записаться на&nbsp;2&nbsp;пробных дня
+              <svg class="btn__arrow" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M9.3 15h11.4m0 0-5.4-5.4m5.4 5.4-5.4 5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           </div>
 
-          <div class="reviews__arrows">
-            <button class="reviews__arrow" type="button" data-pager="prev" aria-label="Предыдущие отзывы">
-              <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="reviews__arrow" type="button" data-pager="next" aria-label="Следующие отзывы">
-              <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+          <picture class="trial__picture">
+            <source media="(max-width: 767px)" srcset="assets/img/invite/kids-mobile.webp">
+            <img class="trial__media" src="assets/img/invite/kids.webp?v=2" alt="Ученики онлайн-школы «Моя школа LS»" width="952" height="760" loading="lazy" decoding="async">
+          </picture>
         </div>
       </div>
     </section>
@@ -705,108 +735,6 @@
       </div>
     </section>
 
-    <section class="electives" id="electives">
-      <div class="container">
-        <h2 class="electives__title">Факультативы<span class="electives__title-muted">/профориентация</span></h2>
-
-        <div class="electives__grid">
-        <div class="electives__row">
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Изучаем языки</h3>
-              <p class="electives__sub">Английский, китайский и&nbsp;французский&nbsp;— от&nbsp;основ до&nbsp;уверенного общения в&nbsp;живых группах.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Изучаем языки">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Робототехника</h3>
-              <p class="electives__sub">Программируем роботов в&nbsp;виртуальной среде, развиваем логику и&nbsp;инженерное мышление.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Робототехника">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Шахматы</h3>
-              <p class="electives__sub">Играем и&nbsp;разбираем партии онлайн: учимся мыслить стратегически и&nbsp;принимать решения.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Шахматы">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-        </div>
-
-        <div class="electives__row">
-          <article class="electives__card electives__card--grow">
-            <div class="electives__head">
-              <h3 class="electives__name">Центр подготовки к&nbsp;ЕГЭ и&nbsp;ОГЭ</h3>
-              <p class="electives__sub">Системная подготовка к&nbsp;экзаменам: теория, практика и&nbsp;разбор сложных заданий.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Центр подготовки к ЕГЭ и ОГЭ">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="electives__card electives__card--wide">
-            <div class="electives__head">
-              <h3 class="electives__name">Каллиграфия</h3>
-              <p class="electives__sub">Развиваем красивый почерк, аккуратность, внимание и&nbsp;мелкую моторику.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Каллиграфия">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-        </div>
-
-        <div class="electives__row">
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Профориентация</h3>
-              <p class="electives__sub">Помогаем определить сильные стороны, интересы и&nbsp;выбрать направление обучения.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Профориентация">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Бесплатные занятия</h3>
-              <p class="electives__sub">Открытые онлайн-занятия и&nbsp;мастер-классы для&nbsp;знакомства с&nbsp;направлениями школы.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Бесплатные занятия">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-
-          <article class="electives__card">
-            <div class="electives__head">
-              <h3 class="electives__name">Творчество</h3>
-              <p class="electives__sub">ИЗО-студия, кулинарные мастер-классы и&nbsp;оригами&nbsp;— занимаемся из&nbsp;дома.</p>
-            </div>
-            <a class="btn btn--outline btn--small electives__btn" href="#form" data-open-form="Творчество">узнать подробнее
-              <svg class="btn__arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </article>
-        </div>
-        </div>
-
-        <div class="scroll-nav" data-scroll-nav>
-          <button class="scroll-nav__btn" type="button" data-scroll="prev" aria-label="Предыдущий факультатив">
-            <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="scroll-nav__btn" type="button" data-scroll="next" aria-label="Следующий факультатив">
-            <svg width="8" height="14" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
 
   </main>
 
@@ -841,7 +769,7 @@
           <a class="footer__link" href="#advantages">Преимущества</a>
           <a class="footer__link" href="#classes">Классы</a>
           <a class="footer__link" href="#school-day">Как проходит обучение</a>
-          <a class="footer__link" href="#electives">Факультативы</a>
+          <a class="footer__link" href="#additional">Дополнительные&nbsp;занятия</a>
           <a class="footer__link" href="#faq">FAQ</a>
           <a class="footer__link" href="#reviews">Отзывы</a>
         </nav>

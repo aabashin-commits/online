@@ -14,6 +14,9 @@
   из бывшего блока «Образовательные программы». Блок тарифов отсюда ушёл:
   в index.html он вернулся с реальными ценами по §13 ТЗ, а заглушки «Тариф 1/2/3»
   по 25 000 ₽ больше не нужны — при надобности они есть в `git show 416a29f:disabled-sections.html`.
+
+  07.09.2026 (ТЗ §14): сюда переехал баннер «Готовим к ЕГЭ и ОГЭ» — в списке блоков ТЗ
+  его нет, а статистика в нём запрещена §3.
 -->
 
 <!-- ===== Синяя карточка «2 пробных дня» из бывшего блока «Образовательные программы» =====
@@ -75,6 +78,33 @@
             <li class="universities__logo"><img src="assets/img/universities/univer-ranh.svg" alt="РАНХиГС" width="88" height="114" loading="lazy" decoding="async"></li>
             <li class="universities__logo"><img src="assets/img/universities/univer-guu.svg" alt="ГУУ" width="114" height="105" loading="lazy" decoding="async"></li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+
+<!-- ===== Блок 8 «Готовим к ЕГЭ и ОГЭ» (баннер) =====
+     Снят 07.09.2026 по ТЗ от 06.09.2026: в списке 15 блоков ТЗ этой секции нет,
+     а её цифры («70% выпускников сдают ЕГЭ выше 240 баллов») попадают под запрет
+     §3 — бездоказательная статистика. Тема подготовки к экзаменам осталась
+     на странице карточкой в блоке #additional. -->
+
+    <section class="ege-banner" id="ege-banner">
+      <div class="container">
+        <div class="ege-banner__banner">
+          <img class="ege-banner__wave" src="assets/img/ege/wave.webp" alt="" width="1899" height="676" loading="lazy" decoding="async">
+
+          <h2 class="ege-banner__title">70%&nbsp;наших выпускников <br> получают <span class="ege-banner__hl">240 и&nbsp;более <br> баллов за&nbsp;3&nbsp;предмета</span> <br> ЕГЭ без репетиторов</h2>
+
+          <div class="ege-banner__media">
+            <picture class="ege-banner__girl">
+              <source media="(max-width: 1024px)" srcset="assets/img/ege/girl-mobile.webp">
+              <img src="assets/img/ege/girl.webp" alt="Ученица онлайн-школы «Моя школа LS»" width="387" height="292" loading="lazy" decoding="async">
+            </picture>
+
+            <img class="ege-banner__badge ege-banner__badge--fgos" src="assets/img/ege/fgos.webp" alt="ФГОС обновлённые" width="143" height="143" loading="lazy" decoding="async">
+            <img class="ege-banner__badge ege-banner__badge--fipi" src="assets/img/ege/fipi.webp" alt="ФИПИ" width="117" height="126" loading="lazy" decoding="async">
+          </div>
         </div>
       </div>
     </section>

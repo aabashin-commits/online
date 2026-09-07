@@ -1,7 +1,17 @@
-/* reviews.css — блок 14 «Отзывы».
+/* reviews.css — блок 11 «Отзывы родителей и учеников» (ТЗ 06.09.2026, §15).
    Замеры по 1920.png: розовая карточка 1880×892 (Y 7697–8588), padding 60, radius 30;
-   сетка 4×2 карточек 425×300, gap 20. Заливки — белый с прозрачностью поверх розового:
-   карточка 15%, круг play 10%, треугольник 62% (посчитано по альфе). */
+   плитка 425×300, gap 20. Заливки — белый с прозрачностью поверх розового:
+   плитка 15%, круг play 10%, треугольник 62% (посчитано по альфе).
+
+   07.09.2026: страничный пагинатор (сетка 4×2 со стрелками) заменён плоским
+   списком — §15 требует другую раскладку. Прежняя версия со стрелками —
+   `git show 151ec77:css/reviews.css`.
+
+   Раскладка по §15:
+   • десктоп — один крупный отзыв и три компактные рядом (4 колонки, крупная
+     плитка занимает 3×3), остальные 11 открываются кнопкой;
+   • планшет — сетка 2×2, крупной плитки нет;
+   • телефон — лента по карточке на экран, виден край следующей, есть счётчик. */
 
 .reviews {
   padding-block: 20px;
@@ -50,93 +60,50 @@
   -webkit-box-decoration-break: clone;
 }
 
-/* ── Пагинатор ──────────────────────────────────────────────────
-   Роликов 15, на экран влезает 8 — листаем страницами. Прокрутка нативная
-   со scroll-snap: на телефоне бесплатно получаем свайп, а стрелки просто
-   прокручивают трек на ширину вьюпорта (механика в createPager, main.js).
-   --per-page читает JS: сколько карточек класть на страницу, решает CSS,
-   чтобы брейкпоинты остались в файле блока. */
-.reviews__viewport { overflow: hidden; }
+/* ── Сетка отзывов ──────────────────────────────────────────────── */
 
-.reviews__track {
-  --per-page: 8;
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  /* Иначе горизонтальный свайп по ленте уводит браузер «назад» по истории */
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-}
-
-.reviews__track::-webkit-scrollbar { display: none; }
-
-.reviews__page {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
+.reviews__list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap-cards);
-  /* Последняя страница неполная (15 = 8 + 7). Без явных строк её единственный
-     ряд растянулся бы на всю высоту и плитки стали бы вдвое выше соседних. */
-  grid-auto-rows: min-content;
-}
-
-/* Стрелки. Синие, как в «Обучайтесь комфортно», на розовом читались бы плохо,
-   поэтому взят язык самого блока — полупрозрачный белый (плитка 15%,
-   кружок play 10%, маркер заголовка 20%). Геометрия — как у .staff__arrow. */
-.reviews__arrows {
-  display: flex;
-  justify-content: flex-end;
-  gap: clamp(6px, 0.532cqw, 10px);
-  margin-top: clamp(20px, 2.128cqw, 40px);
-}
-
-.reviews__arrows[hidden] { display: none; }
-
-.reviews__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: clamp(40px, 2.66cqw, 50px);
-  height: clamp(40px, 2.66cqw, 50px);
-  /* Заливка, а не одна рамка (просьба клиента 31.07.2026): пустая кнопка
-     на розовом читалась слабо и терялась под сеткой плиток */
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: var(--radius-pill);
-  color: var(--color-white);
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.reviews__arrow:hover:not(:disabled) {
-  background: var(--color-white);
-  border-color: var(--color-white);
-  color: var(--color-pink);
-}
-
-.reviews__arrow:disabled {
-  opacity: 0.4;
-  cursor: default;
+  list-style: none;
 }
 
 .reviews__item {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.638cqw, 12px);
+}
+
+/* Скрытые до нажатия «Показать ещё»: display:flex выше перебил бы hidden */
+.reviews__item[hidden] { display: none; }
+
+/* Крупная плитка §15. Занимает 3 колонки и 3 ряда — ровно столько, сколько
+   три компактные карточки справа, поэтому ряды сходятся без дыр. */
+.reviews__item--large {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+/* Кнопка — на всю плитку: кликается любая точка постера */
+.reviews__play {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* Пропорция постеров 850×600 — плитка повторяет её один в один */
   aspect-ratio: 425 / 300;
   border-radius: var(--radius-btn);
   overflow: hidden;
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Кнопка — на всю карточку: кликается любая точка плитки */
-.reviews__play {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+/* Крупная плитка тянется на высоту трёх рядов: фиксированная пропорция
+   разошлась бы с соседями, поэтому здесь её снимаем */
+.reviews__item--large .reviews__play {
+  aspect-ratio: auto;
+  flex: 1;
 }
 
 .reviews__poster {
@@ -150,7 +117,7 @@
 
 /* Затемнение под кружком: на светлых постерах белый треугольник
    поверх 10%-белого круга полностью терялся */
-.reviews__item::after {
+.reviews__play::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -191,9 +158,79 @@
 
 .reviews__play:hover .reviews__poster { transform: scale(1.04); }
 
-@media (max-width: 1280px) {
-  .reviews__track { --per-page: 6; }
-  .reviews__page { grid-template-columns: repeat(3, 1fr); }
+/* ── Подпись: имя, статус, метка ─────────────────────────────────
+   §15: видны без запуска видео. */
+
+.reviews__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reviews__name {
+  font-size: var(--fs-text);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-white);
+}
+
+.reviews__status {
+  font-size: var(--fs-small);
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Метки из §15 (переход из обычной школы, жизнь за границей и т. д.).
+   ⚠️ Сейчас в данных пустые: какая метка какому ролику соответствует,
+   известно только из содержания видео — таблицы от клиента нет.
+   Место под метку свёрстано, JS дорисует плашку, как только метки появятся. */
+.reviews__tag {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+/* ── Кнопка «Показать ещё» и счётчик ─────────────────────────────
+   ⚠️ Кнопка только раскрывает список и не открывает лид-форму (§15),
+   поэтому у неё нет data-open-form. */
+
+.reviews__foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 1.064cqw, 20px);
+  margin-top: clamp(20px, 2.128cqw, 40px);
+}
+
+.reviews__more {
+  /* ТЗ §21: зона нажатия не меньше 44px */
+  min-height: 44px;
+  padding: 10px clamp(20px, 1.596cqw, 30px);
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-pill);
+  color: var(--color-white);
+  font: inherit;
+  font-size: var(--fs-btn);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.reviews__more:hover {
+  background: var(--color-white);
+  color: var(--color-pink);
+}
+
+/* Счётчик нужен только ленте на телефоне */
+.reviews__counter {
+  display: none;
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 @media (max-width: 1024px) {
@@ -208,16 +245,48 @@
   .reviews__note { width: auto; }
 
   .reviews__card { padding: 40px; }
-  .reviews__track { --per-page: 4; }
-  .reviews__page { grid-template-columns: repeat(2, 1fr); }
+
+  /* §15, планшет: ровная сетка 2 × 2 — крупной плитки здесь нет */
+  .reviews__list { grid-template-columns: repeat(2, 1fr); }
+
+  .reviews__item--large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .reviews__item--large .reviews__play {
+    aspect-ratio: 425 / 300;
+    flex: none;
+  }
+
   .reviews__play-circle { width: 70px; height: 70px; }
 }
 
 @media (max-width: 767px) {
   .reviews__card { padding: 30px; }
-  /* По одной карточке на страницу — получается свайп-карусель,
-     тот же паттерн, что у факультативов на телефоне */
-  .reviews__track { --per-page: 1; }
-  .reviews__page { grid-template-columns: 1fr; }
-  .reviews__arrows { justify-content: center; }
+
+  /* §15, телефон: одна карточка на экран, виден край следующей.
+     Нативная прокрутка со scroll-snap — бесплатно получаем свайп,
+     а номер карточки считает js/reviews.js. */
+  .reviews__list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Иначе горизонтальный свайп по ленте уводит браузер «назад» по истории */
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .reviews__list::-webkit-scrollbar { display: none; }
+
+  .reviews__item {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  /* В ленте доступны все 15 отзывов сразу, раскрывать нечего */
+  .reviews__more { display: none; }
+
+  .reviews__counter { display: block; }
 }

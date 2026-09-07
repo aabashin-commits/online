@@ -1,0 +1,244 @@
+/* additional.css — блок «Больше, чем школьная программа» (ТЗ 06.09.2026, §14).
+   Файл был css/electives.css: бенто-раскладка 3+2+3 с каруселью на телефоне
+   описывала прежние восемь факультативов, которых в ТЗ нет. Старая версия —
+   `git show 151ec77:css/electives.css`.
+
+   Раскладка по §14:
+   • десктоп — три карточки в ряд, полный список раскрывается ниже;
+   • планшет — две карточки в первом ряду, одна во втором;
+   • телефон — карточки accordion, полный список accordion по категориям. */
+
+.additional { padding-block: 20px; }
+
+.additional__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.128cqw, 40px);
+}
+
+.additional__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+}
+
+.additional__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.additional__subtitle {
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  color: var(--color-gray-1);
+}
+
+/* --- Три карточки --- */
+
+.additional__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+  list-style: none;
+}
+
+.additional__card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.additional__card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  /* На десктопе карточка не сворачивается — курсор-указатель врал бы */
+  cursor: default;
+}
+
+.additional__card-title {
+  font-size: var(--fs-h4);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.additional__card-text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+/* Стрелки accordion нужны только на телефоне */
+.additional__card-chevron,
+.additional__group-chevron {
+  display: none;
+  flex: 0 0 auto;
+  color: var(--color-blue);
+  transition: transform 0.2s ease;
+}
+
+/* --- Кнопка раскрытия и полный список --- */
+
+.additional__toggle {
+  align-self: flex-start;
+  /* ТЗ §21: зона нажатия не меньше 44px */
+  min-height: 44px;
+  padding: 10px clamp(20px, 1.596cqw, 30px);
+  background: none;
+  border: 1px solid var(--color-blue);
+  border-radius: var(--radius-pill);
+  color: var(--color-blue);
+  font: inherit;
+  font-size: var(--fs-btn);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.additional__toggle:hover {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.additional__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* display:grid выше перебил бы атрибут hidden — список открылся бы сразу */
+.additional__list[hidden] { display: none; }
+
+.additional__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.additional__group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.additional__group-title {
+  font-size: var(--fs-btn);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-black);
+}
+
+.additional__group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+.additional__group-item {
+  position: relative;
+  padding-left: 20px;
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+/* Маркер рисуем сами: у list-style нет управления цветом и отступом */
+.additional__group-item::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-blue);
+}
+
+/* --- Подписи и CTA --- */
+
+.additional__note,
+.additional__paid {
+  font-size: var(--fs-text);
+  line-height: 1.6;
+  color: var(--color-gray-1);
+}
+
+.additional__note { font-weight: 500; color: var(--color-black); }
+
+.additional__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-cards);
+}
+
+/* --- Планшет: 2 + 1 --- */
+
+@media (max-width: 1024px) {
+  .additional__cards { grid-template-columns: repeat(2, 1fr); }
+
+  .additional__card { padding: 20px; }
+
+  .additional__list {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+}
+
+/* --- Телефон: карточки и категории accordion --- */
+
+@media (max-width: 767px) {
+  .additional__cards { grid-template-columns: 1fr; }
+
+  .additional__list { grid-template-columns: 1fr; }
+
+  .additional__card-head,
+  .additional__group-head {
+    min-height: 44px;
+    cursor: pointer;
+  }
+
+  .additional__card-chevron,
+  .additional__group-chevron { display: block; }
+
+  .additional__card-head[aria-expanded='true'] .additional__card-chevron,
+  .additional__group-head[aria-expanded='true'] .additional__group-chevron {
+    transform: rotate(180deg);
+  }
+
+  .additional__card-head[aria-expanded='false'] + .additional__card-text,
+  .additional__group-head[aria-expanded='false'] + .additional__group-list {
+    display: none;
+  }
+
+  .additional__toggle,
+  .additional__cta {
+    align-self: stretch;
+    width: 100%;
+    justify-content: center;
+  }
+}
