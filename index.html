@@ -36,9 +36,9 @@
   <link rel="preload" href="assets/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/base.css?v=2">
   <link rel="stylesheet" href="css/layout.css?v=2">
-  <link rel="stylesheet" href="css/header.css?v=8">
+  <link rel="stylesheet" href="css/header.css?v=10">
   <link rel="stylesheet" href="css/hero.css?v=5">
   <link rel="stylesheet" href="css/info-cards.css?v=3">
   <link rel="stylesheet" href="css/attestat.css?v=2">
@@ -51,17 +51,16 @@
   <link rel="stylesheet" href="css/additional.css">
   <link rel="stylesheet" href="css/reviews.css?v=5">
   <link rel="stylesheet" href="css/trial.css">
-  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/faq.css?v=2">
   <link rel="stylesheet" href="css/consultation.css">
-  <link rel="stylesheet" href="css/footer.css?v=11">
+  <link rel="stylesheet" href="css/footer.css?v=13">
   <link rel="stylesheet" href="css/form.css?v=4">
   <link rel="stylesheet" href="css/mobile-cta.css">
-  <link rel="stylesheet" href="css/ege-banner.css">
-  <link rel="stylesheet" href="css/universities.css">
 
   <script src="js/main.js?v=7" defer></script>
-  <script src="js/header.js?v=2" defer></script>
-  <script src="js/mobile-cta.js" defer></script>
+  <script src="js/analytics.js" defer></script>
+  <script src="js/header.js?v=3" defer></script>
+  <script src="js/mobile-cta.js?v=2" defer></script>
   <script src="js/attestat.js?v=4" defer></script>
   <script src="js/school-day.js?v=2" defer></script>
   <script src="js/classes.js" defer></script>
@@ -71,7 +70,7 @@
   <script src="js/additional.js" defer></script>
   <script src="js/reviews.js?v=5" defer></script>
   <script src="js/faq.js?v=3" defer></script>
-  <script src="js/consultation.js" defer></script>
+  <script src="js/consultation.js?v=2" defer></script>
   <script src="js/form.js?v=4" defer></script>
   <script src="js/bitrix.js?v=2" defer></script>
 </head>
@@ -121,35 +120,18 @@
       </a>
 
       <nav class="header__nav" aria-label="Основное меню">
-        <div class="header__group">
-          <button class="header__group-btn" type="button" aria-expanded="false" aria-controls="nav-school">О школе<svg class="header__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="header__dropdown" id="nav-school">
-            <a class="header__link" href="#about">О нас</a>
-            <a class="header__link" href="#advantages">Преимущества</a>
-          </div>
-        </div>
-
-        <div class="header__group">
-          <button class="header__group-btn" type="button" aria-expanded="false" aria-controls="nav-learning">Обучение<svg class="header__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="header__dropdown" id="nav-learning">
-            <a class="header__link" href="#classes">Классы</a>
-            <a class="header__link" href="#school-day">Как проходит обучение</a>
-            <a class="header__link" href="#additional">Дополнительные&nbsp;занятия</a>
-          </div>
-        </div>
-
-        <div class="header__group">
-          <button class="header__group-btn" type="button" aria-expanded="false" aria-controls="nav-useful">Полезное<svg class="header__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="header__dropdown" id="nav-useful">
-            <a class="header__link" href="#faq">FAQ</a>
-            <a class="header__link" href="#reviews">Отзывы</a>
-          </div>
-        </div>
+        <a class="header__link" href="#about">О&nbsp;школе</a>
+        <a class="header__link" href="#school-day">Как проходит обучение</a>
+        <a class="header__link" href="#classes">Классы</a>
+        <a class="header__link" href="#formats">Форматы</a>
+        <a class="header__link" href="#pricing">Стоимость</a>
+        <a class="header__link" href="#reviews">Отзывы</a>
+        <a class="header__link" href="#faq">FAQ</a>
       </nav>
 
       <a class="header__phone" href="tel:+74993467350">+7&nbsp;(499)&nbsp;346-73-50</a>
 
-      <a class="btn btn--small btn--blue header__cta" href="#form" data-open-form>оставить заявку</a>
+      <a class="btn btn--small btn--blue header__cta" href="#form" data-open-form="Консультация" data-cta-location="header">Получить консультацию</a>
 
       <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -167,17 +149,17 @@
           </button>
         </div>
         <nav class="header__menu-nav" aria-label="Мобильное меню">
-          <a href="#about">О нас</a>
-          <a href="#advantages">Преимущества</a>
-          <a href="#classes">Классы</a>
+          <a href="#about">О&nbsp;школе</a>
           <a href="#school-day">Как проходит обучение</a>
-          <a href="#additional">Дополнительные&nbsp;занятия</a>
-          <a href="#faq">FAQ</a>
+          <a href="#classes">Классы</a>
+          <a href="#formats">Форматы</a>
+          <a href="#pricing">Стоимость</a>
           <a href="#reviews">Отзывы</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <a class="header__menu-phone" href="tel:+74993467350">+7&nbsp;(499)&nbsp;346-73-50</a>
-        <a class="btn btn--primary header__menu-cta" href="#form" data-open-form>
-          оставить заявку
+        <a class="btn btn--primary header__menu-cta" href="#form" data-open-form="Консультация" data-cta-location="header-menu">
+          Получить консультацию
           <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -187,7 +169,7 @@
   </header>
 
   <div class="mobile-cta">
-    <a class="btn btn--blue" href="#form" data-open-form>оставить заявку</a>
+    <a class="btn btn--blue" href="#form" data-open-form="Консультация" data-cta-location="sticky">Получить консультацию</a>
   </div>
 
   <main>

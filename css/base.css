@@ -200,6 +200,20 @@ button {
   cursor: pointer;
 }
 
+/* Видимый фокус с клавиатуры (ТЗ §21).
+   :focus-visible, а не :focus, — контур появляется при ходьбе по Tab и не
+   вылезает при обычном клике мышью.
+   Цвет фирменный розовый, а не синий: контур с offset лежит НЕ на самом
+   элементе, а на фоне секции, а фоны у нас белые и сине-градиентные
+   (--gradient-accent в бургер-меню и модалке формы) — синий контур на них
+   сливался бы. Розовый читается на обоих.
+   box-shadow намеренно не трогаем: у карточек и кнопок он занят тенью
+   (--shadow-card), и её подмена на фокусе ломала бы объём. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-pink);
+  outline-offset: 3px;
+}
+
 ul,
 ol { list-style: none; padding: 0; }
 

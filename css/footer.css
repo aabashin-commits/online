@@ -101,9 +101,16 @@
 
 /* В многоколоночном потоке вертикальный gap не работает — шаг задаём
    отступом самих ссылок; блочными они становятся ради этого же */
+/* padding-block вместо части отступа — зона нажатия 44px по ТЗ §21 (строка
+   текста сама по себе 20px). Шаг между ссылками сохранён: было 20 + 28,
+   стало (20 + 24) + 4 — те же 48. */
 .footer__link {
   display: block;
-  margin-bottom: 28px;
+  /* min-height, а не только поля: строка 19.5px + 24 давала 43.5 — полпикселя
+     до нормы §21. */
+  min-height: 44px;
+  padding-block: 12px;
+  margin-bottom: 4px;
   transition: opacity 0.25s ease;
 }
 
@@ -162,7 +169,15 @@
   color: var(--color-blue-2);
 }
 
-.footer__doc { transition: opacity 0.25s ease; }
+/* padding-block доводит зону нажатия до 44px (ТЗ §21): сама строка мелкая, 17px.
+   align-items: flex-end у .footer__bottom выравнивает пункты по нижнему краю,
+   поэтому лишние поля не сдвигают строку копирайта относительно соседей. */
+.footer__doc {
+  display: inline-block;
+  padding-block: 14px;
+  transition: opacity 0.25s ease;
+}
+
 .footer__doc:hover { opacity: 0.7; }
 
 /* Правый блок контактов — мессенджеры/соцсети + телефон (реквизиты ИП — влево, в .footer__fine).
@@ -179,7 +194,12 @@
 
 /* Телефон: белый (заметнее мелкого синего дисклеймера),
    nowrap; наследует выравнивание блока (справа на десктопе, слева на ≤1024). */
+/* padding-block: зона нажатия 44px по ТЗ §21 (строка телефона — 20px).
+   inline-block, иначе поля у строчной ссылки не увеличивают её область. */
 .footer__phone {
+  display: inline-block;
+  min-height: 44px;
+  padding-block: 12px;
   color: var(--color-white);
   font-size: var(--fs-text);
   white-space: nowrap;
@@ -198,8 +218,11 @@
   gap: clamp(8px, 0.638cqw, 12px);
 }
 
+/* Две строки (канал + значение) дают 36px — до нормы §21 не хватает 8px,
+   добираем полями по 4. */
 .footer__contact {
   display: block;
+  padding-block: 4px;
   color: var(--color-white);
   line-height: 1.3;
   transition: opacity 0.25s ease;
@@ -248,7 +271,9 @@
     margin-inline: 0;
   }
 
-  .footer__link { margin-bottom: 16px; }
+  /* Зона нажатия (44px) уже съедает прежний шаг 16 — отступ обнуляем,
+     иначе меню в колонку растянулось бы вдвое. */
+  .footer__link { margin-bottom: 0; }
 
   /* Копирайт+документы — столбиком (сбрасываем десктопные max-content/nowrap) */
   .footer__bottom {
@@ -288,6 +313,10 @@
   /* Раскрытие обёрток колонок и порядок элементов (лого→бейджи→меню→лицензия→
      контакты→юр-блок) заданы выше, в блоке ≤1024 */
 
+  /* На телефоне лого 36px в высоту — до зоны нажатия §21 не хватает 8px.
+     Поля добираем, отрицательные margin не нужны: под лого идёт gap 30. */
+  .footer__logo { padding-block: 4px; }
+
   /* Лого 1:14318 — 129×36 */
   .footer__logo img {
     width: 129px;
@@ -319,7 +348,9 @@
     font-size: var(--fs-text);
   }
 
-  .footer__link { margin-bottom: 10px; }
+  /* Шаг 10 из макета 1:14335 заменён зоной нажатия: строка 20 + поля 12×2 = 44
+     (ТЗ §21). Пункты стоят вплотную, но не наезжают — каждый ровно 44. */
+  .footer__link { margin-bottom: 0; }
 
   /* Плашка лицензии 1:14355 — padding 20, gap 20, иконка 31×40.
      Радиус 10 приходит сам: базовое правило берёт --radius-btn, а он на телефоне 10 */

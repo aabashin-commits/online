@@ -35,7 +35,13 @@ html { scroll-padding-top: 88px; }
   padding-inline: 20px 30px;
 }
 
-.header__logo { flex: none; }
+/* Поля добирают зону нажатия до 44px по высоте (сама картинка 29px, ТЗ §21);
+   отрицательные margin гасят прирост, чтобы высота шапки осталась макетной. */
+.header__logo {
+  flex: none;
+  padding-block: 8px;
+  margin-block: -8px;
+}
 
 .header__logo img { height: 29px; width: auto; }
 
@@ -61,75 +67,11 @@ html { scroll-padding-top: 88px; }
 .header__link { transition: color 0.25s ease; white-space: nowrap; }
 .header__link:hover { color: var(--color-blue); }
 
-/* ===== Выпадающие списки в шапке (решение клиента 31.07.2026) =====
-   7 якорей объединены в 3 группы: «О школе» (О нас, Преимущества),
-   «Обучение» (Классы, Программы, Факультативы), «Полезное» (FAQ, Отзывы).
-   Причина — с возвратом блока «Отзывы» семь пунктов + тумблер городов +
-   телефон + CTA перестали помещаться в полосе 1281–1312 (перелив 17px на 1281).
-   Три кнопки занимают втрое меньше места, запас вернулся с большим избытком.
-
-   ⚠️ Группе нужен align-self: stretch (высота всей шапки), а НЕ только высота
-   текста: панель позиционируется от неё (top: 100%), и без растяжения между
-   кнопкой и панелью остался бы «мёртвый» зазор — курсор, идущий к списку,
-   пересекал бы ненаводимую зону, и список закрывался бы на полпути. */
-.header__group {
-  position: relative;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-}
-
-/* font: inherit — кнопка не наследует системный шрифт браузера, а берёт
-   Onest и резиновый --fs-btn от .header__nav (как обычные якоря). */
-.header__group-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font: inherit;
-  color: inherit;
-  white-space: nowrap;
-  transition: color 0.25s ease;
-}
-
-.header__group-btn:hover,
-.header__group.is-open .header__group-btn { color: var(--color-blue); }
-
-.header__chevron {
-  flex: none;
-  transition: transform 0.25s ease;
-}
-
-.header__group.is-open .header__chevron { transform: rotate(180deg); }
-
-/* Панель списка. top: 100% = низ шапки (группа растянута на всю её высоту).
-   Закрытая смещена на 6px вниз и «проявляется» вверх — тот же приём, что у
-   ховеров по сайту. visibility (а не только opacity) убирает панель из-под
-   курсора и из таб-порядка, пока она закрыта. */
-.header__dropdown {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 100%;
-  width: max-content;
-  padding: 18px 24px;
-  border-radius: var(--radius-btn);
-  background: var(--color-white);
-  box-shadow: var(--shadow-bubble);
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, 6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-}
-
-.header__group.is-open .header__dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-}
+/* ⚠️ 07.09.2026 выпадающие списки шапки удалены: ТЗ §4 требует семь плоских
+   якорей. Прежние стили групп, панелей и шевронов — `git show c809a07:css/header.css`.
+   Списки в своё время появились из-за тесноты в полосе 1281–1312 (семь пунктов
+   + тумблер городов + телефон + CTA не помещались). С тех пор тумблер городов
+   со страницы ушёл, поэтому места снова хватает — замерено на 1281–1440. */
 
 /* Телефон в крайней правой точке шапки. flex: none — не сжимается;
    nowrap — номер не переносится. Кегль как у якорей, ховер — фирменный синий. */
@@ -260,9 +202,12 @@ html { scroll-padding-top: 88px; }
 
   .header__logo img { height: 29px; }
 
+  /* Иконка по макету 30×30, но зона нажатия должна быть 44×44 (ТЗ §21):
+     добираем полями по 7px, а отрицательные margin возвращают иконку на
+     макетное место — правый край 10 и вертикальный центр шапки. */
   .header__burger {
-    padding: 0;
-    margin-right: 0;
+    padding: 7px;
+    margin: -7px -7px -7px 0;
   }
 
   .header__burger svg { width: 30px; height: 30px; }
