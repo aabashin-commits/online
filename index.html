@@ -42,13 +42,13 @@
   <link rel="stylesheet" href="css/hero.css?v=5">
   <link rel="stylesheet" href="css/info-cards.css?v=3">
   <link rel="stylesheet" href="css/attestat.css?v=2">
+  <link rel="stylesheet" href="css/who-fits.css">
+  <link rel="stylesheet" href="css/school-day.css">
   <link rel="stylesheet" href="css/classes.css">
   <link rel="stylesheet" href="css/ege-banner.css">
   <link rel="stylesheet" href="css/about.css?v=7">
   <link rel="stylesheet" href="css/universities.css">
   <link rel="stylesheet" href="css/pricing.css">
-  <link rel="stylesheet" href="css/programs.css">
-  <link rel="stylesheet" href="css/no-homework.css">
   <link rel="stylesheet" href="css/staff.css">
   <link rel="stylesheet" href="css/invite.css?v=5">
   <link rel="stylesheet" href="css/reviews.css?v=4">
@@ -62,7 +62,7 @@
   <script src="js/header.js?v=2" defer></script>
   <script src="js/mobile-cta.js" defer></script>
   <script src="js/attestat.js?v=4" defer></script>
-  <script src="js/programs.js?v=2" defer></script>
+  <script src="js/school-day.js" defer></script>
   <script src="js/staff.js?v=3" defer></script>
   <script src="js/reviews.js?v=4" defer></script>
   <script src="js/faq.js?v=2" defer></script>
@@ -128,7 +128,7 @@
           <button class="header__group-btn" type="button" aria-expanded="false" aria-controls="nav-learning">Обучение<svg class="header__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="header__dropdown" id="nav-learning">
             <a class="header__link" href="#classes">Классы</a>
-            <a class="header__link" href="#programs">Программы</a>
+            <a class="header__link" href="#school-day">Как проходит обучение</a>
             <a class="header__link" href="#electives">Факультативы</a>
           </div>
         </div>
@@ -165,7 +165,7 @@
           <a href="#about">О нас</a>
           <a href="#advantages">Преимущества</a>
           <a href="#classes">Классы</a>
-          <a href="#programs">Программы</a>
+          <a href="#school-day">Как проходит обучение</a>
           <a href="#electives">Факультативы</a>
           <a href="#faq">FAQ</a>
           <a href="#reviews">Отзывы</a>
@@ -281,6 +281,118 @@
             </button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="who-fits" id="who-fits">
+      <div class="container who-fits__inner">
+        <header class="who-fits__head">
+          <h2 class="who-fits__title">Когда онлайн-школа особенно удобна</h2>
+          <p class="who-fits__subtitle">Выберите ситуацию, которая ближе вашей семье.</p>
+        </header>
+
+        <ul class="who-fits__list">
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
+            <p class="who-fits__card-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
+          </li>
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">Семья часто переезжает или&nbsp;путешествует</h3>
+            <p class="who-fits__card-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
+          </li>
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">Вы живёте за&nbsp;границей</h3>
+            <p class="who-fits__card-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
+          </li>
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
+            <p class="who-fits__card-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
+          </li>
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">Обычная школа занимает слишком много времени</h3>
+            <p class="who-fits__card-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
+          </li>
+          <li class="who-fits__card">
+            <h3 class="who-fits__card-title">Нужен другой темп обучения</h3>
+            <p class="who-fits__card-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
+          </li>
+        </ul>
+
+        <a class="btn btn--primary who-fits__cta" href="#form" data-open-form="Кому подходит онлайн-школа">Подобрать формат для&nbsp;нашей семьи
+          <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="school-day" id="school-day">
+      <div class="container school-day__inner">
+        <header class="school-day__head">
+          <h2 class="school-day__title">Как проходит учебный день</h2>
+          <p class="school-day__subtitle">Ребёнок занимается с&nbsp;преподавателями в&nbsp;прямом эфире, выполняет задания и&nbsp;получает обратную связь.</p>
+        </header>
+
+        <ol class="school-day__steps">
+          <li class="school-day__step">
+            <span class="school-day__step-num" aria-hidden="true">1</span>
+            <h3 class="school-day__step-title">Живые уроки</h3>
+            <p class="school-day__step-text">Ребёнок подключается к&nbsp;занятиям по&nbsp;расписанию. В&nbsp;классе до&nbsp;15&nbsp;учеников.</p>
+          </li>
+          <li class="school-day__step">
+            <span class="school-day__step-num" aria-hidden="true">2</span>
+            <h3 class="school-day__step-title">Работа с&nbsp;преподавателем</h3>
+            <p class="school-day__step-text">Учитель объясняет материал, отвечает на&nbsp;вопросы и&nbsp;разбирает сложные темы.</p>
+          </li>
+          <li class="school-day__step">
+            <span class="school-day__step-num" aria-hidden="true">3</span>
+            <h3 class="school-day__step-title">Закрепление материала</h3>
+            <p class="school-day__step-text">Домашние задания помогают повторить пройденное, а&nbsp;не&nbsp;изучать новую тему самостоятельно.</p>
+          </li>
+          <li class="school-day__step">
+            <span class="school-day__step-num" aria-hidden="true">4</span>
+            <h3 class="school-day__step-title">Проверка и&nbsp;обратная связь</h3>
+            <p class="school-day__step-text">Домашние задания проверяются вручную. Оценки отображаются в&nbsp;электронном журнале. Каждый учебный модуль родители получают обратную связь педагогов.</p>
+          </li>
+        </ol>
+
+        <p class="school-day__selfwork">Весь материал отрабатывается на&nbsp;уроках и&nbsp;самоподготовке с&nbsp;куратором. Творческие работы ученики тоже выполняют самостоятельно&nbsp;— нам важен результат ребёнка, а&nbsp;не&nbsp;помощь родителей.</p>
+      </div>
+
+      <div class="school-day__plate">
+        <div class="container">
+          <div class="school-day__plate-card">
+            <img class="school-day__plate-wave" src="assets/img/no-homework/wave.webp" alt="" width="1224" height="616" aria-hidden="true" loading="lazy" decoding="async">
+
+            <p class="school-day__plate-text">Все записи уроков и&nbsp;дополнительные материалы доступны на&nbsp;платформе.</p>
+
+            <picture class="school-day__plate-boy">
+              <source media="(max-width: 1024px)" srcset="assets/img/no-homework/boy-mobile.webp" width="424" height="272">
+              <img src="assets/img/no-homework/boy.webp" alt="" width="424" height="220" loading="lazy" decoding="async">
+            </picture>
+
+            <a class="btn btn--primary school-day__plate-btn" href="#week-example">Посмотреть пример расписания
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container school-day__inner">
+        <article class="school-day__card">
+          <ul class="school-day__load">
+            <li class="school-day__load-item"><span class="school-day__load-label">Начальная школа</span>4&nbsp;урока в&nbsp;день. Занятия заканчиваются в&nbsp;14:15 по&nbsp;московскому времени.</li>
+            <li class="school-day__load-item"><span class="school-day__load-label">С&nbsp;5&nbsp;класса</span>3–4&nbsp;занятия по&nbsp;90&nbsp;минут. Основное обучение заканчивается не&nbsp;позднее 16:15 по&nbsp;московскому времени.</li>
+          </ul>
+
+          <div class="school-day__week" id="week-example">
+            <h3 class="school-day__week-title">Пример учебной недели</h3>
+            <div class="school-day__tabs" role="tablist" aria-label="Выберите класс"></div>
+            <div class="school-day__days" role="tablist" aria-label="Выберите день недели"></div>
+            <div class="school-day__scroller">
+              <div class="school-day__schedule" role="tabpanel" aria-live="polite"></div>
+            </div>
+            <p class="school-day__routine" hidden></p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -455,57 +567,6 @@
             <li class="universities__logo"><img src="assets/img/universities/univer-ranh.svg" alt="РАНХиГС" width="88" height="114" loading="lazy" decoding="async"></li>
             <li class="universities__logo"><img src="assets/img/universities/univer-guu.svg" alt="ГУУ" width="114" height="105" loading="lazy" decoding="async"></li>
           </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="programs" id="programs">
-      <div class="container programs__inner">
-        <article class="programs__card">
-          <div class="programs__head">
-            <h2 class="programs__title">Образовательные <span class="programs__title-muted">программы</span></h2>
-            <div class="programs__tabs" role="tablist" aria-label="Выберите программу"></div>
-          </div>
-
-          <div class="programs__body">
-            <p class="programs__subtitle">Пример расписания уроков</p>
-            <div class="programs__schedule" role="tabpanel" aria-live="polite"></div>
-            <p class="programs__routine" hidden></p>
-          </div>
-        </article>
-
-        <article class="programs__promo">
-          <h3 class="programs__promo-title"><span class="programs__promo-muted">Приходите к&nbsp;нам на</span> бесплатные 2&nbsp;пробных дня онлайн</h3>
-
-          <div class="programs__promo-labels" aria-hidden="true">
-            <span class="programs__promo-label programs__promo-label--dark">бесплатная диагностика знаний</span>
-            <span class="programs__promo-label programs__promo-label--light">2&nbsp;пробных дня</span>
-          </div>
-
-          <img class="programs__promo-image" src="assets/img/programs/boy.webp" alt="" width="736" height="1051" loading="lazy" decoding="async">
-
-          <a class="btn btn--primary programs__promo-btn" href="#form" data-open-form="2 пробных дня онлайн">начать учиться
-            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </article>
-      </div>
-    </section>
-
-    <section class="no-homework">
-      <div class="container">
-        <div class="no-homework__card">
-          <img class="no-homework__wave" src="assets/img/no-homework/wave.webp" alt="" width="1224" height="616" aria-hidden="true" loading="lazy" decoding="async">
-
-          <p class="no-homework__text">Весь материал отрабатывается на&nbsp;уроках и&nbsp;самоподготовке с&nbsp;куратором. Творческие работы ученики тоже выполняют самостоятельно&nbsp;— нам важен результат ребёнка, а&nbsp;не&nbsp;помощь родителей.</p>
-
-          <picture class="no-homework__boy">
-            <source media="(max-width: 1024px)" srcset="assets/img/no-homework/boy-mobile.webp" width="424" height="272">
-            <img src="assets/img/no-homework/boy.webp" alt="" width="424" height="220" loading="lazy" decoding="async">
-          </picture>
-
-          <a class="btn btn--primary no-homework__btn" href="#form" data-open-form>начать учиться
-            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
         </div>
       </div>
     </section>
@@ -744,7 +805,7 @@
           <a class="footer__link" href="#about">О нас</a>
           <a class="footer__link" href="#advantages">Преимущества</a>
           <a class="footer__link" href="#classes">Классы</a>
-          <a class="footer__link" href="#programs">Программы</a>
+          <a class="footer__link" href="#school-day">Как проходит обучение</a>
           <a class="footer__link" href="#electives">Факультативы</a>
           <a class="footer__link" href="#faq">FAQ</a>
           <a class="footer__link" href="#reviews">Отзывы</a>

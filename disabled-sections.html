@@ -9,7 +9,10 @@
 
   31.07.2026: блок 14 «Отзывы» возвращён в index.html (ролики ещё не пришли,
   плитки пустые и по клику ничего не открывают — js/reviews.js это стережёт).
-  Здесь остались только «Тарифы».
+
+  07.09.2026 (ТЗ от 06.09.2026): сюда переехала синяя карточка «2 пробных дня»
+  из бывшего блока «Образовательные программы». Тарифы возвращаются в пятой фазе
+  переработки — с реальными ценами вместо заглушек.
 -->
 
 <!-- Пункты меню (сняты из index.html) -->
@@ -181,3 +184,25 @@
         </ul>
       </div>
     </section>
+
+<!-- ===== Синяя карточка «2 пробных дня» из бывшего блока «Образовательные программы» =====
+     Снята 07.09.2026 по ТЗ §9: блок стал «Как проходит учебный день», и его состав
+     ТЗ перечисляет закрытым списком — приглашения на пробные дни там нет. Тему
+     закрывает отдельный блок 12 «Два пробных дня» (#trial).
+     ⚠️ Стили .programs__promo* удалены вместе с css/programs.css (файл переименован
+     в css/school-day.css). Возвращать блок — только вместе со стилями из истории git:
+     git show 2738907:css/programs.css -->
+    <article class="programs__promo">
+      <h3 class="programs__promo-title"><span class="programs__promo-muted">Приходите к&nbsp;нам на</span> бесплатные 2&nbsp;пробных дня онлайн</h3>
+
+      <div class="programs__promo-labels" aria-hidden="true">
+        <span class="programs__promo-label programs__promo-label--dark">бесплатная диагностика знаний</span>
+        <span class="programs__promo-label programs__promo-label--light">2&nbsp;пробных дня</span>
+      </div>
+
+      <img class="programs__promo-image" src="assets/img/programs/boy.webp" alt="" width="736" height="1051" loading="lazy" decoding="async">
+
+      <a class="btn btn--primary programs__promo-btn" href="#form" data-open-form="2 пробных дня онлайн">начать учиться
+        <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </article>

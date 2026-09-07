@@ -1,0 +1,98 @@
+/* who-fits.css — блок 4 «Когда онлайн-школа особенно удобна» (ТЗ 06.09.2026, §8).
+   Макета у блока нет: он появился в ТЗ и в 1920.png отсутствует. Поэтому собран
+   из готовых паттернов проекта — коробка секции как у «Выберите класс»,
+   карточка как в «Ключевых преимуществах» (белая, радиус --radius-card,
+   тень --shadow-card, поле --card-pad), кнопка из layout.css.
+
+   ТЗ прямо запрещает карусель: шесть карточек всегда лежат сеткой
+   3 × 2 → 2 × 3 → колонка. */
+
+.who-fits {
+  padding-block: 20px;
+}
+
+.who-fits__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.128cqw, 40px);
+}
+
+.who-fits__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 0.851cqw, 16px);
+}
+
+.who-fits__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.who-fits__subtitle {
+  font-size: var(--fs-h4);
+  line-height: 1.3;
+  color: var(--color-gray-2);
+}
+
+.who-fits__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+}
+
+.who-fits__card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  padding: var(--card-pad);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.who-fits__card-title {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.who-fits__card-text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+/* Кнопка прижата влево под сеткой — как CTA в «Аттестате», а не по центру:
+   в проекте кнопки блоков нигде не центрируются. */
+.who-fits__cta {
+  align-self: flex-start;
+}
+
+/* Планшет (ТЗ §8): сетка 2 × 3 */
+@media (max-width: 1024px) {
+  .who-fits__list { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Телефон: шесть компактных карточек вертикально. Секция типа A —
+   во всю ширину, без бокового поля и скруглений у карточек не отменяем:
+   карточки здесь остаются карточками, меняется только число колонок. */
+@media (max-width: 767px) {
+  .who-fits { padding-block: 0; }
+
+  .who-fits__inner {
+    gap: 20px;
+    padding-block: var(--section-pad-y);
+  }
+
+  .who-fits__list { grid-template-columns: 1fr; }
+
+  .who-fits__card {
+    gap: 8px;
+    padding: 20px;
+  }
+
+  /* На телефоне у всех блоков кнопка во всю ширину */
+  .who-fits__cta {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
