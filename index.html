@@ -44,12 +44,11 @@
   <link rel="stylesheet" href="css/attestat.css?v=2">
   <link rel="stylesheet" href="css/who-fits.css">
   <link rel="stylesheet" href="css/school-day.css">
-  <link rel="stylesheet" href="css/classes.css">
+  <link rel="stylesheet" href="css/classes.css?v=2">
   <link rel="stylesheet" href="css/ege-banner.css">
-  <link rel="stylesheet" href="css/about.css?v=7">
+  <link rel="stylesheet" href="css/about.css?v=8">
   <link rel="stylesheet" href="css/universities.css">
   <link rel="stylesheet" href="css/pricing.css">
-  <link rel="stylesheet" href="css/staff.css">
   <link rel="stylesheet" href="css/invite.css?v=5">
   <link rel="stylesheet" href="css/reviews.css?v=4">
   <link rel="stylesheet" href="css/faq.css">
@@ -58,12 +57,13 @@
   <link rel="stylesheet" href="css/form.css?v=4">
   <link rel="stylesheet" href="css/mobile-cta.css">
 
-  <script src="js/main.js?v=5" defer></script>
+  <script src="js/main.js?v=6" defer></script>
   <script src="js/header.js?v=2" defer></script>
   <script src="js/mobile-cta.js" defer></script>
   <script src="js/attestat.js?v=4" defer></script>
-  <script src="js/school-day.js" defer></script>
-  <script src="js/staff.js?v=3" defer></script>
+  <script src="js/school-day.js?v=2" defer></script>
+  <script src="js/classes.js" defer></script>
+  <script src="js/about.js" defer></script>
   <script src="js/reviews.js?v=4" defer></script>
   <script src="js/faq.js?v=2" defer></script>
   <script src="js/electives.js" defer></script>
@@ -400,73 +400,57 @@
       <div class="container classes__inner">
         <img class="classes__bg" src="assets/img/classes/classes-bg.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
-        <h2 class="classes__title">Выберите класс,<br>в&nbsp;котором учитесь</h2>
+        <h2 class="classes__title">Выберите класс ребёнка</h2>
 
         <ul class="classes__grid">
-          <li class="classes__card">
-            <h3 class="classes__card-title">1–4&nbsp;класс</h3>
-            <p class="classes__card-text"><span class="classes__muted">мягкое привыкание к&nbsp;онлайн-урокам</span> без стресса</p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+          <li class="classes__item">
+            <button class="classes__card" type="button" data-stage="primary" aria-expanded="false" aria-controls="classes-primary">
+              <span class="classes__card-head">
+                <span class="classes__card-title">Начальная школа</span>
+                <span class="classes__card-grades">1–4&nbsp;классы</span>
+              </span>
+              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="classes__card-body" id="classes-primary">
+              <p class="classes__card-text">Мягкая адаптация к&nbsp;онлайн-урокам, основные школьные предметы и&nbsp;поддержка в&nbsp;течение учебного дня.</p>
+            </div>
           </li>
 
-          <li class="classes__card">
-            <h3 class="classes__card-title">5&nbsp;класс</h3>
-            <p class="classes__card-text">лёгкая адаптация <span class="classes__muted">к&nbsp;новым предметам и&nbsp;учителям</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+          <li class="classes__item">
+            <button class="classes__card" type="button" data-stage="middle" aria-expanded="false" aria-controls="classes-middle">
+              <span class="classes__card-head">
+                <span class="classes__card-title">Средняя школа</span>
+                <span class="classes__card-grades">5–8&nbsp;классы</span>
+              </span>
+              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="classes__card-body" id="classes-middle">
+              <p class="classes__card-text">Новые предметы, системное обучение и&nbsp;обратная связь педагогов.</p>
+            </div>
           </li>
 
-          <li class="classes__card">
-            <h3 class="classes__card-title">6&nbsp;класс</h3>
-            <p class="classes__card-text">индивидуальный <span class="classes__muted">темп и&nbsp;поддержка куратора</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
-
-          <li class="classes__card">
-            <h3 class="classes__card-title">7&nbsp;класс</h3>
-            <p class="classes__card-text"><span class="classes__muted">мы проводим дополнительные</span> занятия <span class="classes__muted">по различным направлениям в&nbsp;зависимости от&nbsp;интересов и&nbsp;возраста ученика</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
-
-          <li class="classes__card">
-            <h3 class="classes__card-title">8&nbsp;класс</h3>
-            <p class="classes__card-text">сильная <span class="classes__muted">академическая подготовка</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
-
-          <li class="classes__card">
-            <h3 class="classes__card-title">9&nbsp;класс</h3>
-            <p class="classes__card-text">подготовка к&nbsp;ОГЭ на&nbsp;«отлично» <span class="classes__muted">без отрыва от&nbsp;школьной программы</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
-
-          <li class="classes__card">
-            <h3 class="classes__card-title">10–11&nbsp;класс</h3>
-            <p class="classes__card-text">помощь в&nbsp;выборе профессии <span class="classes__muted">и&nbsp;успешной сдаче ЕГЭ</span></p>
-            <a class="btn btn--outline btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
-
-          <li class="classes__card classes__card--accent">
-            <h3 class="classes__card-title">Экстернат</h3>
-            <p class="classes__card-text">Формат, ради которого чаще всего и&nbsp;приходят в&nbsp;онлайн: проходим программу быстрее, траекторию согласуем после диагностики и&nbsp;встречи с&nbsp;семьёй</p>
-            <a class="btn btn--white btn--small classes__btn" href="#form" data-open-form>хочу поступить
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+          <li class="classes__item">
+            <button class="classes__card" type="button" data-stage="senior" aria-expanded="false" aria-controls="classes-senior">
+              <span class="classes__card-head">
+                <span class="classes__card-title">Старшая школа</span>
+                <span class="classes__card-grades">9–11&nbsp;классы</span>
+              </span>
+              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="classes__card-body" id="classes-senior">
+              <p class="classes__card-text">Школьная программа, профильные классы и&nbsp;подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ.</p>
+            </div>
           </li>
         </ul>
+
+        <div class="classes__extern">
+          <h3 class="classes__extern-title">Экстернат</h3>
+          <p class="classes__extern-text">Возможность пройти программу быстрее. Траектория определяется после диагностики и&nbsp;встречи с&nbsp;семьёй.</p>
+        </div>
+
+        <a class="btn btn--white classes__cta" href="#form" data-open-form="Выберите класс ребёнка" data-cta-location="classes">Узнать об&nbsp;обучении в&nbsp;вашем классе
+          <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </section>
 
@@ -491,123 +475,71 @@
     </section>
 
     <section class="about" id="about">
-      <div class="container">
-        <h2 class="about__title">Моя школа&nbsp;LS <span class="about__title-muted">— полноценная онлайн-школа</span></h2>
-
-        <div class="about__grid">
-          <div class="about__col">
-            <article class="about-card manager">
-              <div class="manager__text">
-                <h3 class="about-card__title">Руководящий состав</h3>
-                <p class="about-card__desc">Команда опытных педагогов, которые помогают каждому ребёнку раскрыть свой потенциал. <span class="manager__accent">Наши преподаватели знают, как&nbsp;удерживать внимание класса через экран</span> и&nbsp;приводить учеников к&nbsp;высоким результатам.</p>
-              </div>
-              <span class="manager__disc" aria-hidden="true"></span>
-              <img class="manager__photo" src="assets/img/about/direktor.webp" alt="Руководитель онлайн-школы «Моя школа LS»" width="500" height="431" loading="lazy" decoding="async">
-            </article>
-
-            <article class="about-card school-video">
-              <h3 class="about-card__title">Полноценное обучение онлайн</h3>
-              <p class="about-card__desc">Ребёнок не&nbsp;остаётся один на&nbsp;один с&nbsp;записями и&nbsp;учебными материалами. Он&nbsp;занимается с&nbsp;преподавателями в&nbsp;прямом эфире, общается с&nbsp;одноклассниками и&nbsp;получает поддержку куратора.</p>
-              <ul class="school-video__chips">
-                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Живые уроки с&nbsp;преподавателем</li>
-                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">До&nbsp;15&nbsp;учеников в&nbsp;классе</li>
-                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Запись каждого занятия</li>
-                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Куратор всегда на&nbsp;связи</li>
-                <li class="school-video__chip"><img src="assets/img/green checkmark.svg" alt="" width="18" height="18" loading="lazy" decoding="async">Электронный журнал и&nbsp;обратная связь</li>
-              </ul>
-            </article>
-          </div>
-
-
-          <div class="about__col about__col--right">
-            <div class="about-online">
-              <div class="about-online__text">
-                <h3 class="about-online__title">Учитесь онлайн из&nbsp;любого региона с&nbsp;возможностью получить московскую медаль</h3>
-                <p class="about-online__subtitle">Дополнительные возможности при&nbsp;поступлении в&nbsp;вуз</p>
-                <p class="about-online__desc">Выпускник получает аттестат государственного образца московской школы-партнёра. При&nbsp;выполнении установленных требований он&nbsp;может претендовать на&nbsp;московскую медаль «За особые успехи в&nbsp;обучении». Медаль может дать до&nbsp;10 дополнительных баллов при&nbsp;поступлении — точное количество определяет выбранный вуз.</p>
-              </div>
-              <img class="about-online__medal" src="assets/img/about/medal.webp" alt="Медаль «За особые успехи в учении»" width="700" height="700" loading="lazy" decoding="async">
-            </div>
-
-            <article class="about-card license">
-              <div class="license__text">
-                <h3 class="about-card__title">Государственная лицензия</h3>
-                <p class="about-card__desc">Школа имеет лицензию на&nbsp;преподавательскую деятельность, поэтому вы <span class="about-dark">можете получить налоговый вычет или оплатить обучение материнским капиталом.</span></p>
-              </div>
-              <img class="license__img" src="assets/img/about/license.webp" alt="Скан государственной лицензии школы" width="696" height="900" loading="lazy" decoding="async">
-            </article>
-          </div>
+      <div class="container about__inner">
+        <div class="about__head">
+          <h2 class="about__title">За ребёнком стоит команда школы</h2>
+          <p class="about__subtitle">Онлайн-формат не&nbsp;означает самостоятельное обучение без&nbsp;поддержки.</p>
         </div>
-      </div>
-    </section>
 
-    <section class="universities" id="universities">
-      <div class="container">
-        <div class="universities__banner">
-          <img class="universities__decor universities__decor--wave" src="assets/img/universities/bg-blend.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
-
-          <div class="universities__content">
-            <h2 class="universities__title"><span class="universities__muted">Наши выпускники</span> <span class="universities__hl">поступают в&nbsp;самые престижные вузы</span> <span class="universities__muted">страны и&nbsp;мира</span></h2>
-            <a class="btn btn--primary universities__btn" href="#form" data-open-form>оставить заявку
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-
-          <ul class="universities__logos" aria-label="Логотипы вузов">
-            <li class="universities__logo"><img src="assets/img/universities/univer-rggu.svg" alt="РГГУ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mpgu.svg" alt="МПГУ" width="115" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-rea.svg" alt="РЭУ им. Плеханова" width="114" height="105" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mifi.svg" alt="НИЯУ МИФИ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgtu.svg" alt="МГТУ им. Н. Э. Баумана" width="109" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgu.svg" alt="МГУ им. Ломоносова" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mfua.svg" alt="МФЮА" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo universities__logo--tall"><img src="assets/img/universities/univer-oxford.svg" alt="University of Oxford" width="114" height="137" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-vshe.svg" alt="НИУ ВШЭ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgimo.svg" alt="МГИМО" width="114" height="91" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-ranh.svg" alt="РАНХиГС" width="88" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-guu.svg" alt="ГУУ" width="114" height="105" loading="lazy" decoding="async"></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="staff" id="staff">
-      <div class="container staff__inner">
-        <h2 class="staff__title">Обучайтесь <span class="staff__title-muted">комфортно</span></h2>
-
-        <div class="staff__tabs" role="tablist" aria-label="Категории сотрудников"></div>
-
-        <div class="staff__card">
-          <div class="staff__nav">
-            <div class="staff__scrollbar" aria-hidden="true">
-              <span class="staff__scrollbar-thumb"></span>
+        <ul class="about__roles">
+          <li class="about__role">
+            <button class="about__role-head" type="button" aria-expanded="false" aria-controls="about-role-teachers">
+              <span class="about__role-title">Преподаватели</span>
+              <svg class="about__role-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="about__role-body" id="about-role-teachers">
+              <p class="about__role-text">Проводят живые уроки, объясняют материал и&nbsp;проверяют домашние задания.</p>
             </div>
-            <div class="staff__thumbs" role="tablist" aria-label="Сотрудники категории"></div>
-          </div>
+          </li>
 
-          <div class="staff__info">
-            <h3 class="staff__name"></h3>
-            <p class="staff__lead"></p>
-          </div>
-
-          <figure class="staff__photo">
-            <img class="staff__photo-img" src="" alt="" width="360" height="360" loading="lazy" decoding="async">
-            <figcaption class="staff__photo-empty">Фото будет добавлено позже</figcaption>
-          </figure>
-
-          <div class="staff__about">
-            <div class="staff__badges"></div>
-            <p class="staff__text"></p>
-          </div>
-
-          <div class="staff__arrows">
-            <button class="staff__arrow staff__arrow--prev" type="button" aria-label="Предыдущий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li class="about__role">
+            <button class="about__role-head" type="button" aria-expanded="false" aria-controls="about-role-curator">
+              <span class="about__role-title">Куратор класса</span>
+              <svg class="about__role-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button class="staff__arrow staff__arrow--next" type="button" aria-label="Следующий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="about__role-body" id="about-role-curator">
+              <p class="about__role-text">Помогает в&nbsp;учебных и&nbsp;организационных вопросах в&nbsp;тарифе с&nbsp;прикреплением.</p>
+            </div>
+          </li>
+
+          <li class="about__role">
+            <button class="about__role-head" type="button" aria-expanded="false" aria-controls="about-role-psychologist">
+              <span class="about__role-title">Школьный психолог</span>
+              <svg class="about__role-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
+            <div class="about__role-body" id="about-role-psychologist">
+              <p class="about__role-text">Входит в&nbsp;оба формата обучения.</p>
+            </div>
+          </li>
+
+          <li class="about__role">
+            <button class="about__role-head" type="button" aria-expanded="false" aria-controls="about-role-management">
+              <span class="about__role-title">Руководство школы</span>
+              <svg class="about__role-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="about__role-body" id="about-role-management">
+              <p class="about__role-text">Отвечает за&nbsp;образовательный процесс и&nbsp;работу команды.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="about__license">
+          <div class="about__license-text">
+            <h3 class="about__license-title">Лицензия и&nbsp;официальный статус</h3>
+            <ul class="about__license-list">
+              <li class="about__license-item">государственная лицензия №&nbsp;Л035-01298-77/00179753;</li>
+              <li class="about__license-item">аттестат государственного образца;</li>
+              <li class="about__license-item">возможность получить налоговый вычет;</li>
+              <li class="about__license-item">возможность использовать материнский капитал для&nbsp;оплаты обучения.</li>
+            </ul>
           </div>
+          <img class="about__license-img" src="assets/img/about/license.webp" alt="Скан государственной лицензии школы" width="696" height="900" loading="lazy" decoding="async">
+        </div>
+
+        <div class="about__team">
+          <h3 class="about__team-title">Преподаватели</h3>
+          <ul class="about__profiles"></ul>
+          <button class="btn btn--primary about__more" type="button">Посмотреть всех преподавателей</button>
         </div>
       </div>
     </section>

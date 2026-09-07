@@ -40,54 +40,119 @@
   margin-bottom: clamp(20px, 2.128cqw, 40px);
 }
 
+/* ⚠️ 07.09.2026 (ТЗ §10): вместо восьми карточек-классов — три ступени
+   и отдельная широкая карточка экстерната. Кнопка из каждой карточки убрана,
+   под блоком остался один CTA. Ступень выбирается кликом и уходит
+   в school_stage (js/classes.js) — блок стоимости пятой фазы её подхватит. */
+
 .classes__grid {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--gap-cards);
+  margin-bottom: var(--gap-cards);
+}
+
+/* Обёртка ступени: шапка-кнопка + текст. На десктопе текст виден всегда,
+   на телефоне схлопывается в accordion. */
+.classes__item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-white);
+  border-radius: var(--radius-btn);
+  /* Рамка нужна и в покое: иначе при выборе ступени карточка «подпрыгивает»
+     на 4px, а с прозрачной рамкой геометрия не меняется. */
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.classes__item--active {
+  border-color: var(--color-pink);
+  box-shadow: var(--shadow-card);
 }
 
 .classes__card {
   display: flex;
-  flex-direction: column;
-  background: var(--color-white);
-  border-radius: var(--radius-btn);
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
   padding: clamp(20px, 1.489cqw, 28px);
-  /* Резиновый минимум (280 на 1920): карточки в ряду держат общую высоту,
-     но при длинном тексте на узкой ширине растут сами */
-  min-height: clamp(180px, 14.894cqw, 280px);
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.classes__card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .classes__card-title {
   font-size: var(--fs-h4);
   line-height: 1.1;
-  margin-bottom: clamp(10px, 0.851cqw, 16px);
+}
+
+.classes__card-grades {
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  color: var(--color-gray-2);
+}
+
+/* Стрелка accordion — только на телефоне */
+.classes__chevron {
+  flex: none;
+  display: none;
+  color: var(--color-blue);
+  transition: transform 0.25s ease;
+}
+
+.classes__card-body {
+  padding: 0 clamp(20px, 1.489cqw, 28px) clamp(20px, 1.489cqw, 28px);
 }
 
 .classes__card-text {
   font-size: var(--fs-small);
   color: var(--color-black);
   line-height: 1.5;
-  /* прижимает кнопку к низу карточки */
-  margin-bottom: auto;
 }
 
-.classes__muted { color: var(--color-gray-2); }
-
-.classes__btn {
-  align-self: flex-start;
-  margin-top: clamp(14px, 1.277cqw, 24px);
-}
-
-/* Розовая карточка «Экстернат» */
-.classes__card--accent {
+/* Розовая карточка «Экстернат» — во всю ширину под ступенями */
+.classes__extern {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.851cqw, 16px);
+  padding: clamp(20px, 1.489cqw, 28px);
+  margin-bottom: clamp(20px, 2.128cqw, 40px);
   background: var(--color-pink);
+  border-radius: var(--radius-btn);
+  color: var(--color-white);
 }
 
-.classes__card--accent .classes__card-title,
-.classes__card--accent .classes__card-text {
-  color: var(--color-white);
+.classes__extern-title {
+  font-size: var(--fs-h4);
+  line-height: 1.1;
+}
+
+.classes__extern-text {
+  max-width: 62%;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+/* .classes__inner — обычный блок, не flex, поэтому ширину кнопки задаём ей самой:
+   в покое она сжимается по тексту (.btn — inline-flex), на телефоне тянется. */
+.classes__cta {
+  position: relative;
+  z-index: 1;
 }
 
 /* --- Адаптив ---
@@ -95,9 +160,14 @@
    Два одинаковых запроса ≤1024 объединены в один. */
 @media (max-width: 1024px) {
   .classes { padding: 0 var(--page-gap) 48px; }
-  .classes__grid { grid-template-columns: repeat(2, 1fr); }
   .classes__inner { padding: 28px 20px; }
-  .classes__card { min-height: 0; }
+
+  /* Ступеней три, колонок две: третья карточка занимает нижний ряд целиком —
+     так ряд не остаётся с дырой справа. */
+  .classes__grid { grid-template-columns: repeat(2, 1fr); }
+  .classes__item:last-child { grid-column: 1 / -1; }
+
+  .classes__extern-text { max-width: none; }
 }
 
 /* Телефоны 360–767 — секция 1:9026: во всю ширину без скруглений,
@@ -140,24 +210,53 @@
   .classes__grid {
     grid-template-columns: 1fr;
     gap: 10px;
+    margin-bottom: 10px;
   }
 
+  .classes__item:last-child { grid-column: auto; }
+
   .classes__card {
-    min-height: 0;
     gap: 10px;
     padding: 20px;
+    /* ТЗ §21: зона нажатия не меньше 44px */
+    min-height: 44px;
   }
 
   .classes__card-title {
     font-size: var(--fs-h3);
     line-height: 0.9;
-    margin-bottom: 0;
   }
+
+  /* Accordion: на телефоне текст ступени скрыт, пока карточку не раскрыли.
+     Управляет aria-expanded у кнопки — отдельного класса не заводим,
+     чтобы состояние жило в одном месте и для скринридера, и для стилей. */
+  .classes__chevron { display: block; }
+
+  .classes__card[aria-expanded='false'] + .classes__card-body { display: none; }
+
+  .classes__card[aria-expanded='true'] .classes__chevron {
+    transform: rotate(180deg);
+  }
+
+  .classes__card-body { padding: 0 20px 20px; }
 
   .classes__card-text { line-height: 1.4; }
 
-  .classes__btn {
-    align-self: stretch;
-    margin-top: 10px;
+  .classes__extern {
+    gap: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .classes__extern-title {
+    font-size: var(--fs-h3);
+    line-height: 0.9;
+  }
+
+  .classes__extern-text { line-height: 1.4; }
+
+  .classes__cta {
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -155,7 +155,10 @@
     routine.hidden = !program.routine;
   };
 
-  const activateTab = (index) => {
+  // silent — стартовый вызов при загрузке: вкладку включить надо, а вот записывать
+  // ступень в состояние нельзя, иначе форма получит «начальную школу» как выбор
+  // родителя, хотя он ничего не выбирал.
+  const activateTab = (index, silent) => {
     currentIndex = index;
 
     tabs.forEach((tab, tabIndex) => {
@@ -168,9 +171,8 @@
     schedule.setAttribute('aria-labelledby', tabs[index].id);
     renderSchedule(PROGRAMS[index]);
 
-    // Выбранная ступень пригодится форме (ТЗ §20). Хелпер появится в фазе 8 —
-    // до тех пор вызов просто не срабатывает.
-    if (typeof window.setSchoolStage === 'function') {
+    // Выбранная ступень пригодится форме и блоку стоимости (ТЗ §20)
+    if (!silent && typeof window.setSchoolStage === 'function') {
       window.setSchoolStage(PROGRAMS[index].stage);
     }
   };
@@ -227,7 +229,7 @@
   dayButtons.forEach((button, index) => button.addEventListener('click', () => activateDay(index)));
   bindArrows(dayButtons, activateDay);
 
-  activateTab(0);
+  activateTab(0, true);
   syncCardHeight();
 
   // Пересчёт после подгрузки Onest: с системным шрифтом строки переносятся

@@ -7,6 +7,26 @@
   // здесь заглушка на случай, если form.js не загрузился.
   window.openForm = () => {};
 
+  // Состояние выбора родителя (ТЗ §20). Ступень выбирается в блоке «Выберите
+  // класс», формат — в блоке «Выберите формат» (фаза 5), место клика приходит
+  // с самой кнопки. Держим в одном объекте, чтобы значение переживало переходы
+  // между блоками; читать его будут скрытые поля формы и аналитика (фаза 8).
+  // ⚠️ Живая заявка уходит через click-форму Битрикса офлайн-школы, и скрытые
+  // поля туда не передаются — см. пункт 1 списка на ревью в checklist.md.
+  window.schoolChoice = {
+    school_stage: '',
+    education_format: '',
+    cta_location: '',
+  };
+
+  window.setSchoolStage = (stage) => {
+    window.schoolChoice.school_stage = stage || '';
+  };
+
+  window.setEducationFormat = (format) => {
+    window.schoolChoice.education_format = format || '';
+  };
+
   // Блокировка прокрутки страницы под модалками (форма, лайтбокс).
   // Одного `overflow: hidden` на body мало: на телефоне страница всё равно
   // «пробивается» свайпом — Safari его игнорирует. Поэтому body фиксируем,
@@ -38,6 +58,9 @@
     const cta = e.target.closest('[data-open-form]');
     if (!cta) return;
     e.preventDefault();
+    // Откуда пришла заявка: явная метка кнопки, иначе id секции, в которой она лежит
+    const section = cta.closest('section[id]');
+    window.schoolChoice.cta_location = cta.dataset.ctaLocation || (section ? section.id : '');
     window.openForm(cta.dataset.openForm);
   });
 

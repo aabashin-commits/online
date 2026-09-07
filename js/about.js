@@ -1,10 +1,17 @@
-// staff.js — блок 12 «Обучайтесь комфортно»: категории × люди,
-// вертикальная лента миниатюр с кастомным скроллбаром и стрелками.
+// about.js — блок «За ребёнком стоит команда школы» (ТЗ 06.09.2026, §11).
+//
+// ⚠️ 07.09.2026 файл переименован из staff.js: блоки «О нас» и «Педагоги»
+// слиты в один. Данные о людях сохранены целиком (ТЗ велит использовать
+// существующие фотографии и описания), а вот показ переписан: вместо категорий
+// с лентой миниатюр — сетка профилей, шесть сразу и остальные по кнопке.
+// Категории оставлены в данных: они задают порядок людей и пригодятся, если
+// клиент попросит вернуть фильтры.
 (() => {
   'use strict';
 
-  const root = document.querySelector('.staff');
+  const root = document.querySelector('.about');
   if (!root) return;
+
 
   // Состав — из двух презентаций клиента: «ПЕДАГОГИ БУТОВО.pptx» (10 чел.) и
   // «Педагоги ЦЕНТР Моя школа LS.pptx» (17 чел.), обе от 27–28.07.2026. Итого 27
@@ -269,33 +276,15 @@
     },
   ];
 
-  // Показываем в категориях, по которым состав ещё не прислали (сейчас все заполнены)
-  const placeholder = {
-    name: 'Скоро здесь появятся специалисты',
-    photo: '',
-    badges: [],
-    lead: 'Состав категории **ждём от клиента**',
-    text: 'ФИО, фотографии и описания сотрудников будут добавлены после получения материалов.',
-  };
+  const profilesEl = root.querySelector('.about__profiles');
+  const moreBtn = root.querySelector('.about__more');
+  if (!profilesEl) return;
 
-  const tabsEl = root.querySelector('.staff__tabs');
-  const cardEl = root.querySelector('.staff__card');
-  const thumbsEl = root.querySelector('.staff__thumbs');
-  const trackEl = root.querySelector('.staff__scrollbar');
-  const barEl = root.querySelector('.staff__scrollbar-thumb');
-  const nameEl = root.querySelector('.staff__name');
-  const leadEl = root.querySelector('.staff__lead');
-  const photoEl = root.querySelector('.staff__photo');
-  const photoImg = root.querySelector('.staff__photo-img');
-  const badgesEl = root.querySelector('.staff__badges');
-  const textEl = root.querySelector('.staff__text');
-  const prevBtn = root.querySelector('.staff__arrow--prev');
-  const nextBtn = root.querySelector('.staff__arrow--next');
+  // Сколько профилей видно до нажатия кнопки (ТЗ §11: «не более шести»)
+  const VISIBLE = 6;
 
-  if (!tabsEl || !cardEl) return;
-
-  let categoryIndex = 0;
-  let personIndex = 0;
+  // Порядок людей — порядок категорий: сначала руководящий состав, дальше предметники
+  const people = categories.reduce((all, category) => all.concat(category.people), []);
 
   // **кусок** → акцентный span; остальное экранируем
   const withAccents = (raw) => raw
@@ -304,143 +293,111 @@
     .replace(/>/g, '&gt;')
     .replace(/\*\*(.+?)\*\*/g, '<span class="accent">$1</span>');
 
-  const peopleOf = (category) => (category.people.length ? category.people : [placeholder]);
+  const buildProfile = (person) => {
+    const item = document.createElement('li');
+    item.className = 'about__profile';
 
-  function renderTabs() {
-    tabsEl.innerHTML = '';
+    const figure = document.createElement('figure');
+    figure.className = 'about__profile-photo';
 
-    categories.forEach((category, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'staff__tab' + (i === categoryIndex ? ' staff__tab--active' : '');
-      btn.textContent = category.label;
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', String(i === categoryIndex));
-
-      btn.addEventListener('click', () => {
-        if (i === categoryIndex) return;
-        categoryIndex = i;
-        personIndex = 0;
-        renderTabs();
-        renderThumbs();
-        renderPerson();
-      });
-
-      tabsEl.appendChild(btn);
-    });
-  }
-
-  function renderThumbs() {
-    const people = peopleOf(categories[categoryIndex]);
-    thumbsEl.innerHTML = '';
-
-    people.forEach((person, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'staff__thumb' + (i === personIndex ? ' staff__thumb--active' : '');
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', String(i === personIndex));
-      btn.setAttribute('aria-label', person.name);
-
-      // У миниатюры своя картинка — вырезка без фона (rembg по фото презентации).
-      // Иначе белый фон обычного фото перекрывает подложку и активная не читается синей.
-      if (person.thumb || person.photo) {
-        const img = document.createElement('img');
-        // ⚠️ src — через data-src и window.applyLazySrc (см. main.js): у картинки,
-        // которой ещё нет в документе, loading="lazy" не работает — миниатюры
-        // грузились при открытии страницы, хотя лента лежит далеко ниже экрана.
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.dataset.src = person.thumb || person.photo;
-        img.alt = '';
-        btn.appendChild(img);
-      }
-
-      btn.addEventListener('click', () => select(i));
-      thumbsEl.appendChild(btn);
-    });
-
-    // Миниатюры уже в документе — отдаём им настоящий src, дальше сработает lazy
-    window.applyLazySrc(thumbsEl);
-
-    // Один человек — лента, скроллбар и стрелки не нужны
-    cardEl.classList.toggle('staff__card--single', people.length < 2);
-    updateScrollbar();
-  }
-
-  function renderPerson() {
-    const people = peopleOf(categories[categoryIndex]);
-    const person = people[personIndex];
-
-    nameEl.textContent = person.name;
-    leadEl.innerHTML = withAccents(person.lead);
-    textEl.innerHTML = withAccents(person.text);
-
-    photoEl.classList.toggle('staff__photo--empty', !person.photo);
     if (person.photo) {
-      photoImg.src = person.photo;
-      photoImg.alt = person.name;
+      const img = document.createElement('img');
+      img.className = 'about__profile-img';
+      img.src = person.photo;
+      img.alt = person.name;
+      img.width = 360;
+      img.height = 360;
+      // Фотографий 27, и все они ниже первого экрана: грузим по мере прокрутки
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      figure.append(img);
     } else {
-      photoImg.removeAttribute('src');
-      photoImg.alt = '';
+      const empty = document.createElement('figcaption');
+      empty.className = 'about__profile-empty';
+      empty.textContent = 'Фото будет добавлено позже';
+      figure.append(empty);
     }
 
-    badgesEl.innerHTML = '';
-    person.badges.forEach((badge) => {
-      const span = document.createElement('span');
-      span.className = 'staff__badge' + (badge.solid ? ' staff__badge--solid' : '');
-      span.textContent = badge.text;
-      badgesEl.appendChild(span);
-    });
+    item.append(figure);
 
-    prevBtn.disabled = personIndex === 0;
-    nextBtn.disabled = personIndex === people.length - 1;
-  }
+    const name = document.createElement('h4');
+    name.className = 'about__profile-name';
+    name.textContent = person.name;
+    item.append(name);
 
-  function select(index) {
-    const people = peopleOf(categories[categoryIndex]);
-    if (index < 0 || index >= people.length || index === personIndex) return;
-
-    personIndex = index;
-
-    thumbsEl.querySelectorAll('.staff__thumb').forEach((el, i) => {
-      el.classList.toggle('staff__thumb--active', i === personIndex);
-      el.setAttribute('aria-selected', String(i === personIndex));
-    });
-
-    const active = thumbsEl.children[personIndex];
-    if (active) active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-
-    renderPerson();
-    updateScrollbar();
-  }
-
-  // Бегунок: высота = доля видимой части ленты, позиция = доля прокрутки
-  function updateScrollbar() {
-    if (!trackEl || !barEl) return;
-
-    const trackHeight = trackEl.clientHeight;
-    const { clientHeight, scrollHeight, scrollTop } = thumbsEl;
-
-    if (!trackHeight || scrollHeight <= clientHeight) {
-      barEl.style.height = '100%';
-      barEl.style.top = '0px';
-      return;
+    // Бейджи — это должность или предмет и стаж: ТЗ требует показать и то, и другое
+    if (person.badges.length) {
+      const badges = document.createElement('ul');
+      badges.className = 'about__profile-badges';
+      person.badges.forEach((badge) => {
+        const badgeEl = document.createElement('li');
+        badgeEl.className = badge.solid
+          ? 'about__profile-badge about__profile-badge--solid'
+          : 'about__profile-badge';
+        badgeEl.textContent = badge.text;
+        badges.append(badgeEl);
+      });
+      item.append(badges);
     }
 
-    const barHeight = Math.max(24, (clientHeight / scrollHeight) * trackHeight);
-    const progress = scrollTop / (scrollHeight - clientHeight);
+    // lead — одно главное профессиональное достижение
+    const lead = document.createElement('p');
+    lead.className = 'about__profile-lead';
+    lead.innerHTML = withAccents(person.lead);
+    item.append(lead);
 
-    barEl.style.height = barHeight + 'px';
-    barEl.style.top = Math.round(progress * (trackHeight - barHeight)) + 'px';
+    return item;
+  };
+
+  const render = (list) => {
+    const fragment = document.createDocumentFragment();
+    list.forEach((person) => fragment.append(buildProfile(person)));
+    profilesEl.append(fragment);
+  };
+
+  render(people.slice(0, VISIBLE));
+
+  if (moreBtn) {
+    if (people.length <= VISIBLE) {
+      moreBtn.hidden = true;
+    } else {
+      moreBtn.addEventListener('click', () => {
+        const shown = profilesEl.children.length;
+        render(people.slice(VISIBLE));
+        moreBtn.hidden = true;
+        // Фокус уводим на первого из открывшихся: иначе после исчезновения
+        // кнопки он улетел бы в начало страницы.
+        const first = profilesEl.children[shown];
+        if (first) {
+          first.setAttribute('tabindex', '-1');
+          first.focus();
+        }
+      }, { once: true });
+    }
   }
 
-  prevBtn.addEventListener('click', () => select(personIndex - 1));
-  nextBtn.addEventListener('click', () => select(personIndex + 1));
-  thumbsEl.addEventListener('scroll', updateScrollbar);
-  window.addEventListener('resize', updateScrollbar);
+  // Карточки ролей: на телефоне — accordion (ТЗ §11), на десктопе текст открыт
+  // всегда. Состояние держит aria-expanded, стили читают его же.
+  const roleHeads = Array.from(root.querySelectorAll('.about__role-head'));
+  const mobile = window.matchMedia('(max-width: 767px)');
+  let openRole = null;
 
-  renderTabs();
-  renderThumbs();
-  renderPerson();
+  const syncRoles = () => {
+    roleHeads.forEach((head) => {
+      const open = mobile.matches ? head === openRole : true;
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  };
+
+  roleHeads.forEach((head) => {
+    head.addEventListener('click', () => {
+      // Открыта не больше одной карточки: список ролей короткий,
+      // и так его целиком видно без длинной прокрутки.
+      openRole = openRole === head ? null : head;
+      syncRoles();
+    });
+  });
+
+  mobile.addEventListener('change', syncRoles);
+  syncRoles();
 })();
