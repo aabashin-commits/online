@@ -39,9 +39,9 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css?v=2">
   <link rel="stylesheet" href="css/header.css?v=8">
-  <link rel="stylesheet" href="css/hero.css?v=4">
-  <link rel="stylesheet" href="css/info-cards.css?v=2">
-  <link rel="stylesheet" href="css/attestat.css">
+  <link rel="stylesheet" href="css/hero.css?v=5">
+  <link rel="stylesheet" href="css/info-cards.css?v=3">
+  <link rel="stylesheet" href="css/attestat.css?v=2">
   <link rel="stylesheet" href="css/classes.css">
   <link rel="stylesheet" href="css/ege-banner.css">
   <link rel="stylesheet" href="css/about.css?v=7">
@@ -61,7 +61,7 @@
   <script src="js/main.js?v=5" defer></script>
   <script src="js/header.js?v=2" defer></script>
   <script src="js/mobile-cta.js" defer></script>
-  <script src="js/attestat.js?v=3" defer></script>
+  <script src="js/attestat.js?v=4" defer></script>
   <script src="js/programs.js?v=2" defer></script>
   <script src="js/staff.js?v=3" defer></script>
   <script src="js/reviews.js?v=4" defer></script>
@@ -198,23 +198,21 @@
 
           <h1 class="hero__title">Онлайн-школа<br><span class="hero__hl">с&nbsp;1 по&nbsp;11&nbsp;класс</span></h1>
 
-          <p class="hero__desc">Аттестат гос.&nbsp;образца, куратор, наставник и&nbsp;школьный психолог</p>
+          <p class="hero__desc">Живые уроки, поддержка куратора и&nbsp;школьного психолога, аттестат государственного образца</p>
 
-          <p class="hero__note">Открыт набор на&nbsp;2026/27&nbsp;уч.&nbsp;год<br><span class="hero__note-hl">Получите консультацию и&nbsp;2&nbsp;пробных дня онлайн</span></p>
+          <p class="hero__note">Открыт набор на&nbsp;2026/27&nbsp;учебный год</p>
 
           <div class="hero__cta">
             <img class="hero__spark hero__spark--btn" src="assets/img/hero/spark-btn.svg" alt="" width="20" height="22">
-            <a class="btn btn--primary" href="#form" data-open-form>
-              оставить заявку
+            <a class="btn btn--primary" href="#form" data-open-form data-cta-location="hero">
+              Получить консультацию и&nbsp;2&nbsp;пробных дня
               <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
-            <span class="hero__sticker">
-              бесплатные занятия
-              <img class="hero__spark hero__spark--sticker" src="assets/img/hero/spark-sticker.svg" alt="" width="27" height="27">
-            </span>
           </div>
+
+          <p class="hero__cta-note">Поможем выбрать класс и&nbsp;формат обучения</p>
         </div>
 
         <div class="hero__kids">
@@ -226,43 +224,47 @@
     <section class="info-cards" id="advantages">
       <ul class="info-cards__list">
         <li class="info-cards__card">
-          <h3 class="info-cards__title">Индивидуальный план обучения</h3>
-          <p class="info-cards__text"><span class="info-cards__muted">Живые уроки в&nbsp;прямом эфире и&nbsp;запись каждого занятия,</span> чтобы каждый ребёнок мог раскрыть свой потенциал</p>
+          <h3 class="info-cards__title">До&nbsp;15&nbsp;учеников в&nbsp;классе</h3>
+          <p class="info-cards__text">Педагог видит каждого ребёнка</p>
         </li>
         <li class="info-cards__card">
-          <h3 class="info-cards__title">Готовим к&nbsp;поступлению в&nbsp;самые престижные вузы</h3>
-          <p class="info-cards__text">Каждый 5-й&nbsp;выпускник «Моя школа&nbsp;LS» <span class="info-cards__muted">поступает в&nbsp;самые престижные вузы страны и&nbsp;за&nbsp;рубежом</span></p>
+          <h3 class="info-cards__title">Живые уроки</h3>
+          <p class="info-cards__text">Занятия проходят с&nbsp;преподавателем и&nbsp;одноклассниками</p>
         </li>
         <li class="info-cards__card">
-          <h3 class="info-cards__title">Государственная<br>лицензия</h3>
+          <h3 class="info-cards__title">Уроки в&nbsp;записи</h3>
+          <p class="info-cards__text">Можно вернуться к&nbsp;пропущенной или сложной теме</p>
+        </li>
+        <li class="info-cards__card">
+          <h3 class="info-cards__title">Прогресс под контролем</h3>
+          <p class="info-cards__text">Оценки в&nbsp;электронном журнале и&nbsp;обратная связь педагогов</p>
+        </li>
+        <li class="info-cards__card info-cards__card--license">
+          <h3 class="info-cards__title">Государственная лицензия</h3>
           <p class="info-cards__text">№&nbsp;Л035-01298-77/00179753</p>
-        </li>
-        <li class="info-cards__card">
-          <h3 class="info-cards__title">Аттестат<br>государственного образца</h3>
-          <p class="info-cards__text">Все онлайн-уроки в&nbsp;соответствии с&nbsp;федеральным <span class="info-cards__muted">государственным образовательным</span> стандартом</p>
         </li>
       </ul>
     </section>
     </div>
 
-    <section class="attestat" id="attestat" data-class-size="15">
+    <section class="attestat" id="attestat">
       <div class="container attestat__inner">
         <img class="attestat__figura" src="assets/img/attestat/diplom_figura.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-        <div class="attestat__tabs">
-          <button class="pill pill--active" aria-current="true">Аттестат гос.&nbsp;образца</button>
-          <button class="pill">До&nbsp;15&nbsp;учеников в&nbsp;классе</button>
-          <button class="pill">Прогресс под контролем</button>
-          <button class="pill">Удобный формат</button>
-          <button class="pill">Уроки в записи</button>
-        </div>
 
         <div class="attestat__row">
           <div class="attestat__content">
-            <h2 class="attestat__title">Выдаём аттестат гос.&nbsp;образца</h2>
-            <p class="attestat__lead">Аттестат онлайн-школы ничем не&nbsp;отличается от&nbsp;аттестата очной: с&nbsp;ним поступают в&nbsp;любой вуз и&nbsp;колледж страны на&nbsp;общих основаниях. <span class="attestat__hl">Для&nbsp;нас каждый выпускник «Моя школа&nbsp;LS»&nbsp;— это большая гордость и&nbsp;результат совместного пути.</span></p>
-            <p class="attestat__note">Ваш ребёнок получит аттестат гос.&nbsp;образца о&nbsp;среднем образовании. При&nbsp;этом мы всегда можем вам предоставить усиленную программу.</p>
+            <h2 class="attestat__title">Аттестат государственного образца</h2>
+            <p class="attestat__lead">Документ не&nbsp;отличается от&nbsp;аттестата обычной школы: с&nbsp;ним поступают в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях.</p>
 
-            <a class="btn btn--primary" href="#form" data-open-form>начать учиться
+            <ul class="attestat__facts">
+              <li class="attestat__fact">Ребёнок учится онлайн по&nbsp;школьной программе</li>
+              <li class="attestat__fact">Выпускники получают аттестат государственного образца</li>
+              <li class="attestat__fact">Документ подходит для&nbsp;поступления в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях</li>
+            </ul>
+
+            <p class="attestat__note">Организационные подробности оформления специалист школы объяснит на&nbsp;консультации.</p>
+
+            <a class="btn btn--primary" href="#form" data-open-form data-cta-location="attestat">Узнать подробнее
               <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -270,16 +272,13 @@
           </div>
 
           <div class="attestat__media">
-            <div class="attestat__frame">
+            <button class="attestat__frame" type="button" aria-label="Открыть аттестат в увеличенном виде">
               <picture class="attestat__picture">
                 <source class="attestat__source" media="(max-width: 767px)" srcset="assets/img/attestat/diplom-mobile.webp">
-                <img class="attestat__img" src="assets/img/attestat/diplom.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="1400" height="835" loading="lazy" decoding="async">
+                <img class="attestat__img attestat__img--wide" src="assets/img/attestat/diplom.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="1400" height="835" loading="lazy" decoding="async">
               </picture>
-              <div class="attestat__bubbles">
-                <span class="attestat__bubble attestat__bubble--light">гос.&nbsp;образец</span>
-                <span class="attestat__bubble attestat__bubble--solid">лично в&nbsp;руки</span>
-              </div>
-            </div>
+              <span class="attestat__zoom">Нажмите, чтобы&nbsp;рассмотреть</span>
+            </button>
           </div>
         </div>
       </div>

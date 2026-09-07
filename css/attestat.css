@@ -42,42 +42,10 @@
   user-select: none;
 }
 
-/* Лента пиллов */
-.attestat__tabs {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: var(--gap-cards);
-  margin-bottom: clamp(30px, 2.553cqw, 48px);
-}
-
-.pill {
-  padding: clamp(10px, 0.745cqw, 14px) clamp(16px, 1.383cqw, 26px);
-  border-radius: var(--radius-pill);
-  background: transparent;
-  border: 1px solid var(--color-light-blue);
-  color: var(--color-blue-2);
-  font-size: var(--fs-btn);
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.pill:hover {
-  color: var(--color-blue);
-  border-color: var(--color-blue-2);
-}
-
-.pill--active,
-.pill--active:hover {
-  background: var(--color-blue);
-  color: var(--color-white);
-  border-color: transparent;
-}
+/* ⚠️ 07.09.2026 удалены стили ленты пиллов (.attestat__tabs, .pill, .pill--active):
+   ТЗ §7 оставило в секции только сам аттестат, вкладок в разметке больше нет.
+   Класс .pill был локальным — в других блоках он не встречался, поэтому уносим
+   его целиком, а не переносим в base.css. */
 
 .attestat__row {
   position: relative;
@@ -104,43 +72,44 @@
   margin-bottom: clamp(16px, 1.277cqw, 24px);
 }
 
-/* Подзаголовок есть у табов 2–5 («блок 2 табы 2-5.png»), у первого его нет */
-.attestat__subtitle {
-  font-size: var(--fs-h4);
-  line-height: 1.2;
-  color: var(--color-black);
-  margin-bottom: 20px;
-}
-
-.attestat__subtitle[hidden] { display: none; }
+/* ⚠️ 07.09.2026 удалены .attestat__subtitle, .attestat__lead--muted и .attestat__hl —
+   их ставил JS у вкладок 2–5, вкладок больше нет. */
 
 .attestat__lead {
   font-size: var(--fs-text);
   color: var(--color-black);
   line-height: 1.6;
-  margin-bottom: 16px;
+  margin-bottom: clamp(20px, 1.277cqw, 24px);
 }
 
-/* У табов 2–5 основной текст серый, а выделенная часть — тёмная */
-.attestat__lead--muted {
-  color: var(--color-gray-2);
+/* Три факта из ТЗ §7. Маркер — синяя галочка псевдоэлементом: своей иконки
+   в проекте нет, а подгружать ради трёх строк SVG незачем. */
+.attestat__facts {
+  display: grid;
+  gap: clamp(10px, 0.638cqw, 12px);
+  margin-bottom: clamp(20px, 1.277cqw, 24px);
 }
 
-.attestat__lead--muted .accent {
+.attestat__fact {
+  position: relative;
+  padding-left: 30px;
+  font-size: var(--fs-text);
+  line-height: 1.5;
   color: var(--color-black);
 }
 
-.attestat__note[hidden] { display: none; }
-
-/* Подсветка-маркер части абзаца — форма и цвет как у H1 (hero__hl):
-   заливка --color-light-blue 40%, радиус 4px, без верт. паддинга (высота = высоте текста) */
-.attestat__hl {
-  background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
-  color: var(--color-black);
-  border-radius: 4px;
-  padding: 0 6px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+.attestat__fact::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  /* 0.75em от базовой линии текста: галочка встаёт по центру первой строки
+     при любом кегле, без магических px */
+  top: 0.55em;
+  width: 14px;
+  height: 8px;
+  border-left: 2px solid var(--color-blue);
+  border-bottom: 2px solid var(--color-blue);
+  transform: rotate(-45deg);
 }
 
 .attestat__note {
@@ -187,112 +156,69 @@
   border-radius: 0;
 }
 
-/* У фото-табов колонка ниже коллажа — высоту не держим.
-   Фото стоит в правом-нижнем углу белой карточки с полем 60px от её края
-   (решение клиента 21.07.2026). Раньше .attestat__frame не имел ни одного
-   правила: как flex-элемент он обнимал картинку по ширине, поэтому
-   margin-left: auto у самой картинки не работал и фото прижималось влево.
-   Прижимаем саму обёртку: flex-end по обеим осям + добор margin'ом до 60,
-   потому что --pad карточки меньше (48 на 1920, 20 ниже). */
-.attestat__media--photo {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  /* min-height НЕ сбрасываем: наследуем резиновую высоту .attestat__media
-     (clamp 320…24.468cqw…460). Именно она задаёт высоту первого таба, поэтому
-     карточка получается одинаковой на всех вкладках (627 на 1920) — раньше
-     здесь стоял min-height: 0 и фото-табы проседали до 556. */
-}
+/* ⚠️ 07.09.2026 удалены стили фото-табов (.attestat__media--photo и его потомки)
+   и бабблов (.attestat__bubbles, .attestat__bubble--light/--solid): и то и другое
+   рисовал JS для вкладок 2–5, которых больше нет. В секции остался один коллаж.
 
-.attestat__media--photo .attestat__frame {
-  /* Позиционированный бокс размером с фото — к нему цепляются бабблы,
-     иначе они остались бы висеть слева, привязанные к .attestat__media */
-  position: relative;
-  /* Ширина задана явно (548 на 1920). Без неё обёртка как flex-элемент
-     ужимается по содержимому, а вклад картинки в max-content считается
-     через пропорцию от заданной высоты: у квадратного кадра таба 3 это
-     давало 366 вместо 548, и фото выпадало из общего ряда. */
-  width: 30.691cqw;
-  max-width: 100%;
-  margin-right: calc(60px - var(--pad));
-  /* Снизу отступа нет: низ фото садится на низ строки, то есть на одну линию
-     с низом кнопки в текстовой колонке. От нижнего края карточки получается
-     --pad (48 на 1920) — столько же, сколько у самой кнопки. */
-  margin-bottom: 0;
-}
-
-/* Единый бокс фото у всех табов 2–5: ширина во всю колонку (548 на 1920,
-   потолок --max-width из базового правила), высота 366 (20.52cqw) — по кадрам
-   табов 4–5, у которых пропорция ~3:2.
-   ⚠️ object-fit: cover обязателен: исходник таба 3 квадратный (dz.webp 736×736)
-   и в бокс 3:2 не вписывается — без cover он сплющился бы. Cover подрезает его
-   сверху/снизу, ширина при этом совпадает с остальными табами.
-   Фиксированная высота заодно держит секцию: без неё квадрат перерастал
-   текстовую колонку, тянул строку за собой и прижатый к низу текст повисал
-   с 244px пустоты сверху. */
-.attestat__media--photo .attestat__img {
-  height: 20.52cqw;
-  object-fit: cover;
-  /* Кадр берётся от верха: у квадратного dz.webp центрирование опускало окно
-     кадра и лицо уезжало в верхнюю треть — ровно под бабблы. У табов 2/4/5
-     кадры и так ~3:2 (1.50 против бокса 1.497), обрезки нет, и это правило
-     на них не влияет. */
-  object-position: center top;
-}
-
-/* Бабблы у фото-табов считаются от самого фото, а не от колонки.
-   Положение — по макету табов 2–5 (Figma 1:15116, фреймы 1921–1924): группа
-   лежит углом на левом верхнем углу фото, выступая за него влево на 80 и вверх
-   на 37 при фото 565×372. Отсюда доли −14.16% / −9.95% — на нашем фото 548×366
-   это −77.6 / −36.4. Доли, а не px: так вылет масштабируется вместе с фото.
-   ⚠️ В макете сдвиг гуляет от таба к табу (−80/−110/−80/−140 по x, −34…−40 по y) —
-   дизайнер ставил на глаз; клиент просил единое строгое положение (21.07.2026),
-   поэтому взят минимальный вылет −80, общий для всех табов. */
-.attestat__media--photo .attestat__bubbles {
-  top: -9.95%;
-  left: -14.16%;
-}
-
-/* Бабблы: колонка, нижний слегка наложен на верхний */
-.attestat__bubbles {
+   Рамка коллажа теперь <button>: ТЗ §7 требует открывать документ в увеличенном
+   виде, а кликабельным должен быть весь кадр.
+   ⚠️ Кнопка растянута на всю медиа-колонку (inset: 0), а не оставлена блоком
+   по потоку: коллаж внутри неё лежит абсолютом, поэтому у блока была бы нулевая
+   высота — кликать по картинке ещё можно (событие всплывает по DOM), а вот
+   фокус с клавиатуры вставал бы на невидимую полоску без рамки, что спорит
+   с §21 ТЗ. Геометрия при этом не меняется: бокс кнопки совпадает с боксом
+   колонки, от которого коллаж позиционировался и раньше. */
+.attestat__frame {
+  appearance: none;
+  -webkit-appearance: none;
   position: absolute;
-  top: 18%;
-  left: 27%;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  inset: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: zoom-in;
 }
 
-.attestat__bubble {
-  padding: 8px 18px;
+/* Подсказка «нажмите, чтобы рассмотреть»: пилюля в левом-нижнем углу
+   медиа-колонки. Позиционируется от .attestat__media (кнопка не спозиционирована
+   намеренно), поэтому на всех ширинах сидит в углу колонки, а не уезжает
+   вслед за коллажем, который на десктопе вылезает за край карточки. */
+.attestat__zoom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 8px 16px;
   border-radius: var(--radius-pill);
+  background: var(--color-light-blue);
+  color: var(--color-blue);
   font-size: var(--fs-small);
   font-weight: 500;
   line-height: 1.1;
-  white-space: nowrap;
   box-shadow: var(--shadow-bubble);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.attestat__bubble--light {
-  position: relative;
-  z-index: 2;          /* светлый баббл — поверх синего в месте наложения */
-  margin-left: 16px;   /* верхний баббл чуть смещён вправо */
-  background: var(--color-light-blue);  
-  color: var(--color-blue);
-  transform: translateY(-15px) rotate(8deg);
-
-
-}
-
-.attestat__bubble--solid {
-  position: relative;
-  z-index: 1;
-  margin-top: -10px;   /* лёгкое наложение на верхний баббл */
+.attestat__frame:hover .attestat__zoom {
   background: var(--color-blue);
   color: var(--color-white);
-  transform: rotate(-6deg);   /* ← вот эта строка */
+}
 
+/* Документ в лайтбоксе (общий window.openLightbox из main.js): вписываем
+   в экран целиком — аттестат читают, а не разглядывают деталь, поэтому
+   contain, а не увеличение. */
+.attestat__lightbox-img {
+  display: block;
+  width: min(92vw, 1400px);
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: var(--radius-btn);
+  background: var(--color-white);
 }
 
 /* ⚠️ Ступени 1600 и 1280 удалены целиком: padding, зазор, высота медиа-колонки,
@@ -309,30 +235,12 @@
   .attestat__content { max-width: none; }
   .attestat__media { min-height: 320px; }
   .attestat__img { max-width: 100%; margin-inline: auto; }
-  /* Одноколоночная раскладка: фото по центру, угловое поле 60 не нужно */
-  .attestat__media--photo { align-items: center; justify-content: center; }
-  /* ⚠️ Фото табов 2–5 на всю ширину колонки не растягиваем. Исходники 468–736px
-     (у таба 2 — всего 468), на ширине 1000 они раздувались до 930px: мыло на
-     любом экране плюс секция вырастала вдвое (942 против 645 у первого таба),
-     то есть при переключении табов страница прыгала. Держим макетный бокс
-     548×366 (3:2) по центру — cover обрезает квадратный кадр таба 3 так же,
-     как на десктопе (object-position: center top наследуется). */
-  .attestat__media--photo .attestat__img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-  }
-  .attestat__media--photo .attestat__frame {
-    /* relative, а не static: бабблы ниже цепляются за фото, а оно уже уже колонки */
-    position: relative;
-    width: min(100%, 548px);
-    margin: 0 auto;
-  }
-  .attestat__media--photo .attestat__bubbles { top: 6%; left: 2%; }
+  /* Здесь коллаж стоит в потоке, поэтому кнопка возвращается в поток и получает
+     высоту от него — растягивать её на колонку не нужно */
+  .attestat__frame { position: static; }
+  /* Коллаж встаёт в поток внутри кнопки-рамки — высоту колонки задаёт он сам */
   .attestat__img--wide { position: relative; right: 0; bottom: 0; width: 100%; max-width: 480px; margin: 0 auto; }
   .attestat__figura { width: 42%; max-width: 220px; }
-  .attestat__bubbles { top: 6%; left: 2%; }
 }
 
 /* Планшет 768–1024 — композиция десктопа, но текст сверху во всю ширину
@@ -340,14 +248,11 @@
    «одна колонка»: текст в 71% ширины, под ним фото по центру, кнопка высоко
    слева — в левом-нижнем углу карточки зияла пустота, а волна-декор висела
    справа от текста.
-   Теперь: табы и текст тянутся на всю ширину, снизу идёт полоса
-   «кнопка слева — фото справа», волна уходит вниз, за фото.
+   Теперь: текст тянется на всю ширину, снизу идёт полоса
+   «кнопка слева — коллаж справа», волна уходит вниз, за коллаж.
    Диапазон, а не просто ≤1024: ниже 768 работает мобильная компоновка
    (коллаж во всю ширину, кнопка над ним в потоке) — её эти правила ломают. */
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* Пиллы делят строку поровну — иначе во второй строке оставался рваный хвост */
-  .attestat__tabs .pill { flex: 1 1 auto; }
-
   /* Ряд перестаёт быть гридом: текст идёт блоком во всю ширину, под ним медиа */
   .attestat__row { display: block; position: relative; }
 
@@ -368,7 +273,7 @@
     margin-top: 24px;
   }
 
-  /* Коллаж таба 1 — вправо, низом на линию кнопки. Ширина 62% ряда: при меньшей
+  /* Коллаж — вправо, низом на линию кнопки. Ширина 62% ряда: при меньшей
      он мельчает до иконки, при большей налезает на кнопку. */
   .attestat__img--wide {
     width: 62%;
@@ -376,32 +281,9 @@
     margin: 0 0 0 auto;
   }
 
-  /* Бабблы коллажа цепляются за .attestat__media (у таба 1 .attestat__frame —
-     display: contents), поэтому доли считаются от всей ширины ряда, а не от
-     коллажа. Пересчёт с десктопа: там бабблы стоят на +14.1% ширины коллажа
-     и +14.7% его высоты (замер на 1920). Коллаж начинается на 38% ряда и занимает
-     62%, значит 38 + 0.141×62 = 46.7% по горизонтали; по вертикали высота ряда
-     равна высоте коллажа, доля переносится как есть. */
-  .attestat__bubbles { top: 14.7%; left: 46.7%; }
-
-  /* Фото табов 2–5 — вправо, тот же макетный бокс 548×366.
-     Отступ сверху больше общего (24): бабблы вылетают за верхний угол фото
-     примерно на 36px (9.95% его высоты) и на 24 наезжали бы на абзац. */
-  .attestat__media--photo {
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-top: 72px;
-  }
-  /* Ширина — та же доля 62%, что у коллажа, с потолком макетных 548:
-     на 768 фиксированные 548 отъедали всю строку и кнопка залезала на фото
-     (свободными оставались 160px при её 225). */
-  .attestat__media--photo .attestat__frame {
-    width: min(62%, 548px);
-    margin: 0 0 0 auto;
-  }
-  /* Слева от фото есть место, поэтому бабблы вешаются углом на его левый-верхний
-     угол, как на десктопе, а не заезжают внутрь кадра */
-  .attestat__media--photo .attestat__bubbles { top: -9.95%; left: -14.16%; }
+  /* Подсказка садится над кнопкой «Узнать подробнее»: слева от коллажа свободно,
+     а поверх кадра она наехала бы на печать аттестата. */
+  .attestat__zoom { bottom: auto; top: 0; }
 
   /* Волна уходит из-под текста вниз, за фото — как на десктопе. Значения сняты
      с 1920 в долях коллажа: волна начинается на +40.7% его ширины, поднимается
@@ -436,21 +318,6 @@
     border-radius: 0;
   }
 
-  .attestat__tabs {
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 30px;
-    overflow: visible;
-  }
-
-  .attestat__tabs .pill {
-    width: 100%;
-    padding: 14px 12px;
-    /* Текст пиллы в макете по центру, а не слева */
-    text-align: center;
-    white-space: normal;
-  }
-
   .attestat__row { gap: 30px; }
 
   /* Единый кегль заголовков блоков на телефоне — 32 (решение клиента 20.07.2026).
@@ -461,13 +328,10 @@
     margin-bottom: 20px;
   }
 
-  .attestat__subtitle { margin-bottom: 16px; }
-
   .attestat__note { margin-bottom: 24px; }
 
   /* Высоту медиа-колонки задаёт сам коллаж */
-  .attestat__media,
-  .attestat__media--photo { min-height: 0; }
+  .attestat__media { min-height: 0; }
 
   /* Коллаж в макете лежит абсолютом и упирается в правый и нижний край секции:
      группа 1:9023 стоит в (20, 748) размером 530×381 при секции 360×978,
@@ -475,7 +339,10 @@
      (проверено по растру «Мобайл целый.png»: краска доходит до x=359 и до
      последней строки секции y=2474). Обрезку даёт overflow: hidden карточки.
      Колонка держит в потоке ровно видимую часть: от низа CTA до низа секции. */
-  .attestat__media:not(.attestat__media--photo) { height: 45.556cqw; }  /* 164 при 360 */
+  .attestat__media { height: 45.556cqw; }  /* 164 при 360 */
+
+  /* Коллаж снова абсолют — значит и кнопка снова на всю видимую часть колонки */
+  .attestat__frame { position: absolute; inset: 0; }
 
   .attestat__img--wide {
     position: absolute;
@@ -492,11 +359,13 @@
     margin: 0;
   }
 
-  /* Бабблы 1:9018 — (57, 754) от верха секции, то есть чуть выше медиа-колонки */
-  .attestat__bubbles {
-    top: -2.778cqw;
-    left: 10.278cqw;
+  /* Подсказка о нажатии — на верхний край коллажа: в 164-пиксельное окно
+     медиа-колонки видно только его левый верхний угол, снизу пилюля легла бы
+     на срез. Бабблы 1:9018, стоявшие здесь раньше, ушли вместе с вкладками. */
+  .attestat__zoom {
+    top: 0;
     bottom: auto;
+    padding: 6px 12px;
   }
 
   /* Волна 1:8392 — вся геометрия из мобильного фрейма (секция 360×978):
