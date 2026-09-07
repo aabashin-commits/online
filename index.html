@@ -52,7 +52,8 @@
   <link rel="stylesheet" href="css/reviews.css?v=5">
   <link rel="stylesheet" href="css/trial.css">
   <link rel="stylesheet" href="css/faq.css">
-  <link rel="stylesheet" href="css/footer.css?v=10">
+  <link rel="stylesheet" href="css/consultation.css">
+  <link rel="stylesheet" href="css/footer.css?v=11">
   <link rel="stylesheet" href="css/form.css?v=4">
   <link rel="stylesheet" href="css/mobile-cta.css">
   <link rel="stylesheet" href="css/ege-banner.css">
@@ -69,8 +70,9 @@
   <script src="js/pricing.js" defer></script>
   <script src="js/additional.js" defer></script>
   <script src="js/reviews.js?v=5" defer></script>
-  <script src="js/faq.js?v=2" defer></script>
-  <script src="js/form.js?v=3" defer></script>
+  <script src="js/faq.js?v=3" defer></script>
+  <script src="js/consultation.js" defer></script>
+  <script src="js/form.js?v=4" defer></script>
   <script src="js/bitrix.js?v=2" defer></script>
 </head>
 <body>
@@ -728,9 +730,69 @@
         <div class="faq__card">
           <img class="faq__decor" src="assets/img/faq/swirl.webp" alt="" width="2175" height="994" loading="lazy" decoding="async">
 
-          <h2 class="faq__title"><span class="faq__muted">Собрали<br>для&nbsp;вас </span>ответы<br>на&nbsp;частые<br><span class="faq__muted">и&nbsp;волнующие</span><br>вопросы</h2>
+          <h2 class="faq__title"><span class="faq__muted">Ответы</span><br>на&nbsp;частые<br>вопросы</h2>
 
           <div class="faq__list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="consultation" id="consultation">
+      <div class="container">
+        <div class="consultation__card">
+          <div class="consultation__text">
+            <h2 class="consultation__title">Поможем выбрать класс и&nbsp;формат обучения</h2>
+            <p class="consultation__subtitle">Оставьте контакты&nbsp;— специалист школы ответит на&nbsp;вопросы, рассчитает стоимость и&nbsp;расскажет, как записаться на&nbsp;2&nbsp;пробных дня.</p>
+          </div>
+
+          <form class="consultation__form" novalidate>
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-name">Как к&nbsp;вам обращаться</label>
+              <input class="consultation__input" id="consultation-name" name="name" type="text" placeholder="Имя" autocomplete="name" required>
+              <p class="consultation__error" data-error-for="name"></p>
+            </div>
+
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-phone">Телефон</label>
+              <input class="consultation__input" id="consultation-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" required>
+              <p class="consultation__error" data-error-for="phone"></p>
+            </div>
+
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-grade">Класс ребёнка</label>
+              <select class="consultation__select" id="consultation-grade" name="grade" required>
+                <option value="" selected disabled>Выберите класс</option>
+              <option value="1">1 класс</option>
+              <option value="2">2 класс</option>
+              <option value="3">3 класс</option>
+              <option value="4">4 класс</option>
+              <option value="5">5 класс</option>
+              <option value="6">6 класс</option>
+              <option value="7">7 класс</option>
+              <option value="8">8 класс</option>
+              <option value="9">9 класс</option>
+              <option value="10">10 класс</option>
+              <option value="11">11 класс</option>
+              </select>
+              <p class="consultation__error" data-error-for="grade"></p>
+            </div>
+
+            <input type="hidden" name="school_stage" value="">
+            <input type="hidden" name="education_format" value="">
+            <input type="hidden" name="price" value="">
+            <input type="hidden" name="cta_location" value="consultation">
+
+            <button class="btn btn--primary consultation__submit" type="submit">Получить консультацию
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <p class="consultation__consent">Нажимая кнопку, вы&nbsp;соглашаетесь с&nbsp;<a href="#">политикой конфиденциальности</a> и&nbsp;<a href="#">обработкой персональных данных</a>.</p>
+          </form>
+
+          <div class="consultation__success" role="status" tabindex="-1" hidden>
+            <h3 class="consultation__success-title">Заявка отправлена</h3>
+            <p class="consultation__success-text">Специалист школы скоро свяжется с&nbsp;вами.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -765,27 +827,30 @@
         </div>
 
         <nav class="footer__nav" aria-label="Меню в футере">
-          <a class="footer__link" href="#about">О нас</a>
           <a class="footer__link" href="#advantages">Преимущества</a>
+          <a class="footer__link" href="#school-day">Как проходит учебный день</a>
           <a class="footer__link" href="#classes">Классы</a>
-          <a class="footer__link" href="#school-day">Как проходит обучение</a>
+          <a class="footer__link" href="#about">О нас</a>
+          <a class="footer__link" href="#formats">Форматы обучения</a>
+          <a class="footer__link" href="#pricing">Стоимость</a>
           <a class="footer__link" href="#additional">Дополнительные&nbsp;занятия</a>
-          <a class="footer__link" href="#faq">FAQ</a>
           <a class="footer__link" href="#reviews">Отзывы</a>
+          <a class="footer__link" href="#faq">FAQ</a>
+          <a class="footer__link" href="#consultation">Консультация</a>
         </nav>
 
         <div class="footer__aside">
           <div class="footer__badges">
-            <a class="footer__badge" href="#" aria-label="Рейтинг 5,0 в Яндекс Картах">
+            <div class="footer__badge" role="img" aria-label="Рейтинг 5,0 в Яндекс Картах">
               <img src="assets/img/yandex.svg" alt="" width="61" height="60" loading="lazy" decoding="async">
               <span>5,0</span>
               <img class="footer__badge-star" src="assets/img/star.svg" alt="" width="35" height="34" loading="lazy" decoding="async">
-            </a>
-            <a class="footer__badge" href="#" aria-label="Рейтинг 5,0 в 2ГИС">
+            </div>
+            <div class="footer__badge" role="img" aria-label="Рейтинг 5,0 в 2ГИС">
               <img src="assets/img/2gis.svg" alt="" width="60" height="60" loading="lazy" decoding="async">
               <span>5,0</span>
               <img class="footer__badge-star" src="assets/img/star.svg" alt="" width="35" height="34" loading="lazy" decoding="async">
-            </a>
+            </div>
           </div>
 
           <div class="footer__legal">

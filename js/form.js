@@ -41,7 +41,14 @@
     return out;
   }
 
-  const phoneDigits = () => phoneInput.value.replace(/\D/g, '');
+  // ⚠️ Код страны отбрасываем: маска всегда пишет «+7 (», и без этой строки
+  // в полном номере насчитывалось 11 цифр вместо 10 — проверка ниже (=== 10)
+  // не пропускала ни один номер. Модалку перекрывает форма Битрикса
+  // (см. bitrix.js), поэтому баг долго не всплывал.
+  const phoneDigits = () => {
+    const digits = phoneInput.value.replace(/\D/g, '');
+    return digits[0] === '7' || digits[0] === '8' ? digits.slice(1) : digits;
+  };
 
   phoneInput.addEventListener('input', () => {
     phoneInput.value = formatPhone(phoneInput.value);
@@ -53,7 +60,7 @@
   });
 
   phoneInput.addEventListener('blur', () => {
-    if (phoneDigits().length <= 1) phoneInput.value = '';
+    if (!phoneDigits()) phoneInput.value = '';
   });
 
   /* ---------- валидация ---------- */
