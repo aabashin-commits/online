@@ -70,27 +70,20 @@
 
 /* --- Общее для всех тарифов --- */
 
+/* ⚠️ 10.09.2026, правки клиента: вместо белой карточки с заголовком и списком
+   из шести пунктов — одна узкая плашка в строку. Заливка названа клиентом
+   дословно: RGB (251,250,255) = #FBFAFF (--color-lilac-tint в base.css).
+   padding-block намеренно мал: плашка должна читаться как подпись между
+   переключателем ступеней и карточками тарифов, а не как ещё один блок. */
 .pricing__common {
-  padding: var(--card-pad);
-  background: var(--color-white);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  padding: clamp(14px, 1.064cqw, 20px) clamp(16px, 1.596cqw, 30px);
+  background: var(--color-lilac-tint);
+  border-radius: var(--radius-btn);
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
 }
 
-.pricing__common-title {
-  margin-bottom: clamp(12px, 1.064cqw, 20px);
-  font-size: var(--fs-h4);
-  line-height: 1.1;
-}
-
-.pricing__common-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px var(--gap-cards);
-  list-style: none;
-}
-
-.pricing__common-item,
 .pricing__feature {
   position: relative;
   padding-left: 20px;
@@ -100,7 +93,6 @@
 }
 
 /* Маркер рисуем сами: у list-style нет управления цветом и отступом */
-.pricing__common-item::before,
 .pricing__feature::before {
   content: '';
   position: absolute;
@@ -114,10 +106,23 @@
 
 /* --- Карточки тарифов --- */
 
+/* Карточки уже полной сетки и стоят по центру (правка клиента 10.09.2026):
+   ширина считается от текста внутри, а не от ширины экрана. 36em — это типовая
+   строка списка («помощь куратора класса в учебных и организационных вопросах»,
+   ≈34em с маркером) плюс запас справа; em берётся от --fs-text, то есть растёт
+   вместе с кеглем, и на 1280/1600/1920 такая строка не переносится. Самые длинные
+   пункты старшей школы (70 символов) переносятся на вторую строку — это нормально,
+   подгонять карточку под них значило бы вернуть прежнюю ширину. */
 .pricing__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--gap-cards);
+  /* ⚠️ Именно width, а не max-width: .pricing__inner — колоночный flex, и
+     margin-inline:auto снимает у сетки растягивание. С одним max-width ширина
+     схлопывалась бы до max-content, то есть скакала бы при переключении ступеней
+     (у старшей школы пункты длиннее). */
+  width: min(100%, calc(2 * (36em + 2 * var(--card-pad)) + var(--gap-cards)));
+  margin-inline: auto;
   list-style: none;
 }
 
@@ -212,6 +217,14 @@
   list-style: none;
 }
 
+/* ⚠️ 10.09.2026, правки клиента: в тарифе «Без прикрепления» пунктов вдвое
+   меньше (2–3 против 4–5), и рядом с соседней карточкой список выглядел
+   комком в её верхней трети. Разводим строки шире — так обе карточки
+   читаются с одной плотностью. */
+.pricing__plan[data-format='without'] .pricing__features {
+  gap: clamp(14px, 1.383cqw, 26px);
+}
+
 /* Прижимаем кнопку к низу: у соседних карточек состав разной длины,
    а CTA должны стоять на одной линии. */
 .pricing__cta {
@@ -219,11 +232,13 @@
   justify-content: center;
 }
 
+/* ⚠️ 10.09.2026, правки клиента: подпись по центру и жирным. */
 .pricing__payment {
   font-size: var(--fs-text);
   line-height: 1.6;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--color-black);
+  text-align: center;
 }
 
 /* --- Планшет --- */
@@ -237,7 +252,6 @@
    («при ширине менее 800 px — одна под другой»). */
 @media (max-width: 800px) {
   .pricing__grid { grid-template-columns: 1fr; }
-  .pricing__common-list { grid-template-columns: 1fr; }
 }
 
 /* --- Телефон: accordion, цена и CTA видны всегда --- */

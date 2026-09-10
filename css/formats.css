@@ -43,33 +43,62 @@
 
 /* --- Таблица --- */
 
+/* ⚠️ 10.09.2026, правки клиента: таблица перерисована по присланному скриншоту.
+   Было — белая карточка с тенью, внутренним полем и горизонтальными линиями
+   между строками. Стало — карточка в тонкой рамке, с лиловой шапкой во всю
+   ширину и сеткой линий: горизонтальные между всеми строками, вертикальные
+   между тремя колонками.
+
+   Отсюда два следствия:
+   • gap у сеток строго 0 — при любом зазоре линии рвались бы по колонкам;
+   • внутреннее поле уехало из .formats__table в ячейки, иначе линии
+     не доходили бы до краёв карточки. */
+
 .formats__table {
   /* Ширина столбца критериев и двух колонок форматов. Держим переменной:
      шапка и строки — две разные сетки, и они обязаны совпадать. */
   --formats-cols: minmax(140px, 0.8fr) 1fr 1fr;
+  /* Поле ячейки. Отдельной переменной, чтобы шапка и строки не разъезжались. */
+  --formats-pad: clamp(14px, 1.117cqw, 21px) clamp(16px, 1.277cqw, 24px);
   position: relative;
-  padding: var(--card-pad);
-  background: var(--color-white);
+  /* Таблица уже основной сетки и стоит по центру блока (правка клиента
+     10.09.2026): на 1920 строки в три колонки во всю ширину читались длинными.
+     Ограничение снимается на планшете, где раскладка становится плиточной. */
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  /* Скругления карточки срезают углы лиловой шапки: своего радиуса у неё нет */
+  overflow: hidden;
+  background: var(--color-cream);
+  border: 1px solid var(--color-cream-line);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
 }
 
 .formats__cols,
 .formats__rows {
   display: grid;
   grid-template-columns: var(--formats-cols);
-  gap: 0 var(--gap-cards);
+  gap: 0;
 }
 
-.formats__cols { margin-bottom: clamp(10px, 0.851cqw, 16px); }
+/* Шапка — сплошная лиловая плашка на все три колонки */
+.formats__cols { background: var(--color-lilac); }
 
+.formats__crit-head,
 .formats__col-title {
+  padding: var(--formats-pad);
   font-size: var(--fs-h4);
   line-height: 1.1;
 }
 
-/* Формат с прикреплением — полный вариант услуги, выделяем его заголовок */
-.formats__col-title[data-col='with'] { color: var(--color-blue); }
+/* «Критерии» — подпись столбца, а не третий равноправный формат:
+   тот же кегль, но приглушённый цвет и меньший вес. */
+.formats__crit-head {
+  font-weight: 500;
+  color: var(--color-gray-1);
+}
+
+.formats__col-title { color: var(--color-black); }
 
 /* Ячейки лежат в общей сетке .formats__rows, поэтому сама строка
    не образует бокса — линии-разделители рисуют ячейки. */
@@ -77,18 +106,33 @@
 
 .formats__crit,
 .formats__cell {
-  padding-block: clamp(12px, 1.064cqw, 20px);
-  border-top: 1px solid var(--color-gray-3);
+  padding: var(--formats-pad);
+  border-top: 1px solid var(--color-cream-line);
   font-size: var(--fs-text);
   line-height: 1.5;
 }
 
-.formats__crit {
-  font-weight: 500;
-  color: var(--color-black);
+/* Вертикальные линии: правая граница у первых двух колонок каждой строки —
+   и в шапке, и в теле таблицы. Третьей колонке граница не нужна, её роль
+   играет рамка карточки. */
+.formats__crit,
+.formats__cell[data-col='with'] {
+  border-right: 1px solid var(--color-cream-line);
 }
 
-.formats__cell { color: var(--color-gray-1); }
+/* Разделители в шапке — своим цветом: кремовая линия на лиловом фоне
+   не видна, нужен оттенок самой шапки на тон темнее. */
+.formats__crit-head,
+.formats__col-title[data-col='with'] {
+  border-right: 1px solid var(--color-lilac-line);
+}
+
+/* Критерий — подпись строки, а не её содержание: приглушённый и без выделения
+   (на скриншоте клиента обе колонки форматов равнозначны, синего нет).
+   Не --color-gray-2: на кремовой заливке он даёт контраст ниже 3:1. */
+.formats__crit { color: var(--color-gray-1); }
+
+.formats__cell { color: var(--color-black); }
 
 /* Подпись критерия внутри ячейки нужна только там, где столбец критериев скрыт */
 .formats__cell::before { display: none; }
@@ -97,19 +141,15 @@
 .formats__compare,
 .formats__compare-close { display: none; }
 
-/* --- CTA и подпись --- */
+/* --- CTA --- */
 
+/* Кнопка одна и стоит по центру под таблицей (правка клиента 10.09.2026).
+   Подпись «Не уверены, какой вариант выбрать?» под ней снята тогда же. */
 .formats__ctas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--gap-cards);
-}
-
-.formats__note {
-  font-size: var(--fs-text);
-  line-height: 1.6;
-  font-weight: 500;
-  color: var(--color-black);
 }
 
 /* --- Планшет: две колонки-карточки --- */
@@ -119,7 +159,10 @@
 
   .formats__table {
     --formats-cols: 1fr 1fr;
+    max-width: none;
     padding: 20px;
+    background: var(--color-white);
+    border-color: var(--color-gray-3);
   }
 
   /* Столбец критериев уходит: подпись переезжает внутрь каждой ячейки,
@@ -127,14 +170,27 @@
   .formats__crit-head,
   .formats__crit { display: none; }
 
+  /* Плитки вместо таблицы: линий и лиловой шапки на планшете нет —
+     в две колонки они читались бы как обрывки. */
+  .formats__cols {
+    margin-bottom: 10px;
+    background: none;
+  }
+
+  .formats__col-title {
+    padding: 0;
+    border-right: 0;
+  }
+
   .formats__cols,
   .formats__rows { gap: 10px; }
 
   .formats__cell {
     padding: 16px;
     border-top: 0;
+    border-right: 0;
     border-radius: var(--radius-btn);
-    background: var(--color-surface);
+    background: var(--color-cream);
   }
 
   .formats__cell::before {
@@ -215,6 +271,7 @@
     --formats-cols: 1fr 1fr;
     overflow-y: auto;
     padding: 56px 10px 20px;
+    border: 0;
     border-radius: 0;
     background: var(--color-white);
   }

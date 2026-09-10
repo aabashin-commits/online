@@ -8,9 +8,15 @@
    (бывший css/no-homework.css) в роли дополнительной плашки: секции
    «нет домашних заданий» ТЗ не предусматривает.
 
-   Замеры расписания: Figma 1:20850 (см. Tz/raspisanie.md), сверено с 1920.png.
-   Шаги, нагрузка и переключатель дней макета не имеют — собраны из паттернов
-   проекта (карточка = --card-pad + --radius-card + --shadow-card). */
+   ⚠️ 10.09.2026 расписание из этого файла УШЛО: клиент попросил вернуть
+   таблицу недели в том виде, как она была на старом сайте, — разметка, стили
+   и JS живут теперь в programs.css / programs.js (блок «Образовательные
+   программы» внутри этой секции). Здесь остались шапка, четыре шага и плашка
+   «Все записи уроков…»; правила `__week/__tabs/__days/__schedule/__lesson`
+   удалены как мёртвые, вместе с ними опустели медиазапросы 1280/1024/768.
+
+   Шаги и нагрузка макета не имеют — собраны из паттернов проекта
+   (карточка = --card-pad + --radius-card + --shadow-card). */
 
 .school-day {
   padding-block: 20px;
@@ -41,10 +47,12 @@
 
 /* ---------- Четыре шага ---------- */
 
-/* Десктоп — горизонтальная линия из четырёх карточек (ТЗ §9) */
+/* ⚠️ 10.09.2026, правки клиента: шаги стоят 2 × 2, а не линией из четырёх.
+   Карточка стала вдвое шире — кегль заголовка и текста поднят на ступень
+   (h3 и fs-btn вместо h4 и fs-text), иначе текст тонет в белом поле. */
 .school-day__steps {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--gap-cards);
 }
 
@@ -75,164 +83,13 @@
 }
 
 .school-day__step-title {
-  font-size: var(--fs-h4);
-  line-height: 1.2;
+  font-size: var(--fs-h3);
+  line-height: 1.15;
 }
 
 .school-day__step-text {
-  font-size: var(--fs-text);
-  line-height: 1.5;
-  color: var(--color-gray-1);
-}
-
-/* Самостоятельная работа — из бывшего блока «нет ДЗ» (ТЗ §9 велит перенести
-   сюда информацию о самостоятельной работе ребёнка). */
-.school-day__selfwork {
-  max-width: 62%;
-  font-size: var(--fs-text);
-  line-height: 1.6;
-  color: var(--color-gray-1);
-}
-
-/* ---------- Белая карточка: нагрузка и расписание ---------- */
-
-.school-day__card {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(20px, 2.128cqw, 40px);
-  padding: var(--card-pad);
-  background: var(--color-white);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-/* Нагрузка (ТЗ §9): две строки — начальная школа и с 5 класса */
-.school-day__load {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--gap-cards);
-}
-
-.school-day__load-item {
-  padding: clamp(16px, 1.064cqw, 20px);
-  border-radius: var(--radius-btn);
-  background: var(--color-surface);
-  font-size: var(--fs-text);
-  line-height: 1.5;
-  color: var(--color-gray-1);
-}
-
-.school-day__load-label {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--color-black);
-  font-weight: 500;
-}
-
-.school-day__week {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(20px, 1.596cqw, 30px);
-  /* Якорь CTA «Посмотреть пример расписания»: липкая шапка 88px + воздух */
-  scroll-margin-top: 108px;
-}
-
-.school-day__week-title {
-  font-size: var(--fs-h4);
-}
-
-/* Три таба равной ширины на всю ширину карточки (335 при content-box 1047) */
-.school-day__tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap-cards);
-}
-
-.school-day__tab {
-  padding: clamp(8px, 0.585cqw, 11px) clamp(14px, 1.596cqw, 30px);
-  border: 1px solid var(--color-light-blue);
-  border-radius: var(--radius-pill);
   font-size: var(--fs-btn);
-  line-height: 1.4;
-  color: var(--color-blue-2);
-  text-align: center;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-
-.school-day__tab:hover {
-  border-color: var(--color-blue-2);
-  color: var(--color-blue);
-}
-
-.school-day__tab--active,
-.school-day__tab--active:hover {
-  background: var(--color-blue);
-  border-color: transparent;
-  color: var(--color-white);
-}
-
-/* Переключатель дней недели нужен только на телефоне (ТЗ §9: расписание
-   показывать по одному дню). Выше 767 все пять дней видны сразу. */
-.school-day__days { display: none; }
-
-/* Сетка не растягивается на всю карточку: в макете она 875 (5×167 + 4×10)
-   и прижата влево, справа остаётся белое поле — так же на скриншоте клиента. */
-.school-day__schedule {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: clamp(6px, 0.532cqw, 10px);
-  /* 875 при карточке 1167 на 1920 = 75% — доля, а не px: сетка прижата влево,
-     и белое поле справа должно сохраняться пропорционально, а не съедаться */
-  max-width: 75%;
-}
-
-.school-day__day {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.school-day__day-name {
-  font-size: var(--fs-text);
-  line-height: 1.4;
-  color: var(--color-gray-2);
-  text-align: center;
-}
-
-/* Плашка урока: 45px в одну строку (10 + 18×1.4 + 10), 70px в две.
-   Боковой padding 20, а не 30 как пишет Figma: там текст стоит в режиме hug
-   и спокойно вылезает за собственный padding. 167 − 2×20 = 127 — единственное
-   окно, при котором «Русский язык» встаёт в строку, а «Английский язык» — в две,
-   как в макете. */
-.school-day__lesson {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: clamp(34px, 2.394cqw, 45px);
-  padding: clamp(6px, 0.532cqw, 10px) clamp(10px, 1.064cqw, 20px);
-  border-radius: clamp(6px, 0.532cqw, 10px);
-  font-size: var(--fs-text);
-  line-height: 1.4;
-  text-align: center;
-}
-
-.school-day__lesson--empty { background: var(--color-surface); }
-
-.school-day__lesson--peach   { background: var(--chip-peach-bg);   color: var(--chip-peach-fg); }
-.school-day__lesson--green   { background: var(--chip-green-bg);   color: var(--chip-green-fg); }
-.school-day__lesson--cyan    { background: var(--chip-cyan-bg);    color: var(--chip-cyan-fg); }
-.school-day__lesson--blue    { background: var(--chip-blue-bg);    color: var(--chip-blue-fg); }
-.school-day__lesson--pink    { background: var(--chip-pink-bg);    color: var(--chip-pink-fg); }
-.school-day__lesson--purple  { background: var(--chip-purple-bg);  color: var(--chip-purple-fg); }
-.school-day__lesson--magenta { background: var(--chip-magenta-bg); color: var(--chip-magenta-fg); }
-.school-day__lesson--lime    { background: var(--chip-lime-bg);    color: var(--chip-lime-fg); }
-.school-day__lesson--mint    { background: var(--chip-mint-bg);    color: var(--chip-mint-fg); }
-.school-day__lesson--violet  { background: var(--chip-violet-bg);  color: var(--chip-violet-fg); }
-
-.school-day__routine {
-  max-width: 75%;
-  font-size: var(--fs-text);
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--color-gray-1);
 }
 
@@ -262,8 +119,11 @@
   position: relative;
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  /* ⚠️ 10.09.2026, правки клиента: вырезка ребёнка убрана, внутрь плашки переехали
+     два пункта нагрузки. Ряд «текст | кнопка» больше не собирается — раскладка
+     стала колонкой: текст → два пункта во всю ширину → кнопка в правом нижнем углу. */
+  flex-direction: column;
+  align-items: flex-start;
   gap: 2.128cqw;         /* 40 */
   min-height: 11.809cqw; /* 222 */
   padding: 3.191cqw;     /* 60 */
@@ -272,7 +132,7 @@
   box-shadow: var(--shadow-card);
 }
 
-/* Слои по порядку из Figma: вихрь → текст → мальчик → кнопка */
+/* Слои по порядку: вихрь (декор, z 0) → текст и пункты нагрузки (z 1) → кнопка (z 3) */
 
 /* Вихрь 1:4606 — 1224.34×687.72 в точке (724, −204) от карточки */
 .school-day__plate-wave {
@@ -286,30 +146,65 @@
   user-select: none;
 }
 
-/* Вырезка 1:5310 — 495×256 в точке (1061, 0): прижата к верху карточки
-   и на 34px свисает за низ, срез даёт overflow */
-.school-day__plate-boy {
-  position: absolute;
-  z-index: 2;
-  left: 56.436cqw;
-  top: 0;
-  width: 26.330cqw;
-  pointer-events: none;
-  user-select: none;
-}
-
-.school-day__plate-boy img {
-  width: 100%;
-  height: auto;
-}
-
 .school-day__plate-text {
-  position: relative;   /* поверх вихря */
-  z-index: 1;
-  max-width: 57.500cqw; /* 1081 — резиновая, чтобы отслеживать позицию мальчика (left: 56.436cqw) */
+  flex: 1 1 auto;
+  min-width: 0;
+  /* было 57.500cqw (1081) — ширина держалась левее вырезки. Вырезки нет, но
+     ограничение оставлено: без него строка растянулась бы на все 1880 и читалась
+     бы полосой. 70cqw = 1316 на 1920. */
+  max-width: 70cqw;
   font-size: 1.489cqw;  /* 28 — резиновый кегль */
   line-height: 1.2;
   color: var(--color-blue);
+}
+
+/* Верхняя строка плашки: текст слева, CTA прижат к правому краю.
+   ⚠️ 10.09.2026: кнопка переехала сюда из нижней части карточки — теперь она
+   на одном уровне с «Все записи уроков…». Текст забирает остаток строки
+   (`flex: 1 1 auto; min-width: 0` — без него длинная строка вытолкнула бы
+   кнопку за край), кнопка держит свою ширину и стоит по правому краю. */
+.school-day__plate-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;   /* однострочный текст по центру высоты кнопки */
+  /* space-between, а не просто gap: у текста осталось ограничение max-width: 70cqw
+     (иначе строка растянулась бы полосой на все 1880), и без распорки кнопка
+     встала бы вплотную к его правому краю, а не по краю плашки. */
+  justify-content: space-between;
+  gap: var(--gap-cards);
+  width: 100%;
+}
+
+/* Нагрузка (ТЗ §9): две строки — начальная школа и с 5 класса.
+   ⚠️ 10.09.2026, правки клиента: пункты переехали из белой карточки расписания
+   внутрь плашки. Фон был как у самой плашки (--color-light-blue) и пункты с ней
+   сливались — теперь белая заливка и синий бордер: карточки читаются как
+   отдельные объекты и по-прежнему закрывают ленту вихря под своим текстом. */
+.school-day__load {
+  position: relative;   /* поверх вихря */
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-cards);
+  width: 100%;
+}
+
+.school-day__load-item {
+  padding: clamp(16px, 1.064cqw, 20px);
+  border: 1px solid var(--color-blue-2);
+  border-radius: var(--radius-btn);
+  background: var(--color-white);
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+.school-day__load-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-blue);
+  font-weight: 500;
 }
 
 /* CTA выше вырезки: в макете кнопка перекрывает и вихрь, и мальчика.
@@ -320,7 +215,8 @@
 .school-day__plate-btn {
   position: relative;
   z-index: 3;
-  flex: none;
+  flex: none;             /* ширина кнопки неприкосновенна, ужимается текст */
+  align-self: center;
   min-height: 4.574cqw;                              /* 86 */
   padding: 1.170cqw 1.755cqw 1.170cqw 2.128cqw;      /* 22 33 22 40 */
   gap: 1.117cqw;                                     /* 21 */
@@ -335,55 +231,21 @@
 
 /* ---------- Адаптив ---------- */
 
-@media (max-width: 1280px) {
-  /* Сетка и распорядок занимают всю ширину карточки: доля из макета здесь
-     больше не работает, пустое поле справа нечем оправдать */
-  .school-day__schedule,
-  .school-day__routine { max-width: none; }
-
-  .school-day__selfwork { max-width: none; }
-}
-
-/* Планшет (ТЗ §9): шаги 2 × 2, расписание в прокручиваемом контейнере.
-   Зазоры сетки и табов здесь уже равны своим резиновым минимумам —
-   остаются только боковые отступы, которые надо ужать сильнее минимума:
-   иначе длинные названия предметов не помещаются в колонку. */
-@media (max-width: 1024px) {
-  .school-day__steps { grid-template-columns: repeat(2, 1fr); }
-
-  .school-day__tab { padding: 11px 12px; }
-  .school-day__lesson { padding: 10px 8px; }
-
-  /* ⚠️ Пятидневку не сжимаем (ТЗ §9 запрещает): колонки получают внятный
-     минимум, а лишнее уезжает в горизонтальную прокрутку самой ленты.
-     overflow на обёртке, а не на карточке: иначе тень карточки обрежется. */
-  .school-day__scroller {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    margin-inline: calc(-1 * var(--card-pad));
-    padding-inline: var(--card-pad);
-  }
-
-  .school-day__schedule { min-width: 620px; }
-}
-
 /* Планшет 768–1024: плашка остаётся баннером (решение клиента 21.07.2026).
    Геометрия карточки, вихрь и позиция вырезки — десктопные, в cqw, они едут
    пропорционально сами. Здесь гасим только то, что от пропорции страдает:
    кегли (иначе текст 1.489cqw = 11px на 768) и коробку кнопки. */
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* Текст и кнопка — колонкой слева; вырезка лежит абсолютом и в ней не участвует */
+  /* Колонка здесь уже десктопная, гасим только резиновые зазоры и отступы */
   .school-day__plate-card {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 24px;
     min-height: 0;    /* высота — по контенту: строк больше, чем на десктопе */
     padding: 40px;
   }
 
-  /* Место под вырезку справа */
+  /* Место под вырезку больше не резервируем — её убрали (правки 10.09.2026) */
   .school-day__plate-text {
-    max-width: 60%;
+    max-width: none;
     font-size: var(--fs-h4);
   }
 
@@ -402,41 +264,21 @@
     height: 20px;
   }
 
-  /* Вырезка прижата к правому-нижнему углу карточки. Привязка к низу, а не
-     к верху как на десктопе: карточка здесь выше, и от верха мальчик повис бы. */
-  .school-day__plate-boy {
-    top: auto;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: 36%;
-  }
-
-  /* Вихрь тоже уходит в правый-нижний угол, за вырезку. Десктопные cqw здесь
-     не работают: карточка вдвое выше по отношению к своей ширине, и лента,
-     растянутая по десктопной пропорции, переползала поперёк текста. */
+  /* Вихрь уходит в правый-нижний угол. Десктопные cqw здесь не работают:
+     карточка вдвое выше по отношению к своей ширине, и лента, растянутая
+     по десктопной пропорции, переползала поперёк текста. */
   .school-day__plate-wave {
     left: auto;
     top: auto;
-    right: -10%;
-    bottom: -15%;
-    width: 55%;
+    right: -12%;
+    bottom: -30%;
+    width: 42%;
     height: auto;
   }
 }
 
-/* Ровно 768 (планшет в портрете): раскладка ещё десктопная, но карточкам
-   нужен более тесный шаг. */
-@media (max-width: 768px) {
-  .school-day__card { padding: 30px 20px; }
-  .school-day__scroller {
-    margin-inline: -20px;
-    padding-inline: 20px;
-  }
-}
-
-/* Телефоны 360–767 — белая карточка расписания как секция типа A: во всю
-   ширину, без скруглений и бокового поля, внутренний отступ 50/20. */
+/* Телефоны 360–767: секции типа A — во всю ширину, без скруглений
+   и бокового поля, внутренний отступ 50/20. */
 @media (max-width: 767px) {
   .school-day { padding-block: 0; }
 
@@ -452,139 +294,47 @@
     padding: 20px;
   }
 
-  .school-day__card {
-    gap: 30px;
-    padding: var(--section-pad-y) var(--section-pad-x);
-    border-radius: 0;
-    box-shadow: none;
+  /* Верхняя строка — в колонку: кнопка под текстом во всю ширину */
+  .school-day__plate-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
   }
 
-  /* Нагрузка — строками друг под другом */
   .school-day__load { grid-template-columns: 1fr; }
-
-  .school-day__week { gap: 20px; scroll-margin-top: 76px; }
-
-  /* Табы ступеней столбиком во всю ширину: padding 14/30, радиус 89, текст 14/1.2 */
-  .school-day__tabs {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .school-day__tab {
-    padding: 14px 30px;
-    line-height: 1.2;
-  }
-
-  /* Переключатель дней недели: пять кнопок в строку, шириной поровну.
-     ТЗ §9 — «расписание показывать по одному выбранному дню». */
-  .school-day__days {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-  }
-
-  .school-day__day-btn {
-    /* 44px — минимальная зона нажатия из ТЗ §21 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 10px 4px;
-    border: 1px solid var(--color-light-blue);
-    border-radius: var(--radius-btn);
-    background: transparent;
-    color: var(--color-blue-2);
-    font-size: var(--fs-small);
-    line-height: 1.2;
-    text-align: center;
-    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-  }
-
-  .school-day__day-btn--active,
-  .school-day__day-btn--active:hover {
-    background: var(--color-blue);
-    border-color: transparent;
-    color: var(--color-white);
-  }
-
-  /* Прокрутки на телефоне нет: в ленте остаётся один день во всю ширину */
-  .school-day__scroller {
-    overflow: visible;
-    margin-inline: 0;
-    padding-inline: 0;
-  }
-
-  .school-day__schedule {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    min-width: 0;
-    max-width: none;
-  }
-
-  /* Виден только выбранный день. Класс ставит js/school-day.js — он же
-     держит его в актуальном состоянии после смены ступени. */
-  .school-day__day { display: none; }
-  .school-day__day--active { display: flex; }
-
-  .school-day__day-name {
-    font-size: var(--fs-h4);
-    color: var(--color-black);
-    text-align: left;
-  }
-
-  /* Плашки уроков на телефоне полноразмерные: день теперь один,
-     ужимать кегль до нечитаемого (как в сжатой пятидневке) больше не нужно */
-  .school-day__lesson {
-    justify-content: flex-start;
-    min-height: 0;
-    padding: 12px 16px;
-    border-radius: 10px;
-    text-align: left;
-  }
-
-  /* Пустые слоты в одном дне не нужны: это была добивка колонок до общей
-     высоты в пятидневной сетке. Прячем, чтобы не висели серые полосы. */
-  .school-day__lesson--empty { display: none; }
-
-  .school-day__routine {
-    max-width: none;
-    font-size: var(--fs-text);
-  }
 
   /* ---- Плашка, мобильный фрейм 1:11866 (360×567) ----
      Секция типа A: во всю ширину, без скруглений, padding 50px 20px, gap 30.
-     Порядок: текст → CTA → мальчик во всю ширину, вихрь заходит справа. */
+     Порядок: текст → две плашки нагрузки → CTA, вихрь заходит справа. */
   .school-day__plate { padding-block: 0; }
 
   .school-day__plate > .container { padding-inline: 0; }
 
-  /* Флекс-колонка, а не block: в макете порядок «текст → кнопка → мальчик»,
-     а в разметке мальчик стоит перед кнопкой (там она лежит поверх вырезки).
-     Переставляем через order, не трогая HTML. */
+  /* ⚠️ 10.09.2026: правила order сняты — они переставляли кнопку перед вырезкой,
+     а вырезки больше нет. Порядок берётся из разметки: текст → нагрузка → CTA.
+     Нижний padding вернулся: раньше нуль держала картинка, упиравшаяся в край. */
   .school-day__plate-card {
     display: flex;
-    flex-direction: column;
     align-items: stretch;
-    gap: 40px;        /* гасим резиновый cqw: на телефоне зазор фиксированный */
+    gap: 30px;        /* гасим резиновый cqw: на телефоне зазор фиксированный */
     min-height: 0;
-    padding: 50px 20px 0;
+    padding: 50px 20px;
     border-radius: 0;
     box-shadow: none;
   }
 
   .school-day__plate-text {
-    order: 1;
     max-width: none;
     font-size: var(--fs-h4);  /* назад к ступенчатому кеглю (20 на телефоне) */
   }
 
   /* в макете 320×48: padding 14/30, радиус 10, стрелка 20×20 */
   .school-day__plate-btn {
-    order: 2;
     display: flex;
+    align-self: stretch;
     width: 100%;
     min-height: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     padding: 14px 30px;
     gap: 10px;
     font-size: var(--fs-btn);
@@ -598,29 +348,20 @@
     height: 20px;
   }
 
-  /* Вырезка (мобильный кроп) — во всю ширину экрана, гасит боковые поля.
-     position: relative (а не static) — иначе z-index не сработает и абсолютный
-     вихрь ляжет поверх вырезки. */
-  .school-day__plate-boy {
-    order: 3;
-    position: relative;
-    inset: auto;
-    display: block;
-    width: calc(100% + 40px);
-    margin: 30px -20px 0;
-  }
-
-  /* Вихрь 1:11867 — тот же слой в точке (−634, 175) при высоте карточки 567.
-     Привязан к низу, а не к верху: так он не разъезжается с вырезкой, когда
-     текст переливается на другое число строк.
+  /* ⚠️ 10.09.2026: раскладка мобильного макета (1:11867) больше не действует —
+     вихрь был вымерен под карточку с вырезкой ребёнка высотой 567 и, когда
+     вырезку убрали, растянутая на 340cqw лента поползла поперёк текста.
+     Теперь это тот же приём, что на планшете: лента уходит в правый нижний
+     угол, за кнопку, в натуральных пропорциях.
      ⚠️ max-width: none обязателен — без него глобальное `img { max-width: 100% }`
-     из base.css режет вихрь до ширины карточки, и он уезжает за левый край. */
+     из base.css режет вихрь до ширины карточки. */
   .school-day__plate-wave {
-    left: -176.111cqw;
+    left: auto;
     top: auto;
-    bottom: -82.144cqw;
-    width: 340.094cqw;
-    height: 191.033cqw;
+    right: -20%;
+    bottom: -12%;
+    width: 85%;
+    height: auto;
     max-width: none;
   }
 }

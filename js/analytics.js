@@ -84,14 +84,12 @@
     }
   });
 
-  /* ---------- Дополнительные занятия, отзывы, FAQ ---------- */
+  /* ---------- Отзывы, FAQ ---------- */
+
+  // ⚠️ 10.09.2026: событие additional_expand убрано вместе с кнопкой
+  // «Посмотреть все направления» — скрытого списка у факультативов больше нет.
 
   document.addEventListener('click', (event) => {
-    const toggle = event.target.closest('.additional__toggle');
-    if (toggle && toggle.getAttribute('aria-expanded') === 'true') {
-      send('additional_expand');
-    }
-
     const play = event.target.closest('.reviews__play');
     if (play) {
       send('review_play', { review: (play.getAttribute('aria-label') || '').slice(0, 60) });

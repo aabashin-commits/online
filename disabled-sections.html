@@ -113,3 +113,75 @@
         </div>
       </div>
     </section>
+
+
+<!--
+  10.09.2026: блок 15 «Поможем выбрать класс и формат обучения» (финальная форма,
+  секция #consultation, ТЗ §18) убран из index.html по просьбе клиента.
+  Вместе с секцией из index.html сняты <link> на css/consultation.css и
+  <script> на js/consultation.js (файлы лежат на месте) и ссылка «Консультация»
+  из футера. Возвращая блок: вставить секцию между #faq и <footer>, вернуть
+  <link>/<script> на их места по порядку секций и ссылку в футер.
+  js/mobile-cta.js правки не требует — отсутствующий #consultation он переживает
+  сам (.filter(Boolean)), просто липкая плашка перестала прятаться на этом блоке.
+-->
+
+    <section class="consultation" id="consultation">
+      <div class="container">
+        <div class="consultation__card">
+          <div class="consultation__text">
+            <h2 class="consultation__title">Поможем выбрать класс и&nbsp;формат обучения</h2>
+            <p class="consultation__subtitle">Оставьте контакты&nbsp;— специалист школы ответит на&nbsp;вопросы, рассчитает стоимость и&nbsp;расскажет, как записаться на&nbsp;2&nbsp;пробных дня.</p>
+          </div>
+
+          <form class="consultation__form" novalidate>
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-name">Как к&nbsp;вам обращаться</label>
+              <input class="consultation__input" id="consultation-name" name="name" type="text" placeholder="Имя" autocomplete="name" required>
+              <p class="consultation__error" data-error-for="name"></p>
+            </div>
+
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-phone">Телефон</label>
+              <input class="consultation__input" id="consultation-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" required>
+              <p class="consultation__error" data-error-for="phone"></p>
+            </div>
+
+            <div class="consultation__field">
+              <label class="consultation__label" for="consultation-grade">Класс ребёнка</label>
+              <select class="consultation__select" id="consultation-grade" name="grade" required>
+                <option value="" selected disabled>Выберите класс</option>
+              <option value="1">1 класс</option>
+              <option value="2">2 класс</option>
+              <option value="3">3 класс</option>
+              <option value="4">4 класс</option>
+              <option value="5">5 класс</option>
+              <option value="6">6 класс</option>
+              <option value="7">7 класс</option>
+              <option value="8">8 класс</option>
+              <option value="9">9 класс</option>
+              <option value="10">10 класс</option>
+              <option value="11">11 класс</option>
+              </select>
+              <p class="consultation__error" data-error-for="grade"></p>
+            </div>
+
+            <input type="hidden" name="school_stage" value="">
+            <input type="hidden" name="education_format" value="">
+            <input type="hidden" name="price" value="">
+            <input type="hidden" name="cta_location" value="consultation">
+
+            <button class="btn btn--primary consultation__submit" type="submit">Получить консультацию
+              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <p class="consultation__consent">Нажимая кнопку, вы&nbsp;соглашаетесь с&nbsp;<a href="#">политикой конфиденциальности</a> и&nbsp;<a href="#">обработкой персональных данных</a>.</p>
+          </form>
+
+          <div class="consultation__success" role="status" tabindex="-1" hidden>
+            <h3 class="consultation__success-title">Заявка отправлена</h3>
+            <p class="consultation__success-text">Специалист школы скоро свяжется с&nbsp;вами.</p>
+          </div>
+        </div>
+      </div>
+    </section>

@@ -43,15 +43,18 @@
 /* ⚠️ 07.09.2026 (ТЗ §10): вместо восьми карточек-классов — три ступени
    и отдельная широкая карточка экстерната. Кнопка из каждой карточки убрана,
    под блоком остался один CTA. Ступень выбирается кликом и уходит
-   в school_stage (js/classes.js) — блок стоимости пятой фазы её подхватит. */
+   в school_stage (js/classes.js) — блок стоимости пятой фазы её подхватит.
+   ⚠️ 10.09.2026, правки клиента: сетка 2×2, экстернат стал четвёртой карточкой
+   вместо отдельной розовой плашки под сеткой. Карточки стали вдвое шире —
+   кегль заголовка и описания подняты на ступень. */
 
 .classes__grid {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--gap-cards);
-  margin-bottom: var(--gap-cards);
+  margin-bottom: clamp(20px, 2.128cqw, 40px);
 }
 
 /* Обёртка ступени: шапка-кнопка + текст. На десктопе текст виден всегда,
@@ -95,7 +98,7 @@
 }
 
 .classes__card-title {
-  font-size: var(--fs-h4);
+  font-size: var(--fs-h3);
   line-height: 1.1;
 }
 
@@ -118,34 +121,31 @@
 }
 
 .classes__card-text {
-  font-size: var(--fs-small);
+  font-size: var(--fs-text);
   color: var(--color-black);
   line-height: 1.5;
 }
 
-/* Розовая карточка «Экстернат» — во всю ширину под ступенями */
-.classes__extern {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(10px, 0.851cqw, 16px);
-  padding: clamp(20px, 1.489cqw, 28px);
-  margin-bottom: clamp(20px, 2.128cqw, 40px);
+/* Экстернат — четвёртая карточка сетки, но не ступень: тарифа у него нет,
+   траектория определяется после диагностики (см. js/classes.js). Поэтому вместо
+   <button> внутри лежит <div>: мёртвая кнопка сбивала бы и мышь, и скринридер.
+   Описание у карточки видно всегда, в том числе на телефоне, — сворачивать
+   нечем, аккордеон завязан на aria-expanded кнопки. */
+.classes__item--static .classes__card { cursor: default; }
+
+/* Оформление — как на старом сайте (`.classes__card--accent`): розовая заливка,
+   весь текст белый. Заливку вешаем на обёртку `.classes__item`, а не на
+   `.classes__card`: у нас карточка разрезана на шапку и тело, и заливка только
+   шапки оставила бы белую полосу под описанием. Подпись «ускоренная программа»
+   тоже белая — серый `--color-gray-2` на розовом не читается. */
+.classes__item--static {
   background: var(--color-pink);
-  border-radius: var(--radius-btn);
+}
+
+.classes__item--static .classes__card-title,
+.classes__item--static .classes__card-grades,
+.classes__item--static .classes__card-text {
   color: var(--color-white);
-}
-
-.classes__extern-title {
-  font-size: var(--fs-h4);
-  line-height: 1.1;
-}
-
-.classes__extern-text {
-  max-width: 62%;
-  font-size: var(--fs-small);
-  line-height: 1.5;
 }
 
 /* .classes__inner — обычный блок, не flex, поэтому ширину кнопки задаём ей самой:
@@ -162,12 +162,7 @@
   .classes { padding: 0 var(--page-gap) 48px; }
   .classes__inner { padding: 28px 20px; }
 
-  /* Ступеней три, колонок две: третья карточка занимает нижний ряд целиком —
-     так ряд не остаётся с дырой справа. */
-  .classes__grid { grid-template-columns: repeat(2, 1fr); }
-  .classes__item:last-child { grid-column: 1 / -1; }
-
-  .classes__extern-text { max-width: none; }
+  /* Сетка 2×2 — та же, что на десктопе: четыре карточки делят два ряда поровну */
 }
 
 /* Телефоны 360–767 — секция 1:9026: во всю ширину без скруглений,
@@ -210,10 +205,8 @@
   .classes__grid {
     grid-template-columns: 1fr;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
-
-  .classes__item:last-child { grid-column: auto; }
 
   .classes__card {
     gap: 10px;
@@ -241,19 +234,6 @@
   .classes__card-body { padding: 0 20px 20px; }
 
   .classes__card-text { line-height: 1.4; }
-
-  .classes__extern {
-    gap: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .classes__extern-title {
-    font-size: var(--fs-h3);
-    line-height: 0.9;
-  }
-
-  .classes__extern-text { line-height: 1.4; }
 
   .classes__cta {
     width: 100%;

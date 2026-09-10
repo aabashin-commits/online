@@ -241,8 +241,11 @@
     body.appendChild(list);
 
     const cta = document.createElement('button');
-    // Формат с прикреплением — полный вариант услуги, он и есть основное действие
-    cta.className = `btn ${plan.format === 'with' ? 'btn--primary' : 'btn--white'} pricing__cta`;
+    // ⚠️ 10.09.2026, правки клиента: подсвечены обе кнопки. Раньше «Без
+    // прикрепления» была белой (btn--white), чтобы основным действием читался
+    // полный тариф; клиент попросил уравнять — иерархию теперь держат цена
+    // и состав пунктов, а не вид кнопки.
+    cta.className = `btn btn--primary pricing__cta`;
     cta.type = 'button';
     cta.textContent = plan.cta;
     cta.dataset.openForm = `Стоимость — ${currentStage.label} — ${plan.title}`;

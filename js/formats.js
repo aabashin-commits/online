@@ -13,7 +13,6 @@
 
   const table = root.querySelector('.formats__table');
   const switchBtns = Array.from(root.querySelectorAll('.formats__switch-btn'));
-  const ctas = Array.from(root.querySelectorAll('.formats__cta'));
   const compareBtn = root.querySelector('.formats__compare');
   const closeBtn = root.querySelector('.formats__compare-close');
   if (!table) return;
@@ -73,24 +72,11 @@
     if (event.key === 'Escape') closeCompare();
   });
 
-  // --- CTA: выбор формата + переход к стоимости ---
-
-  ctas.forEach((button) => {
-    button.addEventListener('click', () => {
-      const format = button.dataset.format;
-      applyFormat(format);
-      closeCompare();
-
-      if (typeof window.setEducationFormat === 'function') {
-        window.setEducationFormat(format);
-      }
-
-      // Блок стоимости стоит сразу следом и сам подхватит формат из события;
-      // здесь только прокрутка. Отступ сверху даёт scroll-margin-top в CSS.
-      const pricing = document.querySelector('#pricing');
-      if (pricing) pricing.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
+  // CTA блока (правка клиента 10.09.2026) — одна кнопка «Подобрать формат
+  // обучения», обычная ссылка с data-open-form: её ловит общий обработчик
+  // main.js и открывает форму. Своего кода ей не нужно. Прежние две кнопки
+  // выбирали формат и прокручивали к тарифам — теперь формат в блоке
+  // стоимости выбирается там же, переключателем ступеней.
 
   // Формат могли выбрать и в блоке стоимости — держим переключатель в согласии
   document.addEventListener('school-choice', (event) => {

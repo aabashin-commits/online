@@ -1,36 +1,34 @@
-// school-day.js — блок «Как проходит учебный день»: переключатель ступеней
-// и рендер примера учебной недели (ТЗ 06.09.2026, §9).
+// programs.js — табы образовательных программ и рендер расписания.
 //
-// ⚠️ 07.09.2026 файл переименован из programs.js. Данные расписания сняты
-// из Figma, секция «Расписание» 1:20850 (см. Tz/raspisanie.md), и §9 велит
-// сохранить их как есть. Изменились только подписи табов: ТЗ требует
-// «1–4 класс · 5–8 класс · 9–11 класс» вместо названий ступеней.
+// ⚠️ 10.09.2026 файл вернулся из версии до правок по ТЗ (коммит 40ce47f) взамен
+// school-day.js: клиент попросил показывать неделю так же, как на старом сайте —
+// пять колонок-дней сразу, а не по одному дню через переключатель. Вместе с
+// рендером вернулись и подписи табов («начальная / средняя / старшая школа»),
+// то есть §9 ТЗ с его «1–4 класс · 5–8 класс · 9–11 класс» здесь больше
+// не соблюдается — расхождение вынесено в PLAN.md.
 //
+// Данные сняты из Figma, секция «Расписание» 1:20850 (см. Tz/raspisanie.md).
 // Второй элемент пары — оттенок плашки: цвет к предмету жёстко не привязан,
 // это декор (одна и та же «География» в средней школе фиолетовая, в старшей розовая).
 (() => {
   'use strict';
 
-  const root = document.querySelector('.school-day');
+  const root = document.querySelector('.programs');
   if (!root) return;
 
-  // Колонки выравниваются по самому длинному дню ступени: недостающие уроки
-  // добираются пустыми плашками, а лишних рядов внизу не остаётся.
-  // На телефоне пустые плашки скрыты стилями — там виден один день.
+  // Слотов в колонке всегда 6: недостающие добираются пустыми плашками.
+  const SLOTS = 6;
   const DAYS = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница'];
-  const DAYS_SHORT = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'];
 
   const PROGRAMS = [
     {
-      label: '1–4 класс',
+      label: 'начальная школа',
       stage: 'primary',
       // Распорядок в макете есть только у начальной школы (переписан под онлайн-день).
       // Для средней и старшей ждём текст от клиента — блок скрывается сам.
-      // ⚠️ Строка противоречит нагрузке из ТЗ (4 урока, окончание не позднее 16:15):
-      // сохранена дословно по §9, расхождение — в списке на ревью клиенту.
-      routine: 'Утренний круг 9:00–9:20 · Уроки в эфире 9:30–14:00 (5 уроков) · Перерыв на обед 12:40–13:00 · '
-        + 'Динамическая пауза 14:10–15:00 · Полдник 15:10–15:20 · Самоподготовка с куратором 15:30–16:30 · '
-        + 'Кружки и факультативы до 17:00',
+      routine: 'Утренний круг 9:00–9:20 · Уроки в эфире 9:30–14:00 (5 уроков) · Перерыв на обед 12:40–13:00 · '
+        + 'Динамическая пауза 14:10–15:00 · Полдник 15:10–15:20 · Самоподготовка с куратором 15:30–16:30 · '
+        + 'Кружки и факультативы до 17:00',
       days: [
         [['Русский язык', 'peach'], ['Английский язык', 'green'], ['Математика', 'cyan'], ['Литературное чтение', 'blue']],
         [['Русский язык', 'peach'], ['Математика', 'cyan'], ['Окружающий мир', 'pink'], ['Литературное чтение', 'blue']],
@@ -40,7 +38,7 @@
       ],
     },
     {
-      label: '5–8 класс',
+      label: 'средняя школа',
       stage: 'middle',
       routine: '',
       days: [
@@ -52,7 +50,7 @@
       ],
     },
     {
-      label: '9–11 класс',
+      label: 'старшая школа',
       stage: 'senior',
       routine: '',
       days: [
@@ -65,82 +63,45 @@
     },
   ];
 
-  const tabsBox = root.querySelector('.school-day__tabs');
-  const daysBox = root.querySelector('.school-day__days');
-  const schedule = root.querySelector('.school-day__schedule');
-  const routine = root.querySelector('.school-day__routine');
-  if (!tabsBox || !daysBox || !schedule || !routine) return;
+  const tabsBox = root.querySelector('.programs__tabs');
+  const schedule = root.querySelector('.programs__schedule');
+  const routine = root.querySelector('.programs__routine');
+  if (!tabsBox || !schedule || !routine) return;
 
-  schedule.id = 'school-day-schedule';
+  schedule.id = 'programs-schedule';
 
-  // Табы строим из данных, чтобы разметка не расходилась со списком ступеней
+  // Табы строим из данных, чтобы разметка не расходилась со списком программ
   const tabs = PROGRAMS.map((program, index) => {
     const tab = document.createElement('button');
     tab.type = 'button';
-    tab.className = 'school-day__tab';
+    tab.className = 'programs__tab';
     tab.textContent = program.label;
-    tab.id = `school-day-tab-${index}`;
+    tab.id = `programs-tab-${index}`;
     tab.setAttribute('role', 'tab');
     tab.setAttribute('aria-controls', schedule.id);
     tabsBox.append(tab);
     return tab;
   });
 
-  // Переключатель дней. В разметке его нет: на десктопе и планшете видны все
-  // пять колонок сразу, кнопки нужны только телефону (ТЗ §9 — показывать
-  // расписание по одному дню, а не сжимать пятидневку).
-  const dayButtons = DAYS_SHORT.map((short, index) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'school-day__day-btn';
-    button.textContent = short;
-    button.id = `school-day-day-${index}`;
-    button.setAttribute('role', 'tab');
-    button.setAttribute('aria-controls', schedule.id);
-    button.setAttribute('aria-label', DAYS[index]);
-    daysBox.append(button);
-    return button;
-  });
-
-  let currentIndex = 0;
-  let currentDay = 0;
-
-  // Колонки перерисовываются при смене ступени, поэтому подсветку выбранного
-  // дня ставим отдельным проходом — после каждого рендера.
-  const applyDay = () => {
-    const columns = schedule.children;
-    for (let index = 0; index < columns.length; index += 1) {
-      columns[index].classList.toggle('school-day__day--active', index === currentDay);
-    }
-
-    dayButtons.forEach((button, index) => {
-      const active = index === currentDay;
-      button.classList.toggle('school-day__day-btn--active', active);
-      button.setAttribute('aria-selected', active ? 'true' : 'false');
-      button.setAttribute('tabindex', active ? '0' : '-1');
-    });
-  };
-
   const renderSchedule = (program) => {
     const grid = document.createDocumentFragment();
-    const slots = Math.max(...program.days.map((day) => day.length));
 
     DAYS.forEach((dayName, dayIndex) => {
       const column = document.createElement('div');
-      column.className = 'school-day__day';
+      column.className = 'programs__day';
 
       const head = document.createElement('span');
-      head.className = 'school-day__day-name';
+      head.className = 'programs__day-name';
       head.textContent = dayName;
       column.append(head);
 
       const lessons = program.days[dayIndex] || [];
-      for (let slot = 0; slot < slots; slot += 1) {
+      for (let slot = 0; slot < SLOTS; slot += 1) {
         const lesson = lessons[slot];
         const cell = document.createElement('span');
         cell.className = lesson
-          ? `school-day__lesson school-day__lesson--${lesson[1]}`
-          : 'school-day__lesson school-day__lesson--empty';
+          ? `programs__lesson programs__lesson--${lesson[1]}`
+          : 'programs__lesson programs__lesson--empty';
         if (lesson) cell.textContent = lesson[0];
         column.append(cell);
       }
@@ -149,11 +110,12 @@
     });
 
     schedule.replaceChildren(grid);
-    applyDay();
 
     routine.textContent = program.routine;
     routine.hidden = !program.routine;
   };
+
+  let currentIndex = 0;
 
   // silent — стартовый вызов при загрузке: вкладку включить надо, а вот записывать
   // ступень в состояние нельзя, иначе форма получит «начальную школу» как выбор
@@ -163,7 +125,7 @@
 
     tabs.forEach((tab, tabIndex) => {
       const active = tabIndex === index;
-      tab.classList.toggle('school-day__tab--active', active);
+      tab.classList.toggle('programs__tab--active', active);
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
       tab.setAttribute('tabindex', active ? '0' : '-1');
     });
@@ -177,22 +139,18 @@
     }
   };
 
-  // Высота карточки не должна прыгать при переключении ступеней: у средней и
-  // старшей школы нет распорядка дня, поэтому карточка выходит ниже.
+  // Высота карточки не должна прыгать при переключении табов: у средней и
+  // старшей школы нет распорядка дня, поэтому карточка выходит ниже (а вместе
+  // с ней и соседняя синяя — она тянется по высоте белой).
   // Прогоняем все программы, запоминаем самую высокую и фиксируем её как
   // min-height. Считаем именно так, а не константой в CSS: когда клиент
   // пришлёт распорядки для средней и старшей, выравнивание останется верным.
-  const card = root.querySelector('.school-day__card');
+  const card = root.querySelector('.programs__card');
 
   const syncCardHeight = () => {
     if (!card) return;
 
     card.style.minHeight = '';
-
-    // На телефоне выравнивать нечего: виден один день, и запертая высота
-    // оставила бы под расписанием полкарточки пустоты.
-    if (window.innerWidth <= 767) return;
-
     let tallest = 0;
     PROGRAMS.forEach((program) => {
       renderSchedule(program);
@@ -203,31 +161,18 @@
     card.style.minHeight = `${Math.ceil(tallest)}px`;
   };
 
-  // Стрелки листают табы по кругу — общий обработчик для обеих лент
-  const bindArrows = (buttons, activate) => {
-    buttons.forEach((button, index) => {
-      button.addEventListener('keydown', (event) => {
-        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-        event.preventDefault();
-        const nextIndex = event.key === 'ArrowRight'
-          ? (index + 1) % buttons.length
-          : (index - 1 + buttons.length) % buttons.length;
-        buttons[nextIndex].focus();
-        activate(nextIndex);
-      });
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateTab(index));
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      const nextIndex = event.key === 'ArrowRight'
+        ? (index + 1) % tabs.length
+        : (index - 1 + tabs.length) % tabs.length;
+      tabs[nextIndex].focus();
+      activateTab(nextIndex);
     });
-  };
-
-  tabs.forEach((tab, index) => tab.addEventListener('click', () => activateTab(index)));
-  bindArrows(tabs, activateTab);
-
-  const activateDay = (index) => {
-    currentDay = index;
-    applyDay();
-  };
-
-  dayButtons.forEach((button, index) => button.addEventListener('click', () => activateDay(index)));
-  bindArrows(dayButtons, activateDay);
+  });
 
   activateTab(0, true);
   syncCardHeight();

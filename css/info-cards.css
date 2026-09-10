@@ -28,13 +28,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: clamp(16px, 1.25vw, 24px);
-  /* Высота карточки: 264 на 1920 → 220 на 1600 → 190 на 1280.
-     Это резиновый минимум; если текст на узкой ширине не влезает,
-     карточка растёт сама. */
-  min-height: clamp(190px, max(9.375vw + 70px, 13.75vw), 264px);
-  /* padding 32 на 1920 → 20 на 1600 и ниже (карточки 1:22931 и 1:21506) */
-  padding: clamp(20px, 3.75vw - 40px, 32px);
+  gap: clamp(10px, 0.625vw + 2px, 14px);
+  /* ⚠️ 10.09.2026, правки клиента: плашки стали ниже. Было 264 на 1920 → 220
+     на 1600 → 190 на 1280, стало 180 → 160 → 140 одной прямой (кривая с изломом
+     здесь больше не нужна: ход равномерный, 20px на каждые 320px ширины).
+     Это по-прежнему резиновый минимум — если текст не влезает, карточка растёт. */
+  min-height: clamp(140px, 6.25vw + 60px, 180px);
+  /* padding тоже ужат: 24 на 1920 → 16 на 1600 и ниже (было 32 → 20) */
+  padding: clamp(16px, 2.5vw - 24px, 24px);
   background: var(--color-white);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
@@ -109,9 +110,9 @@
 
   .info-cards__card {
     grid-column: auto;
-    min-height: 140px;
-    gap: 20px;
-    padding: 20px;
+    min-height: 110px;
+    gap: 12px;
+    padding: 16px;
   }
 
   .info-cards__card:nth-child(4),

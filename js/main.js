@@ -149,8 +149,9 @@
   // у них одна, поэтому она живёт здесь, а не дублируется в двух файлах.
   //
   // track — прокручиваемый контейнер, nav — строка кнопок .scroll-nav
-  // с [data-scroll="prev"|"next"]. Шаг прокрутки равен ширине первой карточки
-  // вместе с зазором, так что лента всегда встаёт по границе карточки.
+  // с [data-scroll="prev"|"next"]. Шаг прокрутки кратен ширине первой карточки
+  // вместе с зазором, так что лента всегда встаёт по границе карточки;
+  // множитель берётся из CSS-переменной --scroll-step на треке (по умолчанию 1).
   //
   // itemSelector обязателен там, где карточки лежат не прямо в треке:
   // у факультативов между треком и карточками стоят ряды бенто, а они на
@@ -163,13 +164,18 @@
     const next = nav.querySelector('[data-scroll="next"]');
     if (!prev || !next) return;
 
+    // На сколько колонок листает стрелка, решает CSS через --scroll-step:
+    // брейкпоинты остаются в файле блока (правило проекта), JS только читает
+    // число. Переменной нет — шаг в одну карточку, как было.
     const step = () => {
       const item = itemSelector
         ? track.querySelector(itemSelector)
         : track.firstElementChild;
       if (!item) return track.clientWidth;
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      return item.getBoundingClientRect().width + gap;
+      const styles = getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap) || 0;
+      const count = parseInt(styles.getPropertyValue('--scroll-step'), 10) || 1;
+      return (item.getBoundingClientRect().width + gap) * count;
     };
 
     // Кнопка у края ленты гасится. Запас в 1px — на дробные значения

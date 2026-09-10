@@ -1,12 +1,25 @@
 /* additional.css — блок «Больше, чем школьная программа» (ТЗ 06.09.2026, §14).
-   Файл был css/electives.css: бенто-раскладка 3+2+3 с каруселью на телефоне
-   описывала прежние восемь факультативов, которых в ТЗ нет. Старая версия —
-   `git show 151ec77:css/electives.css`.
 
-   Раскладка по §14:
-   • десктоп — три карточки в ряд, полный список раскрывается ниже;
-   • планшет — две карточки в первом ряду, одна во втором;
-   • телефон — карточки accordion, полный список accordion по категориям. */
+   ⚠️ 10.09.2026, правки клиента: блок пересобран по разделу «Факультативы»
+   основного сайта (agb.lancmanschool.com, локально ../скул офлайн/,
+   css/electives.css). Было — три карточки-аккордеона и кнопка «Посмотреть все
+   направления», за которой пряталась вся двадцатка. Стало — сетка одинаковых
+   белых карточек: у каждого направления заголовок, описание в одну-две строки
+   и кнопка, открывающая форму с подставленной темой. Скрытого списка нет,
+   accordion и кнопка-раскрывашка убраны вместе с логикой в js/additional.js.
+   Прежняя раскладка, если понадобится: git show tz-2026-09:css/additional.css.
+
+   ⚠️ 10.09.2026, вторая правка: блок стал каруселью в два ряда. Сеткой
+   21 карточка занимала на десктопе семь рядов — полотно на пол-экрана.
+   Теперь на всех экранах это горизонтальная лента со scroll-snap: десктоп
+   показывает 3 колонки по 2 карточки, планшет — 2 колонки, телефон остался
+   лентой в один ряд (два ряда сжали бы карточку до нечитаемой). Стрелка
+   листает на кадр целиком. Прежняя сетка: git show tz-2026-09:css/additional.css.
+
+   Тогда же снят хвост блока: подписи .additional__paid и .additional__note
+   и общий CTA .additional__ctas / .additional__cta — их стили удалены отсюда
+   вместе с разметкой. Заявку принимают кнопки в карточках. ⚠️ Обе подписи
+   были из §14 ТЗ, расхождение зафиксировано в PLAN.md. */
 
 .additional { padding-block: 20px; }
 
@@ -33,212 +46,114 @@
   color: var(--color-gray-1);
 }
 
-/* --- Три карточки --- */
+/* --- Карусель направлений --- */
 
-.additional__cards {
+/* Карусель в два ряда. Сетка растёт не вниз, а вправо: grid-auto-flow: column
+   кладёт карточки по колонкам сверху вниз (1-я и 2-я — первая колонка, 3-я
+   и 4-я — вторая), лишние колонки уезжают за край и листаются стрелками.
+   Ширина колонки — доля кадра, чтобы три колонки вместе с двумя промежутками
+   ровно ложились в контейнер. Ряды в 1fr выравниваются по самой высокой
+   карточке, поэтому своя min-height карточке больше не нужна.
+   --scroll-step читает createScroller() из js/main.js: на сколько колонок
+   листает стрелка. Держим его здесь, чтобы брейкпоинты остались в файле блока. */
+.additional__grid {
+  --scroll-step: 3;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-columns: calc((100% - 2 * var(--gap-cards)) / 3);
   gap: var(--gap-cards);
-  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+.additional__grid::-webkit-scrollbar { display: none; }
+
+/* Строка стрелок в layout.css скрыта везде, кроме ≤767: там ленты только
+   на телефоне. Здесь лента живёт на всех экранах — включаем её точечно,
+   не трогая общее правило (им пользуется педсостав в «О нас»). */
+.additional .scroll-nav { display: flex; }
+
+/* Геометрия карточки — с основного сайта: белая, padding и радиус карточки,
+   кнопка прижата к низу. Высоту задают ряды карусели (1fr), поэтому своей
+   min-height здесь нет — она осталась только в ленте на телефоне. */
 .additional__card {
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 0.851cqw, 16px);
-  padding: var(--card-pad);
+  justify-content: space-between;
+  gap: clamp(16px, 1.596cqw, 30px);
+  padding: clamp(16px, 1.596cqw, 30px);
   background: var(--color-white);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-}
-
-.additional__card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  /* На десктопе карточка не сворачивается — курсор-указатель врал бы */
-  cursor: default;
+  scroll-snap-align: start;
 }
 
 .additional__card-title {
   font-size: var(--fs-h4);
-  font-weight: 500;
-  line-height: 1.1;
-}
-
-.additional__card-text {
-  font-size: var(--fs-text);
-  line-height: 1.5;
-  color: var(--color-gray-1);
-}
-
-/* Стрелки accordion нужны только на телефоне */
-.additional__card-chevron,
-.additional__group-chevron {
-  display: none;
-  flex: 0 0 auto;
-  color: var(--color-blue);
-  transition: transform 0.2s ease;
-}
-
-/* --- Кнопка раскрытия и полный список --- */
-
-.additional__toggle {
-  align-self: flex-start;
-  /* ТЗ §21: зона нажатия не меньше 44px */
-  min-height: 44px;
-  padding: 10px clamp(20px, 1.596cqw, 30px);
-  background: none;
-  border: 1px solid var(--color-blue);
-  border-radius: var(--radius-pill);
-  color: var(--color-blue);
-  font: inherit;
-  font-size: var(--fs-btn);
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.additional__toggle:hover {
-  background: var(--color-blue);
-  color: var(--color-white);
-}
-
-.additional__list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap-cards);
-  padding: var(--card-pad);
-  background: var(--color-white);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-/* display:grid выше перебил бы атрибут hidden — список открылся бы сразу */
-.additional__list[hidden] { display: none; }
-
-.additional__group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.additional__group-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: default;
-}
-
-.additional__group-title {
-  font-size: var(--fs-btn);
-  font-weight: 500;
   line-height: 1.2;
-  color: var(--color-black);
+  margin-bottom: clamp(8px, 0.638cqw, 12px);
 }
 
-.additional__group-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: none;
-}
-
-.additional__group-item {
-  position: relative;
-  padding-left: 20px;
-  font-size: var(--fs-text);
+/* Кегль на 2 пункта выше общего мелкого текста — так же, как в «Факультативах»
+   основного сайта: на 12px описания читались тяжело. */
+.additional__card-text {
+  font-size: calc(var(--fs-small) + 2px);
   line-height: 1.5;
-  color: var(--color-gray-1);
+  color: var(--color-gray-2);
 }
 
-/* Маркер рисуем сами: у list-style нет управления цветом и отступом */
-.additional__group-item::before {
-  content: '';
-  position: absolute;
-  top: 0.6em;
-  left: 4px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-blue);
-}
-
-/* --- Подписи и CTA --- */
-
-.additional__note,
-.additional__paid {
+.additional__card-btn {
+  align-self: flex-start;
   font-size: var(--fs-text);
-  line-height: 1.6;
-  color: var(--color-gray-1);
 }
 
-.additional__note { font-weight: 500; color: var(--color-black); }
-
-.additional__ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-cards);
-}
-
-/* --- Планшет: 2 + 1 --- */
+/* --- Планшет: та же карусель, но две колонки в кадре --- */
 
 @media (max-width: 1024px) {
-  .additional__cards { grid-template-columns: repeat(2, 1fr); }
+  .additional__grid {
+    --scroll-step: 2;
+    grid-auto-columns: calc((100% - var(--gap-cards)) / 2);
+  }
 
   .additional__card { padding: 20px; }
-
-  .additional__list {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 20px;
-  }
 }
 
-/* --- Телефон: карточки и категории accordion --- */
+/* --- Телефон: лента со scroll-snap --- */
 
 @media (max-width: 767px) {
-  .additional__cards { grid-template-columns: 1fr; }
+  /* Один ряд вместо двух: карточка во всю ширину экрана, два ряда сжали бы
+     её до нечитаемой. display: flex отключает всю грид-раскладку карусели,
+     ширину задаёт flex-basis карточки; прокрутка, снап и скрытая полоса
+     наследуются из базового правила.
 
-  .additional__list { grid-template-columns: 1fr; }
-
-  .additional__card-head,
-  .additional__group-head {
-    min-height: 44px;
-    cursor: pointer;
+     Лента живёт внутри полей контейнера, как на основном сайте. Выносить трек
+     за поля отрицательным margin нельзя — scroll-snap считает снап от края
+     скроллера, не от padding, и лента при загрузке сама уезжала на 10px,
+     прижимая карточку к краю. */
+  .additional__grid {
+    --scroll-step: 1;
+    display: flex;
+    gap: 20px;
   }
 
-  .additional__card-chevron,
-  .additional__group-chevron { display: block; }
-
-  .additional__card-head[aria-expanded='true'] .additional__card-chevron,
-  .additional__group-head[aria-expanded='true'] .additional__group-chevron {
-    transform: rotate(180deg);
+  .additional__card {
+    flex: 0 0 100%;
+    min-height: 200px;
+    gap: 20px;
+    padding: 20px;
   }
 
-  .additional__card-head[aria-expanded='false'] + .additional__card-text,
-  .additional__group-head[aria-expanded='false'] + .additional__group-list {
-    display: none;
+  .additional__card-title {
+    font-size: var(--fs-h3);
+    line-height: 0.9;
+    margin-bottom: 10px;
   }
 
-  .additional__toggle,
-  .additional__cta {
-    align-self: stretch;
-    width: 100%;
-    justify-content: center;
-  }
+  .additional__card-text { font-size: calc(var(--fs-text) + 2px); }
+
+  /* Кнопка во всю ширину карточки (ширину и радиус даёт общий .btn) */
+  .additional__card-btn { align-self: stretch; }
 }

@@ -1,10 +1,19 @@
 // additional.js — блок «Больше, чем школьная программа» (ТЗ 06.09.2026, §14).
-// Файл был js/electives.js (блок «Факультативы/профориентация»): прежние
-// направления не совпадали со списком ТЗ, поэтому данные заменены целиком.
 //
-// Полный список берётся из §14 дословно, пятью категориями. Раскрывается
-// по кнопке — на телефоне ещё и по категориям, чтобы список не превращался
-// в простыню на весь экран.
+// ⚠️ 10.09.2026, правки клиента: блок пересобран по разделу «Факультативы»
+// основного сайта. Был аккордеон из трёх карточек плюс кнопка «Посмотреть все
+// направления», за которой пряталась пятёрка категорий со списками. Стало —
+// лента одинаковых карточек, по одной на направление: заголовок, описание
+// и кнопка, открывающая форму с подставленной темой. Ничего не скрыто,
+// раскрывать нечего — вся логика аккордеонов из файла ушла.
+//
+// Дедупликация по правилу клиента («если один блок повторяет второй, только
+// более подробно, оставляем более подробный»): общие карточки «Языки
+// и элективы» и «Профориентация» убраны — их закрывают четыре конкретных языка
+// и «Финансовая грамотность и профориентация». Итого 21 направление.
+//
+// ⚠️ Описания направлений (кроме подготовки к ОГЭ и ЕГЭ — этот текст был
+// в блоке раньше) написаны нами и ждут согласования клиента, см. PLAN.md.
 //
 // Неразрывные пробелы в строках — литеральные U+00A0: строки вставляются
 // через textContent, сущность &nbsp; вывелась бы текстом.
@@ -14,71 +23,109 @@
   const root = document.querySelector('.additional');
   if (!root) return;
 
-  const groups = [
+  const cards = [
     {
-      title: 'Языки',
-      items: [
-        'немецкий базовый и продвинутый',
-        'французский базовый и продвинутый',
-        'китайский базовый и продвинутый',
-        'японский базовый',
-      ],
+      title: 'Подготовка к ОГЭ и ЕГЭ',
+      text: 'Теория, практика и разбор сложных заданий. В старшей школе углублённая подготовка входит в тариф с прикреплением.',
     },
     {
-      title: 'IT, наука и проекты',
-      items: [
-        'Scratch-программирование',
-        'астрономический кружок «Невидимая вселенная»',
-        '«Первые шаги в науку»',
-        'дизайн-мастерская',
-        '«Я и проект»',
-      ],
+      title: 'Немецкий язык',
+      text: 'Базовый и продвинутый уровни: от первых фраз до свободного разговора.',
     },
     {
-      title: 'Развитие навыков',
-      items: [
-        'скорочтение с элементами мнемотехники',
-        'мнемотехника',
-        'функциональная грамотность',
-        'финансовая грамотность и профориентация',
-      ],
+      title: 'Французский язык',
+      text: 'Базовый и продвинутый уровни: произношение, грамматика и живая речь.',
     },
     {
-      title: 'География и окружающий мир',
-      items: [
-        'игровая география',
-        'маршруты Москвы и области',
-        'подготовка к ОГЭ по географии',
-        'прогулки по городам России',
-        'биология для любопытных',
-      ],
+      title: 'Китайский язык',
+      text: 'Базовый и продвинутый уровни: иероглифика, тоны и разговорная практика.',
     },
     {
-      title: 'Гуманитарные и психологические занятия',
-      items: [
-        '«Волшебный мир сказки»',
-        '«Будь собой»',
-      ],
+      title: 'Японский язык',
+      text: 'Базовый уровень: азбуки, первые иероглифы и простые диалоги.',
+    },
+    {
+      title: 'Scratch-программирование',
+      text: 'Первый язык программирования: собираем игры и анимации из готовых блоков.',
+    },
+    {
+      title: '«Невидимая вселенная»',
+      text: 'Астрономический кружок: планеты, звёзды и то, что не разглядеть с Земли.',
+    },
+    {
+      title: '«Первые шаги в науку»',
+      text: 'Учимся задавать вопросы, выдвигать гипотезы и проверять их опытами.',
+    },
+    {
+      title: 'Дизайн-мастерская',
+      text: 'Композиция, цвет и шрифт: делаем постеры, открытки и свои проекты.',
+    },
+    {
+      title: '«Я и проект»',
+      text: 'От идеи до защиты: помогаем довести проектную работу до результата.',
+    },
+    {
+      title: 'Скорочтение с элементами мнемотехники',
+      text: 'Учимся читать быстрее и удерживать в памяти прочитанное.',
+    },
+    {
+      title: 'Мнемотехника',
+      text: 'Приёмы запоминания: даты, термины, правила и иностранные слова.',
+    },
+    {
+      title: 'Функциональная грамотность',
+      text: 'Читаем таблицы, графики и инструкции и применяем их в обычной жизни.',
+    },
+    {
+      title: 'Финансовая грамотность и профориентация',
+      text: 'Бюджет, накопления и первое знакомство с профессиями и своими сильными сторонами.',
+    },
+    {
+      title: 'Игровая география',
+      text: 'Материки, страны и столицы через игры, карты и командные квизы.',
+    },
+    {
+      title: 'Маршруты Москвы и области',
+      text: 'Виртуальные прогулки по усадьбам, музеям и природным местам региона.',
+    },
+    {
+      title: 'Подготовка к ОГЭ по географии',
+      text: 'Карты, номенклатура и разбор экзаменационных заданий по формату.',
+    },
+    {
+      title: 'Прогулки по городам России',
+      text: 'Виртуальные экскурсии: история, архитектура и традиции регионов.',
+    },
+    {
+      title: 'Биология для любопытных',
+      text: 'Опыты, наблюдения и ответы на вопросы о живой природе.',
+    },
+    {
+      title: '«Волшебный мир сказки»',
+      text: 'Читаем и сочиняем сказки, развиваем речь и воображение.',
+    },
+    {
+      title: '«Будь собой»',
+      text: 'Занятия с психологом: уверенность в себе, эмоции и общение со сверстниками.',
     },
   ];
 
-  const list = root.querySelector('.additional__list');
-  const toggle = root.querySelector('.additional__toggle');
-  const mobile = window.matchMedia('(max-width: 767px)');
+  const grid = root.querySelector('.additional__grid');
+  if (!grid) return;
 
-  const chevron = (className) => {
+  const arrow = () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', className);
-    svg.setAttribute('viewBox', '0 0 16 10');
+    svg.setAttribute('class', 'btn__arrow');
+    svg.setAttribute('viewBox', '0 0 20 20');
     svg.setAttribute('width', '16');
-    svg.setAttribute('height', '10');
+    svg.setAttribute('height', '16');
     svg.setAttribute('fill', 'none');
     svg.setAttribute('aria-hidden', 'true');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'M1 1.5 8 8.5l7-7');
+    path.setAttribute('d', 'M3.5 10h13m0 0-5-5m5 5-5 5');
     path.setAttribute('stroke', 'currentColor');
-    path.setAttribute('stroke-width', '2');
+    path.setAttribute('stroke-width', '1.8');
     path.setAttribute('stroke-linecap', 'round');
     path.setAttribute('stroke-linejoin', 'round');
 
@@ -86,103 +133,40 @@
     return svg;
   };
 
-  // --- Полный список направлений ---
+  cards.forEach((card) => {
+    const item = document.createElement('article');
+    item.className = 'additional__card';
 
-  let openGroup = null;
+    const head = document.createElement('div');
+    head.className = 'additional__card-head';
 
-  const groupHeads = [];
+    const title = document.createElement('h3');
+    title.className = 'additional__card-title';
+    title.textContent = card.title;
 
-  const syncGroups = () => {
-    groupHeads.forEach((head) => {
-      // На широких экранах категории раскрыты всегда — aria-expanded не должен
-      // сообщать скринридеру, что видимый список закрыт.
-      const open = mobile.matches ? head === openGroup : true;
-      head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  };
+    const text = document.createElement('p');
+    text.className = 'additional__card-text';
+    text.textContent = card.text;
 
-  if (list) {
-    groups.forEach((group, index) => {
-      const item = document.createElement('div');
-      item.className = 'additional__group';
+    head.append(title, text);
 
-      const bodyId = `additional-group-${index + 1}`;
+    // Форма открывается общим делегированием из main.js по [data-open-form],
+    // поэтому своего обработчика карточке не нужно — достаточно атрибута
+    // с темой. Кавычки-ёлочки в названиях уходят в тему письма как есть.
+    const btn = document.createElement('a');
+    btn.className = 'btn btn--outline btn--small additional__card-btn';
+    btn.href = '#form';
+    btn.dataset.openForm = card.title;
+    btn.dataset.ctaLocation = 'additional';
+    btn.append('узнать подробнее', arrow());
 
-      const head = document.createElement('button');
-      head.className = 'additional__group-head';
-      head.type = 'button';
-      head.setAttribute('aria-controls', bodyId);
-
-      const title = document.createElement('span');
-      title.className = 'additional__group-title';
-      title.textContent = group.title;
-
-      head.append(title, chevron('additional__group-chevron'));
-
-      const items = document.createElement('ul');
-      items.className = 'additional__group-list';
-      items.id = bodyId;
-
-      group.items.forEach((text) => {
-        const li = document.createElement('li');
-        li.className = 'additional__group-item';
-        li.textContent = text;
-        items.appendChild(li);
-      });
-
-      head.addEventListener('click', () => {
-        openGroup = mobile.matches && openGroup === head ? null : head;
-        syncGroups();
-      });
-
-      groupHeads.push(head);
-      item.append(head, items);
-      list.appendChild(item);
-    });
-
-    syncGroups();
-  }
-
-  if (toggle && list) {
-    const labels = {
-      open: 'Посмотреть все направления',
-      close: 'Свернуть список направлений',
-    };
-
-    toggle.addEventListener('click', () => {
-      const open = list.hidden;
-      list.hidden = !open;
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.textContent = open ? labels.close : labels.open;
-      // Кнопка стоит над списком: при раскрытии фокус уводим внутрь,
-      // иначе с клавиатуры пришлось бы «пролистывать» весь список заново.
-      if (open && groupHeads[0]) groupHeads[0].focus();
-    });
-  }
-
-  // --- Три карточки: accordion на телефоне ---
-
-  const cardHeads = Array.from(root.querySelectorAll('.additional__card-head'));
-  let openCard = null;
-
-  const syncCards = () => {
-    cardHeads.forEach((head) => {
-      const open = mobile.matches ? head === openCard : true;
-      head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  };
-
-  cardHeads.forEach((head) => {
-    head.addEventListener('click', () => {
-      openCard = mobile.matches && openCard === head ? null : head;
-      syncCards();
-    });
+    item.append(head, btn);
+    grid.appendChild(item);
   });
 
-  mobile.addEventListener('change', () => {
-    syncCards();
-    syncGroups();
-  });
-
-  syncCards();
+  // Карусель: направления листаются стрелками под лентой на всех экранах
+  // (десктоп и планшет — в два ряда, телефон — в один, см. css/additional.css).
+  // Механика общая с педсоставом — createScroller() из main.js; на сколько
+  // колонок листать, он берёт из --scroll-step в CSS блока.
+  window.createScroller(grid, root.querySelector('[data-scroll-nav]'), '.additional__card');
 })();

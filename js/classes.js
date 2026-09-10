@@ -8,14 +8,17 @@
 //    и для скринридера, и для стилей (см. css/classes.css, медиазапрос 767).
 //
 // Экстернат намеренно не выбирается: это не ступень, тарифа у него нет,
-// траектория определяется после диагностики.
+// траектория определяется после диагностики. С 10.09.2026 он лежит четвёртой
+// карточкой той же сетки, но без <button> внутри — поэтому карточки собираются
+// по button.classes__card, иначе экстернат ловил бы клики и слал в стоимость
+// пустую ступень.
 (() => {
   'use strict';
 
   const root = document.querySelector('.classes');
   if (!root) return;
 
-  const cards = Array.from(root.querySelectorAll('.classes__card'));
+  const cards = Array.from(root.querySelectorAll('button.classes__card'));
   const cta = root.querySelector('.classes__cta');
   if (!cards.length) return;
 

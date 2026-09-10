@@ -1,18 +1,23 @@
 // reviews.js — блок 11 «Отзывы родителей и учеников» (ТЗ 06.09.2026, §15).
 //
-// Что изменилось против прежней версии (`git show 151ec77:js/reviews.js`):
-// страничный пагинатор заменён плоским списком. §15 требует показывать
-// на первом экране не больше шести отзывов, остальные открывать кнопкой,
-// а имя и статус показывать без запуска видео — поэтому у карточки появилась
-// подпись, а у блока — кнопка «Показать ещё отзывы» и счётчик для телефона.
+// ⚠️ 10.09.2026, правки клиента: блок снова карусель, как на основном сайте.
+// Было (07.09.2026, §15) — плоский список: четыре отзыва на первом экране,
+// остальные одиннадцать по кнопке «Показать ещё отзывы», на телефоне лента
+// со счётчиком. Стало — страницы со стрелками: сколько карточек на странице,
+// решает CSS через --per-page, раскладывает их общий createPager из main.js.
+// Кнопка, счётчик и крупная плитка первого отзыва убраны: страницы обязаны
+// быть одинаковыми, иначе лента прыгает по высоте.
+//
+// Подписи под постером (имя, статус, метка) — требование §15 — сохранены:
+// карусель меняет только способ показа карточек, не их содержание.
 (() => {
   'use strict';
 
   const root = document.querySelector('.reviews');
   if (!root) return;
 
-  const list = root.querySelector('.reviews__list');
-  if (!list) return;
+  const track = root.querySelector('.reviews__track');
+  if (!track) return;
 
   // Ролики лежат своими файлами в assets/video/reviews (исходники клиента
   // перекодированы в H.264 + AAC: в оригиналах было VP9/Opus, их не играет Safari).
@@ -52,14 +57,6 @@
     ...item,
   }));
 
-  // Сколько карточек видно до нажатия «Показать ещё отзывы».
-  // Ровно раскладка §15: один крупный отзыв и три компактные рядом.
-  const VISIBLE = 4;
-
-  const more = root.querySelector('.reviews__more');
-  const counter = root.querySelector('.reviews__counter');
-  const mobile = window.matchMedia('(max-width: 767px)');
-
   function makePlayer(item) {
     if (item.type === 'embed') {
       const frame = document.createElement('iframe');
@@ -78,12 +75,9 @@
     return video;
   }
 
-  const cards = items.map((item, index) => {
+  const cards = items.map((item) => {
     const li = document.createElement('li');
     li.className = 'reviews__item';
-    // Первая карточка — крупная (§15, desktop). Класс, а не :first-child:
-    // на планшете и телефоне модификатор просто перестаёт что-либо менять.
-    if (index === 0) li.classList.add('reviews__item--large');
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -147,60 +141,15 @@
     return li;
   });
 
-  list.append(...cards);
+  // Карточки раскладывает по страницам общий createPager (main.js): он читает
+  // --per-page из CSS, строит страницы-обёртки <ul class="reviews__page">
+  // и листает трек нативной прокруткой со scroll-snap — на телефоне это сразу
+  // даёт свайп, стрелкам остаётся сдвинуть ленту на ширину вьюпорта.
+  window.createPager(track, root.querySelector('.reviews__arrows'), cards, {
+    pageClass: 'reviews__page',
+    pageTag: 'ul',
+  });
 
   // Постеры уже в документе — можно отдавать им настоящий src, дальше сработает lazy
-  window.applyLazySrc(list);
-
-  // --- «Показать ещё отзывы» ---
-
-  let expanded = false;
-
-  const syncItems = () => {
-    // На телефоне §15 просит ленту с краем следующей карточки и счётчиком —
-    // там доступны все 15 сразу, и кнопка не нужна (её прячет CSS).
-    const showAll = expanded || mobile.matches;
-    cards.forEach((card, index) => {
-      card.hidden = !showAll && index >= VISIBLE;
-    });
-    if (counter) counter.textContent = mobile.matches ? '1 / ' + cards.length : '';
-  };
-
-  if (more) {
-    more.addEventListener('click', () => {
-      expanded = !expanded;
-      more.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      more.textContent = expanded ? 'Свернуть отзывы' : 'Показать ещё отзывы';
-      syncItems();
-      // Кнопка не открывает лид-форму (§15) — только раскрывает список.
-      if (expanded && cards[VISIBLE]) {
-        const target = cards[VISIBLE].querySelector('.reviews__play');
-        if (target) target.focus({ preventScroll: true });
-      }
-    });
-  }
-
-  // --- Счётчик карточек на телефоне ---
-
-  if (counter) {
-    let ticking = false;
-    list.addEventListener('scroll', () => {
-      if (!mobile.matches || ticking) return;
-      ticking = true;
-      // Пересчитываем в кадре отрисовки: событие scroll приходит чаще,
-      // чем нужно, а нам достаточно одного значения на кадр.
-      requestAnimationFrame(() => {
-        ticking = false;
-        const first = cards[0];
-        if (!first) return;
-        const step = first.getBoundingClientRect().width + parseFloat(getComputedStyle(list).columnGap || 0);
-        if (!step) return;
-        const index = Math.min(cards.length, Math.round(list.scrollLeft / step) + 1);
-        counter.textContent = index + ' / ' + cards.length;
-      });
-    }, { passive: true });
-  }
-
-  mobile.addEventListener('change', syncItems);
-  syncItems();
+  window.applyLazySrc(track);
 })();
