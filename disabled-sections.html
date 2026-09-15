@@ -22,7 +22,39 @@
 
   07.09.2026 (ТЗ §14): сюда переехал баннер «Готовим к ЕГЭ и ОГЭ» — в списке блоков ТЗ
   его нет, а статистика в нём запрещена §3.
+
+  14.09.2026: сюда переехал блок «Попробуйте 2 учебных дня онлайн» (#trial) — по просьбе
+  клиента на его месте в index.html стоит блок «Наши выпускники поступают в самые
+  престижные вузы» (#universities, css/universities.css) — возвращён отсюда же,
+  разметка отсюда удалена. Ссылка на css/trial.css из index.html убрана; сам файл лежит в css/.
 -->
+
+<!-- ===== Блок «Попробуйте 2 учебных дня онлайн» (#trial), снят 14.09.2026 ===== -->
+    <section class="trial" id="trial">
+      <div class="container">
+        <div class="trial__banner">
+          <img class="trial__decor trial__decor--grid" src="assets/img/invite/grid.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <img class="trial__decor trial__decor--wave" src="assets/img/invite/wave.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+          <div class="trial__content">
+            <div class="trial__text">
+              <h2 class="trial__title"><span class="trial__hl">Попробуйте 2&nbsp;учебных дня онлайн</span></h2>
+              <p class="trial__subtitle">Ребёнок познакомится с&nbsp;форматом живых уроков, а&nbsp;вы&nbsp;сможете понять, подходит&nbsp;ли онлайн-школа вашей семье.</p>
+              <p class="trial__extra">Перед началом проведём консультацию и&nbsp;поможем выбрать подходящий класс и&nbsp;формат.</p>
+            </div>
+
+            <a class="btn btn--primary trial__btn" href="#form" data-open-form="2 пробных дня" data-cta-location="trial">Записаться на&nbsp;2&nbsp;пробных дня
+              <svg class="btn__arrow" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M9.3 15h11.4m0 0-5.4-5.4m5.4 5.4-5.4 5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+
+          <picture class="trial__picture">
+            <source media="(max-width: 767px)" srcset="assets/img/invite/kids-mobile.webp">
+            <img class="trial__media" src="assets/img/invite/kids.webp?v=2" alt="Ученики онлайн-школы «Моя школа LS»" width="952" height="760" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </div>
+    </section>
 
 <!-- ===== Синяя карточка «2 пробных дня» из бывшего блока «Образовательные программы» =====
      Снята 07.09.2026 по ТЗ §9: блок стал «Как проходит учебный день», и его состав
@@ -47,45 +79,14 @@
     </article>
 
 <!--
-  Блок «Наши выпускники поступают в самые престижные вузы» (бывш. #universities).
-  Снят со страницы 07.09.2026: в списке из 15 блоков ТЗ его нет, а формулировка
-  «самые престижные вузы» — бездоказательное утверждение из §3.
-  Стили css/universities.css остаются подключёнными (общее правило этого файла).
-  Вместе с ним из index.html убраны старые карточки блока «О нас»: «Руководящий
+  Блок «Наши выпускники поступают в самые престижные вузы» (#universities).
+  Снимался 07.09.2026 (нет в списке ТЗ; «самые престижные вузы» — утверждение из §3),
+  14.09.2026 по просьбе клиента возвращён в index.html на место #trial.
+  Вместе с его снятием 07.09 из index.html убраны старые карточки блока «О нас»: «Руководящий
   состав», «Полноценное обучение онлайн» с чипами (повторы, запрещённые §11)
   и плашка «московская медаль»/«аттестат московской школы-партнёра» (запрет §3).
   Вернуть при необходимости: git show 4ee423f:index.html
 -->
-
-    <section class="universities" id="universities">
-      <div class="container">
-        <div class="universities__banner">
-          <img class="universities__decor universities__decor--wave" src="assets/img/universities/bg-blend.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
-
-          <div class="universities__content">
-            <h2 class="universities__title"><span class="universities__muted">Наши выпускники</span> <span class="universities__hl">поступают в&nbsp;самые престижные вузы</span> <span class="universities__muted">страны и&nbsp;мира</span></h2>
-            <a class="btn btn--primary universities__btn" href="#form" data-open-form>оставить заявку
-              <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-
-          <ul class="universities__logos" aria-label="Логотипы вузов">
-            <li class="universities__logo"><img src="assets/img/universities/univer-rggu.svg" alt="РГГУ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mpgu.svg" alt="МПГУ" width="115" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-rea.svg" alt="РЭУ им. Плеханова" width="114" height="105" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mifi.svg" alt="НИЯУ МИФИ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgtu.svg" alt="МГТУ им. Н. Э. Баумана" width="109" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgu.svg" alt="МГУ им. Ломоносова" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mfua.svg" alt="МФЮА" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo universities__logo--tall"><img src="assets/img/universities/univer-oxford.svg" alt="University of Oxford" width="114" height="137" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-vshe.svg" alt="НИУ ВШЭ" width="114" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-mgimo.svg" alt="МГИМО" width="114" height="91" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-ranh.svg" alt="РАНХиГС" width="88" height="114" loading="lazy" decoding="async"></li>
-            <li class="universities__logo"><img src="assets/img/universities/univer-guu.svg" alt="ГУУ" width="114" height="105" loading="lazy" decoding="async"></li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
 
 <!-- ===== Блок 8 «Готовим к ЕГЭ и ОГЭ» (баннер) =====
