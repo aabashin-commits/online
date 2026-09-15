@@ -109,19 +109,17 @@
     gap: 10px;
   }
 
+  /* 15.09.2026: все карточки по контенту — фикс. 188px из офлайна давал
+     пустоту между заголовком и текстом (просьба клиента уменьшить высоту) */
   .info-cards__card {
     grid-column: auto;
-    min-height: 188px;
-    gap: 20px;
+    min-height: 0;
+    gap: 12px;
     padding: 20px;
   }
 
   .info-cards__card:nth-child(4),
   .info-cards__card:nth-child(5) { grid-column: auto; }
-
-  /* Первая карточка и лицензия — по контенту, без фикс. высоты */
-  .info-cards__card:first-child,
-  .info-cards__card--license { min-height: 0; }
 
   .info-cards__text { max-width: none; }
 }
