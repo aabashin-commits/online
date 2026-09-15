@@ -2,9 +2,9 @@
 //
 // Одна разметка на три раскладки: на десктопе это сравнительная таблица,
 // на планшете — две колонки-карточки, на телефоне видна колонка одного формата
-// (вторая скрыта стилями), а кнопка «Сравнить оба варианта» разворачивает
-// таблицу на весь экран. JS отвечает только за выбор формата и за этот полный
-// экран — саму перестройку делает CSS.
+// (вторая скрыта стилями). JS отвечает только за выбор формата — саму
+// перестройку делает CSS. Кнопка «Сравнить оба варианта» с полноэкранной
+// таблицей на телефоне снята 15.09.2026.
 (() => {
   'use strict';
 
@@ -13,8 +13,6 @@
 
   const table = root.querySelector('.formats__table');
   const switchBtns = Array.from(root.querySelectorAll('.formats__switch-btn'));
-  const compareBtn = root.querySelector('.formats__compare');
-  const closeBtn = root.querySelector('.formats__compare-close');
   if (!table) return;
 
   // Какая колонка видна на телефоне. Формат по умолчанию — с прикреплением:
@@ -47,29 +45,6 @@
       next.focus();
       applyFormat(next.dataset.format);
     });
-  });
-
-  // --- Полноэкранное сравнение (только телефон) ---
-
-  const closeCompare = () => {
-    if (!root.classList.contains('formats--compare')) return;
-    root.classList.remove('formats--compare');
-    if (window.unlockScroll) window.unlockScroll();
-    if (compareBtn) compareBtn.focus();
-  };
-
-  if (compareBtn) {
-    compareBtn.addEventListener('click', () => {
-      root.classList.add('formats--compare');
-      if (window.lockScroll) window.lockScroll();
-      if (closeBtn) closeBtn.focus();
-    });
-  }
-
-  if (closeBtn) closeBtn.addEventListener('click', closeCompare);
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeCompare();
   });
 
   // CTA блока (правка клиента 10.09.2026) — одна кнопка «Подобрать формат

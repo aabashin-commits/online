@@ -100,25 +100,28 @@
     padding-bottom: 50px;
   }
 
-  /* Телефон (ТЗ §6): две колонки, карточка с лицензией — во всю ширину.
-     Сброс планшетных span обязателен: без него span 2 при двух колонках
-     сложил бы карточки в один столбец. */
+  /* ⚠️ 15.09.2026: телефон — один столбец, как в офлайн-версии. Две колонки
+     (ТЗ §6) ломали экран: длинные слова («Государственная», номер лицензии)
+     распирали колонки 1fr шире вьюпорта, и правый ряд уезжал за край.
+     Сброс планшетных span обязателен — иначе span 2/3 создал бы лишние колонки. */
   .info-cards__list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
   .info-cards__card {
     grid-column: auto;
-    min-height: 110px;
-    gap: 12px;
-    padding: 16px;
+    min-height: 188px;
+    gap: 20px;
+    padding: 20px;
   }
 
   .info-cards__card:nth-child(4),
   .info-cards__card:nth-child(5) { grid-column: auto; }
 
-  .info-cards__card--license { grid-column: 1 / -1; min-height: 0; }
+  /* Первая карточка и лицензия — по контенту, без фикс. высоты */
+  .info-cards__card:first-child,
+  .info-cards__card--license { min-height: 0; }
 
   .info-cards__text { max-width: none; }
 }
