@@ -42,14 +42,14 @@
   <link rel="stylesheet" href="css/hero.css?v=5">
   <link rel="stylesheet" href="css/info-cards.css?v=5">
   <link rel="stylesheet" href="css/school-intro.css">
-  <link rel="stylesheet" href="css/onschool.css?v=5">
-  <link rel="stylesheet" href="css/attestat.css?v=20">
+  <link rel="stylesheet" href="css/onschool.css?v=6">
+  <link rel="stylesheet" href="css/attestat.css?v=21">
   <link rel="stylesheet" href="css/who-fits.css">
+  <link rel="stylesheet" href="css/pricing.css?v=6">
   <link rel="stylesheet" href="css/school-day.css?v=3">
   <link rel="stylesheet" href="css/programs.css">
   <link rel="stylesheet" href="css/classes.css?v=2">
   <link rel="stylesheet" href="css/about.css?v=9">
-  <link rel="stylesheet" href="css/pricing.css?v=4">
   <link rel="stylesheet" href="css/additional.css?v=4">
   <link rel="stylesheet" href="css/reviews.css?v=6">
   <link rel="stylesheet" href="css/universities.css">
@@ -118,9 +118,8 @@
       </a>
 
       <nav class="header__nav" aria-label="Основное меню">
-        <a class="header__link" href="#about">О&nbsp;школе</a>
+        <a class="header__link" href="#school-intro">О&nbsp;школе</a>
         <a class="header__link" href="#school-day">Как проходит обучение</a>
-        <a class="header__link" href="#classes">Классы</a>
         <a class="header__link" href="#pricing">Стоимость</a>
         <a class="header__link" href="#reviews">Отзывы</a>
         <a class="header__link" href="#faq">FAQ</a>
@@ -146,9 +145,8 @@
           </button>
         </div>
         <nav class="header__menu-nav" aria-label="Мобильное меню">
-          <a href="#about">О&nbsp;школе</a>
+          <a href="#school-intro">О&nbsp;школе</a>
           <a href="#school-day">Как проходит обучение</a>
-          <a href="#classes">Классы</a>
           <a href="#pricing">Стоимость</a>
           <a href="#reviews">Отзывы</a>
           <a href="#faq">FAQ</a>
@@ -244,7 +242,7 @@
               <img class="attestat__figura" src="assets/img/attestat/diplom_figura.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
               <div class="attestat__content">
-                <h3 class="attestat__title">Аттестат государственного образца</h3>
+                <h3 class="attestat__title">Московский аттестат государственного образца</h3>
                 <p class="attestat__lead">Документ не&nbsp;отличается от&nbsp;аттестата обычной школы: с&nbsp;ним поступают в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях.</p>
 
                 <ul class="attestat__facts">
@@ -337,6 +335,24 @@
       </div>
     </section>
 
+    <section class="pricing" id="pricing">
+      <div class="container pricing__inner">
+        <div class="pricing__head">
+          <h2 class="pricing__title">Стоимость обучения</h2>
+          <p class="pricing__subtitle">Выберите класс ребёнка и&nbsp;сравните два формата обучения.</p>
+        </div>
+
+        <div class="pricing__stages" role="tablist" aria-label="Ступень обучения"></div>
+
+
+        <div class="pricing__formats" role="tablist" aria-label="Формат обучения"></div>
+
+        <ul class="pricing__grid" id="pricing-plans"></ul>
+
+        <p class="pricing__payment">Обучение можно оплачивать частями. При&nbsp;полной оплате учебного года действует скидка.</p>
+      </div>
+    </section>
+
     <section class="school-day" id="school-day">
       <div class="container school-day__inner">
         <header class="school-day__head">
@@ -398,132 +414,6 @@
             <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
-      </div>
-    </section>
-
-    <section class="classes" id="classes">
-      <div class="container classes__inner">
-        <img class="classes__bg" src="assets/img/classes/classes-bg.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-
-        <h2 class="classes__title">Выберите класс ребёнка</h2>
-
-        <ul class="classes__grid">
-          <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="primary" aria-pressed="false">
-              <span class="classes__card-head">
-                <span class="classes__card-title">Начальная школа</span>
-                <span class="classes__card-grades">1–4&nbsp;классы</span>
-              </span>
-            </button>
-            <div class="classes__card-body">
-              <p class="classes__card-text">Мягкая адаптация к&nbsp;онлайн-урокам, основные школьные предметы и&nbsp;поддержка в&nbsp;течение учебного дня.</p>
-            </div>
-          </li>
-
-          <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="middle" aria-pressed="false">
-              <span class="classes__card-head">
-                <span class="classes__card-title">Средняя школа</span>
-                <span class="classes__card-grades">5–8&nbsp;классы</span>
-              </span>
-            </button>
-            <div class="classes__card-body">
-              <p class="classes__card-text">Новые предметы, системное обучение и&nbsp;обратная связь педагогов.</p>
-            </div>
-          </li>
-
-          <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="senior" aria-pressed="false">
-              <span class="classes__card-head">
-                <span class="classes__card-title">Старшая школа</span>
-                <span class="classes__card-grades">9–11&nbsp;классы</span>
-              </span>
-            </button>
-            <div class="classes__card-body">
-              <p class="classes__card-text">Школьная программа, профильные классы и&nbsp;подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ.</p>
-            </div>
-          </li>
-
-          <li class="classes__item classes__item--static">
-            <div class="classes__card">
-              <span class="classes__card-head">
-                <span class="classes__card-title">Экстернат</span>
-                <span class="classes__card-grades">ускоренная программа</span>
-              </span>
-            </div>
-            <div class="classes__card-body">
-              <p class="classes__card-text">Возможность пройти программу быстрее. Траектория определяется после диагностики и&nbsp;встречи с&nbsp;семьёй.</p>
-            </div>
-          </li>
-        </ul>
-
-        <a class="btn btn--white classes__cta" href="#form" data-open-form="Выберите класс ребёнка" data-cta-location="classes">Узнать об&nbsp;обучении в&nbsp;вашем классе
-          <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </section>
-
-
-    <section class="about" id="about">
-      <div class="container about__inner">
-        <div class="about__head">
-          <h2 class="about__title">Обучайтесь <span class="about__title-muted">комфортно</span></h2>
-          <p class="about__subtitle">Онлайн-формат не&nbsp;означает самостоятельное обучение без&nbsp;поддержки.</p>
-        </div>
-
-        <div class="about__tabs" role="tablist" aria-label="Категории сотрудников"></div>
-
-        <div class="about__card">
-          <div class="about__nav">
-            <div class="about__scrollbar" aria-hidden="true">
-              <span class="about__scrollbar-thumb"></span>
-            </div>
-            <div class="about__thumbs" role="tablist" aria-label="Сотрудники категории"></div>
-          </div>
-
-          <div class="about__info">
-            <h3 class="about__name"></h3>
-            <p class="about__lead"></p>
-          </div>
-
-          <figure class="about__photo">
-            <img class="about__photo-img" src="" alt="" width="360" height="360" loading="lazy" decoding="async">
-            <figcaption class="about__photo-empty">Фото будет добавлено позже</figcaption>
-          </figure>
-
-          <div class="about__about">
-            <div class="about__badges"></div>
-            <p class="about__text"></p>
-          </div>
-
-          <div class="about__arrows">
-            <button class="about__arrow about__arrow--prev" type="button" aria-label="Предыдущий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="about__arrow about__arrow--next" type="button" aria-label="Следующий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-      <div class="container pricing__inner">
-        <div class="pricing__head">
-          <h2 class="pricing__title">Стоимость обучения</h2>
-          <p class="pricing__subtitle">Выберите класс ребёнка и&nbsp;сравните два формата обучения.</p>
-        </div>
-
-        <div class="pricing__stages" role="tablist" aria-label="Ступень обучения"></div>
-
-        <p class="pricing__common">Во&nbsp;всех тарифах: до&nbsp;15&nbsp;учеников, живые уроки, ручная проверка, обратная связь, психолог и&nbsp;английский язык.</p>
-
-        <div class="pricing__formats" role="tablist" aria-label="Формат обучения"></div>
-
-        <ul class="pricing__grid" id="pricing-plans"></ul>
-
-        <p class="pricing__payment">Обучение можно оплачивать частями. При&nbsp;полной оплате учебного года действует скидка.</p>
       </div>
     </section>
 
@@ -648,8 +538,7 @@
         <nav class="footer__nav" aria-label="Меню в футере">
           <a class="footer__link" href="#advantages">Преимущества</a>
           <a class="footer__link" href="#school-day">Как проходит учебный день</a>
-          <a class="footer__link" href="#classes">Классы</a>
-          <a class="footer__link" href="#about">О нас</a>
+          <a class="footer__link" href="#school-intro">О нас</a>
           <a class="footer__link" href="#pricing">Стоимость</a>
           <a class="footer__link" href="#additional">Дополнительные&nbsp;занятия</a>
           <a class="footer__link" href="#reviews">Отзывы</a>

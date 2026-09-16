@@ -20,6 +20,10 @@
   flex: 1 1 auto;
   padding: var(--pad);
   overflow: hidden;
+  /* 16.09.2026, правка клиента: заливка как была у плитки «Московская
+     медаль» (та стала белой), текст на ней белый */
+  background: var(--gradient-accent);
+  color: var(--color-white);
 }
 
 /* Волна-декор — за коллажем в правом-нижнем углу, под всем контентом.
@@ -51,7 +55,7 @@
 
 .attestat__lead {
   font-size: var(--fs-text);
-  color: var(--color-black);
+  color: var(--color-white);
   line-height: 1.5;
   margin-bottom: clamp(12px, 1.064cqw, 20px);
 }
@@ -68,7 +72,7 @@
   padding-left: 30px;
   font-size: var(--fs-text);
   line-height: 1.45;
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 .attestat__fact::before {
@@ -78,13 +82,14 @@
   top: 0.5em;
   width: 14px;
   height: 8px;
-  border-left: 2px solid var(--color-blue);
-  border-bottom: 2px solid var(--color-blue);
+  border-left: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
   transform: rotate(-45deg);
 }
 
 .attestat__note {
-  color: var(--color-gray-2);
+  color: var(--color-white);
+  opacity: 0.85;
   font-size: var(--fs-small);
   line-height: 1.5;
   margin-bottom: clamp(16px, 1.277cqw, 24px);

@@ -74,24 +74,27 @@
   color: var(--color-white);
 }
 
+/* 16.09.2026, правка клиента: ступени — отдельные прозрачные плашки
+   с синим контуром, без серой подложки; выбранная заливается синим.
+   Табы формата (видны только на телефоне) — так же */
+.pricing__stages,
+.pricing__formats {
+  gap: 8px;
+  padding: 0;
+  background: none;
+}
+
+.pricing__stage,
+.pricing__format {
+  border: 1px solid var(--color-blue);
+}
+
 /* Переключатель формата нужен только на телефоне */
 .pricing__formats { display: none; }
 
 /* --- Общее для всех тарифов --- */
 
-/* ⚠️ 10.09.2026, правки клиента: вместо белой карточки с заголовком и списком
-   из шести пунктов — одна узкая плашка в строку. Заливка названа клиентом
-   дословно: RGB (251,250,255) = #FBFAFF (--color-lilac-tint в base.css).
-   padding-block намеренно мал: плашка должна читаться как подпись между
-   переключателем ступеней и карточками тарифов, а не как ещё один блок. */
-.pricing__common {
-  padding: clamp(14px, 1.064cqw, 20px) clamp(16px, 1.596cqw, 30px);
-  background: var(--color-lilac-tint);
-  border-radius: var(--radius-btn);
-  font-size: var(--fs-text);
-  line-height: 1.5;
-  color: var(--color-gray-1);
-}
+/* Плашка «Во всех тарифах» снята 16.09.2026 по правке клиента. */
 
 .pricing__feature {
   position: relative;
@@ -230,7 +233,6 @@
 /* --- Планшет --- */
 
 @media (max-width: 1024px) {
-  .pricing__common { padding: 20px; }
   .pricing__plan { padding: 20px; }
 }
 
