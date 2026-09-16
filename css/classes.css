@@ -57,8 +57,7 @@
   margin-bottom: clamp(20px, 2.128cqw, 40px);
 }
 
-/* Обёртка ступени: шапка-кнопка + текст. На десктопе текст виден всегда,
-   на телефоне схлопывается в accordion. */
+/* Обёртка ступени: шапка-кнопка + текст. Текст виден всегда, на всех ширинах. */
 .classes__item {
   display: flex;
   flex-direction: column;
@@ -108,14 +107,6 @@
   color: var(--color-gray-2);
 }
 
-/* Стрелка accordion — только на телефоне */
-.classes__chevron {
-  flex: none;
-  display: none;
-  color: var(--color-blue);
-  transition: transform 0.25s ease;
-}
-
 .classes__card-body {
   padding: 0 clamp(20px, 1.489cqw, 28px) clamp(20px, 1.489cqw, 28px);
 }
@@ -129,8 +120,7 @@
 /* Экстернат — четвёртая карточка сетки, но не ступень: тарифа у него нет,
    траектория определяется после диагностики (см. js/classes.js). Поэтому вместо
    <button> внутри лежит <div>: мёртвая кнопка сбивала бы и мышь, и скринридер.
-   Описание у карточки видно всегда, в том числе на телефоне, — сворачивать
-   нечем, аккордеон завязан на aria-expanded кнопки. */
+   Описание у карточки видно всегда. */
 .classes__item--static .classes__card { cursor: default; }
 
 /* Оформление — как на старом сайте (`.classes__card--accent`): розовая заливка,
@@ -220,17 +210,8 @@
     line-height: 0.9;
   }
 
-  /* Accordion: на телефоне текст ступени скрыт, пока карточку не раскрыли.
-     Управляет aria-expanded у кнопки — отдельного класса не заводим,
-     чтобы состояние жило в одном месте и для скринридера, и для стилей. */
-  .classes__chevron { display: block; }
-
-  .classes__card[aria-expanded='false'] + .classes__card-body { display: none; }
-
-  .classes__card[aria-expanded='true'] .classes__chevron {
-    transform: rotate(180deg);
-  }
-
+  /* ⚠️ 16.09.2026, правка клиента: аккордеон на телефоне снят —
+     описание ступени видно всегда, как на десктопе. */
   .classes__card-body { padding: 0 20px 20px; }
 
   .classes__card-text { line-height: 1.4; }

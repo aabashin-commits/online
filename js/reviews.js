@@ -116,28 +116,9 @@
       if (player.play) player.play().catch(() => {});
     });
 
-    const meta = document.createElement('div');
-    meta.className = 'reviews__meta';
-
-    const name = document.createElement('p');
-    name.className = 'reviews__name';
-    name.textContent = item.name;
-
-    const status = document.createElement('p');
-    status.className = 'reviews__status';
-    status.textContent = item.status;
-
-    meta.append(name, status);
-
-    // Пустую метку не рисуем: пустая плашка выглядела бы недоделанной вёрсткой
-    if (item.tag) {
-      const tag = document.createElement('span');
-      tag.className = 'reviews__tag';
-      tag.textContent = item.tag;
-      meta.appendChild(tag);
-    }
-
-    li.append(btn, meta);
+    // Видимых подписей под плитками нет (решение клиента 16.09.2026):
+    // имя и статус остаются только в aria-label кнопки и лайтбокса
+    li.append(btn);
     return li;
   });
 

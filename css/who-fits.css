@@ -1,8 +1,14 @@
 /* who-fits.css — блок 4 «Когда онлайн-школа особенно удобна» (ТЗ 06.09.2026, §8).
-   Макета у блока нет: он появился в ТЗ и в 1920.png отсутствует. Поэтому собран
-   из готовых паттернов проекта — коробка секции как у «Выберите класс»,
-   карточка как в «Ключевых преимуществах» (белая, радиус --radius-card,
-   тень --shadow-card, поле --card-pad), кнопка из layout.css.
+   В 1920.png блока нет. Эталон — креатив клиента «когда удобна.jpg» (16.09.2026):
+   синяя коробка с градиентом и ребристой петлёй справа, белый заголовок,
+   белые карточки 3 × 2, розовая кнопка «Подобрать формат» слева внизу.
+
+   Отступление от креатива (по просьбе клиента): на креативе справа от сетки
+   поле шире, чем слева. У нас поле одно — --card-pad со всех сторон,
+   карточки тянутся на всю ширину между полями.
+
+   Петля — тот же ассет, что в «Аттестате» (attestat/diplom_figura.webp):
+   исходника с креатива нет, а эта петля совпадает по стилю (синяя, ребристая).
 
    ТЗ прямо запрещает карусель: шесть карточек всегда лежат сеткой
    3 × 2 → 2 × 3 → колонка. */
@@ -11,27 +17,62 @@
   padding-block: 20px;
 }
 
-.who-fits__inner {
+/* container-type у .container (layout.css): cqw ниже считаются от ширины коробки,
+   как в ege-banner.css — content-box контейнера равен ширине коробки. */
+.who-fits__box {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: clamp(24px, 2.128cqw, 40px);
+  padding: var(--card-pad);
+  background: linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Петля выходит из правого верхнего угла и клипается по скруглению коробки.
+   Лежит под всем контентом: карточки белые и перекрывают её, как на креативе.
+   ⚠️ У картинки срез по правому и верхнему краю — right держим 0, а top
+   только отрицательным, иначе срез окажется внутри коробки. Центр кольца —
+   ~85% × 67% картинки; top подобран так, чтобы кольцо стояло на уровне
+   первого ряда карточек, как на креативе. */
+.who-fits__loop {
+  position: absolute;
+  top: -39cqw;
+  right: 0;
+  width: 75cqw;
+  max-width: none;   /* иначе глобальное img { max-width: 100% } из base.css */
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.who-fits__head,
+.who-fits__list,
+.who-fits__cta {
+  position: relative;
+  z-index: 1;
 }
 
 .who-fits__head {
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 0.851cqw, 16px);
+  max-width: 50cqw;
 }
 
 .who-fits__title {
   font-size: var(--fs-h2);
   line-height: 1.05;
+  color: var(--color-white);
 }
 
 .who-fits__subtitle {
   font-size: var(--fs-h4);
   line-height: 1.3;
-  color: var(--color-gray-2);
+  color: var(--color-white);
+  opacity: 0.8;
 }
 
 .who-fits__list {
@@ -44,10 +85,9 @@
   display: flex;
   flex-direction: column;
   gap: clamp(10px, 0.851cqw, 16px);
-  padding: var(--card-pad);
+  padding: clamp(20px, 2.128cqw, 40px);
   background: var(--color-white);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
 }
 
 .who-fits__card-title {
@@ -61,8 +101,7 @@
   color: var(--color-gray-1);
 }
 
-/* Кнопка прижата влево под сеткой — как CTA в «Аттестате», а не по центру:
-   в проекте кнопки блоков нигде не центрируются. */
+/* Кнопка прижата влево под сеткой — как на креативе */
 .who-fits__cta {
   align-self: flex-start;
 }
@@ -70,17 +109,22 @@
 /* Планшет (ТЗ §8): сетка 2 × 3 */
 @media (max-width: 1024px) {
   .who-fits__list { grid-template-columns: repeat(2, 1fr); }
+
+  .who-fits__head { max-width: 70cqw; }
+
+  .who-fits__loop { top: -33cqw; }
 }
 
-/* Телефон: шесть компактных карточек вертикально. Секция типа A —
-   во всю ширину, без бокового поля и скруглений у карточек не отменяем:
-   карточки здесь остаются карточками, меняется только число колонок. */
+/* Телефон: шесть компактных карточек вертикально в синей коробке.
+   Поле коробки — --card-pad (20 на телефоне), одинаковое слева и справа. */
 @media (max-width: 767px) {
-  .who-fits { padding-block: 0; }
+  .who-fits__box { gap: 20px; }
 
-  .who-fits__inner {
-    gap: 20px;
-    padding-block: var(--section-pad-y);
+  .who-fits__head { max-width: none; }
+
+  .who-fits__loop {
+    top: -60cqw;
+    width: 150cqw;
   }
 
   .who-fits__list { grid-template-columns: 1fr; }

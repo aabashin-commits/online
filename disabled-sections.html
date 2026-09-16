@@ -27,6 +27,13 @@
   клиента на его месте в index.html стоит блок «Наши выпускники поступают в самые
   престижные вузы» (#universities, css/universities.css) — возвращён отсюда же,
   разметка отсюда удалена. Ссылка на css/trial.css из index.html убрана; сам файл лежит в css/.
+
+  16.09.2026: по просьбе клиента из блока «Как проходит учебный день» (#school-day)
+  убрана плашка «Все записи уроков… / Узнать подробнее / нагрузка по классам».
+  Разметка — ниже, ставится в index.html внутрь <section class="school-day"> после
+  </div> с шагами. Стили плашки из css/school-day.css удалены — вернуть:
+  `git show bb3166d:css/school-day.css` (раздел «Дополнительная плашка» + правила
+  __plate/__load в медиазапросах 768–1024 и ≤767).
 -->
 
 <!-- ===== Блок «Попробуйте 2 учебных дня онлайн» (#trial), снят 14.09.2026 ===== -->
@@ -183,6 +190,94 @@
             <h3 class="consultation__success-title">Заявка отправлена</h3>
             <p class="consultation__success-text">Специалист школы скоро свяжется с&nbsp;вами.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Плашка блока «Как проходит учебный день» (снята 16.09.2026) -->
+      <div class="school-day__plate">
+        <div class="container">
+          <div class="school-day__plate-card">
+            <img class="school-day__plate-wave" src="assets/img/no-homework/wave.webp" alt="" width="1224" height="616" aria-hidden="true" loading="lazy" decoding="async">
+
+            <div class="school-day__plate-top">
+              <p class="school-day__plate-text">Все записи уроков и&nbsp;дополнительные материалы доступны на&nbsp;платформе.</p>
+
+              <a class="btn btn--primary school-day__plate-btn" href="#week-example">Узнать подробнее
+                <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+
+            <ul class="school-day__load">
+              <li class="school-day__load-item"><span class="school-day__load-label">Начальная школа</span>4&nbsp;урока в&nbsp;день. Занятия заканчиваются в&nbsp;14:15 по&nbsp;московскому времени.</li>
+              <li class="school-day__load-item"><span class="school-day__load-label">С&nbsp;5&nbsp;класса</span>3–4&nbsp;занятия по&nbsp;90&nbsp;минут. Основное обучение заканчивается не&nbsp;позднее 16:15 по&nbsp;московскому времени.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+<!-- ===== Блок «Выберите формат обучения» (#formats), снят 16.09.2026 по просьбе клиента =====
+  Стояла в index.html между «Классы» и «Стоимость обучения». Возвращая: вставить секцию,
+  вернуть <link> на css/formats.css и <script defer> на js/formats.js, пункт «Форматы»
+  (href="#formats") в шапку и мобильное меню. -->
+    <section class="formats" id="formats">
+      <div class="container formats__inner">
+        <div class="formats__head">
+          <h2 class="formats__title">Выберите формат обучения</h2>
+          <p class="formats__subtitle">В&nbsp;обоих форматах ребёнок учится онлайн на&nbsp;живых уроках. Главное отличие&nbsp;— официальное прикрепление и&nbsp;организационное сопровождение семьи.</p>
+        </div>
+
+        <div class="formats__switch" role="tablist" aria-label="Формат обучения">
+          <button class="formats__switch-btn formats__switch-btn--active" type="button" role="tab" id="formats-tab-with" data-format="with" aria-controls="formats-table" aria-selected="true">С&nbsp;прикреплением</button>
+          <button class="formats__switch-btn" type="button" role="tab" id="formats-tab-without" data-format="without" aria-controls="formats-table" aria-selected="false" tabindex="-1">Без&nbsp;прикрепления</button>
+        </div>
+
+        <div class="formats__table" id="formats-table">
+
+          <div class="formats__cols">
+            <span class="formats__crit-head">Критерии</span>
+            <h3 class="formats__col-title" data-col="with">С&nbsp;прикреплением</h3>
+            <h3 class="formats__col-title" data-col="without">Без&nbsp;прикрепления</h3>
+          </div>
+
+          <ul class="formats__rows">
+            <li class="formats__row">
+              <span class="formats__crit">Обучение</span>
+              <span class="formats__cell" data-col="with" data-crit="Обучение">Живые онлайн-уроки с&nbsp;учителем и&nbsp;классом</span>
+              <span class="formats__cell" data-col="without" data-crit="Обучение">Живые онлайн-уроки с&nbsp;учителем и&nbsp;классом</span>
+            </li>
+            <li class="formats__row">
+              <span class="formats__crit">Официальное прикрепление</span>
+              <span class="formats__cell" data-col="with" data-crit="Официальное прикрепление">Школа оформляет прикрепление</span>
+              <span class="formats__cell" data-col="without" data-crit="Официальное прикрепление">Школа не&nbsp;оформляет: ребёнок остаётся в&nbsp;своей школе или семья решает вопрос сама</span>
+            </li>
+            <li class="formats__row">
+              <span class="formats__crit">Аттестации</span>
+              <span class="formats__cell" data-col="with" data-crit="Аттестации">Организационные вопросы берёт на&nbsp;себя школа</span>
+              <span class="formats__cell" data-col="without" data-crit="Аттестации">Семья проходит аттестации сама</span>
+            </li>
+            <li class="formats__row">
+              <span class="formats__crit">Куратор</span>
+              <span class="formats__cell" data-col="with" data-crit="Куратор">Входит в&nbsp;формат, помогает с&nbsp;учёбой и&nbsp;организацией</span>
+              <span class="formats__cell" data-col="without" data-crit="Куратор">Не&nbsp;входит в&nbsp;формат</span>
+            </li>
+            <li class="formats__row">
+              <span class="formats__crit">Дополнительные занятия</span>
+              <span class="formats__cell" data-col="with" data-crit="Дополнительные занятия">Группы после уроков входят в&nbsp;формат</span>
+              <span class="formats__cell" data-col="without" data-crit="Дополнительные занятия">Можно подключить отдельно</span>
+            </li>
+            <li class="formats__row">
+              <span class="formats__crit">Кому подходит</span>
+              <span class="formats__cell" data-col="with" data-crit="Кому подходит">Тем, кто хочет передать школе прикрепление и&nbsp;сопровождение</span>
+              <span class="formats__cell" data-col="without" data-crit="Кому подходит">Тем, у&nbsp;кого прикрепление уже решено или кто займётся им&nbsp;сам</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="formats__ctas">
+          <a class="btn btn--primary formats__cta" href="#form" data-open-form="Выберите формат обучения" data-cta-location="formats">Подобрать формат обучения
+            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </section>

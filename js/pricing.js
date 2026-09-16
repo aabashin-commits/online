@@ -1,8 +1,10 @@
 // pricing.js — блок «Стоимость обучения» (ТЗ 06.09.2026, §13).
 //
-// Данные тарифов взяты из §13 дословно: состав пунктов, порядок и формулировки
-// не менялись. Период «/ мес» стоит у всех шести цен — ответ клиента от 07.09.2026
-// (в §13 он написан только у начальной школы).
+// Тексты карточек — с сайта-источника world.lancman.online (16.09.2026,
+// дословно, см. docs/prices-source.md): формулировки и порядок пунктов не менялись,
+// правлены только ошибки и оформление списка (ё, строчная буква, «;»).
+// Период «/ мес» стоит у всех шести цен — решение клиента (на источнике он есть
+// только у начальной школы).
 //
 // Неразрывные пробелы в строках — литеральные U+00A0: строки вставляются
 // через textContent, сущность &nbsp; вывелась бы текстом.
@@ -13,6 +15,9 @@
   if (!root) return;
 
   const stagesBox = root.querySelector('.pricing__stages');
+  // Переключатель формата (16.09.2026, правка клиента): виден только на
+  // телефоне, там из двух карточек показана одна — выбранная здесь.
+  const formatsBox = root.querySelector('.pricing__formats');
   const grid = root.querySelector('.pricing__grid');
   if (!stagesBox || !grid) return;
 
@@ -25,28 +30,39 @@
       plans: [
         {
           format: 'without',
-          title: 'Без прикрепления',
+          title: 'Без прикрепления',
           price: '19 000 ₽',
-          period: '/ мес',
+          period: '/ мес',
           items: [
-            '4 урока в день;',
+            'до 15 детей в классе;',
+            '4 урока в день до 14:30;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль;',
+            'школьный психолог;',
             'английский с 1 класса по кембриджским учебникам.',
           ],
-          cta: 'Выбрать без прикрепления',
+          cta: 'Выбрать без прикрепления',
         },
         {
           format: 'with',
-          title: 'С прикреплением',
+          title: 'С прикреплением',
           price: '29 000 ₽',
-          period: '/ мес',
-          intro: 'Включает всё из формата без прикрепления, а также:',
+          period: '/ мес',
           items: [
+            'до 15 детей в классе;',
+            '4 урока в день до 14:30;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль;',
+            'школьный психолог;',
+            'английский с 1 класса по кембриджским учебникам;',
             'помощь куратора класса в учебных и организационных вопросах;',
             'сопровождение прикрепления куратором;',
-            'организационное сопровождение аттестации;',
+            'аттестация в школе-партнёре;',
             'групповые дополнительные занятия после уроков.',
           ],
-          cta: 'Выбрать с прикреплением',
+          cta: 'Выбрать с прикреплением',
         },
       ],
     },
@@ -56,30 +72,40 @@
       plans: [
         {
           format: 'without',
-          title: 'Без прикрепления',
+          title: 'Без прикрепления',
           price: '29 000 ₽',
-          period: '/ мес',
+          period: '/ мес',
           items: [
-            '3–4 занятия по 90 минут;',
-            'основное обучение заканчивается не позднее 16:15;',
+            'до 15 детей в классе;',
+            '3–4 урока в день до 14:30 или 16:15;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль;',
+            'школьный психолог;',
             'английский по кембриджским учебникам.',
           ],
-          cta: 'Выбрать без прикрепления',
+          cta: 'Выбрать без прикрепления',
         },
         {
           format: 'with',
-          title: 'С прикреплением',
+          title: 'С прикреплением',
           price: '39 000 ₽',
-          period: '/ мес',
-          intro: 'Включает всё из формата без прикрепления, а также:',
+          period: '/ мес',
           items: [
+            'до 15 детей в классе;',
+            '3–4 урока в день до 14:30 или 16:15;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль;',
+            'школьный психолог;',
+            'английский по кембриджским учебникам;',
             'помощь куратора класса в учебных и организационных вопросах;',
-            'сопровождение прикрепления куратором;',
-            'французский, немецкий или китайский язык на выбор;',
+            'сопровождение прикрепления куратором класса;',
+            'французский, немецкий или китайский — на выбор;',
             'групповые дополнительные занятия после уроков;',
-            'организационное сопровождение аттестации.',
+            'аттестация в школе-партнёре (заочная или семейная форма).',
           ],
-          cta: 'Выбрать с прикреплением',
+          cta: 'Выбрать с прикреплением',
         },
       ],
     },
@@ -89,63 +115,55 @@
       plans: [
         {
           format: 'without',
-          title: 'Без прикрепления',
+          title: 'Без прикрепления',
           price: '35 000 ₽',
-          period: '/ мес',
+          period: '/ мес',
           items: [
-            '3–4 занятия по 90 минут;',
-            'основное обучение заканчивается не позднее 16:15;',
-            'подробная обратная связь каждый учебный модуль по каждому предмету;',
+            'до 15 детей в классе;',
+            '3–4 урока в день до 14:30 или 16:15;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль по каждому предмету;',
+            'школьный психолог;',
             'английский по уровням по кембриджским учебникам;',
             'профильные классы.',
           ],
-          cta: 'Выбрать без прикрепления',
+          cta: 'Выбрать без прикрепления',
         },
         {
           format: 'with',
-          title: 'С прикреплением',
+          title: 'С прикреплением',
           price: '45 000 ₽',
-          period: '/ мес',
-          intro: 'Включает всё из формата без прикрепления, а также:',
+          period: '/ мес',
           items: [
+            'до 15 детей в классе;',
+            '3–4 урока в день до 14:30 или 16:15;',
+            'занятия онлайн с учителем и одноклассниками (формат конференций);',
+            'ручная проверка домашних заданий;',
+            'подробная обратная связь от учителей каждый учебный модуль по каждому предмету;',
+            'школьный психолог;',
+            'английский по уровням по кембриджским учебникам;',
+            'профильные классы;',
             'помощь куратора класса в учебных и организационных вопросах;',
-            'сопровождение прикрепления куратором;',
-            'французский, немецкий или китайский язык на выбор;',
+            'сопровождение прикрепления куратором класса;',
+            'французский, немецкий, китайский — на выбор;',
             'групповые дополнительные занятия после уроков;',
-            'организационное сопровождение аттестации;',
+            'аттестация в школе-партнёре (заочная или семейная форма);',
             'углублённая подготовка к ОГЭ/ЕГЭ на групповых дополнительных занятиях.',
           ],
-          cta: 'Выбрать с прикреплением',
+          cta: 'Выбрать с прикреплением',
         },
       ],
     },
   ];
 
-  const mobile = window.matchMedia('(max-width: 767px)');
+  const formats = [
+    { id: 'without', label: 'Без прикрепления' },
+    { id: 'with', label: 'С прикреплением' },
+  ];
 
   let currentStage = stages[0];
-  // Раскрытая карточка на телефоне: на широких экранах состав виден всегда
-  let openPlan = null;
-
-  const chevron = () => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'pricing__chevron');
-    svg.setAttribute('viewBox', '0 0 16 10');
-    svg.setAttribute('width', '16');
-    svg.setAttribute('height', '10');
-    svg.setAttribute('fill', 'none');
-    svg.setAttribute('aria-hidden', 'true');
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'M1 1.5 8 8.5l7-7');
-    path.setAttribute('stroke', 'currentColor');
-    path.setAttribute('stroke-width', '2');
-    path.setAttribute('stroke-linecap', 'round');
-    path.setAttribute('stroke-linejoin', 'round');
-
-    svg.appendChild(path);
-    return svg;
-  };
+  let currentFormat = formats[0].id;
 
   // --- Табы ступеней ---
 
@@ -172,29 +190,61 @@
     });
   };
 
-  // --- Карточки тарифов ---
+  // --- Переключатель формата (только телефон, прячет его CSS) ---
 
-  const syncOpen = () => {
-    const heads = Array.from(grid.querySelectorAll('.pricing__plan-head'));
-    heads.forEach((head) => {
-      // На широких экранах состав раскрыт всегда, и aria-expanded обязан
-      // говорить правду: скринридер не должен звать закрытым то, что видно.
-      const open = mobile.matches ? head === openPlan : true;
-      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const formatTabs = formatsBox ? formats.map((format) => {
+    const tab = document.createElement('button');
+    tab.className = 'pricing__format';
+    tab.type = 'button';
+    tab.dataset.format = format.id;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-controls', 'pricing-plans');
+    tab.textContent = format.label;
+    formatsBox.appendChild(tab);
+    return tab;
+  }) : [];
+
+  // Какая карточка видна на телефоне, решает CSS по data-visible у сетки
+  const syncFormat = () => {
+    grid.dataset.visible = currentFormat;
+    formatTabs.forEach((tab) => {
+      const active = tab.dataset.format === currentFormat;
+      tab.classList.toggle('pricing__format--active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      tab.setAttribute('tabindex', active ? '0' : '-1');
     });
   };
+
+  const selectFormat = (id) => {
+    if (!formats.some((format) => format.id === id)) return;
+    currentFormat = id;
+    syncFormat();
+  };
+
+  formatTabs.forEach((tab) => {
+    tab.addEventListener('click', () => selectFormat(tab.dataset.format));
+
+    tab.addEventListener('keydown', (event) => {
+      const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+      if (!step) return;
+      event.preventDefault();
+      const next = formatTabs[(formatTabs.indexOf(tab) + step + formatTabs.length) % formatTabs.length];
+      next.focus();
+      selectFormat(next.dataset.format);
+    });
+  });
+
+  // --- Карточки тарифов ---
 
   const buildPlan = (plan) => {
     const item = document.createElement('li');
     item.className = 'pricing__plan';
     item.dataset.format = plan.format;
 
-    const bodyId = `pricing-${currentStage.id}-${plan.format}`;
-
-    const head = document.createElement('button');
+    // 16.09.2026, правка клиента: аккордеон на телефоне снят, состав
+    // раскрыт на всех ширинах — заголовок больше не кнопка.
+    const head = document.createElement('div');
     head.className = 'pricing__plan-head';
-    head.type = 'button';
-    head.setAttribute('aria-controls', bodyId);
 
     const title = document.createElement('span');
     title.className = 'pricing__plan-title';
@@ -213,15 +263,10 @@
 
     priceRow.append(price, period);
 
-    const headText = document.createElement('span');
-    headText.className = 'pricing__plan-headtext';
-    headText.append(title, priceRow);
-
-    head.append(headText, chevron());
+    head.append(title, priceRow);
 
     const body = document.createElement('div');
     body.className = 'pricing__plan-body';
-    body.id = bodyId;
 
     if (plan.intro) {
       const intro = document.createElement('p');
@@ -259,21 +304,14 @@
       if (typeof window.setEducationFormat === 'function') window.setEducationFormat(plan.format);
     });
 
-    head.addEventListener('click', () => {
-      openPlan = mobile.matches && openPlan === head ? null : head;
-      syncOpen();
-    });
-
     item.append(head, body, cta);
     return item;
   };
 
   const renderPlans = () => {
     grid.textContent = '';
-    openPlan = null;
     currentStage.plans.forEach((plan) => grid.appendChild(buildPlan(plan)));
     grid.setAttribute('aria-label', `Тарифы: ${currentStage.label}`);
-    syncOpen();
   };
 
   const selectStage = (id) => {
@@ -310,11 +348,12 @@
     }
     if (event.detail.key === 'education_format') {
       root.dataset.format = event.detail.value || '';
+      // Формат, выбранный в другом блоке, сразу показываем на телефоне
+      if (event.detail.value) selectFormat(event.detail.value);
     }
   });
 
-  mobile.addEventListener('change', syncOpen);
-
   syncTabs();
+  syncFormat();
   renderPlans();
 })();

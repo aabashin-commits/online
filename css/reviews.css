@@ -208,43 +208,6 @@
 
 .reviews__play:hover .reviews__poster { transform: scale(1.04); }
 
-/* ── Подпись: имя, статус, метка ─────────────────────────────────
-   §15: видны без запуска видео. */
-
-.reviews__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.reviews__name {
-  font-size: var(--fs-text);
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--color-white);
-}
-
-.reviews__status {
-  font-size: var(--fs-small);
-  line-height: 1.3;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-/* Метки из §15 (переход из обычной школы, жизнь за границей и т. д.).
-   ⚠️ Сейчас в данных пустые: какая метка какому ролику соответствует,
-   известно только из содержания видео — таблицы от клиента нет.
-   Место под метку свёрстано, JS дорисует плашку, как только метки появятся. */
-.reviews__tag {
-  align-self: flex-start;
-  margin-top: 4px;
-  padding: 4px 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-pill);
-  font-size: var(--fs-small);
-  line-height: 1.2;
-  color: var(--color-white);
-}
-
 @media (max-width: 1280px) {
   .reviews__track { --per-page: 6; }
   .reviews__page { grid-template-columns: repeat(3, 1fr); }

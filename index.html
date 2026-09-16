@@ -42,15 +42,14 @@
   <link rel="stylesheet" href="css/hero.css?v=5">
   <link rel="stylesheet" href="css/info-cards.css?v=5">
   <link rel="stylesheet" href="css/school-intro.css">
-  <link rel="stylesheet" href="css/onschool.css?v=3">
-  <link rel="stylesheet" href="css/attestat.css?v=5">
+  <link rel="stylesheet" href="css/onschool.css?v=5">
+  <link rel="stylesheet" href="css/attestat.css?v=20">
   <link rel="stylesheet" href="css/who-fits.css">
-  <link rel="stylesheet" href="css/school-day.css">
+  <link rel="stylesheet" href="css/school-day.css?v=3">
   <link rel="stylesheet" href="css/programs.css">
   <link rel="stylesheet" href="css/classes.css?v=2">
   <link rel="stylesheet" href="css/about.css?v=9">
-  <link rel="stylesheet" href="css/formats.css?v=2">
-  <link rel="stylesheet" href="css/pricing.css?v=2">
+  <link rel="stylesheet" href="css/pricing.css?v=4">
   <link rel="stylesheet" href="css/additional.css?v=4">
   <link rel="stylesheet" href="css/reviews.css?v=6">
   <link rel="stylesheet" href="css/universities.css">
@@ -60,14 +59,13 @@
   <link rel="stylesheet" href="css/mobile-cta.css">
 
   <script src="js/main.js?v=8" defer></script>
-  <script src="js/analytics.js" defer></script>
+  <script src="js/analytics.js?v=2" defer></script>
   <script src="js/header.js?v=3" defer></script>
   <script src="js/mobile-cta.js?v=2" defer></script>
   <script src="js/programs.js" defer></script>
   <script src="js/classes.js?v=2" defer></script>
   <script src="js/about.js?v=2" defer></script>
-  <script src="js/formats.js?v=2" defer></script>
-  <script src="js/pricing.js" defer></script>
+  <script src="js/pricing.js?v=3" defer></script>
   <script src="js/additional.js?v=2" defer></script>
   <script src="js/reviews.js?v=6" defer></script>
   <script src="js/faq.js?v=3" defer></script>
@@ -123,7 +121,6 @@
         <a class="header__link" href="#about">О&nbsp;школе</a>
         <a class="header__link" href="#school-day">Как проходит обучение</a>
         <a class="header__link" href="#classes">Классы</a>
-        <a class="header__link" href="#formats">Форматы</a>
         <a class="header__link" href="#pricing">Стоимость</a>
         <a class="header__link" href="#reviews">Отзывы</a>
         <a class="header__link" href="#faq">FAQ</a>
@@ -152,7 +149,6 @@
           <a href="#about">О&nbsp;школе</a>
           <a href="#school-day">Как проходит обучение</a>
           <a href="#classes">Классы</a>
-          <a href="#formats">Форматы</a>
           <a href="#pricing">Стоимость</a>
           <a href="#reviews">Отзывы</a>
           <a href="#faq">FAQ</a>
@@ -281,8 +277,7 @@
             <div class="onschool-online">
               <div class="onschool-online__text">
                 <h3 class="onschool-online__title">Московская медаль</h3>
-                <p class="onschool-online__subtitle">Дополнительные возможности при&nbsp;поступлении в&nbsp;вуз</p>
-                <p class="onschool-online__desc">При выполнении требований выпускник может получить московскую медаль, которая даёт до 10 дополнительных баллов при поступлении в вуз.</p>
+                <p class="onschool-online__subtitle">Дополнительные возможности получить до 10 баллов при&nbsp;поступлении в&nbsp;вуз</p>
               </div>
               <img class="onschool-online__medal" src="assets/img/about/medal.webp" alt="Медаль «За особые успехи в учении»" width="700" height="700" loading="lazy" decoding="async">
             </div>
@@ -300,42 +295,45 @@
     </section>
 
     <section class="who-fits" id="who-fits">
-      <div class="container who-fits__inner">
-        <header class="who-fits__head">
-          <h2 class="who-fits__title">Когда онлайн-школа особенно удобна</h2>
-          <p class="who-fits__subtitle">Выберите ситуацию, которая ближе вашей семье.</p>
-        </header>
+      <div class="container">
+        <div class="who-fits__box">
+          <img class="who-fits__loop" src="assets/img/attestat/diplom_figura.webp" alt="" width="1000" height="1260" loading="lazy" decoding="async">
+          <header class="who-fits__head">
+            <h2 class="who-fits__title">Когда онлайн-школа особенно удобна</h2>
+            <p class="who-fits__subtitle">Выберите ситуацию, которая ближе вашей семье.</p>
+          </header>
 
-        <ul class="who-fits__list">
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
-            <p class="who-fits__card-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
-          </li>
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">Семья часто переезжает или&nbsp;путешествует</h3>
-            <p class="who-fits__card-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
-          </li>
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">Вы живёте за&nbsp;границей</h3>
-            <p class="who-fits__card-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
-          </li>
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
-            <p class="who-fits__card-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
-          </li>
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">Обычная школа занимает слишком много времени</h3>
-            <p class="who-fits__card-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
-          </li>
-          <li class="who-fits__card">
-            <h3 class="who-fits__card-title">Нужен другой темп обучения</h3>
-            <p class="who-fits__card-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
-          </li>
-        </ul>
+          <ul class="who-fits__list">
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
+              <p class="who-fits__card-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
+            </li>
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">Семья часто переезжает или&nbsp;путешествует</h3>
+              <p class="who-fits__card-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
+            </li>
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">Вы живёте за&nbsp;границей</h3>
+              <p class="who-fits__card-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
+            </li>
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
+              <p class="who-fits__card-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
+            </li>
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">Обычная школа занимает слишком много времени</h3>
+              <p class="who-fits__card-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
+            </li>
+            <li class="who-fits__card">
+              <h3 class="who-fits__card-title">Нужен другой темп обучения</h3>
+              <p class="who-fits__card-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
+            </li>
+          </ul>
 
-        <a class="btn btn--primary who-fits__cta" href="#form" data-open-form="Кому подходит онлайн-школа">Подобрать формат для&nbsp;нашей семьи
-          <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+          <a class="btn btn--primary who-fits__cta" href="#form" data-open-form="Кому подходит онлайн-школа">Подобрать формат
+            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -368,27 +366,6 @@
             <p class="school-day__step-text">Домашние задания проверяются вручную. Оценки отображаются в&nbsp;электронном журнале. Каждый учебный модуль родители получают обратную связь педагогов.</p>
           </li>
         </ol>
-      </div>
-
-      <div class="school-day__plate">
-        <div class="container">
-          <div class="school-day__plate-card">
-            <img class="school-day__plate-wave" src="assets/img/no-homework/wave.webp" alt="" width="1224" height="616" aria-hidden="true" loading="lazy" decoding="async">
-
-            <div class="school-day__plate-top">
-              <p class="school-day__plate-text">Все записи уроков и&nbsp;дополнительные материалы доступны на&nbsp;платформе.</p>
-
-              <a class="btn btn--primary school-day__plate-btn" href="#week-example">Узнать подробнее
-                <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-
-            <ul class="school-day__load">
-              <li class="school-day__load-item"><span class="school-day__load-label">Начальная школа</span>4&nbsp;урока в&nbsp;день. Занятия заканчиваются в&nbsp;14:15 по&nbsp;московскому времени.</li>
-              <li class="school-day__load-item"><span class="school-day__load-label">С&nbsp;5&nbsp;класса</span>3–4&nbsp;занятия по&nbsp;90&nbsp;минут. Основное обучение заканчивается не&nbsp;позднее 16:15 по&nbsp;московскому времени.</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -432,40 +409,37 @@
 
         <ul class="classes__grid">
           <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="primary" aria-expanded="false" aria-controls="classes-primary">
+            <button class="classes__card" type="button" data-stage="primary" aria-pressed="false">
               <span class="classes__card-head">
                 <span class="classes__card-title">Начальная школа</span>
                 <span class="classes__card-grades">1–4&nbsp;классы</span>
               </span>
-              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div class="classes__card-body" id="classes-primary">
+            <div class="classes__card-body">
               <p class="classes__card-text">Мягкая адаптация к&nbsp;онлайн-урокам, основные школьные предметы и&nbsp;поддержка в&nbsp;течение учебного дня.</p>
             </div>
           </li>
 
           <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="middle" aria-expanded="false" aria-controls="classes-middle">
+            <button class="classes__card" type="button" data-stage="middle" aria-pressed="false">
               <span class="classes__card-head">
                 <span class="classes__card-title">Средняя школа</span>
                 <span class="classes__card-grades">5–8&nbsp;классы</span>
               </span>
-              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div class="classes__card-body" id="classes-middle">
+            <div class="classes__card-body">
               <p class="classes__card-text">Новые предметы, системное обучение и&nbsp;обратная связь педагогов.</p>
             </div>
           </li>
 
           <li class="classes__item">
-            <button class="classes__card" type="button" data-stage="senior" aria-expanded="false" aria-controls="classes-senior">
+            <button class="classes__card" type="button" data-stage="senior" aria-pressed="false">
               <span class="classes__card-head">
                 <span class="classes__card-title">Старшая школа</span>
                 <span class="classes__card-grades">9–11&nbsp;классы</span>
               </span>
-              <svg class="classes__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="m1 1 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div class="classes__card-body" id="classes-senior">
+            <div class="classes__card-body">
               <p class="classes__card-text">Школьная программа, профильные классы и&nbsp;подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ.</p>
             </div>
           </li>
@@ -534,68 +508,6 @@
       </div>
     </section>
 
-    <section class="formats" id="formats">
-      <div class="container formats__inner">
-        <div class="formats__head">
-          <h2 class="formats__title">Выберите формат обучения</h2>
-          <p class="formats__subtitle">В&nbsp;обоих форматах ребёнок учится онлайн на&nbsp;живых уроках. Главное отличие&nbsp;— официальное прикрепление и&nbsp;организационное сопровождение семьи.</p>
-        </div>
-
-        <div class="formats__switch" role="tablist" aria-label="Формат обучения">
-          <button class="formats__switch-btn formats__switch-btn--active" type="button" role="tab" id="formats-tab-with" data-format="with" aria-controls="formats-table" aria-selected="true">С&nbsp;прикреплением</button>
-          <button class="formats__switch-btn" type="button" role="tab" id="formats-tab-without" data-format="without" aria-controls="formats-table" aria-selected="false" tabindex="-1">Без&nbsp;прикрепления</button>
-        </div>
-
-        <div class="formats__table" id="formats-table">
-
-          <div class="formats__cols">
-            <span class="formats__crit-head">Критерии</span>
-            <h3 class="formats__col-title" data-col="with">С&nbsp;прикреплением</h3>
-            <h3 class="formats__col-title" data-col="without">Без&nbsp;прикрепления</h3>
-          </div>
-
-          <ul class="formats__rows">
-            <li class="formats__row">
-              <span class="formats__crit">Обучение</span>
-              <span class="formats__cell" data-col="with" data-crit="Обучение">Живые онлайн-уроки с&nbsp;учителем и&nbsp;классом</span>
-              <span class="formats__cell" data-col="without" data-crit="Обучение">Живые онлайн-уроки с&nbsp;учителем и&nbsp;классом</span>
-            </li>
-            <li class="formats__row">
-              <span class="formats__crit">Официальное прикрепление</span>
-              <span class="formats__cell" data-col="with" data-crit="Официальное прикрепление">Школа оформляет прикрепление</span>
-              <span class="formats__cell" data-col="without" data-crit="Официальное прикрепление">Школа не&nbsp;оформляет: ребёнок остаётся в&nbsp;своей школе или семья решает вопрос сама</span>
-            </li>
-            <li class="formats__row">
-              <span class="formats__crit">Аттестации</span>
-              <span class="formats__cell" data-col="with" data-crit="Аттестации">Организационные вопросы берёт на&nbsp;себя школа</span>
-              <span class="formats__cell" data-col="without" data-crit="Аттестации">Семья проходит аттестации сама</span>
-            </li>
-            <li class="formats__row">
-              <span class="formats__crit">Куратор</span>
-              <span class="formats__cell" data-col="with" data-crit="Куратор">Входит в&nbsp;формат, помогает с&nbsp;учёбой и&nbsp;организацией</span>
-              <span class="formats__cell" data-col="without" data-crit="Куратор">Не&nbsp;входит в&nbsp;формат</span>
-            </li>
-            <li class="formats__row">
-              <span class="formats__crit">Дополнительные занятия</span>
-              <span class="formats__cell" data-col="with" data-crit="Дополнительные занятия">Группы после уроков входят в&nbsp;формат</span>
-              <span class="formats__cell" data-col="without" data-crit="Дополнительные занятия">Можно подключить отдельно</span>
-            </li>
-            <li class="formats__row">
-              <span class="formats__crit">Кому подходит</span>
-              <span class="formats__cell" data-col="with" data-crit="Кому подходит">Тем, кто хочет передать школе прикрепление и&nbsp;сопровождение</span>
-              <span class="formats__cell" data-col="without" data-crit="Кому подходит">Тем, у&nbsp;кого прикрепление уже решено или кто займётся им&nbsp;сам</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="formats__ctas">
-          <a class="btn btn--primary formats__cta" href="#form" data-open-form="Выберите формат обучения" data-cta-location="formats">Подобрать формат обучения
-            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
     <section class="pricing" id="pricing">
       <div class="container pricing__inner">
         <div class="pricing__head">
@@ -606,6 +518,8 @@
         <div class="pricing__stages" role="tablist" aria-label="Ступень обучения"></div>
 
         <p class="pricing__common">Во&nbsp;всех тарифах: до&nbsp;15&nbsp;учеников, живые уроки, ручная проверка, обратная связь, психолог и&nbsp;английский язык.</p>
+
+        <div class="pricing__formats" role="tablist" aria-label="Формат обучения"></div>
 
         <ul class="pricing__grid" id="pricing-plans"></ul>
 
@@ -736,7 +650,6 @@
           <a class="footer__link" href="#school-day">Как проходит учебный день</a>
           <a class="footer__link" href="#classes">Классы</a>
           <a class="footer__link" href="#about">О нас</a>
-          <a class="footer__link" href="#formats">Форматы обучения</a>
           <a class="footer__link" href="#pricing">Стоимость</a>
           <a class="footer__link" href="#additional">Дополнительные&nbsp;занятия</a>
           <a class="footer__link" href="#reviews">Отзывы</a>

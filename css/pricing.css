@@ -6,8 +6,11 @@
    Раскладка по ТЗ:
    • десктоп — переключатель ступени сверху, ниже общая часть и две карточки;
    • планшет — две карточки в ряд, уже 800px — одна под другой;
-   • телефон — ступени сегментированным контролом, карточки accordion,
-     цена и CTA видны до раскрытия состава.
+   • телефон — ступени сегментированным контролом, карточки раскрыты
+     (аккордеон снят правкой клиента 16.09.2026).
+   Под плашкой «Во всех тарифах» на телефоне — переключатель формата
+   («Без прикрепления / С прикреплением»), он оставляет одну карточку
+   (правка клиента 16.09.2026). Вид у него тот же, что у переключателя ступеней.
    Горизонтальной прокрутки у тарифов нет ни на одной ширине. */
 
 /* Отступ под липкую шапку при прокрутке сюда из блока форматов даёт
@@ -39,7 +42,8 @@
 
 /* --- Переключатель ступеней --- */
 
-.pricing__stages {
+.pricing__stages,
+.pricing__formats {
   display: flex;
   flex-wrap: wrap;
   align-self: flex-start;
@@ -49,7 +53,8 @@
   border-radius: var(--radius-pill);
 }
 
-.pricing__stage {
+.pricing__stage,
+.pricing__format {
   /* ТЗ §21: зона нажатия не меньше 44px */
   min-height: 44px;
   padding: 10px clamp(16px, 1.596cqw, 30px);
@@ -63,10 +68,14 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.pricing__stage--active {
+.pricing__stage--active,
+.pricing__format--active {
   background: var(--color-blue);
   color: var(--color-white);
 }
+
+/* Переключатель формата нужен только на телефоне */
+.pricing__formats { display: none; }
 
 /* --- Общее для всех тарифов --- */
 
@@ -146,21 +155,6 @@
 
 .pricing__plan-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.pricing__plan-headtext {
-  display: flex;
   flex-direction: column;
   gap: 6px;
 }
@@ -187,14 +181,6 @@
 .pricing__price-period {
   font-size: var(--fs-text);
   color: var(--color-gray-2);
-}
-
-/* Стрелка accordion нужна только на телефоне */
-.pricing__chevron {
-  display: none;
-  flex: 0 0 auto;
-  color: var(--color-blue);
-  transition: transform 0.2s ease;
 }
 
 .pricing__plan-body {
@@ -254,7 +240,7 @@
   .pricing__grid { grid-template-columns: 1fr; }
 }
 
-/* --- Телефон: accordion, цена и CTA видны всегда --- */
+/* --- Телефон --- */
 
 @media (max-width: 767px) {
   .pricing__stages {
@@ -263,16 +249,21 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .pricing__stage {
+  .pricing__formats {
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing__stage,
+  .pricing__format {
     padding: 10px 6px;
     font-size: var(--fs-small);
   }
 
-  .pricing__plan-head { min-height: 44px; }
-
-  .pricing__chevron { display: block; }
-
-  .pricing__plan-head[aria-expanded='true'] .pricing__chevron { transform: rotate(180deg); }
-
-  .pricing__plan-head[aria-expanded='false'] + .pricing__plan-body { display: none; }
+  /* Одна карточка на экране — та, что выбрана переключателем формата */
+  .pricing__grid[data-visible='with'] .pricing__plan[data-format='without'],
+  .pricing__grid[data-visible='without'] .pricing__plan[data-format='with'] {
+    display: none;
+  }
 }

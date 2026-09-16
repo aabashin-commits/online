@@ -162,7 +162,7 @@
   max-width: none;
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-end;
+  align-items: baseline;
   justify-content: flex-start;
   gap: clamp(16px, 1.7cqw, 32px);
   font-size: var(--fs-small);
@@ -170,8 +170,8 @@
 }
 
 /* padding-block доводит зону нажатия до 44px (ТЗ §21): сама строка мелкая, 17px.
-   align-items: flex-end у .footer__bottom выравнивает пункты по нижнему краю,
-   поэтому лишние поля не сдвигают строку копирайта относительно соседей. */
+   align-items: baseline у .footer__bottom ставит текст всех пунктов на одну линию
+   с копирайтом. При flex-end текст документов поднимался на высоту нижнего поля (14px). */
 .footer__doc {
   display: inline-block;
   padding-block: 14px;

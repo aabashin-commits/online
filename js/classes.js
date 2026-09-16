@@ -1,11 +1,11 @@
 // classes.js — блок «Выберите класс ребёнка» (ТЗ 06.09.2026, §10).
 //
-// Две задачи:
-// 1. Выбранная ступень запоминается (window.setSchoolStage из main.js) и уходит
-//    в блок стоимости — там она переключит тарифы (фаза 5).
-// 2. На телефоне карточки работают как accordion: описание ступени скрыто,
-//    пока карточку не раскрыли. Состояние живёт в aria-expanded — один источник
-//    и для скринридера, и для стилей (см. css/classes.css, медиазапрос 767).
+// Выбранная ступень запоминается (window.setSchoolStage из main.js) и уходит
+// в блок стоимости — там она переключает тарифы. Выбранная карточка
+// подсвечивается, состояние для скринридера — в aria-pressed.
+//
+// ⚠️ 16.09.2026, правка клиента: аккордеон на телефоне снят — описание ступени
+// видно всегда, на всех ширинах.
 //
 // Экстернат намеренно не выбирается: это не ступень, тарифа у него нет,
 // траектория определяется после диагностики. С 10.09.2026 он лежит четвёртой
@@ -26,25 +26,11 @@
   // выбранной ступенью — так менеджер видит её даже без скрытых полей.
   const baseTopic = cta ? cta.dataset.openForm : '';
 
-  const mobile = window.matchMedia('(max-width: 767px)');
-  let current = null;
-
-  // На десктопе описание видно всегда, поэтому aria-expanded там всегда true:
-  // иначе скринридер сообщал бы о свёрнутой карточке, глядя на раскрытую.
-  const syncExpanded = () => {
-    cards.forEach((card) => {
-      const open = mobile.matches ? card === current : true;
-      card.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  };
-
   const select = (card) => {
-    // Повторный клик на телефоне закрывает карточку, но выбор ступени
-    // не отменяет: родитель уже сказал, какой класс его интересует.
-    current = mobile.matches && current === card ? null : card;
-
     cards.forEach((item) => {
-      item.closest('.classes__item').classList.toggle('classes__item--active', item === card);
+      const active = item === card;
+      item.closest('.classes__item').classList.toggle('classes__item--active', active);
+      item.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
     if (typeof window.setSchoolStage === 'function') {
@@ -55,15 +41,7 @@
       const title = card.querySelector('.classes__card-title');
       cta.dataset.openForm = title ? `${baseTopic} — ${title.textContent}` : baseTopic;
     }
-
-    syncExpanded();
   };
 
   cards.forEach((card) => card.addEventListener('click', () => select(card)));
-
-  // При переходе через 767 меняется сама роль карточки: на десктопе описание
-  // раскрыто всегда, на телефоне — только у выбранной.
-  mobile.addEventListener('change', syncExpanded);
-
-  syncExpanded();
 })();
