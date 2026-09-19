@@ -114,6 +114,15 @@
   --carousel-peek: 16%;
 }
 
+/* Края трека растворяются в фоне: без маски соседние кадры обрезаются
+   по границе трека резкой вертикальной полосой. Затухание занимает ровно
+   поле peek, поэтому активный кадр остаётся непрозрачным целиком.
+   Проценты градиента считаются от ширины трека — как и padding peek. */
+.program__carousel .carousel__track {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
+}
+
 .program__slide {
   padding: clamp(5px, 0.5cqw, 9px);
   border-radius: var(--radius-card);

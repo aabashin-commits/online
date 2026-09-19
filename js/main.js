@@ -481,13 +481,20 @@
     };
 
     const goTo = (i) => {
-      // В кольце перед шагом возвращаемся в середину: так цель всегда внутри
-      // склеенной ленты, сколько бы раз подряд ни нажали на стрелку.
-      if (loop) {
+      // В кольце возвращаемся в середину, только если цель вылезает за край
+      // склеенной ленты. Раньше возврат делался перед каждым шагом — и при
+      // быстрых кликах, пока предыдущая прокрутка не доехала, ряд мгновенно
+      // перескакивал в её конечную точку (замер: рывки по 170–250 px).
+      // Запаса копий хватает на целый круг кликов подряд, а после остановки
+      // ленту всё равно досаживает в середину settle().
+      let target = i;
+      if (loop && (target < 0 || target > slides.length - metrics().per)) {
         const here = base + label(index);
-        if (here !== index) { index = here; applyHero(here, false); }
+        target += here - index;
+        index = here;
+        applyHero(here, false);
       }
-      const target = loop ? i : Math.max(0, Math.min(stops() - 1, i));
+      if (!loop) target = Math.max(0, Math.min(stops() - 1, target));
       index = target;
       pending = target;
       clearTimeout(pendingTimer);
@@ -544,6 +551,89 @@
 
     if (prev) prev.addEventListener('click', () => goTo(index - 1));
     if (next) next.addEventListener('click', () => goTo(index + 1));
+
+    // Тачпад: горизонтальный жест листает ровно на одну карточку, как стрелка.
+    // Родная прокрутка тут не годится — инерция тачпада пролетала несколько
+    // карточек, а после остановки лента досаживалась рывком (жалоба клиента
+    // 19.09.2026). Палец на телефоне генерирует touch, а не wheel, и сюда
+    // не попадает — его держит scroll-snap-stop в layout.css.
+    //
+    // Жест = серия событий без пауз длиннее 220 мс (вместе с хвостом инерции).
+    // Ось жеста решается один раз, по первым ~10 px: иначе палец, легший чуть
+    // наискось, половину жеста крутил бы страницу, а половину — ленту.
+    // • ось x — один шаг на жест, остальное глотаем;
+    // • ось y — это прокрутка страницы. Родную пропускаем, только если в
+    //   событии нет горизонтали: иначе браузер заодно сдвинул бы ленту мимо
+    //   карточки (или прилип бы к ней и не крутил страницу вовсе), поэтому
+    //   такие события крутим сами.
+    //
+    // ⚠️ Пауза — не единственный признак нового жеста. На Mac хвост инерции
+    // идёт без перерывов 1–2 с, и свайп, сделанный поверх него, приходил тем же
+    // потоком — ступал только после клика мышью, который гасит инерцию (жалоба
+    // клиента 19.09.2026). Поэтому новый жест внутри потока узнаём так:
+    // инерция только затухает, а свайп разгоняется — модуль дельты растёт
+    // два события подряд; либо сменилось направление.
+    let wheelAxis = '';
+    let wheelX = 0;
+    let wheelY = 0;
+    let wheelStepped = false;
+    let wheelLast = 0;
+    let wheelRise = 0;
+    let wheelDir = 0;
+    // Свайп в начале сам разгоняется — рост считаем новым жестом только
+    // после того, как текущий прошёл пик и пошёл на спад.
+    let wheelPeaked = false;
+    let wheelIdle;
+    const wheelStep = (dir) => {
+      wheelStepped = true;
+      wheelDir = dir;
+      wheelRise = 0;
+      wheelPeaked = false;
+      goTo(index + dir);
+    };
+    track.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) return; // щипок на тачпаде — это масштаб страницы
+      clearTimeout(wheelIdle);
+      wheelIdle = setTimeout(() => {
+        wheelAxis = '';
+        wheelX = 0;
+        wheelY = 0;
+        wheelStepped = false;
+        wheelLast = 0;
+        wheelRise = 0;
+      }, 220);
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+      const dx = e.deltaX * unit;
+      const dy = e.deltaY * unit;
+      if (!wheelAxis) {
+        wheelX += dx;
+        wheelY += dy;
+        if (Math.abs(wheelX) + Math.abs(wheelY) >= 10) {
+          wheelAxis = Math.abs(wheelX) > Math.abs(wheelY) ? 'x' : 'y';
+        }
+      }
+      if (wheelAxis === 'x') {
+        e.preventDefault();
+        const size = Math.abs(dx);
+        const dir = Math.sign(dx);
+        const last = wheelLast;
+        wheelLast = size;
+        if (!wheelStepped) {
+          wheelStep(wheelX > 0 ? 1 : -1);
+          return;
+        }
+        // Мелочь (< 4 px) — хвост инерции или дрожь пальца, по ней не решаем
+        if (size < 4) { wheelRise = 0; return; }
+        if (dir && dir !== wheelDir) { wheelStep(dir); return; }
+        if (size < last) wheelPeaked = true;
+        wheelRise = wheelPeaked && size > last * 1.15 + 0.5 ? wheelRise + 1 : 0;
+        if (wheelRise >= 2) wheelStep(dir);
+        return;
+      }
+      if (!dx) return;
+      e.preventDefault();
+      window.scrollBy({ top: dy, behavior: 'instant' });
+    }, { passive: false });
 
     // Скролл сыплет событиями пачками — обновляем не чаще кадра
     let frame = 0;
