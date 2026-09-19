@@ -1,0 +1,189 @@
+/* program.css — блок «Собственная программа без перегрузки»
+   (корректировки сайта.md, 18.09.2026, §8). Эталон — макет клиента «6.jpg».
+
+   ⚠️ Не путать с programs.css: там блок «Образовательные программы»
+   (#week-example) — табы, расписание и баннер «Как поступить в школу».
+   Здесь (#program) — рассказ о программе и карусель фото с сайта-донора
+   world.lancman.online (блок «23 года опыта в образовании»).
+
+   Подача та же, что у соседних синих блоков (who-fits, benefits): коробка
+   с градиентом и мягкой засветкой, внутри белые карточки. Тексты — §8 ТЗ
+   дословно, разбиты на выделенное начало (<b>) и продолжение.
+
+   Механика карусели — общая, .carousel__* в layout.css + initCarousel
+   в js/main.js. Здесь только размеры кадра и оформление слайда. */
+
+.program {
+  padding-block: 20px;
+}
+
+.program__box {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  /* Доли с макета: текстовая колонка ~600, карусель ~550 от 1180 контента */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: start;
+  gap: clamp(24px, 2.128cqw, 44px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  background:
+    radial-gradient(55% 60% at 88% 6%, color-mix(in srgb, var(--color-white) 22%, transparent), transparent 70%),
+    radial-gradient(45% 70% at 99% 40%, color-mix(in srgb, var(--color-white) 14%, transparent), transparent 72%),
+    linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
+}
+
+/* --- Левая колонка: заголовок, описание, шесть пунктов --- */
+.program__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.5cqw, 28px);
+}
+
+.program__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  color: var(--color-white);
+}
+
+.program__lead {
+  font-size: var(--fs-text);
+  color: var(--color-light-blue);
+}
+
+/* Белая карточка со списком: два столбца по три строки, разделённые
+   тонкими линейками (в макете это именно линейки, а не зазор), поэтому
+   gap: 0, а границы навешиваются на сами пункты. */
+.program__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: clamp(10px, 1.06cqw, 20px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+
+.program__item {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(8px, 0.85cqw, 16px);
+  padding: clamp(10px, 1.06cqw, 20px);
+}
+
+/* Линейки: вертикальная — у левого столбца, горизонтальные — у первых
+   двух строк. Последняя строка и правый столбец остаются без границ. */
+.program__item:nth-child(odd) {
+  border-right: 1px solid var(--color-gray-3);
+}
+
+.program__item:nth-child(-n + 4) {
+  border-bottom: 1px solid var(--color-gray-3);
+}
+
+.program__check {
+  flex: none;
+  width: clamp(24px, 1.9cqw, 36px);
+  height: clamp(24px, 1.9cqw, 36px);
+  /* currentColor заливает круг, галочка красится отдельным правилом */
+  color: var(--chip-blue-bg);
+}
+
+.program__check path {
+  stroke: var(--color-blue);
+}
+
+.program__item-text {
+  font-size: var(--fs-text);
+  line-height: 1.3;
+  color: var(--color-gray-1);
+}
+
+.program__item-text b {
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* --- Правая колонка: карусель --- */
+.program__carousel {
+  position: relative;
+  z-index: 1;
+  /* Кадр крупнее базового: соседи подглядывают узкими полосками, как в макете.
+     Ширина кадра = 100% − 2 × peek, то есть 68% ширины трека. */
+  --carousel-peek: 16%;
+}
+
+.program__slide {
+  padding: clamp(5px, 0.5cqw, 9px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-photo);
+}
+
+.program__shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  /* Внутреннее скругление на толщину белой рамки меньше внешнего */
+  border-radius: calc(var(--radius-card) - clamp(5px, 0.5cqw, 9px));
+}
+
+/* --- Нижняя плашка на всю ширину --- */
+.program__note {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.06cqw, 20px);
+  padding: clamp(14px, 1.3cqw, 26px) clamp(16px, 1.6cqw, 30px);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--color-white) 85%, var(--color-light-blue));
+}
+
+.program__note-icon {
+  flex: none;
+  width: clamp(26px, 2.1cqw, 40px);
+  height: clamp(26px, 2.1cqw, 40px);
+  color: var(--color-blue);
+}
+
+.program__note-text {
+  font-size: var(--fs-text);
+  color: var(--color-gray-1);
+}
+
+.program__note-text b {
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* --- Адаптив --- */
+
+/* Планшет: колонки складываются в одну, карусель уходит под текст
+   и получает базовую ширину кадра — места по бокам больше нет. */
+@media (max-width: 1024px) {
+  .program__box { grid-template-columns: minmax(0, 1fr); }
+
+  .program__carousel { --carousel-peek: 13%; }
+}
+
+/* Телефон: пункты в колонку — два столбца по 150px рвут фразы пополам */
+@media (max-width: 767px) {
+  .program__box { gap: 20px; }
+
+  .program__list { grid-template-columns: minmax(0, 1fr); }
+
+  .program__item { padding: 14px 10px; }
+
+  .program__item:nth-child(odd) { border-right: 0; }
+
+  .program__item:not(:last-child) { border-bottom: 1px solid var(--color-gray-3); }
+
+  .program__item:last-child { border-bottom: 0; }
+
+  .program__note { align-items: flex-start; }
+}

@@ -1,0 +1,127 @@
+/* benefits.css — блок «Преимущества дистанционного образования»
+   (корректировки сайта.md, 18.09.2026, §5). Эталон — макет клиента «4.jpg».
+
+   Подача повторяет соседний блок «Когда онлайн-школа особенно удобна»:
+   синяя коробка с градиентом, белый заголовок, белые карточки 3 × 2.
+   Отличия от who-fits: подзаголовка и кнопки нет, а в каждой карточке —
+   бледная иконка-водяной знак, подрезанная правым нижним углом карточки.
+
+   Тексты — §5 ТЗ дословно; ёфикация и знак ₽ приведены к типографике проекта.
+
+   Свет справа сверху на макете — не ассет, а мягкая засветка: два
+   radial-gradient поверх основного градиента (тот же приём, что в form.css). */
+
+.benefits {
+  padding-block: 20px;
+}
+
+/* container-type у .container (layout.css): cqw считаются от ширины коробки */
+.benefits__box {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.128cqw, 40px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  background:
+    radial-gradient(55% 60% at 88% 6%, color-mix(in srgb, var(--color-white) 22%, transparent), transparent 70%),
+    radial-gradient(45% 70% at 99% 40%, color-mix(in srgb, var(--color-white) 14%, transparent), transparent 72%),
+    linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
+}
+
+.benefits__title {
+  max-width: 55cqw;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  color: var(--color-white);
+}
+
+.benefits__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-cards);
+}
+
+/* Карточка — контейнер позиционирования для иконки, поэтому overflow скрыт:
+   иконка выходит за правый нижний угол и подрезается скруглением. */
+.benefits__card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(10px, 0.851cqw, 16px);
+  min-height: clamp(180px, 15cqw, 230px);
+  padding: clamp(20px, 2.128cqw, 40px);
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+}
+
+.benefits__card-title,
+.benefits__card-text {
+  position: relative;
+  z-index: 1;
+}
+
+.benefits__card-title {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.benefits__card-text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+  /* Текст не заезжает на иконку: справа снизу оставлено поле под водяной знак */
+  max-width: 80%;
+}
+
+/* Водяной знак: тонкий контур, подрезан правым нижним углом карточки */
+.benefits__icon {
+  position: absolute;
+  right: clamp(-16px, -1.25cqw, -10px);
+  bottom: clamp(-16px, -1.25cqw, -10px);
+  width: clamp(72px, 7cqw, 118px);
+  height: auto;
+  color: var(--color-light-blue);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Рубль на макете розовый — единственная цветная иконка в сетке */
+.benefits__icon--money {
+  color: var(--color-pink-hl);
+  opacity: 0.45;
+}
+
+/* Планшет: сетка 2 × 3 — как у соседнего блока */
+@media (max-width: 1024px) {
+  .benefits__list { grid-template-columns: repeat(2, 1fr); }
+
+  .benefits__title { max-width: 75cqw; }
+}
+
+/* Телефон: карточки в колонку, высота по контенту, иконка мельче */
+@media (max-width: 767px) {
+  .benefits__box { gap: 20px; }
+
+  .benefits__title { max-width: none; }
+
+  .benefits__list { grid-template-columns: 1fr; }
+
+  .benefits__card {
+    gap: 8px;
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .benefits__card-text { max-width: 78%; }
+
+  .benefits__icon {
+    right: -8px;
+    bottom: -8px;
+    width: 68px;
+  }
+}

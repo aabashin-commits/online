@@ -18,13 +18,24 @@
    Контейнером служит .container (объявлен в layout.css): его content-box
    равен ширине баннера на всех ширинах. Все cqw-значения в этом файле
    пересчитаны с базы 1760 на 1880 умножением на 0.93617. */
+/* Раскладка (правки 19.09.2026, макет «5.jpg»): сетка из двух колонок
+   и двух строк. Шапка (заголовок + плашка «История выпускницы») лежит
+   на всю ширину — в макете заголовок шире белой карточки и заходит
+   на «территорию» логотипов, но по вертикали с ними не пересекается.
+   Вторая строка делит баннер пополам: слева карточка выпускницы с кнопкой,
+   справа сетка логотипов, выровненная по ВЕРХУ карточки (в макете верхние
+   края совпадают, а низ сетки не достаёт до низа карточки — п.5 правок).
+   Колонка контента 45.6cqw + сетка 7.07u (45.5cqw) + зазор 2.128cqw
+   укладываются в контентные 93.6cqw баннера. */
 .universities__banner {
   position: relative;
   overflow: hidden;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: clamp(20px, 2.128cqw, 40px);
+  display: grid;
+  grid-template-columns: 45.6cqw 1fr;
+  grid-template-rows: auto auto;
+  align-items: start;
+  column-gap: clamp(20px, 2.128cqw, 40px);
+  row-gap: clamp(20px, 2.128cqw, 40px);
   padding: var(--card-pad);
   background: var(--gradient-accent);
   border-radius: var(--radius-card);
@@ -36,6 +47,10 @@
   position: absolute;
   pointer-events: none;
   user-select: none;
+  /* Ленты намеренно шире баннера (150cqw) — глобальное `img { max-width: 100% }`
+     из base.css срезало бы их до его ширины, и торцы вернулись бы в кадр. */
+  max-width: none;
+  height: auto;
 }
 
 /* Сетка. В Figma (1:222) это картинка на 1276×390, которая покрывает лишь
@@ -63,28 +78,69 @@
    top поднят вместе с ростом высоты, иначе лента съезжает вниз. */
 /* Значения пересчитаны с прежней базы 1760 на 1880 (×0.93617), чтобы волна
    встала ровно там же, где стояла на 1920 до переноса контейнера. */
+/* П.4 правок 19.09.2026: лента растянута со 126 до 150cqw и сдвинута влево.
+   Смысл — убрать её торцы из кадра: при прежней ширине правый конец
+   закруглялся внутри баннера (виден срез у сетки логотипов), теперь правая
+   часть пересекает правый край баннера и прячется за ним, как в «5.jpg».
+   Вертикальная композиция сохранена: доля top/высота картинки та же (−0.244),
+   поэтому гребень остался на прежней высоте. */
 .universities__decor--wave {
-  left: -9.362cqw;
-  top: -10.298cqw;
-  width: 126.383cqw;
+  left: -20cqw;
+  top: -12.2cqw;
+  width: 150cqw;
 }
 
-/* --- Левая колонка: заголовок + CTA --- */
+/* Вторая лента (п.4): та же картинка ниже и левее — в макете по низу баннера
+   идёт второй изгиб, входящий слева и выныривающий под сеткой логотипов.
+   Отдельного экспорта под неё в проекте нет (ни в онлайн-, ни в офлайн-версии
+   вторых «лент» не заводили), поэтому берём тот же bg-blend.svg: у него
+   S-образная форма, и со сдвигом вниз в кадр попадает именно нужный изгиб.
+   ⚠️ Без `opacity`: приглушение до 0.6 делало ленту полупрозрачной, и сквозь неё
+   просвечивала белая сетка баннера (`::before`) — лента читалась как лежащая ПОД ней.
+   Обе ленты непрозрачные и перекрывают сетку; разницу в яркости даёт сам градиент
+   картинки — нижний изгиб в ней светлее верхнего. */
+.universities__decor--wave-2 {
+  left: -35cqw;
+  top: 26cqw;
+  width: 150cqw;
+}
+
+/* --- Шапка баннера: заголовок + плашка «История выпускницы» --- */
+.universities__head {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 1.6cqw, 30px);
+}
+
+/* --- Левая колонка второй строки: карточка выпускницы + CTA --- */
 .universities__content {
   position: relative;
   z-index: 1;
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: clamp(20px, 2.128cqw, 40px);
-  /* Ширина текстового блока из макета (707 = 37.6% баннера) — задаёт разбивку
-     на 3 строки. В долях, а не в px: раньше ниже 1600 колонка вытесняла сетку
-     логотипов из баннера, и это лечила отдельная ступень с max-width 471. */
-  max-width: 37.6cqw;
+  /* Ширину колонки задаёт grid баннера (45.6cqw), поэтому собственного
+     max-width здесь больше нет: карточка и кнопка занимают левую половину. */
+  width: 100%;
 }
 
+/* Заголовок крупнее макета прошлой итерации (п.1 правок 19.09.2026):
+   76px на 1920 вместо 48. Кегль — долей от ширины баннера (76/1880 = 4.043%),
+   поэтому вниз по ширинам он едет непрерывно: 63 на 1600, 50 на 1280;
+   пол 32 совпадает с мобильным --fs-h2, на котором заголовок и садится.
+   Ширина 61.4cqw (1154 на 1920) — из макета: она даёт ровно три строки
+   с переносами «…поступают / …вузы / страны и мира» и позволяет заголовку
+   выйти за правый край своей колонки, как в «5.jpg». */
 .universities__title {
-  font-size: var(--fs-h3);
+  width: 61.4cqw;
+  max-width: 100%;
+  font-size: clamp(32px, 4.043cqw, 76px);
   line-height: 0.9;
   color: var(--color-white);
 }
@@ -133,17 +189,23 @@
      на всю ширину, логотипы падали вниз). Теперь это чистая доля: логотипы
      уменьшаются вместе с баннером, и раскладка в две колонки держится
      до планшетного 1024. Пол возвращается ниже 1024, где сетка перестраивается. */
-  --u: min(6.05cqw, 113.75px);
+  /* П.5 правок 19.09.2026: сетка делит баннер пополам с белой карточкой.
+     6u + 5×0.214u = 7.07u; при u = 6.43cqw это 45.5cqw ≈ 855 на 1920 против
+     карточки 857 — ровно половина контентной ширины на каждую колонку.
+     Ряды разведены на 0.9u (вместо 0.3u): так высота сетки — 2.9u ≈ 350 —
+     чуть не достаёт до белой карточки (419), как в макете. */
+  --u: min(6.43cqw, 121px);
   position: relative;
   z-index: 1;
-  flex: none;
+  grid-column: 2;
+  justify-self: end;
   display: grid;
   grid-template-columns: repeat(6, var(--u));
   grid-template-rows: repeat(2, var(--u));
   column-gap: calc(var(--u) * 0.214);
-  row-gap: calc(var(--u) * 0.3);
-  /* 2.4u — высота с учётом «Оксфорда», который выступает ниже своей ячейки */
-  min-height: calc(var(--u) * 2.4);
+  row-gap: calc(var(--u) * 0.9);
+  /* 2.9u — высота с учётом «Оксфорда», который выступает ниже своей ячейки */
+  min-height: calc(var(--u) * 2.9);
   align-content: start;
   justify-items: center;
 }
@@ -173,6 +235,118 @@
   height: calc(var(--u) * 1.2);
 }
 
+
+/* --- Кейс выпускницы (п.7 «корректировки сайта.md», 18.09.2026) ---
+   Раскладка по макету «5.jpg»: плашка-подпись, белая карточка, кнопка.
+   Факты и цитата — со страницы-донора world.lancman.online (та же школа):
+   УрГАХУ, графический дизайнер, 186 баллов за два экзамена (русский 89,
+   литература 97), год выпуска 2022. Цитата сокращена до трёх предложений,
+   как на макете; фактический смысл не менялся. */
+/* П.2 правок 19.09.2026: плашка крупнее (кегль 28 на 1920 вместо 16,
+   поля вдвое больше) и заметно менее круглая — радиус 14 вместо пилюли.
+   Радиус долей не делаем: он совпадает с --radius-btn (20 → 10),
+   но на баннере смотрится крупновато, поэтому свой clamp чуть ниже. */
+.universities__pill {
+  position: relative;
+  z-index: 1;
+  padding: clamp(8px, 0.7cqw, 13px) clamp(16px, 1.6cqw, 30px);
+  border-radius: clamp(8px, 0.745cqw, 14px);
+  background: color-mix(in srgb, var(--color-white) 25%, transparent);
+  color: var(--color-white);
+  font-size: var(--fs-h4);
+}
+
+.universities__case {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.3cqw, 22px);
+  padding: clamp(16px, 1.7cqw, 30px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-photo);
+}
+
+.universities__case-head {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.3cqw, 22px);
+}
+
+.universities__case-photo {
+  flex: none;
+  width: clamp(56px, 5cqw, 92px);
+  height: clamp(56px, 5cqw, 92px);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.universities__case-name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  color: var(--color-blue);
+}
+
+.universities__case-role {
+  font-size: var(--fs-small);
+  color: var(--color-gray-1);
+}
+
+.universities__case-quote {
+  font-size: var(--fs-text);
+  color: var(--color-black);
+}
+
+/* Три плашки с баллами — долями, а не auto-fit: ряд из трёх держится
+   до телефона, там (ниже 767) раскладка меняется отдельным правилом. */
+.universities__scores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 0.85cqw, 16px);
+}
+
+.universities__score {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: clamp(10px, 1.06cqw, 20px);
+  border-radius: var(--radius-btn);
+  background: var(--color-light-blue);
+}
+
+.universities__score-label {
+  font-size: var(--fs-small);
+  color: var(--color-gray-1);
+}
+
+.universities__score-value {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* В итоговой плашке порядок обратный: сначала число, под ним пояснение.
+   Цвет числа с 19.09.2026 общий с соседними плашками — чёрный (п.3 правок):
+   синий выделял итог, но в макете «5.jpg» все три числа одного цвета. */
+.universities__score--total .universities__score-value {
+  color: var(--color-black);
+}
+
+/* П.6 правок 19.09.2026: CTA крупнее общего .btn — 24/28/56 против 20/22/40.
+   Значения долями от баннера, чтобы кнопка ехала вместе с ним;
+   полы совпадают с мобильными значениями общего .btn. */
+.universities__btn {
+  font-size: clamp(16px, 1.277cqw, 24px);
+  padding: clamp(14px, 1.489cqw, 28px) clamp(30px, 3.4cqw, 64px);
+}
+
+.universities__case-year {
+  font-size: var(--fs-small);
+  color: var(--color-gray-2);
+}
+
 /* --- Адаптив ---
    Ступень 1600 (max-width колонки 471) убрана: ширина текста задана долей
    баннера и сужается сама. Ступень 1280 тоже убрана: логотипы уменьшаются
@@ -184,17 +358,18 @@
    место под неё есть, и мельчить логотипы дальше незачем. */
 @media (max-width: 1024px) {
   .universities__banner {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
   }
 
-  .universities__content { max-width: 100%; }
+  .universities__title { width: 100%; }
 
   .universities__logos {
     --u: clamp(76px, 8.5cqw, 113.75px);
-    align-self: center;
+    grid-column: 1;
+    justify-self: center;
     grid-template-columns: repeat(4, var(--u));
     grid-template-rows: none;
+    row-gap: calc(var(--u) * 0.3);
     min-height: 0;
   }
 
@@ -218,6 +393,17 @@
   }
 
   .universities__content { gap: 20px; }
+
+  /* На 320 контента три плашки в ряд дают по 100px — число и подпись
+     ломаются. Двумя колонками, итог — во всю ширину карточки. */
+  .universities__scores { grid-template-columns: repeat(2, 1fr); }
+
+  .universities__score--total {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
 
   /* Единый кегль заголовков на телефоне — 32 (решение клиента 20.07.2026);
      в мобильном фрейме 1:9775 у этого баннера тоже 32, а --fs-h3 давал 28 */
@@ -276,4 +462,8 @@
     width: 2084px;
     max-width: none;
   }
+
+  /* Вторая лента — только для широкого баннера: в мобильном макете низ блока
+     чистый, а на 360 она просто перекрывала бы сетку логотипов. */
+  .universities__decor--wave-2 { display: none; }
 }

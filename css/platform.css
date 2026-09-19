@@ -1,0 +1,236 @@
+/* platform.css — блок «Удобную онлайн-платформу»
+   (корректировки сайта.md, 18.09.2026, §9). Эталон — макет клиента «1.jpg».
+
+   Светлый блок между синими «Собственная программа» и «Образовательные
+   программы»: белая коробка, заголовок в два цвета (как programs__title-muted),
+   плашка-подпись справа сверху и карусель скриншотов платформы.
+   Скриншоты забраны со страницы-донора world.lancman.online (блок «Каждый
+   ученик получает доступ на удобную онлайн-платформу»).
+
+   Карусель — общая механика из layout.css + js/main.js; точек в этом блоке
+   нет (их нет и в макете), поэтому в разметке нет узла data-carousel="dots" —
+   скрипт это переживает. */
+
+.platform {
+  padding-block: 20px;
+}
+
+.platform__box {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.128cqw, 44px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.platform__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(16px, 1.6cqw, 32px);
+}
+
+.platform__intro {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.06cqw, 20px);
+  /* Подзаголовок в макете ломается после «а также» — доля держит эту разбивку */
+  max-width: 66cqw;
+}
+
+.platform__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  color: var(--color-black);
+}
+
+/* Вторая половина заголовка приглушена — тот же приём, что в «Образовательных
+   программах» (.programs__title-muted) */
+.platform__title-muted {
+  color: var(--color-gray-2);
+}
+
+/* ⚠️ Подзаголовок здесь крупнее обычного текста: в макете он набран кеглем
+   заголовка h4 (на 1280 это ~21px против 14px у --fs-text) и почти чёрный,
+   а не серый — сверено пипеткой по «1.jpg» (#2E3136). */
+.platform__lead {
+  font-size: var(--fs-h4);
+  line-height: 1.3;
+  color: var(--color-black);
+}
+
+.platform__pill {
+  flex: none;
+  padding: clamp(8px, 0.85cqw, 16px) clamp(14px, 1.3cqw, 24px);
+  border-radius: var(--radius-pill);
+  background: var(--chip-blue-bg);
+  color: var(--color-blue-chip);
+  font-size: var(--fs-small);
+}
+
+/* --- Карусель ---
+   Макет «1.jpg»: в кадре три целые карточки, средняя заметно крупнее соседних,
+   счётчик «01 / 03». Три — это не три слайда, а три позиции ленты: скриншотов
+   пять, показываются по три, шаг — один слайд (5 − 3 + 1 = 3). Поэтому карусель
+   включена в режиме ленты (data-carousel-strip у корня).
+
+   ⚠️ Замеры макета на 1280 (скан краёв по теням): соседние карточки 319 × 235,
+   средняя 465 × 272, зазор ~12, весь ряд 1128. Отсюда три пропорции ниже.
+   Средняя карточка НЕ увеличенная копия соседней: она шире в 1.46 раза,
+   а выше только в 1.16 — то есть у неё своя, более широкая рамка,
+   и transform: scale() тут не подходит в принципе. */
+.platform__carousel {
+  /* Сколько карточек в кадре. Это же значение читает initCarousel: мерить
+     ширинами он здесь не может — карточки в кадре разного размера. */
+  --carousel-per: 3;
+  /* Во сколько раз средняя карточка шире соседней: 465 / 319 */
+  --platform-hero: 1.458;
+  /* Пропорция РЯДА: ширина трека / высота ряда. На 1280 это 1220 / 294 —
+     высота главной карточки макета, только её теперь держат все карточки. */
+  --platform-row: 4.15;
+  /* Пропорция одиночной карточки (319 / 235) — нужна на телефоне,
+     где в кадре ровно одна. */
+  --platform-ratio: 1.357;
+  --carousel-gap: clamp(8px, 1.1cqw, 18px);
+  /* Блок светлый: «назад» — серая кнопка с тёмной стрелкой,
+     «вперёд» остаётся синей акцентной (как в макете) */
+  --carousel-btn-bg: var(--color-gray-3);
+  --carousel-btn-fg: var(--color-black);
+}
+
+/* Лента идёт от левого края: поле по бокам нужно только тому режиму,
+   где активный слайд встаёт по центру, а здесь оно оставляло бы пустоту
+   слева от первой карточки. */
+.platform__carousel .carousel__track {
+  padding-inline: 0;
+  /* ⚠️ Высоту ряда задаёт трек, а не карточки. Раньше высота карточки
+     считалась от её же ширины (aspect-ratio), а ширина переезжает анимацией —
+     значит, высота менялась вместе с ней: на каждом шаге карточка приседала,
+     и ряд вместе с ней (замер 294 → 270 → 294 на 1280). Теперь высота у ряда
+     своя и постоянная, карточки тянутся на неё целиком и отличаются друг
+     от друга только шириной. Пропорция резиновая — высота считается
+     от ширины трека, фиксированных высот в блоке по-прежнему нет. */
+  aspect-ratio: var(--platform-row);
+  align-items: stretch;
+}
+
+.platform__slide {
+  /* Ряд = (per − 1) узких карточек + одна широкая + зазоры между ними.
+     Отсюда ширина узкой: (100% − (per − 1) × gap) / (per − 1 + hero). */
+  --platform-basis: calc(
+    (100% - (var(--carousel-per) - 1) * var(--carousel-gap)) /
+    (var(--carousel-per) - 1 + var(--platform-hero))
+  );
+  flex: 0 0 var(--platform-basis);
+  scroll-snap-align: start;
+  /* В обычном режиме соседи уменьшены и приглушены; здесь все карточки целые,
+     разница между ними — в размере рамки и тени. */
+  transform: none;
+  opacity: 1;
+  overflow: hidden;
+  padding: clamp(4px, 0.45cqw, 8px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  /* ⚠️ Тени у карточек нет намеренно (правка клиента 19.09.2026): сначала сняли
+     синий подтон общей --shadow-photo, потом клиент попросил убрать ореол целиком —
+     серая тень под скриншотами читалась как подложка. Главная карточка отличается
+     от соседей только размером. */
+  /* Ширина едет вместе с прокруткой: класс вешается в момент клика,
+     а не в конце анимации, поэтому переход обязателен — иначе на каждом
+     шаге ряд перекладывался бы рывком. Высота в переходе не участвует:
+     она у всех карточек одна и не меняется. */
+  transition: flex-basis 0.45s ease;
+}
+
+/* Средняя карточка кадра — главная (класс вешает initCarousel) */
+.platform__slide.is-active {
+  position: relative;
+  z-index: 1;
+  flex-basis: calc(var(--platform-basis) * var(--platform-hero));
+}
+
+/* ⚠️ Рамка — окно фиксированной пропорции, скриншот в него кадрируется
+   от верха, а не вписывается целиком. В макете карточки одной высоты и
+   показывают верх экрана платформы; если отдать высоту картинке, ряд
+   разъезжается (скриншоты сняты с разных экранов) и блок становится
+   в полтора раза выше макетного. */
+.platform__shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: calc(var(--radius-card) - clamp(4px, 0.45cqw, 8px));
+}
+
+/* Счётчик на светлом фоне: текущий кадр тёмный, общее число приглушено.
+   Селектор по data-атрибуту, а не по классу: разметку счётчика задаёт
+   общий шаблон карусели, и лишний класс пришлось бы дублировать в обоих блоках. */
+.platform__carousel .carousel__counter {
+  color: var(--color-black);
+}
+
+.platform__carousel .carousel__counter [data-carousel="total"] {
+  color: var(--color-gray-2);
+}
+
+/* Розовые штрихи-«ускорение» у кнопки «вперёд» — есть в макете.
+   Три полоски одним элементом: три фоновых градиента, каждый своей длины. */
+.platform__carousel .carousel__btn--next {
+  position: relative;
+}
+
+.platform__carousel .carousel__btn--next::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: -14px;
+  inset-block-start: -2px;
+  width: 14px;
+  height: 18px;
+  background:
+    linear-gradient(var(--color-pink), var(--color-pink)) 100% 0 / 14px 2px no-repeat,
+    linear-gradient(var(--color-pink), var(--color-pink)) 100% 50% / 10px 2px no-repeat,
+    linear-gradient(var(--color-pink), var(--color-pink)) 100% 100% / 6px 2px no-repeat;
+  border-radius: 2px;
+  transform: rotate(-38deg);
+  pointer-events: none;
+}
+
+.platform__carousel .carousel__btn--next:disabled::after {
+  opacity: 0;
+}
+
+/* --- Адаптив --- */
+
+/* Планшет: плашка уходит под заголовок, иначе она съедает ширину строки.
+   Карточек в кадре две, главной среди них нет — делить кадр на «широкую
+   и узкую» не на чем, поэтому hero = 1 и обе рамки одинаковые. */
+@media (max-width: 1024px) {
+  .platform__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .platform__intro { max-width: 100%; }
+
+  .platform__carousel {
+    --carousel-per: 2;
+    --platform-hero: 1;
+    /* Две одинаковые карточки в кадре: высота ряда = (ширина − зазор) / 2
+       по пропорции карточки, то есть примерно 2 × 1.357. */
+    --platform-row: 2.74;
+  }
+}
+
+/* Телефон: один скриншот во всю ширину */
+@media (max-width: 767px) {
+  .platform__box { gap: 20px; }
+
+  /* В кадре одна карточка, значит пропорция ряда = пропорция карточки. */
+  .platform__carousel {
+    --carousel-per: 1;
+    --platform-row: var(--platform-ratio);
+  }
+}

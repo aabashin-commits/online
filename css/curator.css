@@ -1,0 +1,210 @@
+/* curator.css — блок «Куратор класса» (корректировки сайта.md, 18.09.2026, §6).
+   Эталон — макет клиента «2.jpg»: заголовок и серый подзаголовок над коробкой,
+   синяя коробка с двумя абзацами и тремя белыми плашками-тегами,
+   справа — круглое фото куратора в белом кольце, чуть выступающее за коробку.
+
+   ⚠️ Фото куратора вырезано из самого макета «2.jpg» (328×328 — всё, что там
+   есть). Для ретины маловато: у клиента запрошен оригинал (см. PLAN.md).
+
+   Под коробкой — белая карточка «Пример обратной связи от куратора» с тремя
+   цветными плашками (добавлена 19.09.2026 по замечанию клиента: в ТЗ её не было,
+   но в макете она есть). Тексты и оттенки плашек сняты с «2.jpg». */
+
+.curator {
+  padding-block: 20px;
+}
+
+.curator__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.7cqw, 32px);
+}
+
+.curator__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.4cqw, 8px);
+}
+
+.curator__title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+.curator__subtitle {
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  color: var(--color-gray-2);
+}
+
+/* Коробка не прячет переполнение: фото намеренно выступает за её верхний край.
+   Высоту задаёт текст, а не фото, — поэтому круг вынут из потока (position:
+   absolute), а сетка держит под него пустую колонку шириной --curator-photo. */
+.curator__box {
+  --curator-photo: clamp(200px, 28.9cqw, 360px);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--curator-photo);
+  align-items: center;
+  /* Пол высоты по пропорции макета (318 при ширине 1181 ≈ 26.9%): без него
+     коробка сжималась бы по тексту и рвала пропорцию с кругом. */
+  min-height: clamp(200px, 26.9cqw, 340px);
+  gap: clamp(20px, 3cqw, 56px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  background:
+    radial-gradient(50% 70% at 92% 10%, color-mix(in srgb, var(--color-white) 18%, transparent), transparent 70%),
+    linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
+}
+
+/* Длину строки ограничиваем: колонка 1fr на 1920 даёт ~1300px, на такой ширине
+   абзац вытягивается в одну строку. min() вместо брейкпоинта: на планшете
+   и телефоне ограничение само отключается, колонка там уже уже 900. */
+.curator__content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.2cqw, 20px);
+  max-width: min(100%, 54cqw);
+}
+
+.curator__lead {
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.curator__text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-white);
+  opacity: 0.85;
+}
+
+.curator__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-cards);
+  margin-top: clamp(4px, 0.8cqw, 12px);
+}
+
+.curator__tag {
+  padding: clamp(14px, 1.6cqw, 24px) clamp(20px, 3cqw, 44px);
+  font-size: var(--fs-text);
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-black);
+  background: var(--color-white);
+  border-radius: var(--radius-btn);
+}
+
+/* Круглый слот фото. Замеры «2.jpg» (коробка 1181×318): круг вместе с кольцом
+   341px, выступает над верхом коробки на 44px (≈13% диаметра), до низа коробки
+   не достаёт 21px, справа отступ 37px (3.13cqw). Поэтому круг привязан к верху,
+   а не к низу: высота коробки задаётся текстом и меняться кругу не мешает. */
+.curator__media {
+  position: absolute;
+  right: clamp(10px, 3.13cqw, 40px);
+  top: calc(var(--curator-photo) * -0.13);
+  width: var(--curator-photo);
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: clamp(4px, 0.5cqw, 8px) solid var(--color-white);
+  background: var(--color-light-blue);
+  overflow: hidden;
+}
+
+.curator__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Планшет: строки текста переносятся чаще, коробка становится выше круга —
+   вынос за верхний край теряет смысл, поэтому круг центруется по вертикали. */
+@media (max-width: 1024px) {
+  .curator__box { --curator-photo: clamp(170px, 30cqw, 300px); }
+  .curator__content { max-width: 100%; }
+
+  .curator__media {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ===== Пример обратной связи от куратора (белая карточка под коробкой) ===== */
+
+.curator__feedback {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.7cqw, 30px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.curator__feedback-title {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+/* Три плашки равной ширины и высоты: grid растягивает их по самой длинной
+   (у «Математики» текст втрое длиннее), как и в макете */
+.curator__notes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-cards);
+}
+
+.curator__note {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.8cqw, 14px);
+  padding: clamp(16px, 1.9cqw, 30px);
+  border-radius: var(--radius-btn);
+}
+
+.curator__note--blue  { background: var(--tint-blue); }
+.curator__note--green { background: var(--tint-green); }
+.curator__note--pink  { background: var(--tint-pink); }
+
+.curator__note-subject {
+  font-size: var(--fs-text);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.curator__note-text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+/* Телефон: фото сверху по центру, тексты под ним, теги в колонку */
+@media (max-width: 767px) {
+  .curator__box {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 20px;
+  }
+
+  .curator__media {
+    position: static;
+    transform: none;
+    grid-row: 1;
+    justify-self: center;
+    width: min(60cqw, 220px);
+  }
+
+  .curator__tags { flex-direction: column; }
+
+  .curator__tag { padding: 14px 20px; }
+
+  .curator__notes { grid-template-columns: 1fr; }
+}

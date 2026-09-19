@@ -36,8 +36,8 @@
   <link rel="preload" href="assets/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/base.css?v=2">
-  <link rel="stylesheet" href="css/layout.css?v=2">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=3">
   <link rel="stylesheet" href="css/header.css?v=10">
   <link rel="stylesheet" href="css/hero.css?v=5">
   <link rel="stylesheet" href="css/info-cards.css?v=5">
@@ -45,26 +45,30 @@
   <link rel="stylesheet" href="css/onschool.css?v=7">
   <link rel="stylesheet" href="css/attestat.css?v=22">
   <link rel="stylesheet" href="css/school-day.css?v=3">
+  <link rel="stylesheet" href="css/benefits.css">
+  <link rel="stylesheet" href="css/curator.css?v=4">
   <link rel="stylesheet" href="css/who-fits.css">
+  <link rel="stylesheet" href="css/program.css">
+  <link rel="stylesheet" href="css/platform.css?v=10">
   <link rel="stylesheet" href="css/programs.css">
   <link rel="stylesheet" href="css/classes.css?v=2">
+  <link rel="stylesheet" href="css/about.css?v=10">
   <link rel="stylesheet" href="css/reviews.css?v=6">
   <link rel="stylesheet" href="css/pricing.css?v=9">
-  <link rel="stylesheet" href="css/universities.css">
-  <link rel="stylesheet" href="css/about.css?v=9">
+  <link rel="stylesheet" href="css/universities.css?v=3">
   <link rel="stylesheet" href="css/additional.css?v=4">
   <link rel="stylesheet" href="css/faq.css?v=2">
   <link rel="stylesheet" href="css/footer.css?v=13">
   <link rel="stylesheet" href="css/form.css?v=4">
   <link rel="stylesheet" href="css/mobile-cta.css">
 
-  <script src="js/main.js?v=8" defer></script>
+  <script src="js/main.js?v=12" defer></script>
   <script src="js/analytics.js?v=2" defer></script>
   <script src="js/header.js?v=3" defer></script>
   <script src="js/mobile-cta.js?v=2" defer></script>
   <script src="js/programs.js" defer></script>
   <script src="js/classes.js?v=2" defer></script>
-  <script src="js/about.js?v=2" defer></script>
+  <script src="js/about.js?v=3" defer></script>
   <script src="js/pricing.js?v=3" defer></script>
   <script src="js/additional.js?v=2" defer></script>
   <script src="js/reviews.js?v=6" defer></script>
@@ -99,7 +103,6 @@
   <noscript><div><img src="https://mc.yandex.ru/watch/37734395" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 
-  <!-- Bitrix24 CRM-форма — открывается по клику на любую CTA-кнопку страницы (см. js/bitrix.js) -->
   <script data-b24-form="click/225/yn061r" data-skip-moving="true">
   window.roistatVisitCallback = function (visitId) {
       window.addEventListener('b24:form:init', (event) => {
@@ -179,7 +182,7 @@
 
           <h1 class="hero__title">Онлайн-школа<br><span class="hero__hl">с&nbsp;1 по&nbsp;11&nbsp;класс</span></h1>
 
-          <p class="hero__desc">Живые уроки, поддержка куратора и&nbsp;школьного психолога, аттестат государственного образца</p>
+          <p class="hero__desc">Живые онлайн-уроки с&nbsp;учителем и&nbsp;одноклассниками</p>
 
           <p class="hero__note">Открыт набор на&nbsp;2026/27&nbsp;учебный год</p>
 
@@ -243,11 +246,10 @@
 
               <div class="attestat__content">
                 <h3 class="attestat__title">Московский аттестат<br>государственного образца</h3>
-                <p class="attestat__lead">Документ не&nbsp;отличается от&nbsp;аттестата обычной школы: с&nbsp;ним поступают в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях.</p>
-
                 <ul class="attestat__facts">
                   <li class="attestat__fact">Ребёнок учится онлайн по&nbsp;школьной программе</li>
-                  <li class="attestat__fact">Выпускники получают аттестат государственного образца</li>
+                  <li class="attestat__fact">Ученик прикрепляется к&nbsp;аккредитованной школе-партнёру</li>
+                  <li class="attestat__fact">Аттестат государственного образца выдаёт школа, к&nbsp;которой прикреплён ученик</li>
                   <li class="attestat__fact">Документ подходит для&nbsp;поступления в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях</li>
                 </ul>
 
@@ -302,25 +304,111 @@
         <ol class="school-day__steps">
           <li class="school-day__step">
             <span class="school-day__step-num" aria-hidden="true">1</span>
-            <h3 class="school-day__step-title">Живые уроки</h3>
-            <p class="school-day__step-text">Ребёнок подключается к&nbsp;занятиям по&nbsp;расписанию. В&nbsp;классе до&nbsp;15&nbsp;учеников.</p>
+            <h3 class="school-day__step-title">Интерактивные уроки в&nbsp;прямом эфире с&nbsp;включёнными камерами и&nbsp;микрофонами</h3>
+            <p class="school-day__step-text">Дети общаются с&nbsp;учителем и&nbsp;одноклассниками, задают вопросы, как будто находятся в&nbsp;классе.</p>
           </li>
           <li class="school-day__step">
             <span class="school-day__step-num" aria-hidden="true">2</span>
-            <h3 class="school-day__step-title">Работа с&nbsp;преподавателем</h3>
-            <p class="school-day__step-text">Учитель объясняет материал, отвечает на&nbsp;вопросы и&nbsp;разбирает сложные темы.</p>
+            <h3 class="school-day__step-title">Записи уроков и&nbsp;дополнительные материалы доступны всегда</h3>
+            <p class="school-day__step-text">Грамотные, хорошо продуманные дидактические материалы помогут закрепить знания.</p>
           </li>
           <li class="school-day__step">
             <span class="school-day__step-num" aria-hidden="true">3</span>
-            <h3 class="school-day__step-title">Закрепление материала</h3>
-            <p class="school-day__step-text">Домашние задания помогают повторить пройденное, а&nbsp;не&nbsp;изучать новую тему самостоятельно.</p>
+            <h3 class="school-day__step-title">Домашнее задание</h3>
+            <p class="school-day__step-text">Цель&nbsp;— повторить изученный на&nbsp;уроке материал, а&nbsp;не&nbsp;изучить его самостоятельно.</p>
           </li>
           <li class="school-day__step">
             <span class="school-day__step-num" aria-hidden="true">4</span>
-            <h3 class="school-day__step-title">Проверка и&nbsp;обратная связь</h3>
-            <p class="school-day__step-text">Домашние задания проверяются вручную. Оценки отображаются в&nbsp;электронном журнале. Каждый учебный модуль родители получают обратную связь педагогов.</p>
+            <h3 class="school-day__step-title">Проверка и&nbsp;оценка</h3>
+            <p class="school-day__step-text">Ручная проверка заданий. Все оценки отражены в&nbsp;электронном дневнике.</p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <section class="benefits" id="benefits">
+      <div class="container benefits__inner">
+        <div class="benefits__box">
+          <h2 class="benefits__title">Преимущества дистанционного образования</h2>
+
+          <ul class="benefits__list">
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Обучение с&nbsp;9:00 до&nbsp;16:15 МСК</h3>
+            <p class="benefits__card-text">Не&nbsp;нужно рано просыпаться, чтобы собраться и&nbsp;добраться до&nbsp;школы. У&nbsp;ребёнка есть возможность выспаться, позавтракать и&nbsp;спокойно приступить к&nbsp;занятиям.</p>
+            <svg class="benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 6.8v5.4l3.6 2.1"/></svg>
+          </li>
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Доступ к&nbsp;записям уроков</h3>
+            <p class="benefits__card-text">Пропустили урок? Не&nbsp;беда! Все уроки записываются и&nbsp;доступны вам в&nbsp;любое время.</p>
+            <svg class="benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.6" y="4.6" width="18.8" height="14.8" rx="3"/><path d="M10 9.4l5 2.6-5 2.6z"/></svg>
+          </li>
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Только обязательные предметы</h3>
+            <p class="benefits__card-text">В&nbsp;нашей школе нет ОБЖ, ИЗО, технологии и&nbsp;пр. В&nbsp;освободившееся время у&nbsp;детей есть возможность заниматься в&nbsp;секциях и&nbsp;кружках.</p>
+            <svg class="benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.2 5h5.3a3 3 0 0 1 3 3v11a2.4 2.4 0 0 0-2.4-2.2H3.2z"/><path d="M20.8 5h-5.3a3 3 0 0 0-3 3v11a2.4 2.4 0 0 1 2.4-2.2h5.9z"/><path d="M15.4 11.4l1.9 1.9 3.4-3.6"/></svg>
+          </li>
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Экономия затрат до&nbsp;100&nbsp;000&nbsp;₽/год</h3>
+            <p class="benefits__card-text">Ребёнку необходимы: тетрадка, ручка, линейка и&nbsp;карандаш. Не&nbsp;требуется покупать форму, сдавать на&nbsp;ремонт школы, подарки и&nbsp;пр.</p>
+            <svg class="benefits__icon benefits__icon--money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M10.1 17.2V7.6h3.1a2.6 2.6 0 0 1 0 5.2H8.8"/><path d="M8.8 15h4.6"/></svg>
+          </li>
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Психологически здоровая атмосфера</h3>
+            <p class="benefits__card-text">Грамотно выстроенная комфортная психологическая атмосфера 100% приведёт к&nbsp;академическому успеху ребёнка.</p>
+            <svg class="benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.2l7.4 2.9v5.4c0 4-2.9 7.3-7.4 8.9-4.5-1.6-7.4-4.9-7.4-8.9V6.1z"/><path d="M12 15.1s-2.9-1.8-2.9-3.8a1.7 1.7 0 0 1 2.9-1 1.7 1.7 0 0 1 2.9 1c0 2-2.9 3.8-2.9 3.8z"/></svg>
+          </li>
+          <li class="benefits__card">
+            <h3 class="benefits__card-title">Комфорт родителей</h3>
+            <p class="benefits__card-text">Не&nbsp;нужно везти ребёнка, ездить на&nbsp;родительские собрания. Вас не&nbsp;вызовут в&nbsp;школу. И&nbsp;у&nbsp;нас нет родительских чатов.</p>
+            <svg class="benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9.2" cy="8.4" r="3.1"/><path d="M3.4 19.4a5.8 5.8 0 0 1 11.6 0"/><circle cx="17.6" cy="9.6" r="2.3"/><path d="M15.6 15.1a5 5 0 0 1 5.4 4.3"/></svg>
+          </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="curator" id="curator">
+      <div class="container curator__inner">
+        <header class="curator__head">
+          <h2 class="curator__title">Куратор класса</h2>
+          <p class="curator__subtitle">Рядом с&nbsp;ребёнком весь учебный год</p>
+        </header>
+
+        <div class="curator__box">
+          <div class="curator__content">
+            <p class="curator__lead">Куратор помогает ребёнку с&nbsp;учебными и&nbsp;организационными вопросами, поддерживает, если возникают сложности, и&nbsp;остаётся на&nbsp;связи в&nbsp;течение учебного дня.</p>
+            <p class="curator__text">Раз в&nbsp;5&nbsp;недель родители получают подробную обратную связь от&nbsp;учителей о&nbsp;прогрессе ребёнка.</p>
+
+            <ul class="curator__tags">
+              <li class="curator__tag">Помощь с&nbsp;учёбой</li>
+              <li class="curator__tag">Связь с&nbsp;родителями</li>
+              <li class="curator__tag">Контроль прогресса</li>
+            </ul>
+          </div>
+
+          <div class="curator__media">
+            <img class="curator__photo" src="assets/img/curator/curator.webp" width="328" height="328" loading="lazy" decoding="async" alt="Куратор класса онлайн-школы «Моя школа LS»">
+          </div>
+        </div>
+
+        <article class="curator__feedback">
+          <h3 class="curator__feedback-title">Пример обратной связи от&nbsp;куратора</h3>
+
+          <ul class="curator__notes">
+            <li class="curator__note curator__note--blue">
+              <h4 class="curator__note-subject">Русский язык</h4>
+              <p class="curator__note-text">Варвара активно работает на&nbsp;уроках, выполняет задания и&nbsp;старается.</p>
+            </li>
+            <li class="curator__note curator__note--green">
+              <h4 class="curator__note-subject">Литература</h4>
+              <p class="curator__note-text">Варвара занимается отлично: видна вовлечённость и&nbsp;заинтересованность. Она мотивирована, активна и&nbsp;всегда готова к&nbsp;уроку.</p>
+            </li>
+            <li class="curator__note curator__note--pink">
+              <h4 class="curator__note-subject">Математика</h4>
+              <p class="curator__note-text">Варвара хорошо работает на&nbsp;уроках, но&nbsp;если не&nbsp;повторила материал, возникают трудности с&nbsp;заданиями. С&nbsp;алгеброй справляется лучше, чем с&nbsp;геометрией. Иногда не&nbsp;присылает контрольные работы, поэтому получает оценку&nbsp;2.</p>
+            </li>
+          </ul>
+        </article>
       </div>
     </section>
 
@@ -367,6 +455,95 @@
       </div>
     </section>
 
+    <section class="program" id="program">
+      <div class="container">
+        <div class="program__box">
+          <div class="program__content">
+            <h2 class="program__title">Собственная программа без&nbsp;перегрузки</h2>
+            <p class="program__lead">Мы&nbsp;переработали школьную программу так, чтобы ребёнку было проще понимать материал и&nbsp;двигаться по&nbsp;нему последовательно.</p>
+
+            <ul class="program__list">
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Понятная структура</b> и&nbsp;цели каждого блока</p>
+              </li>
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Только нужные предметы</b> и&nbsp;темы без лишней нагрузки</p>
+              </li>
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Прозрачная система</b> оценки и&nbsp;аттестации</p>
+              </li>
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Сдвоенные уроки</b> по&nbsp;ключевым предметам для более глубокого погружения</p>
+              </li>
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Собственные методические материалы</b> для 1–4&nbsp;классов</p>
+              </li>
+              <li class="program__item">
+                <svg class="program__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="program__item-text"><b>Переработанные учебные планы</b> для 5–11&nbsp;классов</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="carousel program__carousel" data-carousel-root>
+            <ul class="carousel__track" data-carousel="track">
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/01.webp" alt="Виртуальная лаборатория на онлайн-уроке" width="832" height="520" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/02.webp" alt="Ученик занимается за ноутбуком" width="832" height="520" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/03.webp" alt="Онлайн-урок математики" width="832" height="520" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/04.webp" alt="Печатные методические материалы школы" width="1100" height="688" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/05.webp" alt="Ученица на онлайн-уроке" width="1100" height="688" loading="lazy" decoding="async"></li>
+            </ul>
+
+            <div class="carousel__nav">
+              <button class="carousel__btn carousel__btn--prev" type="button" data-carousel="prev" aria-label="Предыдущее фото"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <p class="carousel__counter"><span data-carousel="current">01</span> / <span data-carousel="total">04</span></p>
+              <button class="carousel__btn carousel__btn--next" type="button" data-carousel="next" aria-label="Следующее фото"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+
+            <ul class="carousel__dots" data-carousel="dots"></ul>
+          </div>
+
+          <p class="program__note">
+            <svg class="program__note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+            <span class="program__note-text"><b>Все материалы доступны онлайн на&nbsp;платформе</b>&nbsp;— каждый ученик получает полный электронный комплект для обучения.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform" id="platform">
+      <div class="container">
+        <div class="platform__box">
+          <div class="platform__head">
+            <div class="platform__intro">
+              <h2 class="platform__title">Удобную <span class="platform__title-muted">онлайн-платформу</span></h2>
+              <p class="platform__lead">На платформе предоставлен доступ к&nbsp;учебникам, рабочим тетрадям, а&nbsp;также записям онлайн-уроков и&nbsp;элективов</p>
+            </div>
+            <p class="platform__pill">Всё для учёбы в&nbsp;одном месте</p>
+          </div>
+
+          <div class="carousel platform__carousel" data-carousel-root data-carousel-strip data-carousel-loop>
+            <ul class="carousel__track" data-carousel="track">
+              <li class="carousel__slide platform__slide"><img class="platform__shot" src="assets/img/platform/04.webp" alt="Учебники и атласы по предметам в электронной библиотеке" width="1088" height="794" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide platform__slide"><img class="platform__shot" src="assets/img/platform/01.webp" alt="Записи уроков по месяцам с указанием числа доступных занятий" width="1068" height="834" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide platform__slide"><img class="platform__shot" src="assets/img/platform/02.webp" alt="Расписание на день: уроки с открытым доступом" width="1149" height="891" loading="lazy" decoding="async"></li>
+            </ul>
+
+            <div class="carousel__nav">
+              <button class="carousel__btn carousel__btn--prev" type="button" data-carousel="prev" aria-label="Предыдущий скриншот"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m0 0 5-5m-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <p class="carousel__counter"><span data-carousel="current">01</span> / <span data-carousel="total">03</span></p>
+              <button class="carousel__btn carousel__btn--next" type="button" data-carousel="next" aria-label="Следующий скриншот"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="programs" id="week-example">
       <div class="container programs__inner">
         <article class="programs__card">
@@ -383,19 +560,81 @@
         </article>
 
         <article class="programs__promo">
-          <h3 class="programs__promo-title"><span class="programs__promo-muted">Приходите к&nbsp;нам на</span> бесплатные пробные 2&nbsp;дня онлайн</h3>
+          <h3 class="programs__promo-title">Как поступить в&nbsp;школу</h3>
 
-          <div class="programs__promo-labels" aria-hidden="true">
-            <span class="programs__promo-label programs__promo-label--dark">бесплатная диагностика знаний</span>
-            <span class="programs__promo-label programs__promo-label--light">пробные дни</span>
-          </div>
+          <ol class="programs__steps">
+            <li class="programs__step">
+              <span class="programs__step-num" aria-hidden="true">01</span>
+              <span class="programs__step-text">Пройти входную диагностику</span>
+            </li>
+            <li class="programs__step">
+              <span class="programs__step-num" aria-hidden="true">02</span>
+              <span class="programs__step-text">Пройти собеседование</span>
+            </li>
+            <li class="programs__step">
+              <span class="programs__step-num" aria-hidden="true">03</span>
+              <span class="programs__step-text">Пройти 2&nbsp;пробных дня</span>
+            </li>
+            <li class="programs__step">
+              <span class="programs__step-num" aria-hidden="true">04</span>
+              <span class="programs__step-text">Поступить в&nbsp;школу</span>
+            </li>
+            <li class="programs__step">
+              <span class="programs__step-num" aria-hidden="true">05</span>
+              <span class="programs__step-text">Заключить договор</span>
+            </li>
+            <li class="programs__step programs__step--accent">
+              <span class="programs__step-num" aria-hidden="true">06</span>
+              <span class="programs__step-text">Оплатить обучение</span>
+            </li>
+          </ol>
 
           <img class="programs__promo-image" src="assets/img/programs/boy.webp" alt="" width="736" height="1051" loading="lazy" decoding="async">
-
-          <a class="btn btn--primary programs__promo-btn" href="#form" data-open-form="Пробные 2 дня онлайн">начать учиться
-            <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
         </article>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container about__inner">
+        <div class="about__head">
+          <h2 class="about__title">Обучайтесь <span class="about__title-muted">комфортно</span></h2>
+          <p class="about__subtitle">Онлайн-формат не&nbsp;означает самостоятельное обучение без&nbsp;поддержки.</p>
+        </div>
+
+        <div class="about__tabs" role="tablist" aria-label="Категории сотрудников"></div>
+
+        <div class="about__card">
+          <div class="about__nav">
+            <div class="about__scrollbar" aria-hidden="true">
+              <span class="about__scrollbar-thumb"></span>
+            </div>
+            <div class="about__thumbs" role="tablist" aria-label="Сотрудники категории"></div>
+          </div>
+
+          <div class="about__info">
+            <h3 class="about__name"></h3>
+            <p class="about__lead"></p>
+          </div>
+
+          <figure class="about__photo">
+            <img class="about__photo-img" src="" alt="" width="360" height="360" loading="lazy" decoding="async">
+            <figcaption class="about__photo-empty">Фото будет добавлено позже</figcaption>
+          </figure>
+
+          <div class="about__about">
+            <div class="about__badges"></div>
+            <p class="about__text"></p>
+          </div>
+
+          <div class="about__arrows">
+            <button class="about__arrow about__arrow--prev" type="button" aria-label="Предыдущий сотрудник">
+              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="about__arrow about__arrow--next" type="button" aria-label="Следующий сотрудник">
+              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -447,9 +686,40 @@
       <div class="container">
         <div class="universities__banner">
           <img class="universities__decor universities__decor--wave" src="assets/img/universities/bg-blend.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <img class="universities__decor universities__decor--wave-2" src="assets/img/universities/bg-blend.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+          <div class="universities__head">
+            <h2 class="universities__title"><span class="universities__muted">Наши выпускники</span> <span class="universities__hl">поступают в&nbsp;самые престижные вузы</span> <span class="universities__muted">страны и&nbsp;мира</span></h2>
+            <p class="universities__pill">История выпускницы</p>
+          </div>
 
           <div class="universities__content">
-            <h2 class="universities__title"><span class="universities__muted">Наши выпускники</span> <span class="universities__hl">поступают в&nbsp;самые престижные вузы</span> <span class="universities__muted">страны и&nbsp;мира</span></h2>
+            <article class="universities__case">
+              <div class="universities__case-head">
+                <img class="universities__case-photo" src="assets/img/universities/sofya.webp" alt="Софья Медведева, выпускница школы" width="520" height="520" loading="lazy" decoding="async">
+                <div class="universities__case-who">
+                  <p class="universities__case-name">Софья Медведева</p>
+                  <p class="universities__case-role">Поступила в&nbsp;УрГАХУ на&nbsp;графического дизайнера</p>
+                </div>
+              </div>
+              <p class="universities__case-quote">После 11&nbsp;класса я&nbsp;поступила в&nbsp;университет мечты. За&nbsp;два экзамена набрала 186&nbsp;баллов. Поддержка преподавателей помогла мне поверить в&nbsp;себя и&nbsp;добиться результата.</p>
+              <ul class="universities__scores">
+                <li class="universities__score">
+                  <span class="universities__score-label">Русский язык</span>
+                  <span class="universities__score-value">89</span>
+                </li>
+                <li class="universities__score">
+                  <span class="universities__score-label">Литература</span>
+                  <span class="universities__score-value">97</span>
+                </li>
+                <li class="universities__score universities__score--total">
+                  <span class="universities__score-value">186&nbsp;баллов</span>
+                  <span class="universities__score-label">за 2&nbsp;экзамена</span>
+                </li>
+              </ul>
+              <p class="universities__case-year">Выпуск 2022</p>
+            </article>
+
             <a class="btn btn--primary universities__btn" href="#form" data-open-form>оставить заявку
               <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>

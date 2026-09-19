@@ -225,3 +225,118 @@ footer .container {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
 }
+
+/* --- Карусель: общая разметка (скрипт — initCarousel в js/main.js) ---
+   Используют блоки «Собственная программа без перегрузки» и
+   «Удобная онлайн-платформа». Здесь только механика; размер кадра, фон
+   и цвета кнопок каждый блок задаёт через переменные --carousel-*.
+   Листание — родной scroll-snap, поэтому свайп на телефоне работает сам. */
+.carousel {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.5cqw, 28px);
+}
+
+.carousel__track {
+  /* position: relative обязателен: скрипт центрирует слайд по offsetLeft,
+     а эта координата считается от ближайшего позиционированного предка. */
+  position: relative;
+  display: flex;
+  gap: var(--carousel-gap, clamp(10px, 1.06cqw, 20px));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Поле по бокам = «подглядывающая» часть соседей. Без него первый
+     и последний слайды не смогли бы встать в центр трека.
+     ⚠️ Это единственная ручка размера: ширина кадра выводится из неё
+     (100% − 2 × peek), см. .carousel__slide. */
+  padding-inline: var(--carousel-peek, 13%);
+}
+
+.carousel__track::-webkit-scrollbar { display: none; }
+
+.carousel__slide {
+  /* 100% — это ширина КОНТЕНТНОЙ области трека, то есть уже без полей
+     по бокам. Поэтому кадр занимает ровно 100% − 2 × --carousel-peek
+     ширины трека, и при scrollLeft: 0 первый слайд встаёт точно по центру.
+     ⚠️ Задавать здесь свою долю нельзя: проценты перемножились бы
+     (68% от 68% = 46%) и кадр вышел бы вдвое мельче задуманного. */
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  /* Соседи мельче и бледнее — активный кадр читается как главный */
+  transform: scale(0.88);
+  opacity: 0.5;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.carousel__slide.is-active {
+  transform: none;
+  opacity: 1;
+}
+
+.carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 1.3cqw, 24px);
+}
+
+.carousel__btn {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(38px, 3.4cqw, 60px);
+  height: clamp(38px, 3.4cqw, 60px);
+  border: 0;
+  border-radius: 50%;
+  background: var(--carousel-btn-bg, var(--color-white));
+  color: var(--carousel-btn-fg, var(--color-blue));
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.carousel__btn--next {
+  background: var(--carousel-btn-next-bg, var(--color-blue));
+  color: var(--carousel-btn-next-fg, var(--color-white));
+}
+
+.carousel__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.carousel__btn svg {
+  width: 40%;
+  height: 40%;
+}
+
+.carousel__counter {
+  font-size: var(--fs-text);
+  letter-spacing: 0.08em;
+  color: var(--carousel-fg, var(--color-white));
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.carousel__dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--carousel-dot, color-mix(in srgb, var(--color-white) 45%, transparent));
+  cursor: pointer;
+}
+
+.carousel__dot.is-active {
+  background: var(--carousel-dot-active, var(--color-pink));
+}

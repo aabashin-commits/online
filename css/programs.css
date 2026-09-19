@@ -46,9 +46,10 @@
 }
 
 /* Три таба равной ширины на всю ширину карточки (335 при content-box 1047) */
+/* Четыре ступени (§11 корректировок 18.09.2026) — раньше колонок было три */
 .programs__tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--gap-cards);
 }
 
@@ -146,14 +147,18 @@
 
 /* ---------- Синяя карточка «пробные 2 дня» ---------- */
 
-/* В потоке только заголовок и кнопка (space-between), остальное — абсолютом,
-   как в Figma 1:4536. Высоту карточке задаёт соседняя белая через stretch. */
+/* Содержимое баннера заменено по §10 «корректировки сайта.md» (18.09.2026):
+   вместо «пробных 2 дней» — заголовок «Как поступить в школу» и схема из шести
+   шагов (макет клиента «3.jpg»). Мальчик и сетка-декор остались от прежней
+   карточки. В потоке заголовок и схема, мальчик — абсолютом, как в Figma 1:4536.
+   Высоту карточке задаёт соседняя белая через stretch. */
 .programs__promo {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(110px, 32%, 280px);
+  align-content: center;
+  align-items: center;
+  gap: clamp(20px, 2.9cqw, 56px) clamp(10px, 1.5cqw, 24px);
   padding: var(--card-pad);
   border-radius: var(--radius-card);
   background: var(--gradient-accent);
@@ -178,62 +183,94 @@
 .programs__promo-title {
   position: relative;
   z-index: 2;
+  grid-column: 1 / -1;
   max-width: 78.5%;   /* 544 при карточке 693 на 1920 */
   font-size: var(--fs-h2);
   line-height: 0.9;
   letter-spacing: -0.02em;
 }
 
-.programs__promo-muted { color: var(--color-light-blue); }
+/* ---------- Схема поступления (§10 ТЗ, макет «3.jpg») ----------
 
-/* Два «стикера» с лёгким наклоном в разные стороны — замер по 1920.png:
-   светлый уходит вправо-вниз (+4.6°), тёмный вправо-вверх (−6°). */
-.programs__promo-labels {
-  position: absolute;
-  z-index: 3;
-  left: 60px;
-  top: 45.5%;
+   Три раскладки, потому что баннер трижды меняет пропорции:
+   на 1920 это узкая вертикальная карточка (693) — путь идёт колонкой;
+   на ≤1280 карточка разворачивается в широкий баннер — там змейка 3 × 2
+   из макета (01→02→03, вниз, 06←05←04);
+   на телефоне снова колонка.
+
+   Соединители — псевдоэлементы в зазоре сетки, поэтому у зазора фиксированное
+   значение (--step-gap): линию надо чем-то мерить. */
+.programs__steps {
+  --step-gap: clamp(10px, 1.2cqw, 18px);
+  --step-line: 2px;
+
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  gap: var(--step-gap);
+}
+
+.programs__step {
+  position: relative;
   display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-start;
+  align-items: center;
+  gap: clamp(8px, 0.9cqw, 14px);
+  padding: clamp(8px, 0.9cqw, 14px) clamp(12px, 1.3cqw, 20px);
+  border-radius: var(--radius-btn);
+  background: color-mix(in srgb, var(--color-white) 92%, transparent);
 }
 
-.programs__promo-label {
-  padding: 10px 30px;
-  border-radius: var(--radius-pill);
-  font-size: var(--fs-text);
-  line-height: 1.4;
-  white-space: nowrap;
-}
-
-.programs__promo-label--light {
-  margin-left: 7px;
+.programs__step-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: clamp(32px, 3.2cqw, 46px);
+  aspect-ratio: 1;
+  border-radius: 50%;
   background: var(--chip-blue-bg);
   color: var(--color-blue-chip);
-  transform: rotate(4.6deg);
+  font-size: var(--fs-text);
+  font-weight: 700;
 }
 
-.programs__promo-label--dark {
-  margin-top: -6px;
-  background: var(--color-blue-chip);
+.programs__step-text {
+  font-size: var(--fs-small);
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* Последний шаг — акцентный, как на макете */
+.programs__step--accent .programs__step-num {
+  background: var(--color-pink);
   color: var(--color-white);
-  transform: rotate(-6deg);
+}
+
+/* Соединитель: по умолчанию вертикальный, из-под кружка вниз в зазор */
+.programs__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 100%;
+  left: calc(clamp(12px, 1.3cqw, 20px) + clamp(32px, 3.2cqw, 46px) / 2);
+  width: var(--step-line);
+  height: var(--step-gap);
+  background: color-mix(in srgb, var(--color-white) 55%, transparent);
 }
 
 /* Мальчик — экспорт из Figma (нода 1:4594), вырезка с прозрачностью.
-   В макете он вылезает за нижний и правый край, лишнее срезает overflow карточки. */
+   ⚠️ Раньше лежал абсолютом поверх карточки: под прежний контент («пробные дни»,
+   два баббла и кнопка) наложение работало. Со схемой поступления не работает —
+   у плашек непрозрачный фон, и они закрыли бы вырезку. Поэтому мальчик получил
+   собственную колонку сетки справа от схемы. */
 .programs__promo-image {
-  position: absolute;
-  z-index: 1;
-  left: 22.7%;
-  top: 18.2%;
-  width: 99.3%;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  width: 100%;
   height: auto;
-}
-
-.programs__promo-btn {
-  position: relative;
-  z-index: 2;
 }
 
 /* ---------- Адаптив ----------
@@ -257,34 +294,19 @@
   .programs__routine { max-width: none; }
 
   /* Синяя карточка становится горизонтальным баннером (как «нет ДЗ»):
-     слева колонка «заголовок → бабблы → кнопка», справа мальчик.
-     Высоту задаёт контент; min-height нужен только чтобы вырезка не мельчала. */
+     слева заголовок и схема поступления, справа мальчик. Раскладка та же
+     сетка, меняются пропорции колонок; min-height — чтобы вырезка не мельчала. */
   .programs__promo {
-    gap: clamp(20px, 2.5vw, 40px);
-    /* поле под мальчика, чтобы длинный заголовок не заезжал ему на лицо */
-    padding-right: clamp(190px, 22%, 280px);
+    grid-template-columns: minmax(0, 1fr) clamp(150px, 24%, 300px);
+    gap: clamp(20px, 2.5vw, 40px) clamp(16px, 2vw, 32px);
     min-height: clamp(300px, 29vw, 380px);
   }
 
-  /* Заголовок больше не ограничен долей узкой карточки — ширину даёт padding */
+  /* Заголовок больше не ограничен долей узкой карточки */
   .programs__promo-title { max-width: none; }
 
-  /* Бабблы возвращаются в поток, между заголовком и кнопкой */
-  .programs__promo-labels {
-    position: static;
-    z-index: auto;
-  }
-
-  /* Мальчик прижат к правому нижнему углу, размер — по высоте карточки */
-  .programs__promo-image {
-    left: auto;
-    right: 0;
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 88%;
-    max-width: none;
-  }
+  /* Плашки шагов короткие: на всю ширину баннера они выглядели бы пустыми */
+  .programs__steps { width: min(100%, 620px); }
 }
 
 /* Зазоры сетки и табов здесь уже равны своим резиновым минимумам —
@@ -305,9 +327,9 @@
   .programs__head { gap: 30px; }
   .programs__body { gap: 20px; }
 
-  /* Мальчику остаётся меньше места — поле под него ужимаем, иначе колонка
-     текста схлопывается и заголовок ломается на 4 строки */
-  .programs__promo { padding-right: 170px; }
+  /* Мальчику остаётся меньше места — колонку под него ужимаем, иначе колонка
+     схемы схлопывается и шаги ломаются на четыре строки */
+  .programs__promo { grid-template-columns: minmax(0, 1fr) clamp(120px, 20%, 170px); }
 }
 
 /* Телефоны 360–767 — фреймы 1:14359 (белая, 360×625) и 1:11797 (синяя, 360×510).
@@ -382,48 +404,25 @@
     font-size: var(--fs-text);
   }
 
-  /* ---- Синяя карточка 1:11797 (360×510) ---- */
+  /* ---- Синяя карточка на телефоне ----
+     Фиксированная высота 510 из макета 1:11797 снята: прежний контент был
+     короткий (заголовок, два баббла, кнопка), а схема из шести шагов выше.
+     Высоту теперь задаёт контент — это и требование «высоты не фиксируем». */
   .programs__promo {
-    min-height: 510px;
+    grid-template-columns: 1fr;
+    min-height: 0;
     padding: var(--section-pad-y) var(--section-pad-x);
     border-radius: 0;
     box-shadow: none;
   }
 
-  /* Мальчик 1:11855 — 326×465 в точке (124, 45): низ вровень с карточкой,
-     правым краем (450) вылезает за неё на 90 и срезается overflow.
-     Размер задан по ВЫСОТЕ карточки (465/510), а не по ширине: карточка
-     фиксированной высоты, и ширина в % раздула бы вырезку на широких экранах.
-
-     ⚠️ Вылет — через translateX, а не через `right: -25%`. Проценты у `right`
-     считаются от ширины КАРТОЧКИ: на 360 это макетные −90, но на 700 уже −175,
-     и мальчика срезало больше чем наполовину. Проценты у `translateX` берутся
-     от ширины самого элемента, а он ~326 на любой ширине экрана (размер задан
-     по высоте) — доля обрезки 90/326 = 27.6% держится везде. */
+  /* Мальчик уходит под схему и встаёт по центру: справа от шести плашек
+     на телефоне ему места нет. */
   .programs__promo-image {
-    left: auto;
-    right: 0;
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 91.176%;
-    max-width: none;
-    transform: translateX(27.6%);
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: center;
+    width: min(55%, 200px);
   }
 
-  /* Бабблы 1:11861 — (20, 229) при карточке 510: 229 сверху = 183 снизу.
-     ⚠️ position возвращаем явно: в ≤1280 бабблы уходят в поток (static),
-     и без сброса left/bottom здесь бы не сработали. */
-  .programs__promo-labels {
-    position: absolute;
-    z-index: 3;
-    left: var(--section-pad-x);
-    top: auto;
-    bottom: 35.88%;
-  }
-
-  .programs__promo-label {
-    padding: 8px 20px;
-    font-size: 12px;
-  }
 }

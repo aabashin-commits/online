@@ -323,4 +323,256 @@
     build();
     sync();
   };
+
+  // --- Общая карусель (блоки «Собственная программа» и «Онлайн-платформа») ---
+  // Разметка одна на оба блока (классы .carousel__* в layout.css), отличается
+  // только оформление. Листает родной scroll-snap: свайп на телефоне работает
+  // сам, стрелки лишь прокручивают трек — тот же приём, что в createPager.
+  // Активный слайд ищем по близости к центру трека, а не по счётчику кликов:
+  // после свайпа счётчик и точки всё равно должны совпадать с картинкой.
+  const initCarousel = (root) => {
+    const track = root.querySelector('[data-carousel="track"]');
+    if (!track) return;
+    let slides = Array.from(track.children);
+    if (!slides.length) return;
+
+    const prev = root.querySelector('[data-carousel="prev"]');
+    const next = root.querySelector('[data-carousel="next"]');
+    const counter = root.querySelector('[data-carousel="current"]');
+    const total = root.querySelector('[data-carousel="total"]');
+    const dotsBox = root.querySelector('[data-carousel="dots"]');
+    const pad = (n) => String(n).padStart(2, '0');
+
+    // Три режима. Обычный: в кадре один слайд, он по центру, соседи
+    // подглядывают по краям (блок «Собственная программа»). Лента
+    // (data-carousel-strip): в кадре несколько целых карточек, шаг — одна
+    // карточка, счётчик показывает номер позиции, а не слайда. Кольцо
+    // (data-carousel-loop) — лента без концов: после последней карточки снова
+    // первая, по бокам всегда видно соседей, стрелки никогда не гаснут.
+    const strip = root.hasAttribute('data-carousel-strip');
+    const loop = strip && root.hasAttribute('data-carousel-loop');
+
+    // Кольцо собираем клонами: [копия][оригиналы][копия]. Прокрутка остаётся
+    // родной, свайп на телефоне работает сам; когда лента уезжает в копию, то
+    // после остановки возвращаем её в середину — картинки там те же, подмены
+    // не видно. Клоны скрыты от скринридеров, чтобы не читались по три раза.
+    const ring = slides.length;
+    const base = loop ? ring : 0;
+    if (loop) {
+      const head = document.createDocumentFragment();
+      const tail = document.createDocumentFragment();
+      slides.forEach((slide) => {
+        [head, tail].forEach((box) => {
+          const copy = slide.cloneNode(true);
+          copy.setAttribute('aria-hidden', 'true');
+          box.appendChild(copy);
+        });
+      });
+      track.insertBefore(head, slides[0]);
+      track.appendChild(tail);
+      slides = Array.from(track.children);
+    }
+
+    // Сколько карточек в кадре. В ленте с главной карточкой мерить по факту
+    // нельзя: карточки в кадре разной ширины, и шаг перестаёт быть равен
+    // «ширина кадра / число карточек». Поэтому число берём из CSS-переменной
+    // блока (--carousel-per), а измерение остаётся запасным путём.
+    const declaredPer = () => {
+      const raw = parseFloat(getComputedStyle(root).getPropertyValue('--carousel-per'));
+      return Number.isFinite(raw) && raw >= 1 ? Math.round(raw) : 0;
+    };
+
+    // Шаг ленты. Считаем по двум первым карточкам: главной среди них не бывает
+    // (она всегда в середине кадра), поэтому шаг — ровно «узкая + зазор»,
+    // и он не врёт, даже если ширины прямо сейчас доигрывают анимацию.
+    const metrics = () => {
+      const width = slides[0].offsetWidth;
+      const step = slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : width;
+      if (!strip || step <= 0) return { step: step || width, per: 1 };
+      const per = declaredPer()
+        || Math.round((track.clientWidth + (step - width)) / step);
+      return { step, per: Math.min(Math.max(1, per), slides.length) };
+    };
+
+    const limit = (i) => Math.max(0, Math.min(slides.length - 1, i));
+
+    // Сколько всего позиций. В кольце — сколько настоящих карточек; в обычной
+    // ленте позиций меньше, чем карточек: последняя — когда правый край
+    // последней карточки встал к правому краю трека.
+    const stops = () => {
+      if (loop) return ring;
+      return strip ? slides.length - metrics().per + 1 : slides.length;
+    };
+
+    // Номер позиции для счётчика и точек: в кольце индекс сворачивается
+    // по модулю, потому что живьём он гуляет по копиям.
+    const label = (i) => (loop ? ((i - base) % ring + ring) % ring : limit(i));
+
+    // Куда должен встать трек на позиции i.
+    const stopLeft = (i) => {
+      if (strip) return limit(i) * metrics().step;
+      // При scroll-snap-align: center просто offsetLeft промахнулся бы.
+      const slide = slides[limit(i)];
+      return slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+    };
+
+    // Какая карточка главная на позиции i. В ленте это середина кадра
+    // (в макете она крупнее соседних, а счётчик при этом показывает «01»);
+    // если карточек в кадре меньше трёх, середины нет — и главной тоже.
+    const accentOf = (i) => {
+      if (!strip) return i;
+      const { per } = metrics();
+      return per >= 3 ? limit(i + Math.floor(per / 2)) : -1;
+    };
+
+    let index = base;
+    // Позиция, к которой едем прямо сейчас по клику. Пока прокрутка не доехала,
+    // положение из scrollLeft не берём: иначе счётчик отставал бы.
+    let pending = -1;
+    let pendingTimer;
+
+    // Точки заводим только на настоящие карточки, клоны в счёт не идут.
+    const dots = (loop ? slides.slice(base, base + ring) : slides).map((slide, i) => {
+      if (!dotsBox) return null;
+      const item = document.createElement('li');
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'carousel__dot';
+      dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+      dot.addEventListener('click', () => goTo(base + i));
+      item.appendChild(dot);
+      dotsBox.appendChild(item);
+      return dot;
+    });
+
+    // Счётчик, точки и стрелки обновляем хоть на каждом кадре прокрутки —
+    // они ничего не перекладывают. Ширина главной карточки — отдельно.
+    const renderMeta = () => {
+      const at = label(index);
+      dots.forEach((dot, i) => { if (dot) dot.classList.toggle('is-active', i === at); });
+      if (counter) counter.textContent = pad(at + 1);
+      // Общее число пересчитывается здесь, а не один раз при старте: в ленте
+      // оно зависит от того, сколько карточек влезло, то есть от ширины экрана.
+      if (total) total.textContent = pad(stops());
+      // У кольца концов нет, гасить стрелки не на чем.
+      if (!loop) {
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === stops() - 1;
+      }
+    };
+
+    // Вешает класс главной карточки.
+    // animate: true  — ширина переезжает плавно (клик по стрелке: трек едет
+    //                  туда же и с той же скоростью, ряд не дёргается);
+    // animate: false — мгновенно, с пересчётом позиции трека. Нужно после
+    //                  свайпа и при возврате кольца в середину: ширины обязаны
+    //                  стать окончательными в том же кадре, иначе ряд поедет
+    //                  сам по себе, когда анимация доиграет, — это и есть те
+    //                  прыжки, на которые жаловались.
+    const applyHero = (i, animate) => {
+      const accent = accentOf(i);
+      if (!animate) slides.forEach((slide) => { slide.style.transition = 'none'; });
+      slides.forEach((slide, n) => slide.classList.toggle('is-active', n === accent));
+      if (animate) return;
+      track.scrollLeft = stopLeft(i);
+      requestAnimationFrame(() => {
+        slides.forEach((slide) => { slide.style.transition = ''; });
+      });
+    };
+
+    const goTo = (i) => {
+      // В кольце перед шагом возвращаемся в середину: так цель всегда внутри
+      // склеенной ленты, сколько бы раз подряд ни нажали на стрелку.
+      if (loop) {
+        const here = base + label(index);
+        if (here !== index) { index = here; applyHero(here, false); }
+      }
+      const target = loop ? i : Math.max(0, Math.min(stops() - 1, i));
+      index = target;
+      pending = target;
+      clearTimeout(pendingTimer);
+      // Страховка: если плавную прокрутку перебьют пальцем, точка назначения
+      // может так и не совпасть — ожидание не должно висеть вечно.
+      pendingTimer = setTimeout(() => { pending = -1; }, 700);
+      applyHero(target, true);
+      renderMeta();
+      track.scrollTo({ left: stopLeft(target), behavior: 'smooth' });
+    };
+
+    const nearest = () => {
+      if (strip) {
+        const { step } = metrics();
+        return step > 0 ? limit(Math.round(track.scrollLeft / step)) : 0;
+      }
+      const point = track.scrollLeft + track.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      slides.forEach((slide, i) => {
+        const dist = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - point);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      return best;
+    };
+
+    // Кадр прокрутки: обновляем только то, что не меняет раскладку.
+    const sync = () => {
+      if (pending >= 0 && Math.abs(track.scrollLeft - stopLeft(pending)) > 2) return;
+      index = loop ? nearest() : Math.min(nearest(), stops() - 1);
+      if (!strip) applyHero(index, true);
+      renderMeta();
+    };
+
+    // Прокрутка остановилась — досаживаем ленту: возвращаем кольцо в середину
+    // и ставим главную карточку. Если она и так на месте (доехали по клику,
+    // ширина уже переезжает плавно) — не трогаем, чтобы не рвать анимацию.
+    const settle = () => {
+      pending = -1;
+      clearTimeout(pendingTimer);
+      index = loop ? nearest() : Math.min(nearest(), stops() - 1);
+      let jump = false;
+      if (loop) {
+        const norm = base + label(index);
+        if (norm !== index) { index = norm; jump = true; }
+      }
+      const accent = accentOf(index);
+      const placed = accent < 0
+        ? !slides.some((slide) => slide.classList.contains('is-active'))
+        : slides[accent].classList.contains('is-active');
+      if (jump || !placed) applyHero(index, false);
+      renderMeta();
+    };
+
+    if (prev) prev.addEventListener('click', () => goTo(index - 1));
+    if (next) next.addEventListener('click', () => goTo(index + 1));
+
+    // Скролл сыплет событиями пачками — обновляем не чаще кадра
+    let frame = 0;
+    let rest;
+    track.addEventListener('scroll', () => {
+      clearTimeout(rest);
+      rest = setTimeout(settle, 160);
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; sync(); });
+    }, { passive: true });
+
+    let timer;
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        // Число карточек в кадре меняется на брейкпоинтах — позицию
+        // пересобираем заново, иначе трек останется между карточками.
+        if (!loop) index = Math.min(index, stops() - 1);
+        applyHero(index, false);
+        renderMeta();
+      }, 150);
+    });
+
+    applyHero(index, false);
+    renderMeta();
+  };
+
+  // Блокам с каруселью своего JS не нужно: разметка статичная, достаточно
+  // пометить корень атрибутом data-carousel-root.
+  document.querySelectorAll('[data-carousel-root]').forEach(initCarousel);
+
 })();

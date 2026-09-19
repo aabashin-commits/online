@@ -282,10 +282,12 @@
       </div>
     </section>
 
-<!-- ===== Блоки «Выберите класс ребёнка» (#classes) и «Обучайтесь комфортно» (#about), сняты 16.09.2026 =====
-  Стояли в index.html подряд между #week-example и #pricing. Ссылки «Классы» из шапки,
-  бургер-меню и футера удалены; «О школе» / «О нас» теперь ведут на #school-intro.
-  CSS/JS блоков в index.html оставлены (скрипты тихо выходят без корня). -->
+<!-- ===== Блок «Выберите класс ребёнка» (#classes), снят 16.09.2026 =====
+  Стоял в index.html между #week-example и #pricing. Ссылки «Классы» из шапки,
+  бургер-меню и футера удалены; «О школе» / «О нас» ведут на #school-intro.
+  CSS/JS блока в index.html оставлены (скрипты тихо выходят без корня).
+  Соседний блок «Обучайтесь комфортно» (#about) 19.09.2026 возвращён в index.html
+  с составом педагогов онлайн-школы — по пункту 12 правок клиента. -->
     <section class="classes" id="classes">
       <div class="container classes__inner">
         <img class="classes__bg" src="assets/img/classes/classes-bg.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -345,49 +347,5 @@
         <a class="btn btn--white classes__cta" href="#form" data-open-form="Выберите класс ребёнка" data-cta-location="classes">Узнать об&nbsp;обучении в&nbsp;вашем классе
           <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div class="container about__inner">
-        <div class="about__head">
-          <h2 class="about__title">Обучайтесь <span class="about__title-muted">комфортно</span></h2>
-          <p class="about__subtitle">Онлайн-формат не&nbsp;означает самостоятельное обучение без&nbsp;поддержки.</p>
-        </div>
-
-        <div class="about__tabs" role="tablist" aria-label="Категории сотрудников"></div>
-
-        <div class="about__card">
-          <div class="about__nav">
-            <div class="about__scrollbar" aria-hidden="true">
-              <span class="about__scrollbar-thumb"></span>
-            </div>
-            <div class="about__thumbs" role="tablist" aria-label="Сотрудники категории"></div>
-          </div>
-
-          <div class="about__info">
-            <h3 class="about__name"></h3>
-            <p class="about__lead"></p>
-          </div>
-
-          <figure class="about__photo">
-            <img class="about__photo-img" src="" alt="" width="360" height="360" loading="lazy" decoding="async">
-            <figcaption class="about__photo-empty">Фото будет добавлено позже</figcaption>
-          </figure>
-
-          <div class="about__about">
-            <div class="about__badges"></div>
-            <p class="about__text"></p>
-          </div>
-
-          <div class="about__arrows">
-            <button class="about__arrow about__arrow--prev" type="button" aria-label="Предыдущий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M6.66 1 1 6.645l5.66 5.645" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="about__arrow about__arrow--next" type="button" aria-label="Следующий сотрудник">
-              <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </div>
       </div>
     </section>
