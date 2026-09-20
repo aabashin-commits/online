@@ -242,9 +242,24 @@
   color: var(--color-black);
 }
 
-/* Последний шаг — акцентный, как на макете */
+/* Акцентный шаг — «Пройти 2 пробных дня» (креатив «программы», 20.09.2026):
+   розовый кружок и розовая пилюля «бесплатно» справа от текста. Раньше акцентом
+   был последний шаг («Оплатить обучение»). */
 .programs__step--accent .programs__step-num {
   background: var(--color-pink);
+  color: var(--color-white);
+}
+
+.programs__step-badge {
+  flex: none;
+  padding: 0.35em 0.7em;
+  border-radius: var(--radius-btn);
+  background: var(--color-pink);
+  font-size: clamp(9px, 0.55vw, 10.5px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--color-white);
 }
 

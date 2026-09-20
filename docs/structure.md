@@ -43,7 +43,7 @@
 │   │                      относительные, поэтому резолвятся в ту же папку;
 │   │                      `theme_color` приведён к фирменному #366EDF (в исходнике был белый)
 │   ├── fonts/           — Onest variable (woff2, сабсеты cyrillic/latin/latin-ext, OFL.txt)
-│   ├── img/             — по подпапкам блоков: hero/, attestat/, about/, pricing/, programs/, ...
+│   ├── img/             — по подпапкам блоков: hero/, attestat/, about/, pricing/, programs/, curator/ (bykova.webp), who-fits/ (boy.webp), ...
 │   │   ├── staff/           — фото педагогов блока 12: главное круглое `<slug>.webp`
 │   │   │                       (кроп «голова+плечи» из презентации) + вырезка без фона
 │   │   │                       `<slug>-thumb.webp` (rembg/u2net) для миниатюры

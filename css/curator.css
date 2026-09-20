@@ -82,21 +82,42 @@
   opacity: 0.85;
 }
 
+/* ⚠️ 20.09.2026, правка клиента («куратор плашки.png»): вместо белых таблеток —
+   ряд прямо на синем фоне: полупрозрачный круг с белой галочкой, белый
+   полужирный текст, между пунктами тонкие вертикальные линейки. */
 .curator__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap-cards);
+  gap: var(--gap-cards) 0;
   margin-top: clamp(4px, 0.8cqw, 12px);
 }
 
 .curator__tag {
-  padding: clamp(14px, 1.6cqw, 24px) clamp(20px, 3cqw, 44px);
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.85cqw, 14px);
+  padding-inline: clamp(16px, 2.1cqw, 40px);
   font-size: var(--fs-text);
   font-weight: 600;
-  text-align: center;
-  color: var(--color-black);
-  background: var(--color-white);
-  border-radius: var(--radius-btn);
+  color: var(--color-white);
+}
+
+.curator__tag:first-child { padding-left: 0; }
+
+.curator__tag:not(:last-child) {
+  border-right: 1px solid color-mix(in srgb, var(--color-white) 35%, transparent);
+}
+
+.curator__check {
+  flex: none;
+  width: clamp(28px, 2.4cqw, 44px);
+  height: clamp(28px, 2.4cqw, 44px);
+  /* Круг — белый с прозрачностью, галочка — сплошная белая */
+  color: color-mix(in srgb, var(--color-white) 30%, transparent);
+}
+
+.curator__check path {
+  stroke: var(--color-white);
 }
 
 /* Круглый слот фото. Замеры «2.jpg» (коробка 1181×318): круг вместе с кольцом
@@ -202,9 +223,14 @@
     width: min(60cqw, 220px);
   }
 
-  .curator__tags { flex-direction: column; }
+  .curator__tags { flex-direction: column; gap: 0; }
 
-  .curator__tag { padding: 14px 20px; }
+  .curator__tag { padding: 12px 0; }
+
+  .curator__tag:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-white) 35%, transparent);
+  }
 
   .curator__notes { grid-template-columns: 1fr; }
 }

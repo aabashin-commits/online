@@ -137,24 +137,47 @@
 
 /* Плашка «Во всех тарифах» снята 16.09.2026 по правке клиента. */
 
+/* Пункт списка: иконка + текст. Иконку рисует pricing.js (20.09.2026):
+   зелёная галочка — входит в тариф, красный крест — не входит. */
 .pricing__feature {
   position: relative;
-  padding-left: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   font-size: var(--fs-text);
   line-height: 1.5;
   color: var(--color-gray-1);
 }
 
-/* Маркер рисуем сами: у list-style нет управления цветом и отступом */
-.pricing__feature::before {
-  content: '';
+.pricing__icon {
+  flex: none;
+  width: 1.4em;
+  height: 1.4em;
+  /* Высота строки — 1.5em, иконка 1.4em: чуть подтягиваем к центру первой строки */
+  margin-top: 0.05em;
+}
+
+.pricing__icon path {
+  stroke: var(--color-white);
+}
+
+.pricing__feature--yes .pricing__icon { color: var(--color-success); }
+
+.pricing__feature--no .pricing__icon { color: var(--color-danger); }
+
+/* Услуги, которых в тарифе нет, приглушены */
+.pricing__feature--no { color: var(--color-gray-2); }
+
+/* Подпись «Входит: / Не входит: » — только для скринридеров */
+.pricing__sr {
   position: absolute;
-  top: 0.6em;
-  left: 4px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-blue);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* --- Карточки тарифов --- */
@@ -245,14 +268,6 @@
   flex-direction: column;
   gap: 10px;
   list-style: none;
-}
-
-/* ⚠️ 10.09.2026, правки клиента: в тарифе «Без прикрепления» пунктов вдвое
-   меньше (2–3 против 4–5), и рядом с соседней карточкой список выглядел
-   комком в её верхней трети. Разводим строки шире — так обе карточки
-   читаются с одной плотностью. */
-.pricing__plan[data-format='without'] .pricing__features {
-  gap: clamp(14px, 1.383cqw, 26px);
 }
 
 /* Прижимаем кнопку к низу: у соседних карточек состав разной длины,

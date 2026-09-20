@@ -36,7 +36,7 @@
   <link rel="preload" href="assets/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=6">
   <link rel="stylesheet" href="css/layout.css?v=3">
   <link rel="stylesheet" href="css/header.css?v=10">
   <link rel="stylesheet" href="css/hero.css?v=5">
@@ -46,15 +46,15 @@
   <link rel="stylesheet" href="css/attestat.css?v=22">
   <link rel="stylesheet" href="css/school-day.css?v=3">
   <link rel="stylesheet" href="css/benefits.css">
-  <link rel="stylesheet" href="css/curator.css?v=4">
-  <link rel="stylesheet" href="css/who-fits.css">
+  <link rel="stylesheet" href="css/curator.css?v=5">
+  <link rel="stylesheet" href="css/who-fits.css?v=2">
   <link rel="stylesheet" href="css/program.css">
   <link rel="stylesheet" href="css/platform.css?v=10">
-  <link rel="stylesheet" href="css/programs.css">
+  <link rel="stylesheet" href="css/programs.css?v=3">
   <link rel="stylesheet" href="css/classes.css?v=2">
   <link rel="stylesheet" href="css/about.css?v=10">
   <link rel="stylesheet" href="css/reviews.css?v=6">
-  <link rel="stylesheet" href="css/pricing.css?v=9">
+  <link rel="stylesheet" href="css/pricing.css?v=10">
   <link rel="stylesheet" href="css/universities.css?v=3">
   <link rel="stylesheet" href="css/additional.css?v=4">
   <link rel="stylesheet" href="css/faq.css?v=2">
@@ -69,7 +69,7 @@
   <script src="js/programs.js" defer></script>
   <script src="js/classes.js?v=2" defer></script>
   <script src="js/about.js?v=3" defer></script>
-  <script src="js/pricing.js?v=3" defer></script>
+  <script src="js/pricing.js?v=4" defer></script>
   <script src="js/additional.js?v=2" defer></script>
   <script src="js/reviews.js?v=6" defer></script>
   <script src="js/faq.js?v=3" defer></script>
@@ -380,14 +380,14 @@
             <p class="curator__text">Раз в&nbsp;5&nbsp;недель родители получают подробную обратную связь от&nbsp;учителей о&nbsp;прогрессе ребёнка.</p>
 
             <ul class="curator__tags">
-              <li class="curator__tag">Помощь с&nbsp;учёбой</li>
-              <li class="curator__tag">Связь с&nbsp;родителями</li>
-              <li class="curator__tag">Контроль прогресса</li>
+              <li class="curator__tag"><svg class="curator__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Помощь с&nbsp;учёбой</li>
+              <li class="curator__tag"><svg class="curator__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Связь с&nbsp;родителями</li>
+              <li class="curator__tag"><svg class="curator__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Контроль прогресса</li>
             </ul>
           </div>
 
           <div class="curator__media">
-            <img class="curator__photo" src="assets/img/curator/curator.webp" width="328" height="328" loading="lazy" decoding="async" alt="Куратор класса онлайн-школы «Моя школа LS»">
+            <img class="curator__photo" src="assets/img/curator/bykova.webp" width="328" height="328" loading="lazy" decoding="async" alt="Куратор класса онлайн-школы «Моя школа LS»">
           </div>
         </div>
 
@@ -415,42 +415,63 @@
     <section class="who-fits" id="who-fits">
       <div class="container">
         <div class="who-fits__box">
-          <img class="who-fits__loop" src="assets/img/attestat/diplom_figura.webp" alt="" width="1000" height="1260" loading="lazy" decoding="async">
           <header class="who-fits__head">
             <h2 class="who-fits__title">Когда онлайн-школа особенно удобна</h2>
             <p class="who-fits__subtitle">Выберите ситуацию, которая ближе вашей семье.</p>
           </header>
 
           <ul class="who-fits__list">
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
-              <p class="who-fits__card-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
+                <p class="who-fits__item-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
+              </div>
             </li>
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">Семья часто переезжает или&nbsp;путешествует</h3>
-              <p class="who-fits__card-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">Семья часто переезжает или&nbsp;путешествует</h3>
+                <p class="who-fits__item-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
+              </div>
             </li>
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">Вы живёте за&nbsp;границей</h3>
-              <p class="who-fits__card-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">Вы живёте за&nbsp;границей</h3>
+                <p class="who-fits__item-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
+              </div>
             </li>
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
-              <p class="who-fits__card-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
+                <p class="who-fits__item-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
+              </div>
             </li>
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">Обычная школа занимает слишком много времени</h3>
-              <p class="who-fits__card-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">Обычная школа занимает слишком много времени</h3>
+                <p class="who-fits__item-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
+              </div>
             </li>
-            <li class="who-fits__card">
-              <h3 class="who-fits__card-title">Нужен другой темп обучения</h3>
-              <p class="who-fits__card-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
+            <li class="who-fits__item">
+              <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="who-fits__item-body">
+                <h3 class="who-fits__item-title">Нужен другой темп обучения</h3>
+                <p class="who-fits__item-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
+              </div>
             </li>
           </ul>
 
           <a class="btn btn--primary who-fits__cta" href="#form" data-open-form="Кому подходит онлайн-школа">Подобрать формат
             <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
+
+          <div class="who-fits__media">
+            <img class="who-fits__photo" src="assets/img/who-fits/boy.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Ученик занимается онлайн: учитель на экране ноутбука, тетрадь и ручка">
+          </div>
         </div>
       </div>
     </section>
@@ -493,13 +514,13 @@
           <div class="carousel program__carousel" data-carousel-root>
             <ul class="carousel__track" data-carousel="track">
               <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/01.webp" alt="Виртуальная лаборатория на онлайн-уроке" width="832" height="520" loading="lazy" decoding="async"></li>
-              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/02.webp" alt="Ученик занимается за ноутбуком" width="832" height="520" loading="lazy" decoding="async"></li>
               <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/03.webp" alt="Онлайн-урок математики" width="832" height="520" loading="lazy" decoding="async"></li>
-              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/04.webp" alt="Печатные методические материалы школы" width="1100" height="688" loading="lazy" decoding="async"></li>            </ul>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/04.webp" alt="Печатные методические материалы школы" width="1100" height="688" loading="lazy" decoding="async"></li>
+            </ul>
 
             <div class="carousel__nav">
               <button class="carousel__btn carousel__btn--prev" type="button" data-carousel="prev" aria-label="Предыдущее фото"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-              <p class="carousel__counter"><span data-carousel="current">01</span> / <span data-carousel="total">04</span></p>
+              <p class="carousel__counter"><span data-carousel="current">01</span> / <span data-carousel="total">03</span></p>
               <button class="carousel__btn carousel__btn--next" type="button" data-carousel="next" aria-label="Следующее фото"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             </div>
 
@@ -519,7 +540,7 @@
         <div class="platform__box">
           <div class="platform__head">
             <div class="platform__intro">
-              <h2 class="platform__title">Удобную <span class="platform__title-muted">онлайн-платформу</span></h2>
+              <h2 class="platform__title">Удобная <span class="platform__title-muted">онлайн-платформа</span></h2>
               <p class="platform__lead">На платформе предоставлен доступ к&nbsp;учебникам, рабочим тетрадям, а&nbsp;также записям онлайн-уроков и&nbsp;элективов</p>
             </div>
             <p class="platform__pill">Всё для учёбы в&nbsp;одном месте</p>
@@ -571,9 +592,10 @@
               <span class="programs__step-num" aria-hidden="true">02</span>
               <span class="programs__step-text">Пройти собеседование</span>
             </li>
-            <li class="programs__step">
+            <li class="programs__step programs__step--accent">
               <span class="programs__step-num" aria-hidden="true">03</span>
-              <span class="programs__step-text">Пройти 2&nbsp;пробных дня</span>
+              <span class="programs__step-text">Пройти 2&nbsp;пробных&nbsp;дня</span>
+              <span class="programs__step-badge">бесплатно</span>
             </li>
             <li class="programs__step">
               <span class="programs__step-num" aria-hidden="true">04</span>
@@ -583,7 +605,7 @@
               <span class="programs__step-num" aria-hidden="true">05</span>
               <span class="programs__step-text">Заключить договор</span>
             </li>
-            <li class="programs__step programs__step--accent">
+            <li class="programs__step">
               <span class="programs__step-num" aria-hidden="true">06</span>
               <span class="programs__step-text">Оплатить обучение</span>
             </li>
