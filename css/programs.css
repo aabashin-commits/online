@@ -201,8 +201,10 @@
    Соединители — псевдоэлементы в зазоре сетки, поэтому у зазора фиксированное
    значение (--step-gap): линию надо чем-то мерить. */
 .programs__steps {
-  --step-gap: clamp(10px, 1.2cqw, 18px);
+  --step-gap: clamp(20px, 2.66cqw, 50px);
+  --step-num: clamp(36px, 3.27cqw, 62px);
   --step-line: 2px;
+  --step-dot: 8px;
 
   position: relative;
   z-index: 2;
@@ -212,74 +214,80 @@
   gap: var(--step-gap);
 }
 
+/* Шаг — без плашки: кружок с номером и белый текст прямо на синем (ref «Как поступить») */
 .programs__step {
   position: relative;
   display: flex;
   align-items: center;
-  gap: clamp(8px, 0.9cqw, 14px);
-  padding: clamp(8px, 0.9cqw, 14px) clamp(12px, 1.3cqw, 20px);
-  border-radius: var(--radius-btn);
-  background: color-mix(in srgb, var(--color-white) 92%, transparent);
+  gap: clamp(12px, 1.25cqw, 24px);
 }
 
 .programs__step-num {
+  position: relative;
+  z-index: 1;
   flex: none;
   display: grid;
   place-items: center;
-  width: clamp(32px, 3.2cqw, 46px);
+  width: var(--step-num);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--chip-blue-bg);
-  color: var(--color-blue-chip);
-  font-size: var(--fs-text);
+  background: color-mix(in srgb, var(--color-white) 90%, transparent);
+  color: var(--color-blue-deep);
+  font-size: clamp(14px, 1.1cqw, 21px);
   font-weight: 700;
 }
 
 .programs__step-text {
-  font-size: var(--fs-small);
+  font-size: clamp(14px, 1.08cqw, 21px);
   line-height: 1.25;
-  font-weight: 600;
-  color: var(--color-black);
+  font-weight: 500;
+  color: var(--color-white);
 }
 
-/* Акцентный шаг — «Пройти 2 пробных дня» (креатив «программы», 20.09.2026):
-   розовый кружок и розовая пилюля «бесплатно» справа от текста. Раньше акцентом
-   был последний шаг («Оплатить обучение»). */
+.programs__step-text b { font-weight: 600; }
+
+/* Акцентный шаг — «Пройти 2 пробных дня»: розовый кружок чуть крупнее (scale, чтобы
+   не сдвигать центр колонки кружков) и розовая пилюля «бесплатно» сразу за текстом. */
 .programs__step--accent .programs__step-num {
   background: var(--color-pink);
   color: var(--color-white);
+  transform: scale(1.09);
 }
 
 .programs__step-badge {
   flex: none;
-  padding: 0.35em 0.7em;
+  margin-left: calc(-0.65 * clamp(12px, 1.25cqw, 24px));   /* зазор до текста ~11 вместо 23 */
+  padding: 0.85em 1.55em;
   border-radius: var(--radius-btn);
   background: var(--color-pink);
-  font-size: clamp(9px, 0.55vw, 10.5px);
+  font-size: clamp(9px, 0.69cqw, 13px);
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  line-height: 1;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-white);
 }
 
-/* Соединитель: по умолчанию вертикальный, из-под кружка вниз в зазор */
+/* Соединитель: белая линия из-под кружка вниз, на концах — точки. Лежит под
+   кружком (z-index у номера выше), центр — по центру колонки кружков. */
 .programs__step:not(:last-child)::after {
   content: "";
   position: absolute;
-  z-index: -1;
-  top: 100%;
-  left: calc(clamp(12px, 1.3cqw, 20px) + clamp(32px, 3.2cqw, 46px) / 2);
-  width: var(--step-line);
-  height: var(--step-gap);
-  background: color-mix(in srgb, var(--color-white) 55%, transparent);
+  top: calc(100% - 0.5px);
+  left: calc(var(--step-num) / 2 - var(--step-dot) / 2);
+  width: var(--step-dot);
+  height: calc(var(--step-gap) + 1px);
+  background:
+    radial-gradient(circle closest-side, var(--color-white) 96%, transparent) top / 100% var(--step-dot) no-repeat,
+    radial-gradient(circle closest-side, var(--color-white) 96%, transparent) bottom / 100% var(--step-dot) no-repeat,
+    linear-gradient(var(--color-white), var(--color-white)) center / var(--step-line) 100% no-repeat;
+  opacity: 0.85;
 }
 
 /* Мальчик — экспорт из Figma (нода 1:4594), вырезка с прозрачностью.
-   ⚠️ Раньше лежал абсолютом поверх карточки: под прежний контент («пробные дни»,
-   два баббла и кнопка) наложение работало. Со схемой поступления не работает —
-   у плашек непрозрачный фон, и они закрыли бы вырезку. Поэтому мальчик получил
-   собственную колонку сетки справа от схемы. */
+   Здесь (баннер уже ≤1280 и телефон) он получает собственную колонку сетки:
+   плашек под ним больше нет, но колонка держит порядок. На десктопе он абсолютом
+   в правом нижнем углу — см. блок min-width: 1281px внизу файла. */
 .programs__promo-image {
   grid-column: 2;
   grid-row: 2;
@@ -315,7 +323,12 @@
     grid-template-columns: minmax(0, 1fr) clamp(150px, 24%, 300px);
     gap: clamp(20px, 2.5vw, 40px) clamp(16px, 2vw, 32px);
     min-height: clamp(300px, 29vw, 380px);
+    padding: var(--card-pad);
+    align-content: center;
   }
+
+  /* Мальчик стоит на нижнем краю карточки, как в рефе: срез брюк уходит за край */
+  .programs__promo-image { margin-bottom: calc(-1 * var(--card-pad)); }
 
   /* Заголовок больше не ограничен долей узкой карточки */
   .programs__promo-title { max-width: none; }
@@ -345,6 +358,7 @@
   /* Мальчику остаётся меньше места — колонку под него ужимаем, иначе колонка
      схемы схлопывается и шаги ломаются на четыре строки */
   .programs__promo { grid-template-columns: minmax(0, 1fr) clamp(120px, 20%, 170px); }
+  .programs__promo-image { margin-bottom: -30px; }
 }
 
 /* Телефоны 360–767 — фреймы 1:14359 (белая, 360×625) и 1:11797 (синяя, 360×510).
@@ -438,6 +452,38 @@
     grid-row: 3;
     justify-self: center;
     width: min(55%, 200px);
+    margin-bottom: calc(-1 * var(--section-pad-y));
   }
 
+}
+
+/* Десктоп (карточка справа от белой, узкая колонка) — по рефу «Как поступить в школу».
+   Масштаб рефа к нашей карточке 693 ≈ 1.12: поле 26–30, заголовок 0.9 от --fs-h2,
+   схема прижата к верху, мальчик абсолютом в правом нижнем углу (фигура занимает
+   ~64% ширины файла, поэтому справа он выходит за карточку на прозрачное поле). */
+@media (min-width: 1281px) {
+  .programs__promo {
+    align-content: start;
+    padding: clamp(16px, 1.55cqw, 30px) clamp(16px, 1.55cqw, 30px) 0;
+    gap: clamp(16px, 2.2cqw, 42px) 0;
+  }
+
+  .programs__promo-title {
+    max-width: 8em;   /* «Как поступить / в школу» в две строки, как в рефе */
+    font-size: calc(var(--fs-h2) * 0.9);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+  }
+
+  .programs__steps { grid-column: 1 / -1; }
+
+  .programs__promo-image {
+    position: absolute;
+    grid-area: auto;
+    z-index: 1;
+    right: -8.7%;
+    bottom: 0;
+    width: 58.6%;
+    pointer-events: none;
+  }
 }

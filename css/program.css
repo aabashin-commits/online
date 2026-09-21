@@ -22,10 +22,13 @@
   overflow: hidden;
   display: grid;
   /* Доли с макета: текстовая колонка ~600, карусель ~550 от 1180 контента */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  grid-template-columns: 51.9cqw minmax(0, 1fr);
   align-items: start;
-  gap: clamp(24px, 2.128cqw, 44px);
-  padding: var(--card-pad);
+  column-gap: 0;
+  row-gap: clamp(18px, 1.75cqw, 33px);
+  /* Поля с эталона (замер по 1920): слева/справа ~37, сверху ~43, снизу ~30 */
+  --program-pad: clamp(20px, 1.95cqw, 37px);
+  padding: clamp(20px, 2.3cqw, 44px) var(--program-pad) clamp(20px, 1.6cqw, 30px);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   background:
@@ -40,54 +43,73 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 1.5cqw, 28px);
+  gap: clamp(14px, 1.4cqw, 26px);
 }
 
+/* Кегли с эталона: заголовок ~56, текст лида ~21, пункты ~23 (при 1920).
+   Ниже 1280 clamp опускает их до минимумов, привычных по остальным блокам. */
 .program__title {
-  font-size: var(--fs-h2);
+  font-size: clamp(32px, 3cqw, 56px);
   line-height: 1.05;
   color: var(--color-white);
 }
 
 .program__lead {
-  font-size: var(--fs-text);
-  color: var(--color-light-blue);
+  font-size: clamp(14px, 1.1cqw, 21px);
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--color-white) 78%, transparent);
 }
 
-/* Белая карточка со списком: два столбца по три строки, разделённые
-   тонкими линейками (в макете это именно линейки, а не зазор), поэтому
-   gap: 0, а границы навешиваются на сами пункты. */
+.program__lead b {
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+/* Список лежит прямо на синем, без белой карточки: два столбца по три
+   строки, разделённые тонкими полупрозрачными линейками. Линейки — границы
+   самих пунктов (gap: 0), поэтому вертикальная идёт сплошной через все
+   строки, а горизонтальные тянутся через оба столбца. */
 .program__list {
+  margin-top: clamp(0px, 0.45cqw, 9px);
+  --program-line: color-mix(in srgb, var(--color-white) 26%, transparent);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding: clamp(10px, 1.06cqw, 20px);
-  border-radius: var(--radius-card);
-  background: var(--color-white);
+  grid-template-columns: 0.94fr 1fr;
 }
 
 .program__item {
   display: flex;
   align-items: flex-start;
-  gap: clamp(8px, 0.85cqw, 16px);
-  padding: clamp(10px, 1.06cqw, 20px);
+  gap: clamp(9px, 1cqw, 19px);
+  padding: clamp(10px, 1.22cqw, 23px) 0;
 }
 
-/* Линейки: вертикальная — у левого столбца, горизонтальные — у первых
-   двух строк. Последняя строка и правый столбец остаются без границ. */
+/* Отступ от линеек 23, а у краёв списка всего ~11 (замер: у первой и последней
+   строки текст стоит почти вплотную к границе списка) */
+.program__item:nth-child(-n + 2) { padding-top: clamp(6px, 0.55cqw, 10px); }
+
+.program__item:nth-last-child(-n + 2) { padding-bottom: clamp(6px, 0.65cqw, 13px); }
+
+/* Правый столбец отступает от линейки на 29 (замер) */
+.program__item:nth-child(even) {
+  padding-left: clamp(12px, 1.55cqw, 29px);
+}
+
+/* Левый — не даёт тексту упереться в линейку */
 .program__item:nth-child(odd) {
-  border-right: 1px solid var(--color-gray-3);
+  padding-right: clamp(10px, 1cqw, 19px);
+  border-right: 1px solid var(--program-line);
 }
 
 .program__item:nth-child(-n + 4) {
-  border-bottom: 1px solid var(--color-gray-3);
+  border-bottom: 1px solid var(--program-line);
 }
 
 .program__check {
   flex: none;
-  width: clamp(24px, 1.9cqw, 36px);
-  height: clamp(24px, 1.9cqw, 36px);
+  width: clamp(26px, 2.3cqw, 43px);
+  height: clamp(26px, 2.3cqw, 43px);
   /* currentColor заливает круг, галочка красится отдельным правилом */
-  color: var(--chip-blue-bg);
+  color: var(--color-light-blue);
 }
 
 .program__check path {
@@ -95,36 +117,42 @@
 }
 
 .program__item-text {
-  font-size: var(--fs-text);
-  line-height: 1.3;
-  color: var(--color-gray-1);
+  font-size: clamp(15px, 1.28cqw, 24px);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--color-white) 88%, transparent);
 }
 
 .program__item-text b {
   font-weight: 600;
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
-/* --- Правая колонка: карусель --- */
+/* --- Правая колонка: карусель ---
+   Трек тянется до правого края коробки (margin-right гасит её поле), чтобы
+   следующий слайд выглядывал из-под края, как в эталоне. Поля трека
+   несимметричны: слева 8.76% (76 при 1920), справа 19.6% — кадр в 622 пикселя
+   встаёт первым слайдом ровно туда, где он на макете, а слайды 2–4 центрируются
+   родным снапом (первый упирается в scrollLeft: 0, поэтому стоит чуть левее).
+   ⚠️ Ширина кадра = 100% − левое − правое поле = 71.64% трека. */
 .program__carousel {
   position: relative;
   z-index: 1;
-  /* Кадр крупнее базового: соседи подглядывают узкими полосками, как в макете.
-     Ширина кадра = 100% − 2 × peek, то есть 68% ширины трека. */
-  --carousel-peek: 16%;
+  margin-top: clamp(0px, 1.1cqw, 21px);
+  margin-right: calc(-1 * var(--program-pad));
+  gap: clamp(16px, 1.7cqw, 32px);
+  --carousel-btn-size: clamp(40px, 3.5cqw, 66px);
 }
 
-/* Края трека растворяются в фоне: без маски соседние кадры обрезаются
-   по границе трека резкой вертикальной полосой. Затухание занимает ровно
-   поле peek, поэтому активный кадр остаётся непрозрачным целиком.
-   Проценты градиента считаются от ширины трека — как и padding peek. */
 .program__carousel .carousel__track {
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
+  padding-inline: 8.76% 19.6%;
+  /* Левый край растворяется, чтобы сосед предыдущего слайда не резался
+     вертикальной чертой; на первом кадре зона затухания пуста. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8.76%);
+  mask-image: linear-gradient(to right, transparent 0, #000 8.76%);
 }
 
 .program__slide {
-  padding: clamp(5px, 0.5cqw, 9px);
+  padding: clamp(5px, 0.48cqw, 9px);
   border-radius: var(--radius-card);
   background: var(--color-white);
   box-shadow: var(--shadow-photo);
@@ -137,60 +165,108 @@
   aspect-ratio: 16 / 10;
   object-fit: cover;
   /* Внутреннее скругление на толщину белой рамки меньше внешнего */
-  border-radius: calc(var(--radius-card) - clamp(5px, 0.5cqw, 9px));
+  border-radius: calc(var(--radius-card) - clamp(5px, 0.48cqw, 9px));
 }
 
-/* --- Нижняя плашка на всю ширину --- */
+/* Управление — по центру именно кадра, а не всей колонки: поля трека
+   несимметричны, поэтому сдвигаем ряд на разность полей (5.4% ширины). */
+.program__carousel .carousel__nav,
+.program__carousel .carousel__dots {
+  margin-left: 8.76%;
+  margin-right: 19.6%;
+}
+
+.program__carousel .carousel__nav { gap: clamp(12px, 1.5cqw, 28px); }
+
+.program__carousel .carousel__btn {
+  width: var(--carousel-btn-size);
+  height: var(--carousel-btn-size);
+}
+
+.program__carousel .carousel__counter {
+  font-size: clamp(15px, 1.15cqw, 22px);
+}
+
+.program__carousel .carousel__dots { gap: clamp(7px, 0.48cqw, 9px); }
+
+.program__carousel .carousel__dot {
+  width: clamp(9px, 0.58cqw, 11px);
+  height: clamp(9px, 0.58cqw, 11px);
+  background: color-mix(in srgb, var(--color-white) 62%, transparent);
+}
+
+.program__carousel .carousel__dot.is-active { background: var(--color-pink); }
+
+/* --- Нижняя строка на всю ширину: линейка сверху, без плашки --- */
 .program__note {
   grid-column: 1 / -1;
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1.06cqw, 20px);
-  padding: clamp(14px, 1.3cqw, 26px) clamp(16px, 1.6cqw, 30px);
-  border-radius: var(--radius-card);
-  background: color-mix(in srgb, var(--color-white) 85%, var(--color-light-blue));
+  gap: clamp(10px, 1.45cqw, 27px);
+  padding-top: clamp(14px, 1.55cqw, 29px);
+  border-top: 1px solid var(--program-line, color-mix(in srgb, var(--color-white) 26%, transparent));
 }
 
 .program__note-icon {
   flex: none;
-  width: clamp(26px, 2.1cqw, 40px);
-  height: clamp(26px, 2.1cqw, 40px);
-  color: var(--color-blue);
+  width: clamp(20px, 1.55cqw, 29px);
+  height: clamp(25px, 1.94cqw, 36px);
+  color: color-mix(in srgb, var(--color-white) 88%, transparent);
 }
 
 .program__note-text {
-  font-size: var(--fs-text);
-  color: var(--color-gray-1);
+  font-size: clamp(14px, 1.1cqw, 21px);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--color-white) 82%, transparent);
 }
 
 .program__note-text b {
   font-weight: 600;
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 /* --- Адаптив --- */
 
 /* Планшет: колонки складываются в одну, карусель уходит под текст
-   и получает базовую ширину кадра — места по бокам больше нет. */
+   на всю ширину коробки и получает симметричные поля. */
 @media (max-width: 1024px) {
   .program__box { grid-template-columns: minmax(0, 1fr); }
 
-  .program__carousel { --carousel-peek: 13%; }
+  .program__list { --program-line: color-mix(in srgb, var(--color-white) 26%, transparent); }
+
+  .program__carousel {
+    margin-right: 0;
+    --carousel-peek: 13%;
+  }
+
+  .program__carousel .carousel__track {
+    padding-inline: var(--carousel-peek);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--carousel-peek), #000 calc(100% - var(--carousel-peek)), transparent 100%);
+  }
+
+  .program__carousel .carousel__nav,
+  .program__carousel .carousel__dots {
+    margin-inline: 0;
+  }
 }
 
 /* Телефон: пункты в колонку — два столбца по 150px рвут фразы пополам */
 @media (max-width: 767px) {
-  .program__box { gap: 20px; }
+  .program__box { row-gap: 20px; }
 
   .program__list { grid-template-columns: minmax(0, 1fr); }
 
-  .program__item { padding: 14px 10px; }
+  .program__item,
+  .program__item:nth-child(even),
+  .program__item:nth-child(odd) {
+    padding: 14px 0;
+    border-right: 0;
+  }
 
-  .program__item:nth-child(odd) { border-right: 0; }
-
-  .program__item:not(:last-child) { border-bottom: 1px solid var(--color-gray-3); }
+  .program__item:not(:last-child) { border-bottom: 1px solid var(--program-line); }
 
   .program__item:last-child { border-bottom: 0; }
 
