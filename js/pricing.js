@@ -11,6 +11,9 @@
 // говорит included. 21.09.2026: пункты, которых в тарифе нет, не показываются
 // (раньше стояли с красным крестом) — у «Без прикрепления» только входящие,
 // все с зелёной галочкой. Точки с запятой и точки в конце пунктов сняты.
+// 21.09.2026 (вторая правка): перечень вернули целиком — у «Без прикрепления»
+// недостающие услуги стоят на тех же местах с тонким крестиком, чтобы тарифы
+// сравнивались по строкам. Иконки — тонкие линии без круглой подложки.
 //
 // Неразрывные пробелы в строках — литеральные U+00A0: строки вставляются
 // через textContent, сущность &nbsp; вывелась бы текстом.
@@ -223,8 +226,9 @@
 
   // --- Карточки тарифов ---
 
-  // Иконка пункта (20.09.2026, правка клиента): зелёная галочка — услуга входит
-  // в тариф, красный крест — не входит. Цвет задаёт CSS через currentColor.
+  // Иконка пункта (21.09.2026, правка клиента): тонкая зелёная галочка — услуга
+  // входит в тариф, тонкий крестик — не входит. Без кругов и плашек; цвет
+  // задаёт CSS через currentColor.
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const buildIcon = (included) => {
     const svg = document.createElementNS(SVG_NS, 'svg');
@@ -233,19 +237,14 @@
     svg.setAttribute('fill', 'none');
     svg.setAttribute('aria-hidden', 'true');
 
-    const circle = document.createElementNS(SVG_NS, 'circle');
-    circle.setAttribute('cx', '12');
-    circle.setAttribute('cy', '12');
-    circle.setAttribute('r', '12');
-    circle.setAttribute('fill', 'currentColor');
-
     const mark = document.createElementNS(SVG_NS, 'path');
-    mark.setAttribute('d', included ? 'M7 12.4l3.2 3.2L17 8.8' : 'M8 8l8 8M16 8l-8 8');
-    mark.setAttribute('stroke-width', '2');
+    mark.setAttribute('d', included ? 'M4.5 12.5l5 5L19.5 6.5' : 'M6 6l12 12M18 6L6 18');
+    mark.setAttribute('stroke', 'currentColor');
+    mark.setAttribute('stroke-width', '1.5');
     mark.setAttribute('stroke-linecap', 'round');
     mark.setAttribute('stroke-linejoin', 'round');
 
-    svg.append(circle, mark);
+    svg.appendChild(mark);
     return svg;
   };
 
@@ -290,10 +289,10 @@
 
     const list = document.createElement('ul');
     list.className = 'pricing__features';
-    // 21.09.2026, правка клиента: в карточке только то, что входит в тариф —
-    // у «Без прикрепления» первые included пунктов, у «С прикреплением» все.
-    currentStage.features.slice(0, plan.included).forEach((text) => {
-      const included = true;
+    // Перечень один на оба тарифа: первые plan.included пунктов входят,
+    // остальные остаются на своих местах с крестиком.
+    currentStage.features.forEach((text, index) => {
+      const included = index < plan.included;
       const feature = document.createElement('li');
       feature.className = `pricing__feature pricing__feature--${included ? 'yes' : 'no'}`;
 

@@ -137,8 +137,9 @@
 
 /* Плашка «Во всех тарифах» снята 16.09.2026 по правке клиента. */
 
-/* Пункт списка: иконка + текст. Иконку рисует pricing.js (20.09.2026):
-   зелёная галочка — входит в тариф, красный крест — не входит. */
+/* Пункт списка: иконка + текст. Иконку рисует pricing.js (21.09.2026):
+   тонкая зелёная галочка — входит в тариф, тонкий серый крестик — не входит.
+   Без круглых обводок и фонов. */
 .pricing__feature {
   position: relative;
   display: flex;
@@ -157,13 +158,9 @@
   margin-top: 0.05em;
 }
 
-.pricing__icon path {
-  stroke: var(--color-white);
-}
-
 .pricing__feature--yes .pricing__icon { color: var(--color-success); }
 
-.pricing__feature--no .pricing__icon { color: var(--color-danger); }
+.pricing__feature--no .pricing__icon { color: var(--color-gray-2); }
 
 /* Услуги, которых в тарифе нет, приглушены */
 .pricing__feature--no { color: var(--color-gray-2); }

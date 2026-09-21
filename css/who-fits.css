@@ -1,16 +1,19 @@
 /* who-fits.css — блок 4 «Когда онлайн-школа особенно удобна» (ТЗ 06.09.2026, §8).
-   ⚠️ 20.09.2026, правка клиента: блок переверстан по креативу «Собственная
-   программа без перегрузки» (тот же приём, что в program.css). Слева заголовок,
-   белая карточка со списком из шести ситуаций и кнопка «Подобрать формат»,
-   справа фото в белой рамке. Вместо прежней сетки карточек 3 × 2 с петлёй
-   (эталон «когда удобна.jpg») — список с галочками.
+   ⚠️ 21.09.2026, правка клиента: блок переверстан «1 в 1» по новому референсу.
+   Убрана белая подложка под списком, фон коробки — светлый, лёгкий (вместо
+   синего градиента). Отделяется от соседних секций только фоном и тенью коробки,
+   без вложенных карточек. Декор один: тонкая сетка в правом верхнем углу
+   и розовый штрих у заголовка.
+
+   Раскладка: сверху заголовок с подзаголовком, под ним слева фото, справа
+   список ситуаций 2 × 3 (галочка, название, описание, тонкие линейки) и кнопка
+   «Подобрать формат» на одной линии с нижним краем фото.
+   Карусели здесь нет: ТЗ §8 её прямо запрещает.
 
    Фото — «2026-09-20 23.18.45.jpg» из папки «корректировки сайта», ужато до WebP.
-   Рамка и тень — как у слайда карусели в program.css. Карусели здесь нет:
-   ТЗ §8 её прямо запрещает.
 
-   Раскладка — именованные области: на десктопе фото стоит справа и тянется
-   на всю высоту левой колонки, на планшете и телефоне порядок
+   Раскладка — именованные области: на десктопе фото стоит слева и тянется
+   на всю высоту списка и кнопки, на планшете и телефоне порядок
    заголовок → фото → список → кнопка. */
 
 .who-fits {
@@ -19,87 +22,141 @@
 
 /* container-type у .container (layout.css): cqw ниже считаются от ширины коробки. */
 .who-fits__box {
+  /* Фон коробки и цвет линеек — только от переменных base.css */
+  --who-bg: color-mix(in srgb, var(--tint-blue) 35%, var(--color-white));
+  --who-line: color-mix(in srgb, var(--color-blue) 14%, transparent);
+
   position: relative;
   overflow: hidden;
   display: grid;
-  /* Доли те же, что у #program: текст ~600, фото ~550 */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  grid-template-rows: auto auto 1fr;
+  /* Доли по референсу: фото ≈ 0,7 : список ≈ 1 */
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "head  media"
-    "list  media"
-    "cta   media";
-  column-gap: clamp(24px, 2.128cqw, 44px);
+    "head  head"
+    "media list"
+    "media cta";
+  column-gap: clamp(24px, 2.8cqw, 56px);
   row-gap: clamp(14px, 1.5cqw, 28px);
   padding: var(--card-pad);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-  background:
-    radial-gradient(55% 60% at 88% 6%, color-mix(in srgb, var(--color-white) 22%, transparent), transparent 70%),
-    radial-gradient(45% 70% at 99% 40%, color-mix(in srgb, var(--color-white) 14%, transparent), transparent 72%),
-    linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
+  background: var(--who-bg);
+}
+
+/* Тонкая сетка в правом верхнем углу: две пары линий, к центру гаснет маской */
+.who-fits__box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 26cqw;
+  height: 15cqw;
+  background-image:
+    linear-gradient(to right, var(--who-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--who-line) 1px, transparent 1px);
+  background-size: 3.2cqw 3.2cqw;
+  background-position: right top;
+  -webkit-mask-image: radial-gradient(ellipse at top right, black 25%, transparent 72%);
+  mask-image: radial-gradient(ellipse at top right, black 25%, transparent 72%);
+  pointer-events: none;
 }
 
 .who-fits__head {
   grid-area: head;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 0.851cqw, 16px);
+  /* Место под розовый штрих слева от заголовка */
+  padding-left: clamp(36px, 3.6cqw, 68px);
+}
+
+/* Розовый штрих-акцент слева от первой строки заголовка */
+.who-fits__slash {
+  position: absolute;
+  top: 0.2cqw;
+  left: 0;
+  width: clamp(28px, 2.6cqw, 52px);
+  height: auto;
+  color: var(--color-pink);
 }
 
 .who-fits__title {
   font-size: var(--fs-h2);
   line-height: 1.05;
-  color: var(--color-white);
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+/* Вторая строка заголовка — серая, как в блоках «Платформа» и «Программы» */
+.who-fits__title-muted {
+  display: block;
+  color: var(--color-gray-2);
 }
 
 .who-fits__subtitle {
   font-size: var(--fs-text);
   line-height: 1.4;
-  color: var(--color-light-blue);
+  color: var(--color-gray-1);
 }
 
-/* Белая карточка: шесть строк, между ними тонкие линейки (как в program.css) */
+/* Список без подложки: две колонки, между рядами и колонками тонкие линейки */
 .who-fits__list {
   grid-area: list;
-  padding: clamp(6px, 0.6cqw, 12px) clamp(10px, 1.06cqw, 20px);
-  border-radius: var(--radius-card);
-  background: var(--color-white);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
 }
 
 .who-fits__item {
   display: flex;
   align-items: flex-start;
-  gap: clamp(8px, 0.85cqw, 16px);
-  padding: clamp(10px, 1cqw, 18px) clamp(10px, 1.06cqw, 20px);
+  gap: clamp(10px, 1cqw, 18px);
+  padding: clamp(14px, 1.6cqw, 30px) clamp(12px, 1.4cqw, 26px) clamp(14px, 1.6cqw, 30px) 0;
 }
 
-.who-fits__item:not(:last-child) {
-  border-bottom: 1px solid var(--color-gray-3);
+.who-fits__item:nth-child(-n+4) {
+  border-bottom: 1px solid var(--who-line);
+}
+
+/* Левая колонка отделена от правой вертикальной линейкой */
+.who-fits__item:nth-child(odd) {
+  border-right: 1px solid var(--who-line);
+}
+
+.who-fits__item:nth-child(even) {
+  padding-left: clamp(12px, 1.4cqw, 26px);
+  padding-right: 0;
+}
+
+.who-fits__item:first-child,
+.who-fits__item:nth-child(2) {
+  padding-top: 0;
 }
 
 .who-fits__check {
   flex: none;
-  width: clamp(24px, 1.9cqw, 36px);
-  height: clamp(24px, 1.9cqw, 36px);
-  /* currentColor заливает круг, галочка красится отдельным правилом */
-  color: var(--chip-blue-bg);
+  width: clamp(28px, 2.4cqw, 46px);
+  height: clamp(28px, 2.4cqw, 46px);
+  /* currentColor заливает круг, галочка — белая */
+  color: var(--color-blue);
 }
 
 .who-fits__check path {
-  stroke: var(--color-blue);
+  stroke: var(--color-white);
 }
 
 .who-fits__item-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: clamp(6px, 0.6cqw, 12px);
 }
 
 .who-fits__item-title {
   font-size: var(--fs-text);
-  line-height: 1.3;
-  font-weight: 600;
+  line-height: 1.25;
+  font-weight: 700;
   color: var(--color-black);
 }
 
@@ -111,36 +168,31 @@
 
 .who-fits__cta {
   grid-area: cta;
-  align-self: start;
+  align-self: end;
   justify-self: start;
 }
 
-/* Фото: белая рамка и тень — как у слайда в program.css. Рамка тянется на всю
-   высоту левой колонки, а фото лежит в ней абсолютом и кадрируется: с
-   aspect-ratio у самой картинки flex её по высоте не растягивает. */
+/* Фото без рамки: скругление и тень. Медиа-блок тянется на всю высоту списка
+   и кнопки, а фото лежит в нём абсолютом и кадрируется: с aspect-ratio у самой
+   картинки grid её по высоте не растягивает. */
 .who-fits__media {
-  --who-frame: clamp(5px, 0.5cqw, 9px);
-
   grid-area: media;
   position: relative;
-  padding: var(--who-frame);
   border-radius: var(--radius-card);
-  background: var(--color-white);
   box-shadow: var(--shadow-photo);
 }
 
 .who-fits__photo {
   position: absolute;
-  inset: var(--who-frame);
-  width: calc(100% - 2 * var(--who-frame));
-  height: calc(100% - 2 * var(--who-frame));
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: 45% 50%;
-  /* Внутреннее скругление на толщину белой рамки меньше внешнего */
-  border-radius: calc(var(--radius-card) - var(--who-frame));
+  border-radius: var(--radius-card);
 }
 
-/* Планшет: одна колонка, фото сразу под заголовком */
+/* Планшет: одна колонка, фото сразу под заголовком; список остаётся в две колонки */
 @media (max-width: 1024px) {
   .who-fits__box {
     grid-template-columns: minmax(0, 1fr);
@@ -156,17 +208,37 @@
   .who-fits__photo {
     position: static;
     display: block;
-    width: 100%;
     height: auto;
     aspect-ratio: 16 / 10;
   }
+
+  .who-fits__item:first-child,
+  .who-fits__item:nth-child(2) {
+    padding-top: clamp(14px, 1.6cqw, 30px);
+  }
 }
 
-/* Телефон: поле коробки — --card-pad (20), кнопка во всю ширину, пункты плотнее */
+/* Телефон: поле коробки — --card-pad (20), список в одну колонку, кнопка во всю ширину */
 @media (max-width: 767px) {
   .who-fits__box { row-gap: 20px; }
 
-  .who-fits__item { padding: 14px 6px; }
+  .who-fits__head { padding-left: 40px; }
+
+  .who-fits__list { grid-template-columns: minmax(0, 1fr); }
+
+  .who-fits__item,
+  .who-fits__item:nth-child(odd),
+  .who-fits__item:nth-child(even),
+  .who-fits__item:first-child,
+  .who-fits__item:nth-child(2) {
+    padding: 16px 0;
+    border-right: 0;
+  }
+
+  .who-fits__item:nth-child(-n+4),
+  .who-fits__item:nth-child(5) {
+    border-bottom: 1px solid var(--who-line);
+  }
 
   .who-fits__cta {
     justify-self: stretch;
