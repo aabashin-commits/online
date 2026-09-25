@@ -288,9 +288,17 @@
    Здесь (баннер уже ≤1280 и телефон) он получает собственную колонку сетки:
    плашек под ним больше нет, но колонка держит порядок. На десктопе он абсолютом
    в правом нижнем углу — см. блок min-width: 1281px внизу файла. */
+.programs__promo-cta {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: start;
+}
+
 .programs__promo-image {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 2 / 4;   /* на две строки: мальчик по-прежнему стоит на нижнем краю, под кнопкой */
   align-self: end;
   width: 100%;
   height: auto;
@@ -449,7 +457,7 @@
      на телефоне ему места нет. */
   .programs__promo-image {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 4;
     justify-self: center;
     width: min(55%, 200px);
     margin-bottom: calc(-1 * var(--section-pad-y));
@@ -476,6 +484,11 @@
   }
 
   .programs__steps { grid-column: 1 / -1; }
+
+  .programs__promo-cta {
+    grid-column: 1 / -1;
+    margin-bottom: clamp(16px, 1.55cqw, 30px);   /* нижнее поле карточки — у неё padding-bottom: 0 */
+  }
 
   .programs__promo-image {
     position: absolute;
