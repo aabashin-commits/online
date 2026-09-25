@@ -16,6 +16,7 @@
 }
 
 .platform__box {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 2.128cqw, 44px);
@@ -42,6 +43,8 @@
 
 .platform__title {
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
   color: var(--color-black);
 }
@@ -204,10 +207,29 @@
 
 /* --- Адаптив --- */
 
+/* Маскот (брендбук): декор, не перекрывает текст и кнопки */
+.platform__mascot {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  pointer-events: none;
+  top: 6cqw;
+  right: var(--card-pad);
+  width: clamp(90px, 9cqw, 170px);
+}
+
 /* Планшет: плашка уходит под заголовок, иначе она съедает ширину строки.
    Карточек в кадре две, главной среди них нет — делить кадр на «широкую
    и узкую» не на чем, поэтому hero = 1 и обе рамки одинаковые. */
 @media (max-width: 1024px) {
+  .platform__mascot {
+    top: auto;
+    right: auto;
+    bottom: 14px;
+    left: 20px;
+    width: 90px;
+  }
+
   .platform__head {
     flex-direction: column;
     align-items: flex-start;
@@ -226,6 +248,14 @@
 
 /* Телефон: один скриншот во всю ширину */
 @media (max-width: 767px) {
+  .platform__mascot {
+    top: auto;
+    right: auto;
+    bottom: 14px;
+    left: 12px;
+    width: 72px;
+  }
+
   .platform__box { gap: 20px; }
 
   /* В кадре одна карточка, значит пропорция ряда = пропорция карточки. */

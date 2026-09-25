@@ -35,6 +35,8 @@
   z-index: 1;
   color: var(--color-white);
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
   /* 40 на 1920 → 30 на 1600 → 20 на 1200 (в макете gap колонки 30 и 20) */
   margin-bottom: clamp(20px, 2.128cqw, 40px);
@@ -98,6 +100,8 @@
 
 .classes__card-title {
   font-size: var(--fs-h3);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.1;
 }
 
@@ -207,6 +211,8 @@
 
   .classes__card-title {
     font-size: var(--fs-h3);
+    font-family: var(--font-heading);
+    font-weight: 700;
     line-height: 0.9;
   }
 

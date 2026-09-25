@@ -43,6 +43,8 @@
 
 .info-cards__title {
   font-size: var(--fs-h4);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.2;
 }
 

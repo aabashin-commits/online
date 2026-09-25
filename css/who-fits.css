@@ -84,6 +84,7 @@
 
 .who-fits__title {
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
   line-height: 1.05;
   font-weight: 700;
   color: var(--color-black);

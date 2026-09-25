@@ -86,6 +86,8 @@
 .hero__title {
   margin-top: clamp(20px, 1.667vw, 32px);
   font-size: calc(var(--fs-h1) + 4px);
+  font-family: var(--font-heading);
+  font-weight: 700;
 }
 
 /* Подсветка строки в H1 */

@@ -28,11 +28,15 @@
 
 .curator__title {
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
 }
 
 .curator__subtitle {
   font-size: var(--fs-h3);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.1;
   color: var(--color-gray-2);
 }
@@ -144,6 +148,17 @@
   object-fit: cover;
 }
 
+/* Маскот (брендбук): декор, не перекрывает текст и кнопки */
+.curator__mascot {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  pointer-events: none;
+  right: calc(var(--curator-photo) + 3cqw);
+  bottom: 0;
+  width: clamp(110px, 12cqw, 230px);
+}
+
 /* Планшет: строки текста переносятся чаще, коробка становится выше круга —
    вынос за верхний край теряет смысл, поэтому круг центруется по вертикали. */
 @media (max-width: 1024px) {
@@ -170,8 +185,9 @@
 
 .curator__feedback-title {
   font-size: var(--fs-h4);
+  font-family: var(--font-heading);
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Три плашки равной ширины и высоты: grid растягивает их по самой длинной
@@ -209,6 +225,13 @@
 
 /* Телефон: фото сверху по центру, тексты под ним, теги в колонку */
 @media (max-width: 767px) {
+  .curator__mascot {
+    top: auto;
+    right: 12px;
+    bottom: 8px;
+    width: 84px;
+  }
+
   .curator__box {
     grid-template-columns: 1fr;
     min-height: 0;

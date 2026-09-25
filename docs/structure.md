@@ -41,8 +41,9 @@
 │   │                      В `<head>` пути **без ведущего слэша** (`assets/favicon/…`) —
 │   │                      чтобы работали и в подпапке домена. В манифесте пути к иконкам
 │   │                      относительные, поэтому резолвятся в ту же папку;
-│   │                      `theme_color` приведён к фирменному #366EDF (в исходнике был белый)
-│   ├── fonts/           — Onest variable (woff2, сабсеты cyrillic/latin/latin-ext, OFL.txt)
+│   │                      `theme_color` приведён к фирменному #285FF5 (в исходнике был белый)
+│   ├── fonts/           — Nunito Sans (аналог Circe) variable + Almarai Bold 700 (только цифры и латиница), woff2, OFL-*.txt; кириллица, ₽ и № идут из Nunito Sans (в Almarai их нет)
+│   ├── img/mascots/     — маскоты брендбука (webp с прозрачностью): blue-1…4 (синие), pink-* (розовые); декор, alt=""
 │   ├── img/             — по подпапкам блоков: hero/, attestat/, about/, pricing/, programs/, curator/ (bykova.webp), who-fits/ (boy.webp), ...
 │   │   ├── staff/           — фото педагогов блока 12: главное круглое `<slug>.webp`
 │   │   │                       (кроп «голова+плечи» из презентации) + вырезка без фона

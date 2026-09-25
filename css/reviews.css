@@ -21,6 +21,7 @@
 }
 
 .reviews__card {
+  position: relative;
   padding: 60px;
   background: var(--color-pink);
   border-radius: var(--radius-card);
@@ -208,6 +209,17 @@
 
 .reviews__play:hover .reviews__poster { transform: scale(1.04); }
 
+/* Маскот (брендбук): декор, не перекрывает текст и кнопки */
+.reviews__mascot {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  pointer-events: none;
+  top: 0.5cqw;
+  right: 2cqw;
+  width: clamp(90px, 10cqw, 190px);
+}
+
 @media (max-width: 1280px) {
   .reviews__track { --per-page: 6; }
   .reviews__page { grid-template-columns: repeat(3, 1fr); }
@@ -233,6 +245,14 @@
 }
 
 @media (max-width: 767px) {
+  .reviews__mascot {
+    top: auto;
+    right: auto;
+    bottom: 12px;
+    left: 16px;
+    width: 76px;
+  }
+
   .reviews__card { padding: 30px; }
 
   /* По одной карточке на страницу — получается свайп-карусель,

@@ -84,6 +84,8 @@
 
 .programs__subtitle {
   font-size: var(--fs-h4);
+  font-family: var(--font-heading);
+  font-weight: 700;
 }
 
 /* Сетка не растягивается на всю карточку: в макете она 875 (5×167 + 4×10)
@@ -186,6 +188,8 @@
   grid-column: 1 / -1;
   max-width: 78.5%;   /* 544 при карточке 693 на 1920 */
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.02em;
 }
@@ -479,6 +483,8 @@
   .programs__promo-title {
     max-width: 8em;   /* «Как поступить / в школу» в две строки, как в рефе */
     font-size: calc(var(--fs-h2) * 0.9);
+    font-family: var(--font-heading);
+    font-weight: 700;
     line-height: 0.88;
     letter-spacing: -0.01em;
   }

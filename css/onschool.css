@@ -55,6 +55,8 @@
 
 .onschool-card__title {
   font-size: var(--fs-h4);      /* 28 */
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.2;
 }
 

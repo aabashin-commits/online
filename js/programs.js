@@ -200,7 +200,7 @@
   activateTab(0, true);
   syncCardHeight();
 
-  // Пересчёт после подгрузки Onest: с системным шрифтом строки переносятся
+  // Пересчёт после подгрузки шрифтов: с системным шрифтом строки переносятся
   // иначе, и замеренная высота была бы неверной.
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(syncCardHeight);

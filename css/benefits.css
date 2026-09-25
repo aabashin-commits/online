@@ -34,6 +34,8 @@
 .benefits__title {
   max-width: 55cqw;
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
   color: var(--color-white);
 }
@@ -67,6 +69,8 @@
 
 .benefits__card-title {
   font-size: var(--fs-h4);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.2;
 }
 

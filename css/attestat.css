@@ -49,6 +49,8 @@
 
 .attestat__title {
   font-size: var(--fs-h3);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
   margin-bottom: clamp(12px, 1.064cqw, 20px);
 }
@@ -198,6 +200,8 @@
 
   .attestat__title {
     font-size: var(--fs-h2);
+    font-family: var(--font-heading);
+    font-weight: 700;
     margin-bottom: 16px;
   }
 

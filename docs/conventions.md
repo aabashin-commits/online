@@ -213,3 +213,9 @@ defer-скриптами, то есть **до первой отрисовки**
 ---
 
 ← [CLAUDE.md](../CLAUDE.md) · [README.md](../README.md)
+
+## Брендбук: шрифты, цвета, маскоты (25.09.2026)
+
+- Шрифты: `--font-main` — Nunito Sans (аналог Circe), `--font-heading` — Almarai 700 → Nunito Sans. Almarai подключён с `unicode-range` только на цифры и латиницу: в нём нет кириллицы, «₽» и «№».
+- Синий `#285FF5` и розовый `#E73860` — основные; производные (`--color-blue-2`, `--color-light-blue`, стопы градиента) считаются вокруг них. Хардкода hex вне `base.css` нет.
+- Маскоты: `<img class="{блок}__mascot" alt="" aria-hidden="true">` внутри секции, `position: absolute`, размер в `cqw`, `pointer-events: none`. ⚠️ У `.container` нет `position` (`container-type` его не даёт) — родителю с маскотом `position: relative` задаём явно. Розовый ставим на белое/синее, синий — на белое/розовое. Ниже 1024/767 маскот уменьшается или уходит в угол, где нет текста; если места нет — `display: none`.

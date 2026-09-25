@@ -30,13 +30,17 @@
 }
 
 .additional__head {
+  position: relative;
   display: flex;
   flex-direction: column;
+  min-height: clamp(80px, 9cqw, 170px);
   gap: clamp(10px, 0.851cqw, 16px);
 }
 
 .additional__title {
   font-size: var(--fs-h2);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.05;
 }
 
@@ -93,6 +97,8 @@
 
 .additional__card-title {
   font-size: var(--fs-h4);
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.2;
   margin-bottom: clamp(8px, 0.638cqw, 12px);
 }
@@ -110,6 +116,17 @@
   font-size: var(--fs-text);
 }
 
+/* Маскот (брендбук): декор, не перекрывает текст и кнопки */
+.additional__mascot {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  pointer-events: none;
+  right: 2cqw;
+  bottom: 0;
+  width: clamp(80px, 9cqw, 170px);
+}
+
 /* --- Планшет: та же карусель, но две колонки в кадре --- */
 
 @media (max-width: 1024px) {
@@ -124,6 +141,10 @@
 /* --- Телефон: лента со scroll-snap --- */
 
 @media (max-width: 767px) {
+  .additional__mascot { display: none; }
+
+  .additional__head { min-height: 0; }
+
   /* Один ряд вместо двух: карточка во всю ширину экрана, два ряда сжали бы
      её до нечитаемой. display: flex отключает всю грид-раскладку карусели,
      ширину задаёт flex-basis карточки; прокрутка, снап и скрытая полоса
@@ -148,6 +169,8 @@
 
   .additional__card-title {
     font-size: var(--fs-h3);
+    font-family: var(--font-heading);
+    font-weight: 700;
     line-height: 0.9;
     margin-bottom: 10px;
   }
