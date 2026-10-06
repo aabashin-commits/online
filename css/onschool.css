@@ -1,51 +1,37 @@
 /* onschool.css — блок «Моя школа LS — полноценная онлайн-школа».
-   Вернули из версии до правок по ТЗ (коммит 40ce47f), где он назывался `about`.
-   Префикс сменили на `onschool`: класс и id `about` в текущей версии заняты
-   блоком-каруселью сотрудников, старые правила перебили бы его.
-   Замеры: Figma `1:3599` (ряд колонок) и сверка с 1920.png (блок y 2747–3775).
-   Две колонки по 930 с зазором 20:
-   • слева  — «Аттестат государственного образца» (css/attestat.css; до 14.09.2026
-     здесь стояли «Руководящий состав» и «Полноценное обучение онлайн»);
-   • справа — плитка про московскую медаль и «Государственная лицензия».
-   Заголовок блока вынесен в отдельную секцию .school-intro (css/school-intro.css).
+   Редизайн 05.10.2026 по Figma V3nHsKgQaovS4IJFmwRudC, узел 1:12042 (1920):
+   сетка 946 + 914 с зазором 20, высота 478; справа плитка аттестата 209 и
+   лицензия 249 с зазором 20. Левая карточка — css/attestat.css.
+   Версия до редизайна (медаль вместо аттестата) — в old/css/onschool.css.
    Все цвета/радиусы/тени — только переменные из base.css. */
 
-/* Заголовок стоит в .school-intro над секцией — сверху отступ не нужен */
+/* Заголовок блока вынесен в .school-intro — сверху отступ не нужен */
 .onschool { padding: 0 0 20px; }
 
-/* Тёмный акцент внутри серого абзаца — #525252 (--color-gray-1), не чёрный */
-.onschool-dark { color: var(--color-gray-1); }
+.onschool-accent { color: var(--color-blue-accent); font-weight: 700; }
 
-/* stretch, а не start: в макете обе колонки заканчиваются на одной линии
-   (942 = 319+20+603 слева и 677+16+249 справа). На промежуточных ширинах
-   натуральные высоты расходятся, поэтому колонки тянем до общей высоты,
-   а разницу добирает последняя карточка каждой колонки (.attestat и .license). */
+/* Колонки 946fr / 914fr: слева на 32px шире, как в Figma */
 .onschool__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 946fr) minmax(0, 914fr);
   gap: var(--gap-cards);
   align-items: stretch;
 }
 
 .onschool__col {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 209fr) minmax(0, 249fr);
   gap: var(--gap-cards);
   min-width: 0;
 }
 
-/* У правой колонки зазор 16, а не 20 — так в макете (Figma 1:3653).
-   Правки 16.09.2026 (скрин-референс клиента): медаль ниже лицензии —
-   ~200 и ~250 на 1920 (лицензия макетной высоты). Сетка из двух строк
-   4fr / 5fr делит высоту колонки в этой пропорции (и когда её тянет левая
-   колонка, и когда высота по контенту). На телефоне — обратно flex, см. ниже. */
-.onschool__col--right {
-  display: grid;
-  grid-template-rows: 4fr 5fr;
-  gap: clamp(8px, 0.851cqw, 16px);
+/* На десктопе высоту грида задаёт левая карточка (478), правая колонка делит её
+   209 / 249 и не растягивает ряд своим содержимым. На ≤1024 колонки друг под другом. */
+@media (min-width: 1025px) {
+  .onschool__col { contain: size; }
 }
 
-/* ── Общая белая карточка блока ─────────────────────────────── */
+/* Общая карточка: padding 30 (Figma), радиус 30, тень */
 .onschool-card {
   background: var(--color-white);
   border-radius: var(--radius-card);
@@ -66,101 +52,94 @@
   line-height: 1.4;
 }
 
-/* ── Плитка «Учимся онлайн» ───────────────────────────────────
-   Решение клиента (01.09.2026): вместо короткого заголовка и вырезки
-   ученицы — блок про московскую медаль (доп. баллы к ЕГЭ при поступлении
-   в вуз), с фото медали в наградной коробочке, приколоченным к правому
-   нижнему углу тем же приёмом, что .license__img — часть
-   фото уходит за край и срезается overflow: hidden. Текста стало больше
-   (заголовок + подзаголовок + абзац), высота плитки больше не фиксируется
-   аспектом — её задаёт контент, а разницу
-   с левой колонкой дотягивает .license (flex: 1 1 auto). */
+/* ── Плитка «Московский аттестат» (Figma 1:12084, 914×209) ───────
+   Текст 580 слева, диплом 319×190 справа (x 599, y 24.5), за ним
+   голубой круг. Круг и диплом вылезают за край — срезает overflow. */
 .onschool-online {
   position: relative;
-  container-type: inline-size;
   overflow: hidden;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-  /* 16.09.2026, правка клиента: синяя заливка снята (переехала на аттестат) */
-  background: var(--color-white);
-  /* ⚠️ cqw здесь считался бы от ancestor .container (для СВОИХ properties
-     элемент не является себе ближайшим контейнером — им остаётся внешний
-     main .container), а не от ширины самой плитки, поэтому паддинг взят
-     тем же приёмом, что у .onschool-card (клемп от ширины секции). */
+  background: var(--tint-sky-2);
   padding: clamp(16px, 1.596cqw, 30px);
 }
 
+.onschool-online::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/img/onschool/blob-online.webp") 100% 0 / 100% 100% no-repeat;
+}
+
 .onschool-online__text {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1.29cqw, 14px);
-  max-width: 62%;
+  gap: clamp(8px, 0.6cqw, 11px);
+  max-width: 30.85cqw;
 }
 
 .onschool-online__title {
-  color: var(--color-black);
-  font-size: max(17px, 2.9cqw);
+  color: var(--color-blue-accent);
+  font-family: var(--font-heading);
+  font-size: max(17px, 1.34cqw);   /* 25.2 */
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  /* Figma: заголовок в две строки («…государственного / образца») */
+  max-width: 26.6cqw;
 }
 
 .onschool-online__subtitle {
-  color: var(--color-gray-2);
-  font-size: max(15px, 2.15cqw);
-  /* 17.09.2026, правка клиента: подпись не жирная */
+  max-width: 28.4cqw;               /* 534 */
+  color: var(--color-black);
+  font-size: max(14px, 0.995cqw);   /* 18.7 */
   font-weight: 400;
   line-height: 1.3;
 }
 
-.onschool-online__desc {
-  color: var(--color-gray-2);
-  font-size: max(14px, 1.72cqw);
-  line-height: 1.4;
-}
-
-/* Медаль в коробочке стоит по диагонали уже в самом фото (прозрачный фон,
-   поля вокруг коробочки неравномерные) — сдвигаем её за оба края плитки,
-   overflow: hidden срезает лишнее, а сама коробочка «торчит» из угла. */
-.onschool-online__medal {
+.onschool-online__diploma {
   position: absolute;
-  right: -8cqw;
-  bottom: -8cqw;
-  width: 43cqw;
+  left: 65.5%;
+  top: 1.304cqw;
+  z-index: 1;
+  width: 34.9%;
   height: auto;
-  max-width: none;
 }
 
-/* ── Карточка «Государственная лицензия» ──────────────────────
-   Padding 50 (у остальных карточек 60). Скан 348×450 стоит абсолютом от верха
-   карточки и нижней половиной уходит за её край — срезается overflow.
-   Наклон уже есть в самой картинке, CSS-поворот не нужен. */
+/* ── Карточка «Государственная лицензия» (Figma 1:12102, 914×249) ──
+   Текст 535 слева (x 50, y 46), скан 392×470 справа от x 522 сверху,
+   нижняя часть срезается. За сканом — тёплое пятно. */
 .license {
   position: relative;
   overflow: hidden;
-  padding: clamp(20px, 2.66cqw, 50px);
-  /* Пол высоты — макетные 249 на 1920 (249/1880 = 13.245cqw); по референсу
-     16.09.2026 лицензия снова макетной высоты, медаль над ней — 4/5 от неё
-     (сетка правой колонки 4fr / 5fr). */
+  background: var(--tint-cream);
+  padding: clamp(20px, 2.447cqw, 46px) clamp(20px, 2.66cqw, 50px) clamp(20px, 2.66cqw, 50px);
   min-height: clamp(160px, 13.245cqw, 249px);
 }
 
-/* Тоже в процентах (521/829), чтобы текст сжимался вместе со сканом справа */
-.license__text {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 62.8%;
+.license::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/img/onschool/blob-license.webp") 100% 0 / 100% 100% no-repeat;
 }
 
-/* 553/929 = 59.5% слева, 348/929 = 37.5% ширины.
-   height: auto — иначе высоту задаёт HTML-атрибут height="900" и скан
-   рисуется вдвое крупнее, наезжая на текст */
+.license__text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  max-width: 28.46cqw;              /* 535 */
+}
+
+.license .onschool-card__desc { color: var(--color-black); }
+
 .license__img {
   position: absolute;
   top: 0;
-  left: 59.5%;
-  width: 37.5%;
+  left: 57.1%;
+  width: 42.9%;
   height: auto;
 }
 
@@ -189,6 +168,9 @@
 }
 
 @media (max-width: 1024px) {
+  .onschool-online::before,
+  .license::before { background-size: auto 100%; }
+
   /* Одна колонка: сначала аттестат, затем медаль + лицензия */
   .onschool__grid { grid-template-columns: 1fr; }
 }
@@ -221,15 +203,11 @@
     margin-left: -2px;
   }
 
-  /* ── Плитка «Учимся онлайн» (на месте карты, нода 1:9703) ──
-     На узкой карточке (340) текст в одну колонку почти во всю ширину не
-     помещается рядом с медалью — сужаем текстовую колонку сильнее, чем
-     на десктопе, и уменьшаем медаль, чтобы она не наезжала на абзац. */
+  /* Плитка аттестата: текст сверху, диплом под ним на всю ширину */
   .onschool-online { padding: 20px; }
-
-  .onschool-online__text { max-width: 58%; }
-
-  .onschool-online__medal { right: -10cqw; bottom: -10cqw; width: 50cqw; }
+  .onschool-online__text { max-width: none; }
+  .onschool-online__diploma { position: relative; left: auto; top: auto; width: 82%; margin: 16px auto 0; }
+  .onschool-online::before { inset: auto -10% -20% auto; width: 60%; aspect-ratio: 1; border-radius: 50%; background: var(--tint-circle); }
 
   /* ── Лицензия (1:9697) — карточка 340, padding 20, скан абсолютом ──
      Контейнер для cqw вешаем на колонку, а не на саму карточку: у карточки

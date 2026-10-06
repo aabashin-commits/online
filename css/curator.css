@@ -45,16 +45,16 @@
    Высоту задаёт текст, а не фото, — поэтому круг вынут из потока (position:
    absolute), а сетка держит под него пустую колонку шириной --curator-photo. */
 .curator__box {
-  --curator-photo: clamp(200px, 28.9cqw, 360px);
+  --curator-photo: clamp(200px, 17.5cqw, 329px);   /* Figma 1:12242: круг 329 */
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--curator-photo);
-  align-items: center;
-  /* Пол высоты по пропорции макета (318 при ширине 1181 ≈ 26.9%): без него
-     коробка сжималась бы по тексту и рвала пропорцию с кругом. */
-  min-height: clamp(200px, 26.9cqw, 340px);
+  align-items: start;
+  /* Redesign 05.10.2026 (Figma 1:12227): баннер 407 при ширине 1880 ≈ 21.65cqw,
+     контент стартует на 76 от верха и на 51 от левого края. */
+  min-height: clamp(200px, 21.65cqw, 407px);
   gap: clamp(20px, 3cqw, 56px);
-  padding: var(--card-pad);
+  padding: clamp(24px, 4.04cqw, 76px) var(--card-pad) var(--card-pad) clamp(24px, 2.71cqw, 51px);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   background:
@@ -69,13 +69,13 @@
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 1.2cqw, 20px);
-  max-width: min(100%, 54cqw);
+  max-width: min(100%, 61.2cqw);
 }
 
 .curator__lead {
   font-size: var(--fs-h4);
   line-height: 1.35;
-  font-weight: 600;
+  font-weight: 800;
   color: var(--color-white);
 }
 
@@ -84,6 +84,7 @@
   line-height: 1.5;
   color: var(--color-white);
   opacity: 0.85;
+  font-weight: 700;
 }
 
 /* ⚠️ 20.09.2026, правка клиента («куратор плашки.png»): вместо белых таблеток —
@@ -116,12 +117,12 @@
   flex: none;
   width: clamp(28px, 2.4cqw, 44px);
   height: clamp(28px, 2.4cqw, 44px);
-  /* Круг — белый с прозрачностью, галочка — сплошная белая */
-  color: color-mix(in srgb, var(--color-white) 30%, transparent);
+  /* Figma 1:158: белый круг, зелёная галочка */
+  color: var(--color-white);
 }
 
 .curator__check path {
-  stroke: var(--color-white);
+  stroke: var(--color-green-check);
 }
 
 /* Круглый слот фото. Замеры «2.jpg» (коробка 1181×318): круг вместе с кольцом
@@ -130,14 +131,14 @@
    а не к низу: высота коробки задаётся текстом и меняться кругу не мешает. */
 .curator__media {
   position: absolute;
-  right: clamp(10px, 3.13cqw, 40px);
-  top: calc(var(--curator-photo) * -0.13);
+  left: 74.202cqw;   /* Figma 1:12242: x=1395 от левого края коробки */
+  top: clamp(10px, 1.593cqw, 30px);
   width: var(--curator-photo);
   display: grid;
   place-items: center;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: clamp(4px, 0.5cqw, 8px) solid var(--color-white);
+  border: clamp(4px, 0.64cqw, 12px) solid var(--color-white);
   background: var(--color-light-blue);
   overflow: hidden;
 }
@@ -148,15 +149,29 @@
   object-fit: cover;
 }
 
+/* Redesign 06.10.2026 (Figma 1:12227): светлое пятно за фото и две оранжевые звезды.
+   Координаты — как в Figma (отсчёт от левого края коробки). */
+.curator__deco {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+.curator__deco--blob  { left: 70cqw; top: 0.824cqw;  width: 23.245cqw; }
+.curator__deco--blob2 { left: 62.13cqw; top: 7.5cqw;    width: 12.128cqw; }
+.curator__deco--star1 { left: 71.54cqw;  top: 1.6cqw;    width: 2.926cqw; z-index: 2; }
+.curator__deco--star2 { left: 89.76cqw;  top: 1.38cqw;   width: 2.979cqw; z-index: 2; }
+
 /* Маскот (брендбук): декор, не перекрывает текст и кнопки */
 .curator__mascot {
   position: absolute;
   z-index: 1;
   height: auto;
   pointer-events: none;
-  right: calc(var(--curator-photo) + 3cqw);
-  bottom: 0;
-  width: clamp(110px, 12cqw, 230px);
+  left: 64.415cqw;
+  top: 8.77cqw;
+  width: clamp(110px, 10.85cqw, 204px);
 }
 
 /* Планшет: строки текста переносятся чаще, коробка становится выше круга —
@@ -166,8 +181,17 @@
   .curator__content { max-width: 100%; }
 
   .curator__media {
+    left: auto;
+    right: 4cqw;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .curator__mascot {
+    left: auto;
+    top: auto;
+    right: 22.4cqw;
+    bottom: clamp(8px, 2.5cqw, 47px);
   }
 }
 
@@ -226,6 +250,7 @@
 /* Телефон: фото сверху по центру, тексты под ним, теги в колонку */
 @media (max-width: 767px) {
   .curator__mascot {
+    left: auto;
     top: auto;
     right: 12px;
     bottom: 8px;
@@ -234,8 +259,10 @@
 
   .curator__box {
     grid-template-columns: 1fr;
+    align-items: center;
     min-height: 0;
     gap: 20px;
+    padding: var(--card-pad);
   }
 
   .curator__media {
@@ -256,4 +283,8 @@
   }
 
   .curator__notes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1024px) {
+  .curator__deco { display: none; }
 }

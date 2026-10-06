@@ -37,27 +37,28 @@
   <link rel="preload" href="assets/fonts/nunito-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/almarai-latin-700.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/base.css?v=7">
+  <link rel="stylesheet" href="css/base.css?v=8">
   <link rel="stylesheet" href="css/layout.css?v=3">
-  <link rel="stylesheet" href="css/header.css?v=10">
-  <link rel="stylesheet" href="css/hero.css?v=6">
-  <link rel="stylesheet" href="css/info-cards.css?v=6">
-  <link rel="stylesheet" href="css/school-intro.css">
-  <link rel="stylesheet" href="css/onschool.css?v=8">
-  <link rel="stylesheet" href="css/attestat.css?v=23">
-  <link rel="stylesheet" href="css/school-day.css?v=4">
-  <link rel="stylesheet" href="css/benefits.css?v=1">
-  <link rel="stylesheet" href="css/curator.css?v=6">
-  <link rel="stylesheet" href="css/who-fits.css?v=8">
-  <link rel="stylesheet" href="css/program.css?v=5">
-  <link rel="stylesheet" href="css/platform.css?v=11">
-  <link rel="stylesheet" href="css/programs.css?v=6">
+  <link rel="stylesheet" href="css/header.css?v=11">
+  <link rel="stylesheet" href="css/hero.css?v=8">
+  <link rel="stylesheet" href="css/info-cards.css?v=8">
+  <link rel="stylesheet" href="css/school-intro.css?v=2">
+  <link rel="stylesheet" href="css/onschool.css?v=12">
+  <link rel="stylesheet" href="css/attestat.css?v=10">
+  <link rel="stylesheet" href="css/school-day.css?v=7">
+  <link rel="stylesheet" href="css/benefits.css?v=2">
+  <link rel="stylesheet" href="css/curator.css?v=9">
+  <link rel="stylesheet" href="css/who-fits.css?v=19">
+  <link rel="stylesheet" href="css/program.css?v=9">
+  <link rel="stylesheet" href="css/platform.css?v=14">
+  <link rel="stylesheet" href="css/programs.css?v=8">
   <link rel="stylesheet" href="css/classes.css?v=3">
-  <link rel="stylesheet" href="css/about.css?v=11">
-  <link rel="stylesheet" href="css/reviews.css?v=7">
-  <link rel="stylesheet" href="css/pricing.css?v=12">
-  <link rel="stylesheet" href="css/universities.css?v=4">
-  <link rel="stylesheet" href="css/additional.css?v=5">
+  <link rel="stylesheet" href="css/about.css?v=14">
+  <link rel="stylesheet" href="css/reviews.css?v=9">
+  <link rel="stylesheet" href="css/pricing.css?v=13">
+  <link rel="stylesheet" href="css/universities.css?v=6">
+  <link rel="stylesheet" href="css/additional.css?v=6">
+  <link rel="stylesheet" href="css/cta.css?v=5">
   <link rel="stylesheet" href="css/faq.css?v=3">
   <link rel="stylesheet" href="css/footer.css?v=13">
   <link rel="stylesheet" href="css/form.css?v=5">
@@ -70,7 +71,7 @@
   <script src="js/programs.js?v=1" defer></script>
   <script src="js/classes.js?v=2" defer></script>
   <script src="js/about.js?v=3" defer></script>
-  <script src="js/pricing.js?v=6" defer></script>
+  <script src="js/pricing.js?v=7" defer></script>
   <script src="js/additional.js?v=2" defer></script>
   <script src="js/reviews.js?v=6" defer></script>
   <script src="js/faq.js?v=3" defer></script>
@@ -241,54 +242,40 @@
     <section class="onschool" id="onschool">
       <div class="container">
         <div class="onschool__grid">
-          <div class="onschool__col">
-            <article class="onschool-card attestat" id="attestat">
-              <img class="attestat__figura" src="assets/img/attestat/diplom_figura.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-
-              <div class="attestat__content">
-                <h3 class="attestat__title">Московский аттестат<br>государственного образца</h3>
-                <ul class="attestat__facts">
-                  <li class="attestat__fact">Ребёнок учится онлайн по&nbsp;школьной программе</li>
-                  <li class="attestat__fact">Ученик прикрепляется к&nbsp;аккредитованной школе-партнёру</li>
-                  <li class="attestat__fact">Аттестат государственного образца выдаёт школа, к&nbsp;которой прикреплён ученик</li>
-                  <li class="attestat__fact">Документ подходит для&nbsp;поступления в&nbsp;вузы и&nbsp;колледжи на&nbsp;общих основаниях</li>
-                </ul>
-
-                <p class="attestat__note">Организационные подробности оформления специалист школы объяснит на&nbsp;консультации.</p>
-
-                <a class="btn btn--primary" href="#form" data-open-form data-cta-location="attestat">Узнать подробнее
-                  <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <article class="onschool-card attestat" id="attestat">
+            <div class="attestat__content">
+              <h3 class="attestat__title"><span class="attestat__title-accent">Учимся вместе</span> с&nbsp;одноклассниками</h3>
+              <ul class="attestat__facts">
+                  <li class="attestat__fact attestat__fact--blue"><svg class="attestat__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="attestat__fact-text">Укрепляем знания, чтобы ребёнок увереннее подошёл к&nbsp;ЕГЭ.</span></li>
+                  <li class="attestat__fact attestat__fact--pink"><svg class="attestat__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="attestat__fact-text">Сохраняем желание учиться через поддержку и&nbsp;понятные объяснения.</span></li>
+                  <li class="attestat__fact attestat__fact--blue"><svg class="attestat__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="attestat__fact-text">Помогаем учиться самостоятельнее, чтобы вам реже приходилось напоминать об&nbsp;уроках.</span></li>
+                  <li class="attestat__fact attestat__fact--pink"><svg class="attestat__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="attestat__fact-text">Показываем, что ребёнок уже освоил и&nbsp;над чем ещё нужно работать.</span></li>
+                  <li class="attestat__fact attestat__fact--blue"><svg class="attestat__check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="attestat__fact-text">Разбираем ошибки, пока они не&nbsp;превратились в&nbsp;накопленные пробелы.</span></li>
+              </ul>
+              <a class="btn btn--primary" href="#form" data-open-form data-cta-location="attestat">Узнать подробнее
+                <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                     <path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                </a>
-              </div>
+              </a>
+            </div>
+            <img class="attestat__owl" src="assets/img/onschool/owl-figma.webp" alt="" aria-hidden="true" width="834" height="422" loading="lazy" decoding="async">
+          </article>
 
-              <div class="attestat__media">
-                <div class="attestat__frame">
-                  <picture class="attestat__picture">
-                    <source class="attestat__source" media="(max-width: 767px)" srcset="assets/img/attestat/diplom-mobile.webp">
-                    <img class="attestat__img attestat__img--wide" src="assets/img/attestat/diplom.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="1400" height="835" loading="lazy" decoding="async">
-                  </picture>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="onschool__col onschool__col--right">
+          <div class="onschool__col">
             <div class="onschool-online">
               <div class="onschool-online__text">
-                <h3 class="onschool-online__title">Московская медаль</h3>
-                <p class="onschool-online__subtitle">Дополнительные возможности получить до 10 баллов при&nbsp;поступлении в&nbsp;вуз</p>
+                <h3 class="onschool-online__title">Московский аттестат государственного образца</h3>
+                <p class="onschool-online__subtitle">Ребёнок прикрепляется к&nbsp;аккредитованной московской школе-партнёру, которая выдаёт аттестат государственного образца. С&nbsp;ним можно поступать в колледжи и&nbsp;вузы на&nbsp;общих основаниях.</p>
               </div>
-              <img class="onschool-online__medal" src="assets/img/about/medal.webp" alt="Медаль «За особые успехи в учении»" width="700" height="700" loading="lazy" decoding="async">
+              <img class="onschool-online__diploma" src="assets/img/onschool/diploma-figma.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="638" height="380" loading="lazy" decoding="async">
             </div>
 
             <article class="onschool-card license">
               <div class="license__text">
                 <h3 class="onschool-card__title">Государственная лицензия</h3>
-                <p class="onschool-card__desc">Школа имеет лицензию на&nbsp;преподавательскую деятельность, поэтому вы <span class="onschool-dark">можете получить налоговый вычет или оплатить обучение материнским капиталом.</span></p>
+                <p class="onschool-card__desc">Школа имеет лицензию на&nbsp;преподавательскую деятельность, поэтому вы можете получить <span class="onschool-accent">налоговый вычет</span> или оплатить обучение <span class="onschool-accent">материнским капиталом.</span></p>
               </div>
-              <img class="license__img" src="assets/img/about/license.webp" alt="Скан государственной лицензии школы" width="696" height="900" loading="lazy" decoding="async">
+              <img class="license__img" src="assets/img/onschool/license-figma.webp" alt="Скан государственной лицензии школы" width="785" height="940" loading="lazy" decoding="async">
             </article>
           </div>
         </div>
@@ -303,25 +290,33 @@
         </header>
 
         <ol class="school-day__steps">
-          <li class="school-day__step">
-            <span class="school-day__step-num" aria-hidden="true">1</span>
-            <h3 class="school-day__step-title">Интерактивные уроки в&nbsp;прямом эфире с&nbsp;включёнными камерами и&nbsp;микрофонами</h3>
-            <p class="school-day__step-text">Дети общаются с&nbsp;учителем и&nbsp;одноклассниками, задают вопросы, как будто находятся в&nbsp;классе.</p>
+          <li class="school-day__step school-day__step--live">
+            <div class="school-day__text">
+              <h3 class="school-day__step-title">Интерактивные уроки в&nbsp;прямом эфире с&nbsp;включёнными камерами и&nbsp;микрофонами</h3>
+              <p class="school-day__step-text">Дети общаются с&nbsp;учителем и&nbsp;одноклассниками, задают вопросы, как будто находятся в&nbsp;классе.</p>
+            </div>
+            <img class="school-day__img" src="assets/img/school-day/laptop.webp" alt="" aria-hidden="true" width="666" height="511" loading="lazy" decoding="async">
           </li>
-          <li class="school-day__step">
-            <span class="school-day__step-num" aria-hidden="true">2</span>
-            <h3 class="school-day__step-title">Записи уроков и&nbsp;дополнительные материалы доступны всегда</h3>
-            <p class="school-day__step-text">Грамотные, хорошо продуманные дидактические материалы помогут закрепить знания.</p>
+          <li class="school-day__step school-day__step--records">
+            <div class="school-day__text">
+              <h3 class="school-day__step-title">Записи уроков и&nbsp;дополнительные материалы доступны всегда</h3>
+              <p class="school-day__step-text">Грамотные, хорошо продуманные дидактические материалы помогут закрепить знания.</p>
+            </div>
+            <img class="school-day__img" src="assets/img/school-day/records.webp" alt="" aria-hidden="true" width="598" height="542" loading="lazy" decoding="async">
           </li>
-          <li class="school-day__step">
-            <span class="school-day__step-num" aria-hidden="true">3</span>
-            <h3 class="school-day__step-title">Домашнее задание</h3>
-            <p class="school-day__step-text">Цель&nbsp;— повторить изученный на&nbsp;уроке материал, а&nbsp;не&nbsp;изучить его самостоятельно.</p>
+          <li class="school-day__step school-day__step--homework">
+            <div class="school-day__text">
+              <h3 class="school-day__step-title">Домашнее задание</h3>
+              <p class="school-day__step-text">Цель&nbsp;— повторить изученный на&nbsp;уроке материал, а&nbsp;не&nbsp;изучить его самостоятельно.</p>
+            </div>
+            <img class="school-day__img" src="assets/img/school-day/notebook.webp" alt="" aria-hidden="true" width="774" height="754" loading="lazy" decoding="async">
           </li>
-          <li class="school-day__step">
-            <span class="school-day__step-num" aria-hidden="true">4</span>
-            <h3 class="school-day__step-title">Проверка и&nbsp;оценка</h3>
-            <p class="school-day__step-text">Ручная проверка заданий. Все оценки отражены в&nbsp;электронном дневнике.</p>
+          <li class="school-day__step school-day__step--check">
+            <div class="school-day__text">
+              <h3 class="school-day__step-title">Проверка и&nbsp;оценка</h3>
+              <p class="school-day__step-text">Ручная проверка заданий. Все оценки отражены в&nbsp;электронном дневнике.</p>
+            </div>
+            <img class="school-day__img" src="assets/img/school-day/check.webp" alt="" aria-hidden="true" width="725" height="626" loading="lazy" decoding="async">
           </li>
         </ol>
       </div>
@@ -376,6 +371,10 @@
         </header>
 
         <div class="curator__box">
+          <img class="curator__deco curator__deco--blob" src="assets/img/curator/blob.svg" alt="" aria-hidden="true" width="437" height="374" decoding="async">
+          <img class="curator__deco curator__deco--blob2" src="assets/img/curator/blob2.svg" alt="" aria-hidden="true" width="228" height="210" decoding="async">
+          <img class="curator__deco curator__deco--star1" src="assets/img/curator/star1.svg" alt="" aria-hidden="true" width="55" height="57" decoding="async">
+          <img class="curator__deco curator__deco--star2" src="assets/img/curator/star2.svg" alt="" aria-hidden="true" width="56" height="59" decoding="async">
           <img class="curator__mascot" src="assets/img/mascots/pink-listen.webp" alt="" aria-hidden="true" width="520" height="497" loading="lazy" decoding="async">
           <div class="curator__content">
             <p class="curator__lead">Куратор помогает ребёнку с&nbsp;учебными и&nbsp;организационными вопросами, поддерживает, если возникают сложности, и&nbsp;остаётся на&nbsp;связи в&nbsp;течение учебного дня.</p>
@@ -418,7 +417,6 @@
       <div class="container">
         <div class="who-fits__box">
           <header class="who-fits__head">
-            <svg class="who-fits__slash" viewBox="0 0 53 64" fill="none" aria-hidden="true"><path d="M32.5 5.8l15 27.4M5.9 43.4l29.2 14.2" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
             <h2 class="who-fits__title">Когда онлайн-школа <span class="who-fits__title-muted">особенно удобна</span></h2>
             <p class="who-fits__subtitle">Выберите ситуацию, которая ближе вашей семье.</p>
           </header>
@@ -428,42 +426,42 @@
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
                 <h3 class="who-fits__item-title">Ребёнок занимается спортом или&nbsp;творчеством</h3>
-                <p class="who-fits__item-text">Учёбу можно совмещать с&nbsp;тренировками, сборами и&nbsp;выступлениями.</p>
+                <p class="who-fits__item-text">Учёбу можно совмещать с&nbsp;тренировками,<br class="who-fits__br"> сборами и&nbsp;выступлениями.</p>
               </div>
             </li>
             <li class="who-fits__item">
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
                 <h3 class="who-fits__item-title">Семья часто переезжает или&nbsp;путешествует</h3>
-                <p class="who-fits__item-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями и&nbsp;классом из&nbsp;любой точки.</p>
+                <p class="who-fits__item-text">Ребёнок продолжает заниматься с&nbsp;теми&nbsp;же учителями<br class="who-fits__br"> и&nbsp;классом из&nbsp;любой точки.</p>
               </div>
             </li>
             <li class="who-fits__item">
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
                 <h3 class="who-fits__item-title">Вы живёте за&nbsp;границей</h3>
-                <p class="who-fits__item-text">Ребёнок может продолжать обучение по&nbsp;российской школьной программе онлайн.</p>
+                <p class="who-fits__item-text">Ребёнок может продолжать обучение по&nbsp;российской<br class="who-fits__br"> школьной программе онлайн.</p>
               </div>
             </li>
             <li class="who-fits__item">
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
                 <h3 class="who-fits__item-title">В&nbsp;большом классе не&nbsp;хватает внимания</h3>
-                <p class="who-fits__item-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит каждого ребёнка.</p>
+                <p class="who-fits__item-text">В&nbsp;классе до&nbsp;15&nbsp;учеников, поэтому педагог видит<br class="who-fits__br"> каждого ребёнка.</p>
               </div>
             </li>
             <li class="who-fits__item">
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
-                <h3 class="who-fits__item-title">Обычная школа занимает слишком много времени</h3>
-                <p class="who-fits__item-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба проходит в&nbsp;течение учебного дня.</p>
+                <h3 class="who-fits__item-title">Обычная школа занимает слишком много<br class="who-fits__br"> времени</h3>
+                <p class="who-fits__item-text">Не&nbsp;нужно тратить время на&nbsp;дорогу, а&nbsp;основная учёба<br class="who-fits__br"> проходит в&nbsp;течение учебного дня.</p>
               </div>
             </li>
             <li class="who-fits__item">
               <svg class="who-fits__check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <div class="who-fits__item-body">
                 <h3 class="who-fits__item-title">Нужен другой темп обучения</h3>
-                <p class="who-fits__item-text">Подходящий формат и&nbsp;траекторию выбирают после знакомства и&nbsp;диагностики.</p>
+                <p class="who-fits__item-text">Подходящий формат и&nbsp;траекторию выбирают после<br class="who-fits__br"> знакомства и&nbsp;диагностики.</p>
               </div>
             </li>
           </ul>
@@ -516,7 +514,7 @@
 
           <div class="carousel program__carousel" data-carousel-root>
             <ul class="carousel__track" data-carousel="track">
-              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/01.webp" alt="Виртуальная лаборатория на онлайн-уроке" width="832" height="520" loading="lazy" decoding="async"></li>
+              <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/laptop.webp" alt="Онлайн-урок в виртуальной лаборатории: ноутбук с занятием и маскот школы" width="1536" height="1024" loading="lazy" decoding="async"></li>
               <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/03.webp" alt="Онлайн-урок математики" width="832" height="520" loading="lazy" decoding="async"></li>
               <li class="carousel__slide program__slide"><img class="program__shot" src="assets/img/program/04.webp" alt="Печатные методические материалы школы" width="1100" height="688" loading="lazy" decoding="async"></li>
             </ul>
@@ -596,10 +594,9 @@
               <span class="programs__step-num" aria-hidden="true">02</span>
               <span class="programs__step-text">Пройти собеседование</span>
             </li>
-            <li class="programs__step programs__step--accent">
+            <li class="programs__step">
               <span class="programs__step-num" aria-hidden="true">03</span>
-              <span class="programs__step-text">Пройти <b>2&nbsp;пробных&nbsp;дня</b></span>
-              <span class="programs__step-badge">бесплатно</span>
+              <span class="programs__step-text">Пройти 2&nbsp;пробных дня <span class="programs__step-badge">бесплатно</span></span>
             </li>
             <li class="programs__step">
               <span class="programs__step-num" aria-hidden="true">04</span>
@@ -619,7 +616,7 @@
             <svg class="btn__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h13m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
 
-          <img class="programs__promo-image" src="assets/img/programs/boy.webp" alt="" width="736" height="1051" loading="lazy" decoding="async">
+          <img class="programs__promo-image" src="assets/img/programs/girl.webp" alt="" width="1199" height="1312" loading="lazy" decoding="async">
         </article>
       </div>
     </section>
@@ -664,6 +661,8 @@
               <svg width="7.66" height="13.29" viewBox="0 0 7.66 13.29" fill="none" aria-hidden="true"><path d="M1 1l5.66 5.645L1 12.29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
+
+          <img class="about__mascot" src="assets/img/about/mascot.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -696,11 +695,9 @@
     <section class="pricing" id="pricing">
       <div class="container">
         <div class="pricing__box">
-          <img class="pricing__mascot" src="assets/img/mascots/pink-tell.webp" alt="" aria-hidden="true" width="520" height="390" loading="lazy" decoding="async">
-          <img class="pricing__loop" src="assets/img/attestat/diplom_figura.webp" alt="" width="1000" height="1260" loading="lazy" decoding="async">
           <div class="pricing__inner">
             <div class="pricing__head">
-              <h2 class="pricing__title">Стоимость обучения</h2>
+              <h2 class="pricing__title">Стоимость <span class="pricing__title-muted">обучения</span></h2>
               <p class="pricing__subtitle">Выберите класс ребёнка и&nbsp;сравните два формата обучения.</p>
             </div>
 
@@ -710,6 +707,17 @@
 
             <ul class="pricing__grid" id="pricing-plans"></ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner cta-banner--price" id="cta-price">
+      <div class="container">
+        <div class="cta-banner__box">
+          <img class="cta-banner__swirl" src="assets/img/cta/swirl-price.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <h2 class="cta-banner__title">Зафиксируйте <span class="cta-banner__mark">лучшую</span><br><span class="cta-banner__mark">цену&nbsp;за&nbsp;обучение</span></h2>
+          <a class="cta-banner__btn" href="#form" data-open-form="Зафиксировать цену" data-cta-location="cta-price">Забронировать место</a>
+          <img class="cta-banner__photo" src="assets/img/cta/photo-price.webp" alt="" width="1136" height="1385" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -797,6 +805,17 @@
       </div>
     </section>
 
+
+    <section class="cta-banner cta-banner--trial" id="cta-trial">
+      <div class="container">
+        <div class="cta-banner__box">
+          <img class="cta-banner__swirl" src="assets/img/cta/swirl-trial.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <h2 class="cta-banner__title">Получить <span class="cta-banner__mark">бесплатный</span><br><span class="cta-banner__mark">доступ</span><br>на&nbsp;2&nbsp;пробных дня,<br>оставив заявку</h2>
+          <a class="cta-banner__btn" href="#form" data-open-form="2 пробных дня" data-cta-location="cta-trial">Забронировать место</a>
+          <img class="cta-banner__photo" src="assets/img/cta/photo-trial.webp" alt="" width="848" height="1264" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
 
     <section class="faq" id="faq">
       <div class="container">

@@ -22,7 +22,7 @@
 
 .reviews__card {
   position: relative;
-  padding: 60px;
+  padding: var(--card-pad-top) 60px 60px;
   background: var(--color-pink);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
@@ -33,7 +33,9 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: clamp(20px, 2.128cqw, 40px);
-  margin-bottom: clamp(20px, 2.128cqw, 40px);
+  /* К базовому отступу добавлено 2.6cqw: маскот (абсолютный, ~1.03cqw + высота) выступает
+     ниже шапки на 14–21px и налезал на ряд с видео */
+  margin-bottom: calc(clamp(20px, 2.128cqw, 40px) + 2.6cqw);
 }
 
 .reviews__title {
@@ -215,7 +217,7 @@
   z-index: 1;
   height: auto;
   pointer-events: none;
-  top: 0.5cqw;
+  top: 1.031cqw;
   right: 2cqw;
   width: clamp(90px, 10cqw, 190px);
 }
@@ -254,6 +256,8 @@
   }
 
   .reviews__card { padding: 30px; }
+
+  .reviews__head { margin-bottom: 20px; }
 
   /* По одной карточке на страницу — получается свайп-карусель,
      тот же паттерн, что у факультативов на телефоне */

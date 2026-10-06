@@ -28,7 +28,8 @@
   row-gap: clamp(18px, 1.75cqw, 33px);
   /* Поля с эталона (замер по 1920): слева/справа ~37, сверху ~43, снизу ~30 */
   --program-pad: clamp(20px, 1.95cqw, 37px);
-  padding: clamp(20px, 2.3cqw, 44px) var(--program-pad) clamp(20px, 1.6cqw, 30px);
+  /* Redesign 05.10.2026 (Figma 1:12341): контент на 28 от верха, низ 54, карусель поднята к верху и перекрывает строку примечания. */
+  padding: clamp(20px, 1.49cqw, 28px) var(--program-pad) clamp(20px, 2.88cqw, 54px);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   background:
@@ -73,35 +74,20 @@
   margin-top: clamp(0px, 0.45cqw, 9px);
   --program-line: color-mix(in srgb, var(--color-white) 26%, transparent);
   display: grid;
-  grid-template-columns: 0.94fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 06.10.2026: плитки как в «Когда удобна» — раздельные, зазор 16, одинаковые
+     отступы 1.596cqw / 1.383cqw, без линеек между ними; ряды равной высоты */
+  gap: 16px;
+  grid-auto-rows: 1fr;
 }
 
 .program__item {
   display: flex;
   align-items: flex-start;
   gap: clamp(9px, 1cqw, 19px);
-  padding: clamp(10px, 1.22cqw, 23px) 0;
-}
-
-/* Отступ от линеек 23, а у краёв списка всего ~11 (замер: у первой и последней
-   строки текст стоит почти вплотную к границе списка) */
-.program__item:nth-child(-n + 2) { padding-top: clamp(6px, 0.55cqw, 10px); }
-
-.program__item:nth-last-child(-n + 2) { padding-bottom: clamp(6px, 0.65cqw, 13px); }
-
-/* Правый столбец отступает от линейки на 29 (замер) */
-.program__item:nth-child(even) {
-  padding-left: clamp(12px, 1.55cqw, 29px);
-}
-
-/* Левый — не даёт тексту упереться в линейку */
-.program__item:nth-child(odd) {
-  padding-right: clamp(10px, 1cqw, 19px);
-  border-right: 1px solid var(--program-line);
-}
-
-.program__item:nth-child(-n + 4) {
-  border-bottom: 1px solid var(--program-line);
+  padding: clamp(14px, 1.596cqw, 30px) clamp(12px, 1.383cqw, 26px);
+  border-radius: 20px;
+  background: var(--color-blue-tile);
 }
 
 .program__check {
@@ -137,35 +123,31 @@
 .program__carousel {
   position: relative;
   z-index: 1;
-  margin-top: clamp(0px, 1.1cqw, 21px);
+  grid-column: 2;
+  grid-row: 1 / 3;
   margin-right: calc(-1 * var(--program-pad));
-  gap: clamp(16px, 1.7cqw, 32px);
+  gap: clamp(8px, 1.702cqw, 32px);   /* Figma 1:12342: кадр → ряд → точки через 32 */
   --carousel-btn-size: clamp(40px, 3.5cqw, 66px);
 }
 
 .program__carousel .carousel__track {
-  padding-inline: 8.76% 19.6%;
-  /* Левый край растворяется, чтобы сосед предыдущего слайда не резался
-     вертикальной чертой; на первом кадре зона затухания пуста. */
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8.76%);
-  mask-image: linear-gradient(to right, transparent 0, #000 8.76%);
+  /* Кадр 835 из 868 (Figma 1:12343): слева без поля, справа выглядывает край соседа */
+  padding-inline: 0 3.7%;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .program__slide {
-  padding: clamp(5px, 0.48cqw, 9px);
   border-radius: var(--radius-card);
-  background: var(--color-white);
-  box-shadow: var(--shadow-photo);
 }
 
 .program__shot {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
-  /* Внутреннее скругление на толщину белой рамки меньше внешнего */
-  border-radius: calc(var(--radius-card) - clamp(5px, 0.48cqw, 9px));
+  border-radius: var(--radius-card);
 }
 
 /* Управление — по центру именно кадра, а не всей колонки: поля трека
@@ -173,7 +155,7 @@
 .program__carousel .carousel__nav,
 .program__carousel .carousel__dots {
   margin-left: 8.76%;
-  margin-right: 19.6%;
+  margin-right: 15.78%;   /* Figma 1:12344: ряд 654 по центру кадра 1089…1743 */
 }
 
 .program__carousel .carousel__nav { gap: clamp(12px, 1.5cqw, 28px); }
@@ -189,6 +171,11 @@
 
 .program__carousel .carousel__dots { gap: clamp(7px, 0.48cqw, 9px); }
 
+@media (min-width: 1025px) {
+  /* кадр начинается на 5.78 от верха коробки (Figma), а не на 28 */
+  .program__carousel { margin-top: -1.18cqw; }
+}
+
 .program__carousel .carousel__dot {
   width: clamp(9px, 0.58cqw, 11px);
   height: clamp(9px, 0.58cqw, 11px);
@@ -200,8 +187,9 @@
 /* --- Нижняя строка на всю ширину: линейка сверху, без плашки --- */
 .program__note {
   grid-column: 1 / -1;
+  grid-row: 2;
   position: relative;
-  z-index: 1;
+  z-index: 0;
   display: flex;
   align-items: center;
   gap: clamp(10px, 1.45cqw, 27px);
@@ -232,11 +220,16 @@
 /* Планшет: колонки складываются в одну, карусель уходит под текст
    на всю ширину коробки и получает симметричные поля. */
 @media (max-width: 1024px) {
-  .program__box { grid-template-columns: minmax(0, 1fr); }
+  .program__box { grid-template-columns: minmax(0, 1fr); padding-bottom: var(--program-pad); }
 
   .program__list { --program-line: color-mix(in srgb, var(--color-white) 26%, transparent); }
 
+  .program__note { grid-row: auto; }
+
   .program__carousel {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
     margin-right: 0;
     --carousel-peek: 13%;
   }
@@ -259,16 +252,9 @@
 
   .program__list { grid-template-columns: minmax(0, 1fr); }
 
-  .program__item,
-  .program__item:nth-child(even),
-  .program__item:nth-child(odd) {
-    padding: 14px 0;
-    border-right: 0;
-  }
+  .program__list { gap: 10px; }
 
-  .program__item:not(:last-child) { border-bottom: 1px solid var(--program-line); }
-
-  .program__item:last-child { border-bottom: 0; }
+  .program__item { padding: 14px 16px; }
 
   .program__note { align-items: flex-start; }
 }

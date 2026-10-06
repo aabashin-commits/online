@@ -6,6 +6,9 @@
 /* Сверху разгон от «Ключевых преимуществ», снизу — зазор до сетки .onschool */
 .school-intro { padding: clamp(40px, 5.208vw, 100px) 0 30px; }
 
+/* Figma 1:12040: строка заголовка занимает 62 (1em), а не 55.8 по line-height */
+.school-intro__title { min-height: 1em; }
+
 .school-intro__title-muted { color: var(--color-gray-2); }
 
 @media (max-width: 767px) {

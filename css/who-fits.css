@@ -23,7 +23,7 @@
 /* container-type у .container (layout.css): cqw ниже считаются от ширины коробки. */
 .who-fits__box {
   /* Фон коробки и цвет линеек — только от переменных base.css */
-  --who-bg: color-mix(in srgb, var(--tint-blue) 35%, var(--color-white));
+  --who-bg: var(--tint-selago);
   --who-line: color-mix(in srgb, var(--color-blue) 14%, transparent);
 
   position: relative;
@@ -37,28 +37,27 @@
     "media list"
     "media cta";
   column-gap: clamp(24px, 2.8cqw, 56px);
-  row-gap: clamp(14px, 1.5cqw, 28px);
-  padding: var(--card-pad);
+  row-gap: clamp(14px, 1.702cqw, 32px);
+  padding: var(--card-pad-top) var(--card-pad) var(--card-pad);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   background: var(--who-bg);
 }
 
-/* Тонкая сетка в правом верхнем углу: две пары линий, к центру гаснет маской */
+/* Figma 1:12285: в углу не сетка, а две тонкие линии — верхняя и левая кромка рамки
+   488.8×282 (стоп-цвет на 1.66%), гаснущие радиальной маской от правого верхнего угла. */
 .who-fits__box::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 0.532cqw;
   right: 0;
   width: 26cqw;
   height: 15cqw;
-  background-image:
-    linear-gradient(to right, var(--who-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--who-line) 1px, transparent 1px);
-  background-size: 3.2cqw 3.2cqw;
-  background-position: right top;
-  -webkit-mask-image: radial-gradient(ellipse at top right, black 25%, transparent 72%);
-  mask-image: radial-gradient(ellipse at top right, black 25%, transparent 72%);
+  background:
+    linear-gradient(to bottom, var(--who-line) 0 1.66%, transparent 1.66%),
+    linear-gradient(to right, var(--who-line) 0 1.66%, transparent 1.66%);
+  -webkit-mask-image: radial-gradient(36.77cqw 21.21cqw at 100% 0, black 25%, transparent 72%);
+  mask-image: radial-gradient(36.77cqw 21.21cqw at 100% 0, black 25%, transparent 72%);
   pointer-events: none;
 }
 
@@ -68,18 +67,8 @@
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 0.851cqw, 16px);
-  /* Место под розовый штрих слева от заголовка */
+  /* Левое поле заголовка из Figma: 67.68px */
   padding-left: clamp(36px, 3.6cqw, 68px);
-}
-
-/* Розовый штрих-акцент слева от первой строки заголовка */
-.who-fits__slash {
-  position: absolute;
-  top: 0.2cqw;
-  left: 0;
-  width: clamp(28px, 2.6cqw, 52px);
-  height: auto;
-  color: var(--color-pink);
 }
 
 .who-fits__title {
@@ -102,44 +91,38 @@
   color: var(--color-gray-1);
 }
 
-/* Список без подложки: две колонки, между рядами и колонками тонкие линейки */
+/* Redesign 06.10.2026 (Figma 1:12284): пункты — пастельные плитки радиуса 20 с зазором 16.
+   Заливки чередуются: мятная, кремовая / розовая, мятная / кремовая, розовая.
+   В Figma список вылезает на кнопку (артефакт захвата) — здесь строки растут по тексту. */
 .who-fits__list {
   grid-area: list;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
+  gap: 16px;
 }
 
 .who-fits__item {
   display: flex;
   align-items: flex-start;
-  gap: clamp(10px, 1cqw, 18px);
-  padding: clamp(14px, 1.6cqw, 30px) clamp(12px, 1.4cqw, 26px) clamp(14px, 1.6cqw, 30px) 0;
+  gap: clamp(10px, 0.96cqw, 18px);
+  padding: clamp(12px, 1.06cqw, 20px) clamp(12px, 1.06cqw, 20px);
+  border-radius: 20px;
 }
 
-.who-fits__item:nth-child(-n+4) {
-  border-bottom: 1px solid var(--who-line);
-}
+.who-fits__item:nth-child(1),
+.who-fits__item:nth-child(4) { background: var(--tint-green); }
 
-/* Левая колонка отделена от правой вертикальной линейкой */
-.who-fits__item:nth-child(odd) {
-  border-right: 1px solid var(--who-line);
-}
+.who-fits__item:nth-child(2),
+.who-fits__item:nth-child(5) { background: var(--tint-cream-2); }
 
-.who-fits__item:nth-child(even) {
-  padding-left: clamp(12px, 1.4cqw, 26px);
-  padding-right: 0;
-}
-
-.who-fits__item:first-child,
-.who-fits__item:nth-child(2) {
-  padding-top: 0;
-}
+.who-fits__item:nth-child(3),
+.who-fits__item:nth-child(6) { background: var(--tint-pink); }
 
 .who-fits__check {
   flex: none;
-  width: clamp(28px, 2.4cqw, 46px);
-  height: clamp(28px, 2.4cqw, 46px);
+  width: clamp(28px, 2.4cqw, 45.11px);
+  height: clamp(28px, 2.4cqw, 45.11px);
   /* currentColor заливает круг, галочка — белая */
   color: var(--color-blue);
 }
@@ -151,18 +134,19 @@
 .who-fits__item-body {
   display: flex;
   flex-direction: column;
-  gap: clamp(6px, 0.6cqw, 12px);
+  gap: 11.27px;
 }
 
 .who-fits__item-title {
-  font-size: var(--fs-text);
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 0.957cqw, 18px);
   line-height: 1.25;
   font-weight: 700;
   color: var(--color-black);
 }
 
 .who-fits__item-text {
-  font-size: var(--fs-small);
+  font-size: clamp(13px, 0.85cqw, 16px);
   line-height: 1.4;
   color: var(--color-gray-1);
 }
@@ -193,6 +177,29 @@
   border-radius: var(--radius-card);
 }
 
+/* Redesign 06.10.2026, пиксель-сверка (Figma 1:12284), только десктоп.
+   Заголовок начинается на 67.68 от края коробки (рамка шире на поле коробки, padding-left 67.68);
+   список 1025 прижат к правому полю и заходит на зазор колонок; ряды 109.55 / 139.55 / 161.05
+   (как резиновые минимумы), поля плиток разные у левой и правой колонки, переносы в тексте — как в макете. */
+@media (min-width: 1025px) {
+  .who-fits__head { margin-left: calc(-1 * var(--card-pad)); }
+
+  .who-fits__list {
+    justify-self: end;
+    width: 54.52cqw;
+    /* 06.10.2026 по просьбе клиента все плитки как шестая: одинаковые ряды (по самой высокой, мин. 8.567cqw) */
+    grid-template-rows: repeat(3, minmax(8.567cqw, 1fr));
+  }
+
+  .who-fits__item { padding: 1.596cqw 1.383cqw; }
+
+  /* Кнопка по левому краю списка (список шире колонки: 54.52cqw, прижат вправо) */
+  .who-fits__cta { margin-left: calc(100% - 54.52cqw); }
+
+}
+
+.who-fits__br { display: none; }
+
 /* Планшет: одна колонка, фото сразу под заголовком; список остаётся в две колонки */
 @media (max-width: 1024px) {
   .who-fits__box {
@@ -212,34 +219,17 @@
     height: auto;
     aspect-ratio: 16 / 10;
   }
-
-  .who-fits__item:first-child,
-  .who-fits__item:nth-child(2) {
-    padding-top: clamp(14px, 1.6cqw, 30px);
-  }
 }
 
 /* Телефон: поле коробки — --card-pad (20), список в одну колонку, кнопка во всю ширину */
 @media (max-width: 767px) {
-  .who-fits__box { row-gap: 20px; }
+  .who-fits__box { row-gap: 20px; padding-top: var(--card-pad); }
 
   .who-fits__head { padding-left: 40px; }
 
   .who-fits__list { grid-template-columns: minmax(0, 1fr); }
 
-  .who-fits__item,
-  .who-fits__item:nth-child(odd),
-  .who-fits__item:nth-child(even),
-  .who-fits__item:first-child,
-  .who-fits__item:nth-child(2) {
-    padding: 16px 0;
-    border-right: 0;
-  }
-
-  .who-fits__item:nth-child(-n+4),
-  .who-fits__item:nth-child(5) {
-    border-bottom: 1px solid var(--who-line);
-  }
+  .who-fits__item { padding: 16px; }
 
   .who-fits__cta {
     justify-self: stretch;

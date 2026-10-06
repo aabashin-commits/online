@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 2.128cqw, 44px);
-  padding: var(--card-pad);
+  padding: var(--card-pad-top) var(--card-pad) var(--card-pad);
   border-radius: var(--radius-card);
   background: var(--color-white);
   box-shadow: var(--shadow-card);
@@ -179,8 +179,7 @@
   color: var(--color-gray-2);
 }
 
-/* Розовые штрихи-«ускорение» у кнопки «вперёд» — есть в макете.
-   Три полоски одним элементом: три фоновых градиента, каждый своей длины. */
+/* Розовый ромб у кнопки «вперёд» (Figma 1:12440: габарит 22×23 = квадрат 15,6 px под 45°). */
 .platform__carousel .carousel__btn--next {
   position: relative;
 }
@@ -188,16 +187,13 @@
 .platform__carousel .carousel__btn--next::after {
   content: '';
   position: absolute;
-  inset-inline-end: -14px;
-  inset-block-start: -2px;
-  width: 14px;
-  height: 18px;
-  background:
-    linear-gradient(var(--color-pink), var(--color-pink)) 100% 0 / 14px 2px no-repeat,
-    linear-gradient(var(--color-pink), var(--color-pink)) 100% 50% / 10px 2px no-repeat,
-    linear-gradient(var(--color-pink), var(--color-pink)) 100% 100% / 6px 2px no-repeat;
+  inset-inline-start: 59.2px;
+  inset-block-start: -0.8px;
+  width: 15.6px;
+  height: 15.6px;
+  background: var(--color-pink);
   border-radius: 2px;
-  transform: rotate(-38deg);
+  transform: rotate(45deg);
   pointer-events: none;
 }
 
@@ -210,10 +206,11 @@
 /* Маскот (брендбук): декор, не перекрывает текст и кнопки */
 .platform__mascot {
   position: absolute;
-  z-index: 1;
+  /* Выше активного слайда карусели (z-index: 1) — иначе при свайпе фото закрывают маскота */
+  z-index: 3;
   height: auto;
   pointer-events: none;
-  top: 6cqw;
+  top: 6.532cqw;   /* Figma 1:12441: y=122.8 */
   right: var(--card-pad);
   width: clamp(90px, 9cqw, 170px);
 }
@@ -248,6 +245,8 @@
 
 /* Телефон: один скриншот во всю ширину */
 @media (max-width: 767px) {
+  .platform__box { padding-top: var(--card-pad); }
+
   .platform__mascot {
     top: auto;
     right: auto;

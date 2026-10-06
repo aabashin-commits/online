@@ -1,0 +1,134 @@
+/* cta.css — розовые CTA-баннеры «цена» (Redesign 06.10.2026, Figma 1:12862 и 1:13734).
+   Один компонент, два варианта: --price (после тарифов) и --trial (перед FAQ).
+   Геометрия в cqw от ширины .container (1880 при 1920): 1cqw = 18.8px.
+   Заголовок Figma — Onest Medium 78/0.9; в проекте Onest нет, держим шрифт брендбука. */
+
+.cta-banner { padding-block: 20px; }
+
+.cta-banner__box {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 1.277cqw, 24px);
+  padding: var(--card-pad);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  background: var(--color-hot-pink);
+}
+
+.cta-banner--price .cta-banner__box { min-height: 22.713cqw; gap: clamp(14px, 1.06cqw, 20px); padding-bottom: 3.03cqw; }
+.cta-banner--trial .cta-banner__box { min-height: 25.16cqw; }
+
+.cta-banner__swirl,
+.cta-banner__photo {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cta-banner__swirl { max-width: none; }
+
+.cta-banner__photo { object-fit: cover; }
+
+/* В Figma (1:13470) портрет отражён по горизонтали */
+.cta-banner--price .cta-banner__photo { transform: scaleX(-1); }
+
+.cta-banner--price .cta-banner__swirl { left: 32.553cqw; top: 3.187cqw; width: 127.352cqw; height: auto; }
+.cta-banner--price .cta-banner__photo { left: 43.085cqw; top: -1.455cqw; width: 32.553cqw; height: 39.829cqw; }
+
+.cta-banner--trial .cta-banner__swirl { left: 51.223cqw; top: 3.676cqw; width: 101.016cqw; height: auto; }
+.cta-banner--trial .cta-banner__photo { left: 43.351cqw; top: -0.898cqw; width: 24.886cqw; height: 38.665cqw; }
+
+.cta-banner__title {
+  position: relative;
+  z-index: 1;
+  max-width: 59.5cqw;
+  font-size: clamp(34px, 4.14cqw, 78px);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.008em;
+  color: var(--color-white);
+}
+
+.cta-banner--price .cta-banner__title { padding-block: 2.07cqw; }
+
+.cta-banner--trial .cta-banner__title { max-width: 81.5cqw; margin-bottom: -1.06cqw; }
+
+/* Figma 1:13464 / 1:13465: плашки «цены» — 297×70 и 679×95, текст внутри них
+   сидит со своими отступами, поэтому поля задаются на каждую плашку отдельно */
+.cta-banner--price .cta-banner__mark:nth-of-type(1) { padding: 0 0.14em 0 0; margin: 0 -0.14em 0 0; top: 0.09em; }
+.cta-banner--price .cta-banner__mark:nth-of-type(2) { padding: 0.159em 0.17em 0.159em 0.36em; margin: -0.159em -0.17em -0.159em -0.36em; top: 0.105em; }
+
+/* Стеклянные плашки под словами (rgba(255,255,255,.2) + blur 20 в Figma) */
+.cta-banner__mark {
+  display: inline-block;
+  position: relative;
+  z-index: -1;
+  padding: 0.1em 0.33em;
+  margin: -0.1em -0.33em;
+  background: color-mix(in srgb, var(--color-white) 20%, transparent);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.cta-banner__btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 40px;
+  border-radius: 20px;
+  background: var(--color-white);
+  color: var(--color-hot-pink);
+  font-size: clamp(16px, 1.064cqw, 20px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease;
+}
+
+.cta-banner__btn:hover { transform: translateY(-2px); }
+
+@media (max-width: 1280px) {
+  .cta-banner__title { max-width: 62cqw; }
+  .cta-banner--trial .cta-banner__title { max-width: 62cqw; }
+  .cta-banner__btn { padding: 18px 32px; }
+}
+
+@media (max-width: 1024px) {
+  .cta-banner__title { font-size: clamp(30px, 5.6cqw, 52px); }
+}
+
+/* Телефон: текст → кнопка → фото под ними */
+@media (max-width: 767px) {
+  .cta-banner--price .cta-banner__box,
+  .cta-banner--trial .cta-banner__box { min-height: 0; padding-bottom: 0; }
+
+  .cta-banner__title,
+  .cta-banner--price .cta-banner__title,
+  .cta-banner--trial .cta-banner__title { padding-block: 0; margin-bottom: 0; max-width: none; font-size: clamp(28px, 8.4vw, 40px); }
+
+  .cta-banner__mark { display: inline; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+  .cta-banner__btn { align-self: stretch; padding: 16px 24px; }
+
+  .cta-banner__swirl { display: none; }
+
+  .cta-banner__photo {
+    position: relative;
+    left: auto;
+    top: auto;
+    align-self: center;
+    width: min(78%, 320px);
+    height: auto;
+    margin-top: 8px;
+  }
+
+  .cta-banner--price .cta-banner__photo,
+  .cta-banner--trial .cta-banner__photo { left: auto; top: auto; width: min(78%, 320px); height: auto; }
+}

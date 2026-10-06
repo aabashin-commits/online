@@ -7,13 +7,13 @@
   /* Насколько ряд карточек поднят на синюю панель hero.
      110 на 1920 (замер по 1920.png) → 90 на 1600 → 70 на 1280 и ниже —
      теперь одной кривой вместо трёх ступеней. */
-  --overlap: clamp(70px, 6.25vw - 10px, 110px);
+  --overlap: clamp(69px, 6.25vw - 11px, 109px);
   position: relative;
   z-index: 5;
   /* Боковой отступ ряда: 40 на 1920 (1920.png — ряд от x=40, карточка 445;
      Figma 1:3569 — x=40, ширина 1840), 30 на 1600 и ниже (1:22930 и 1:21505 —
      x=30 при ширине 1540 и 1140). */
-  padding-inline: clamp(30px, 3.125vw - 20px, 40px);
+  padding-inline: calc(clamp(30px, 3.125vw - 20px, 40px) + clamp(0px, 6.25vw - 100px, 20px));
   margin-top: calc(-1 * var(--overlap));
 }
 

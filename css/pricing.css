@@ -20,29 +20,12 @@
 /* 17.09.2026, правка клиента (скрин «цены2»): блок в синей коробке с петлёй
    справа — тот же приём, что в who-fits.css. Карточки белые, стоят по центру
    коробки. Кнопка «Подобрать формат» снята (тоже 17.09.2026). */
+/* Редизайн 06.10.2026 (Figma 1:12628–1:12638): синяя коробка с петлёй и маскотом
+   снята — заголовок, плашки ступеней и четыре тарифа лежат прямо на странице.
+   Боковое поле 60 оставлено: вместе с контейнером даёт x = 80, как в макете. */
 .pricing__box {
   position: relative;
-  overflow: hidden;
-  padding: var(--card-pad);
-  background: linear-gradient(135deg, var(--color-blue-bright) 0%, var(--color-blue) 45%, var(--color-blue-deep) 100%);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-/* ⚠️ У картинки срез по верхнему, правому и НИЖНЕМУ краю. Коробка цен выше,
-   чем в who-fits, и меняет высоту при смене ступени (у старшей школы пунктов
-   вдвое больше), поэтому высоту петли считаем от коробки: низ картинки всегда
-   ниже края коробки, срез не виден. 94.5cqw — естественная высота при ширине
-   75cqw (1000×1260), меньше неё петлю не делаем. */
-.pricing__loop {
-  position: absolute;
-  top: -39cqw;
-  right: 0;
-  width: auto;
-  max-width: none;   /* иначе глобальное img { max-width: 100% } из base.css */
-  height: max(94.5cqw, calc(100% + 39cqw + 2px));
-  pointer-events: none;
-  user-select: none;
+  padding: 0 var(--card-pad);
 }
 
 .pricing__inner {
@@ -50,7 +33,7 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(24px, 2.128cqw, 40px);
+  gap: clamp(20px, 1.596cqw, 30px);
 }
 
 .pricing__head {
@@ -64,15 +47,17 @@
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.05;
-  color: var(--color-white);
+  color: var(--color-black);
 }
+
+.pricing__title-muted { color: var(--color-gray-2); }
 
 .pricing__subtitle {
   font-size: var(--fs-h4);
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.3;
-  color: var(--color-white);
+  color: var(--color-black);
   opacity: 0.8;
 }
 
@@ -120,18 +105,23 @@
   background: none;
 }
 
-/* 17.09.2026: на синей коробке — белый полупрозрачный контур и белый текст,
-   выбранная плашка розовая */
+/* Редизайн 06.10.2026: на светлом фоне — серый контур и серый текст (#939393),
+   выбранная плашка розовая с белым текстом; кегль 20/28, поля 10 × 30 */
 .pricing .pricing__stage,
 .pricing .pricing__format {
-  border: 1px solid rgb(255 255 255 / 0.35);
-  color: var(--color-white);
+  min-height: 0;
+  padding: 10px clamp(16px, 1.596cqw, 30px);
+  border: 1px solid var(--color-gray-2);
+  color: var(--color-gray-2);
+  font-size: clamp(15px, 1.064cqw, 20px);
+  line-height: 1.4;
 }
 
 .pricing .pricing__stage--active,
 .pricing .pricing__format--active {
   background: var(--color-pink);
   border-color: var(--color-pink);
+  color: var(--color-white);
 }
 
 /* Переключатель формата нужен только на телефоне */
@@ -183,36 +173,39 @@
 
 /* --- Карточки тарифов --- */
 
-/* Карточки уже полной сетки и стоят по центру (правка клиента 10.09.2026):
-   ширина считается от текста внутри, а не от ширины экрана. 36em — это типовая
-   строка списка («помощь куратора класса в учебных и организационных вопросах»,
-   ≈34em с маркером) плюс запас справа; em берётся от --fs-text, то есть растёт
-   вместе с кеглем, и на 1280/1600/1920 такая строка не переносится. Самые длинные
-   пункты старшей школы (70 символов) переносятся на вторую строку — это нормально,
-   подгонять карточку под них значило бы вернуть прежнюю ширину. */
+/* Редизайн 06.10.2026 (Figma 1:12638): четыре тарифа в ряд на всю ширину, 425 × gap 20
+   при 1920. Раньше две карточки стояли по центру в колонке 36em. */
 .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--gap-cards);
-  /* ⚠️ Именно width, а не max-width: .pricing__inner — колоночный flex, и
-     margin-inline:auto снимает у сетки растягивание. С одним max-width ширина
-     схлопывалась бы до max-content, то есть скакала бы при переключении ступеней
-     (у старшей школы пункты длиннее). */
-  width: min(100%, calc(2 * (36em + 2 * var(--card-pad)) + var(--gap-cards)));
-  margin-inline: auto;
   list-style: none;
 }
 
 .pricing__plan {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 1.276cqw, 24px);
-  padding: var(--card-pad);
+  gap: clamp(20px, 1.702cqw, 32px);
+  padding: clamp(20px, 2.553cqw, 48px);
   background: var(--color-white);
   /* Прозрачная рамка держит место: без неё карточка «подпрыгивает» при выборе */
   border: 2px solid transparent;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
+}
+
+/* Figma 1:12640: карточка 1105.2 на 1920 (фиксированная высота макета) */
+@media (min-width: 1281px) {
+  .pricing__plan { min-height: 58.787cqw; }
+}
+
+/* Тарифы с прикреплением (3 и 4) выделены лёгким градиентом, рамкой и тенью */
+.pricing__plan[data-format='with'],
+.pricing__plan[data-format='premium'] {
+  border-color: color-mix(in srgb, var(--color-blue) 13%, transparent);
+  background: linear-gradient(180deg, var(--tint-selago) 0%, var(--color-white) 100%);
+  box-shadow: 0 8px 30px 0 color-mix(in srgb, var(--color-blue) 8%, transparent), var(--shadow-card);
 }
 
 /* Формат, выбранный в блоке форматов или здесь же (data-format пишет JS) */
@@ -221,10 +214,67 @@
   border-color: var(--color-blue);
 }
 
+/* Плашки над названием: тип тарифа + «ФГОС» с точкой */
+.pricing__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.pricing__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 clamp(10px, 1.1cqw, 21px);
+  border-radius: var(--radius-pill);
+  background: var(--tint-athens);
+  color: var(--color-ink);
+  font-size: clamp(13px, 0.83cqw, 16px);
+  font-weight: 500;
+  line-height: 1.55;
+  white-space: nowrap;
+}
+
+.pricing__chip--without { background: var(--tint-periwinkle); color: var(--color-violet); }
+
+.pricing__chip--with,
+.pricing__chip--premium { background: var(--tint-orchid); color: var(--color-plum); }
+
+.pricing__chip--fgos::after {
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 6px;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' fill='none'%3E%3Cpath d='M6.8 11.7l3.6 5.5a.9.9 0 001.7 0L18 8.3' stroke='%2322AE73' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% no-repeat,
+    var(--color-white);
+}
+
+/* Бейдж «самый популярный» — на верхней кромке карточки, правее середины */
+.pricing__hot {
+  position: absolute;
+  top: -17px;
+  left: 45.4%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 206px;
+  min-height: 33px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-violet);
+  color: var(--tint-periwinkle);
+  font-size: clamp(13px, 0.8cqw, 15px);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .pricing__plan-head {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 
 .pricing__plan-title {
@@ -232,6 +282,7 @@
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.1;
+  color: var(--color-black);
 }
 
 .pricing__price {
@@ -241,7 +292,7 @@
 }
 
 .pricing__price-value {
-  font-size: var(--fs-h3);
+  font-size: clamp(32px, 2.553cqw, 48px);
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.1;
@@ -256,56 +307,47 @@
 .pricing__plan-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: clamp(20px, 1.702cqw, 32px);
 }
 
+/* Подпись под списком у тарифов с прикреплением: 16/22.4, серая */
 .pricing__plan-intro {
-  font-size: var(--fs-text);
-  line-height: 1.5;
-  font-weight: 500;
-  color: var(--color-black);
+  font-size: var(--fs-small);
+  line-height: 1.4;
+  color: var(--color-gray-2);
 }
 
 .pricing__features {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   list-style: none;
 }
 
-/* Прижимаем кнопку к низу: у соседних карточек состав разной длины,
-   а CTA должны стоять на одной линии. */
+/* Кнопка стоит сразу под ценой (порядок макета): плашки, название и цена, кнопка, список */
 .pricing__cta {
-  margin-top: auto;
   justify-content: center;
+  padding-block: clamp(14px, 1.17cqw, 22px);
+  border-radius: 20px;
+  font-size: clamp(16px, 1.064cqw, 20px);
 }
 
 /* Подпись об оплате частями снята 17.09.2026 — на скрине клиента её нет. */
 
-/* Маскот (брендбук): декор, не перекрывает текст и кнопки */
-.pricing__mascot {
-  position: absolute;
-  z-index: 1;
-  height: auto;
-  pointer-events: none;
-  top: 2cqw;
-  right: 3cqw;
-  width: clamp(110px, 13cqw, 250px);
-}
+/* --- Адаптив --- */
 
-/* --- Планшет --- */
+/* ≤1280: четыре в ряд тесны, два ряда по два */
+@media (max-width: 1280px) {
+  .pricing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+}
 
 @media (max-width: 1024px) {
-  .pricing__mascot {
-    top: 8px;
-    width: 80px;
-  }
+  .pricing__box { padding-inline: 0; }
 
-  .pricing__plan { padding: 20px; }
+  .pricing__plan { padding: 24px; }
 }
 
-/* Ступень канона проекта здесь не подходит: §13 задаёт перелом ровно на 800px
-   («при ширине менее 800 px — одна под другой»). */
+/* §13 задаёт перелом ровно на 800px («при ширине менее 800 px — одна под другой»). */
 @media (max-width: 800px) {
   .pricing__grid { grid-template-columns: 1fr; }
 }
@@ -313,44 +355,16 @@
 /* --- Телефон --- */
 
 @media (max-width: 767px) {
-  .pricing__mascot {
-    top: 78px;
-    right: 10px;
-    width: 80px;
-  }
-
   .pricing__stages {
     align-self: stretch;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .pricing__formats {
-    align-self: stretch;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .pricing__stage,
-  .pricing__format {
+  .pricing .pricing__stage {
     padding: 10px 6px;
     font-size: var(--fs-small);
   }
 
-  /* Одна карточка на экране — та, что выбрана переключателем формата */
-  /* На телефоне коробка в разы выше ширины — растянуть петлю на всю высоту
-     значит раздуть её до неузнаваемости. Размер от ширины, а нижний срез
-     (он за карточкой, но виден в узком поле справа от неё) растворяем маской. */
-  .pricing__loop {
-    top: -60cqw;
-    width: 150cqw;
-    height: auto;
-    -webkit-mask-image: linear-gradient(to bottom, currentColor 55%, transparent 95%);
-    mask-image: linear-gradient(to bottom, currentColor 55%, transparent 95%);
-  }
-
-  .pricing__grid[data-visible='with'] .pricing__plan[data-format='without'],
-  .pricing__grid[data-visible='without'] .pricing__plan[data-format='with'] {
-    display: none;
-  }
+  .pricing__hot { left: auto; right: 16px; }
 }

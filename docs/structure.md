@@ -66,7 +66,7 @@
 │   ├── benefits.css   curator.css   program.css   platform.css   — ⚠️ program.css ≠ programs.css: разные блоки
 │   ├── classes.css   about.css
 │   ├── formats.css   pricing.css   additional.css   reviews.css
-│   ├── trial.css   faq.css   footer.css
+│   ├── cta.css   trial.css   faq.css   footer.css
 │   ├── form.css   mobile-cta.css
 │   ├── ege-banner.css   universities.css   consultation.css   — ⚠️ НЕ подключены: секции лежат в disabled-sections.html
 └── js/

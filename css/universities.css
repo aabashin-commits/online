@@ -36,7 +36,7 @@
   align-items: start;
   column-gap: clamp(20px, 2.128cqw, 40px);
   row-gap: clamp(20px, 2.128cqw, 40px);
-  padding: var(--card-pad);
+  padding: var(--card-pad-top) var(--card-pad) var(--card-pad);
   background: var(--gradient-accent);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
@@ -65,8 +65,11 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 52.4px),
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 104.8px),
     repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 52.4px);
+  /* Фаза по замеру Figma 1:13472 (06.10.2026): вертикальные линии через клетку
+     (шаг 104.8, первая на x=52.4), горизонтальные сдвинуты на 6.6px вниз. */
+  background-position: 52.4px 0, 0 6.6px;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 35%);
   mask-image: linear-gradient(to right, transparent 0, #000 35%);
 }
@@ -173,6 +176,30 @@
   margin-left: -3px;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+/* Десктоп 1281+: в Figma плашка (1:13478) — ОДИН прямоугольник 1078.77×172.39
+   на (−3, −18) от заголовка под двумя первыми строками, а не построчные полосы.
+   Рисуем слоем под текстом; построчный фон инлайна на этих ширинах гасим. */
+@media (min-width: 1281px) {
+  .universities__title {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .universities__title::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -3px;
+    top: -18px;
+    width: 57.37cqw;
+    height: 9.17cqw;
+    background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+  }
+
+  /* Глифы Nunito Sans уже макетных на ~6% — добираем межбуквием по ширине строк Figma */
+  .universities__hl { background-image: none; letter-spacing: 0.03em; }
 }
 
 /* --- Правая колонка: сетка логотипов 6×2 ---

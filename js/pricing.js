@@ -32,39 +32,48 @@
 
   // Идентификаторы ступеней совпадают с data-stage в блоке «Выберите класс»
   // (index.html, .classes__card) — по ним блоки узнают выбор друг друга.
+  // Редизайн 06.10.2026 (Figma): в ряду четыре тарифа. «Записи» и «Премиум»
+  // добавляются к каждой ступени ниже; цена у них в макете — заглушка «х 000 ₽»,
+  // реальные суммы ждём от клиента (PLAN.md).
+  const INTRO = 'Полное сопровождение с аттестацией в школе-партнёре';
+
   const stages = [
     {
       id: 'primary',
       label: 'Начальная школа',
       // Единый перечень услуг: у «Без прикрепления» входят первые 7, остальные — с крестом
       features: [
-        'до 15 детей в классе',
-        '4 урока в день до 14:30',
-        'занятия онлайн с учителем и одноклассниками (формат конференций)',
+        'до 15 детей в классе',
+        '4 урока в день до 14:30',
+        'занятия онлайн с учителем и одноклассниками (формат конференций)',
         'ручная проверка домашних заданий',
         'подробная обратная связь от учителей каждый учебный модуль',
         'школьный психолог',
-        'английский с 1 класса по кембриджским учебникам',
-        'помощь куратора класса в учебных и организационных вопросах',
+        'английский с 1 класса по кембриджским учебникам',
+        'помощь куратора класса в учебных и организационных вопросах',
         'сопровождение прикрепления куратором',
-        'аттестация в школе-партнёре',
+        'аттестация в школе-партнёре',
       ],
       plans: [
         {
           format: 'without',
+          chip: 'сильная программа',
           title: 'Без прикрепления',
           price: '19 000 ₽',
           period: '/ мес',
           included: 7,
-          cta: 'Выбрать без прикрепления',
+          cta: 'оставить заявку',
         },
         {
           format: 'with',
+          chip: 'мини-группы',
+          hot: true,
+          intro: INTRO,
           title: 'С прикреплением',
           price: '29 000 ₽',
           period: '/ мес',
           included: 10,
-          cta: 'Выбрать с прикреплением',
+          cta: 'оставить заявку',
         },
       ],
     },
@@ -73,33 +82,37 @@
       label: 'Средняя школа',
       // Единый перечень услуг: у «Без прикрепления» входят первые 7, остальные — с крестом
       features: [
-        'до 15 детей в классе',
-        '3–4 урока в день до 14:30 или 16:15',
-        'занятия онлайн с учителем и одноклассниками (формат конференций)',
+        'до 15 детей в классе',
+        '3–4 урока в день до 14:30 или 16:15',
+        'занятия онлайн с учителем и одноклассниками (формат конференций)',
         'ручная проверка домашних заданий',
         'подробная обратная связь от учителей каждый учебный модуль',
         'школьный психолог',
-        'английский по кембриджским учебникам',
-        'помощь куратора класса в учебных и организационных вопросах',
+        'английский по кембриджским учебникам',
+        'помощь куратора класса в учебных и организационных вопросах',
         'сопровождение прикрепления куратором класса',
-        'аттестация в школе-партнёре (заочная или семейная форма)',
+        'аттестация в школе-партнёре (заочная или семейная форма)',
       ],
       plans: [
         {
           format: 'without',
+          chip: 'сильная программа',
           title: 'Без прикрепления',
           price: '29 000 ₽',
           period: '/ мес',
           included: 7,
-          cta: 'Выбрать без прикрепления',
+          cta: 'оставить заявку',
         },
         {
           format: 'with',
+          chip: 'мини-группы',
+          hot: true,
+          intro: INTRO,
           title: 'С прикреплением',
           price: '39 000 ₽',
           period: '/ мес',
           included: 10,
-          cta: 'Выбрать с прикреплением',
+          cta: 'оставить заявку',
         },
       ],
     },
@@ -108,39 +121,56 @@
       label: 'Старшая школа',
       // Единый перечень услуг: у «Без прикрепления» входят первые 8, остальные — с крестом
       features: [
-        'до 15 детей в классе',
-        '3–4 урока в день до 14:30 или 16:15',
-        'занятия онлайн с учителем и одноклассниками (формат конференций)',
+        'до 15 детей в классе',
+        '3–4 урока в день до 14:30 или 16:15',
+        'занятия онлайн с учителем и одноклассниками (формат конференций)',
         'ручная проверка домашних заданий',
-        'подробная обратная связь от учителей каждый учебный модуль по каждому предмету',
+        'подробная обратная связь от учителей каждый учебный модуль по каждому предмету',
         'школьный психолог',
-        'английский по уровням по кембриджским учебникам',
+        'английский по уровням по кембриджским учебникам',
         'профильные классы',
-        'помощь куратора класса в учебных и организационных вопросах',
+        'помощь куратора класса в учебных и организационных вопросах',
         'сопровождение прикрепления куратором класса',
-        'аттестация в школе-партнёре (заочная или семейная форма)',
-        'углублённая подготовка к ОГЭ/ЕГЭ на групповых дополнительных занятиях',
+        'аттестация в школе-партнёре (заочная или семейная форма)',
+        'углублённая подготовка к ОГЭ/ЕГЭ на групповых дополнительных занятиях',
       ],
       plans: [
         {
           format: 'without',
+          chip: 'сильная программа',
           title: 'Без прикрепления',
           price: '35 000 ₽',
           period: '/ мес',
           included: 8,
-          cta: 'Выбрать без прикрепления',
+          cta: 'оставить заявку',
         },
         {
           format: 'with',
+          chip: 'мини-группы',
+          hot: true,
+          intro: INTRO,
           title: 'С прикреплением',
           price: '45 000 ₽',
           period: '/ мес',
           included: 12,
-          cta: 'Выбрать с прикреплением',
+          cta: 'оставить заявку',
         },
       ],
     },
   ];
+
+  const withExtras = (stage) => {
+    const base = stage.plans[0].included;
+    const records = {
+      format: 'records', chip: 'записи уроков', title: 'Записи', price: 'х\u00A0000\u00A0₽',
+      period: '/ мес', included: base, cta: 'оставить заявку',
+    };
+    const premium = {
+      format: 'premium', chip: 'мини-группы', title: 'Премиум', price: 'х\u00A0000\u00A0₽',
+      period: '/ мес', included: stage.features.length, intro: INTRO, cta: 'оставить заявку',
+    };
+    return [records, ...stage.plans, premium];
+  };
 
   const formats = [
     { id: 'without', label: 'Без прикрепления' },
@@ -248,6 +278,26 @@
     item.className = 'pricing__plan';
     item.dataset.format = plan.format;
 
+    const chips = document.createElement('div');
+    chips.className = 'pricing__chips';
+
+    const chip = document.createElement('span');
+    chip.className = `pricing__chip pricing__chip--${plan.format}`;
+    chip.textContent = plan.chip;
+
+    const fgos = document.createElement('span');
+    fgos.className = 'pricing__chip pricing__chip--fgos';
+    fgos.textContent = 'ФГОС';
+
+    chips.append(chip, fgos);
+
+    if (plan.hot) {
+      const hot = document.createElement('span');
+      hot.className = 'pricing__hot';
+      hot.textContent = '🔥 самый популярный';
+      item.appendChild(hot);
+    }
+
     // 16.09.2026, правка клиента: аккордеон на телефоне снят, состав
     // раскрыт на всех ширинах — заголовок больше не кнопка.
     const head = document.createElement('div');
@@ -275,13 +325,6 @@
     const body = document.createElement('div');
     body.className = 'pricing__plan-body';
 
-    if (plan.intro) {
-      const intro = document.createElement('p');
-      intro.className = 'pricing__plan-intro';
-      intro.textContent = plan.intro;
-      body.appendChild(intro);
-    }
-
     const list = document.createElement('ul');
     list.className = 'pricing__features';
     // Перечень один на оба тарифа: первые plan.included пунктов входят,
@@ -300,6 +343,14 @@
     });
     body.appendChild(list);
 
+    if (plan.intro) {
+      const intro = document.createElement('p');
+      intro.className = 'pricing__plan-intro';
+      intro.textContent = plan.intro;
+      body.appendChild(intro);
+    }
+
+
     const cta = document.createElement('button');
     // ⚠️ 10.09.2026, правки клиента: подсвечены обе кнопки. Раньше «Без
     // прикрепления» была белой (btn--white), чтобы основным действием читался
@@ -316,16 +367,17 @@
     cta.addEventListener('click', () => {
       if (typeof window.setSchoolStage === 'function') window.setSchoolStage(currentStage.id);
       if (typeof window.setPrice === 'function') window.setPrice(`${plan.price} ${plan.period}`);
-      if (typeof window.setEducationFormat === 'function') window.setEducationFormat(plan.format);
+      const known = plan.format === 'with' || plan.format === 'without';
+      if (typeof window.setEducationFormat === 'function') window.setEducationFormat(known ? plan.format : '');
     });
 
-    item.append(head, body, cta);
+    item.append(chips, head, cta, body);
     return item;
   };
 
   const renderPlans = () => {
     grid.textContent = '';
-    currentStage.plans.forEach((plan) => grid.appendChild(buildPlan(plan)));
+    withExtras(currentStage).forEach((plan) => grid.appendChild(buildPlan(plan)));
     grid.setAttribute('aria-label', `Тарифы: ${currentStage.label}`);
   };
 

@@ -1,234 +1,100 @@
-/* attestat.css — карточка «Аттестат государственного образца».
-   ⚠️ 14.09.2026 перенесена из отдельной полноширинной секции в левую колонку
-   блока «Моя школа LS» (заменила карточки «Руководящий состав» и «Полноценное
-   обучение онлайн»). Прежняя геометрия под карточку 1880 (коллаж абсолютом
-   с max-width в cqw, полоса «кнопка слева — коллаж справа» на планшете,
-   белая полоса во всю ширину экрана на телефоне) в колонке ~930 не работала,
-   поэтому файл переписан под карточку: фон, радиус и тень даёт .onschool-card,
-   здесь только внутренняя раскладка.
+/* attestat.css — левая карточка блока «Полноценная школа»: «Учимся вместе с одноклассниками».
+   Редизайн 05.10.2026, Figma 1:12043 (946×478): padding 19/30, заголовок Almarai 48/60,
+   пять плашек-фактов высотой 44 с зазором ~6, кнопка 284×76 (общая .btn), сова справа
+   внизу — вылезает за край на 14 и 16 px и срезается overflow.
+   Версия до редизайна (аттестат/диплом) — в old/css/attestat.css. */
 
-   Раскладка: текст сверху, коллаж прижат к правому-нижнему углу и вылезает
-   за край карточки на её поле (обрезает overflow: hidden). Карточка тянется
-   до высоты правой колонки (flex: 1), лишнюю высоту забирает margin-top: auto
-   у медиа — коллаж всегда стоит в углу, а не висит под текстом. */
 .attestat {
-  /* То же поле, что у .onschool-card: от него считается вылет коллажа */
-  --pad: clamp(16px, 1.596cqw, 30px);
   position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  padding: var(--pad);
   overflow: hidden;
-  /* 16.09.2026, правка клиента: заливка как была у плитки «Московская
-     медаль» (та стала белой), текст на ней белый */
-  background: var(--gradient-accent);
-  color: var(--color-white);
+  min-height: 25.43cqw;
+  padding: clamp(16px, 1.01cqw, 19px) clamp(16px, 1.596cqw, 30px) clamp(16px, 1.277cqw, 24px);
 }
 
-/* Волна-декор — за коллажем в правом-нижнем углу, под всем контентом.
-   У экспорта рубленые верх, правый и нижний края. Верхний срез приходится
-   на правую четверть картинки (второе кольцо), поэтому она сдвинута за край
-   карточки на 15% (≈ четверть своей ширины) — срез уходит под overflow. */
-.attestat__figura {
-  position: absolute;
-  right: -15%;
-  bottom: 0;
-  width: 60%;
-  height: auto;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-}
-
-.attestat__content,
-.attestat__media {
+.attestat__content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .attestat__title {
-  font-size: var(--fs-h3);
+  color: var(--color-black);
   font-family: var(--font-heading);
+  font-size: var(--fs-h3);       /* 48 */
   font-weight: 700;
-  line-height: 1.05;
-  margin-bottom: clamp(12px, 1.064cqw, 20px);
+  line-height: 1.25;
 }
 
-.attestat__lead {
-  font-size: var(--fs-text);
-  color: var(--color-white);
-  line-height: 1.5;
-  margin-bottom: clamp(12px, 1.064cqw, 20px);
-}
+.attestat__title-accent { color: var(--color-blue-accent); }
 
-/* Маркер — синяя галочка псевдоэлементом: своей иконки в проекте нет */
 .attestat__facts {
-  display: grid;
-  gap: clamp(8px, 0.638cqw, 12px);
-  margin-bottom: clamp(12px, 1.064cqw, 20px);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.352cqw, 6.62px);
+  margin: clamp(14px, 2.287cqw, 43px) 0 clamp(8px, 0.5cqw, 9.5px);
 }
 
 .attestat__fact {
-  position: relative;
-  padding-left: 30px;
-  font-size: var(--fs-text);
-  line-height: 1.45;
-  color: var(--color-white);
-}
-
-.attestat__fact::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 14px;
-  height: 8px;
-  border-left: 2px solid var(--color-white);
-  border-bottom: 2px solid var(--color-white);
-  transform: rotate(-45deg);
-}
-
-.attestat__note {
-  color: var(--color-white);
-  opacity: 0.85;
-  font-size: var(--fs-small);
-  line-height: 1.5;
-  margin-bottom: clamp(16px, 1.277cqw, 24px);
-}
-
-/* Медиа прижата к низу карточки и выходит на её поле справа и снизу:
-   отрицательные margin на --pad ставят коллаж ровно в угол */
-.attestat__media {
   display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-  padding-top: clamp(12px, 1.064cqw, 20px);
-  margin-right: calc(-1 * var(--pad));
-  margin-bottom: calc(-1 * var(--pad));
+  align-items: center;
+  gap: 12px;
+  color: var(--color-black);
+  font-size: var(--fs-text);     /* 18 */
+  line-height: 1.39;
 }
 
-/* Обёртка <picture> нужна только ради мобильного <source> */
-.attestat__picture { display: contents; }
-
-/* Рамка коллажа. До 14.09.2026 была <button> и открывала документ
-   в лайтбоксе (js/attestat.js) — по просьбе клиента просмотр убран,
-   файл скрипта удалён, рамка стала обычным <div>. */
-.attestat__frame {
-  display: block;
-  width: min(80%, 640px);
+/* Figma 1:12048: круг-галочка 24 стоит рядом с плашкой (зазор 12), заливка — только у текста */
+.attestat__fact-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  border-radius: 20px;
 }
 
-.attestat__img {
-  display: block;
-  width: 100%;
+.attestat__fact--blue .attestat__fact-text { background: var(--tint-sky); }
+.attestat__fact--pink .attestat__fact-text { background: var(--tint-peach); }
+
+.attestat__check {
+  flex: none;
+  box-sizing: content-box;
+  padding: 5px;
+  border-radius: 12px;
+  color: var(--color-white);
+}
+
+.attestat__content .btn {
+  margin-left: 20px;
+  box-sizing: border-box;
+  width: 284px;
+  min-height: 76px;
+  padding: 22px 0;
+  justify-content: center;
+  gap: 12px;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.attestat__fact--blue .attestat__check { background: var(--color-blue-accent); }
+.attestat__fact--pink .attestat__check { background: var(--color-pink); }
+
+.attestat__owl {
+  position: absolute;
+  left: 63.5%;
+  top: 58.6%;
+  width: 44.08%;
   height: auto;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* Десктоп (две колонки): коллаж абсолютом в правом-нижнем углу, вне потока.
-   Решение клиента 14.09.2026: карточка «Государственная лицензия» справа
-   должна быть макетного размера (249 на 1920), а не тянуться за высоким
-   аттестатом. В потоке коллаж давал карточке 820px и растягивал весь ряд;
-   абсолютом высоту карточки задаёт только текст, а сама карточка дотягивается
-   до правой колонки (медаль + лицензия). Ширина коллажа в процентах подобрана
-   так, чтобы его верх не доходил до примечания, а левый край — до кнопки. */
-@media (min-width: 1025px) {
-  .attestat__media {
-    position: absolute;
-    bottom: 0;
-    /* По скрину-референсу клиента 16.09.2026: на 1920 коллаж 44% карточки
-       (≈410 из 930) и уходит за правый край на 6.7% (≈62) — правая часть
-       бланка срезана. К узким колонкам доля растёт, но не больше 52.8%.
-       До 16.09.2026 было calc(264px + 11.56%) без выноса */
-    right: -6.7%;
-    width: clamp(44%, calc(616px - 22%), 52.8%);
-    margin: 0;
-    padding: 0;
-  }
-
-  .attestat__frame { width: 100%; }
-
-  /* Текст не заходит под коллаж (замер по альфа-каналу diplom.webp):
-     в верхних ~37% высоты коллажа непрозрачное начинается с 51% его
-     ширины (бланк), ниже — с 10% (красная обложка). Отсюда два правила.
-     Проценты здесь — от колонки текста C (карточка = C + 2 поля), поэтому
-     ширина коллажа Wc пересчитана: 44% карточки = 44% колонки + 0.88 поля. */
-  .attestat__content {
-    --wc: clamp(44% + 0.88 * var(--pad),
-                616px - 22% - 0.44 * var(--pad),
-                52.8% + 1.056 * var(--pad));
-    /* 2) Примечание выше обложки: левее 51% ширины коллаж непрозрачен
-       только ниже 36% его высоты, значит низ примечания должен стоять
-       не ниже 64% высоты коллажа над низом карточки (0.64 × 0.5964 ≈
-       0.382 Wc). Под примечанием уже есть его отступ, кнопка и поле
-       карточки; не хватает — добираем padding-bottom. Высота кнопки —
-       из .btn в layout.css: 1.4 кегля + 2 вертикальных отступа */
-    --btn-h: calc(1.4 * var(--fs-btn) + 2 * clamp(14px, 2.5vw - 26px, 22px));
-    padding-bottom: max(0px, 0.382 * var(--wc) - var(--pad) - var(--btn-h) - clamp(16px, 1.277cqw, 24px));
-  }
-
-  /* 1) Пункты и примечание кончаются левее бланка: его левый край —
-     ширина карточки + вынос 6.7% − 0.49 Wc, минус поле и зазор 12.
-     На 1920 это ≈750 — строки из референса помещаются без переносов */
-  .attestat__facts,
-  .attestat__note {
-    max-width: calc(106.7% + 1.134 * var(--pad) - 0.49 * var(--wc) - 12px);
-  }
-
-  /* Кольцо по референсу 16.09.2026: крупное, но почти целиком за правым
-     краем — видна его левая дуга (у экспорта она на 35% ширины, на 60–80%
-     высоты), она стоит правее текста и поднимается к верху карточки.
-     До этого было 38% без сдвига вверх */
-  .attestat__figura {
-    right: -28%;
-    bottom: 6%;
-    width: 62%;
-  }
-}
-
-/* Планшет: грид .onschool в одну колонку, карточка ~1000 шириной —
-   на 80% коллаж раздувался до 640 и под текстом зияла пустота */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .attestat__frame { width: 52%; }
-  .attestat__figura { width: 40%; right: -10%; }
-}
-
-/* Телефоны: мобильный экспорт коллажа (1575×1128). Кегль заголовка — общий --fs-h2 на телефоне
-   (решение клиента 20.07.2026: все заголовки блоков одного кегля). */
 @media (max-width: 767px) {
-  .attestat { --pad: 20px; }
-
-  .attestat__title {
-    font-size: var(--fs-h2);
-    font-family: var(--font-heading);
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-
-  /* Коллаж по макету 360 (Figma 1:9023 в секции 1:8391): группа 530×381
-     стоит от левого поля текста и срезается правым и нижним краем —
-     видна верхняя-левая часть 340×230 (обложка и бланк, рука за кадром).
-     Рамка — это окно 340:230, прибитое к правому-нижнему углу карточки
-     (отрицательные margin у .attestat__media выводят его на поле),
-     картинка в нём 530/340 = 155.9% ширины, от левого-верхнего угла.
-     На 360 окно во всю ширину (левый край = поле текста), на широких
-     телефонах сужается в долях: 86% на 480, 72% на 767 — иначе коллаж
-     раздувался до 727×492 */
-  .attestat__media { padding-top: 16px; }
-
-  .attestat__frame {
-    width: min(100%, calc(50% + 160px));
-    aspect-ratio: 340 / 230;
-    overflow: hidden;
-  }
-
-  .attestat__img {
-    width: 155.9%;
-    max-width: none;
-  }
-
-  .attestat__figura {
-    right: -12%;
-    width: calc(40% + 100px);
-  }
+  .attestat { padding: 20px; }
+  .attestat__title { font-size: var(--fs-h3); }
+  .attestat__owl { position: relative; left: auto; top: auto; width: 200px; margin: -30px -20px -20px auto; display: block; }
+  .attestat__content .btn { align-self: stretch; width: auto; margin-left: 0; }
 }

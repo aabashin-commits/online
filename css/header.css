@@ -67,6 +67,12 @@ html { scroll-padding-top: 88px; }
 .header__link { transition: color 0.25s ease; white-space: nowrap; }
 .header__link:hover { color: var(--color-blue); }
 
+/* Figma: между «Как проходит обучение» и «Стоимость» на 2px больше, чем между
+   остальными (разница рендера кернинга) — сверено попиксельно 06.10.2026. */
+@media (min-width: 1601px) {
+  .header__link:nth-child(2) { margin-right: 2px; }
+}
+
 /* ⚠️ 07.09.2026 выпадающие списки шапки удалены: ТЗ §4 требует семь плоских
    якорей. Прежние стили групп, панелей и шевронов — `git show c809a07:css/header.css`.
    Списки в своё время появились из-за тесноты в полосе 1281–1312 (семь пунктов

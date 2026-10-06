@@ -125,7 +125,7 @@
   grid-column: 1;
   grid-row: 1;
   display: flex;
-  gap: 1.129cqw;   /* 21.22 */
+  gap: 0.851cqw;   /* 16: полоса 11 + зазор 16 = прежние 27 (Figma 1:12577) */
   /* Высота = ровно 4 миниатюры + 3 зазора (как в макете: 4×80 + 3×10 = 350).
      Значения и здесь, и у миниатюры считаются от одной единицы cqw, поэтому
      четвёртая миниатюра встаёт вровень с низом ленты на любой ширине.
@@ -136,7 +136,7 @@
 .about__scrollbar {
   position: relative;
   flex: none;
-  width: clamp(4px, 0.319cqw, 6px);
+  width: clamp(6px, 0.585cqw, 11px);
   height: 100%;
   background: var(--color-light-blue);
   border-radius: 22px;
@@ -146,7 +146,7 @@
 .about__scrollbar-thumb {
   position: absolute;
   left: 0;
-  width: 6px;
+  width: 100%;
   background: var(--color-blue-2);
   border-radius: 22px;
   transition: top 0.25s ease;
@@ -216,11 +216,12 @@
    при колонке 472). */
 .about__name {
   max-width: 83%;
-  margin-bottom: var(--gap-cards);
+  margin-top: 0.213cqw;
+  margin-bottom: 0.798cqw;
   font-size: var(--fs-h3);
   font-family: var(--font-heading);
   font-weight: 700;
-  line-height: 0.9;
+  line-height: 0.9167;
   color: var(--color-black);
 }
 
@@ -571,4 +572,103 @@
   .about__badge { font-size: 12px; }
 
   .about__text { max-width: none; }
+}
+
+/* Маскот справа внизу карточки — только на десктопе (см. блок ниже) */
+.about__mascot { display: none; }
+
+/* Десктоп ≥1281 — редизайн 06.10.2026, Figma 1:12560 (1880 × 541).
+   Колонки по осям макета: поле 53 | лента 123 (трек 11 + зазор 32 + миниатюра 80) | 32 |
+   фото 360 | 37 | контент 834 | остаток 441. Строки: имя с 90, бейджи с 294, цитата 346–520.
+   Цитата — кремовая плашка 834 × 174 с кавычками (quote.webp) слева; маскот 429 × 286
+   выглядывает из правого нижнего угла и срезается краем карточки. */
+@media (min-width: 1281px) {
+  .about__card,
+  .about__card--single {
+    position: relative;
+    overflow: hidden;
+    grid-template-columns:
+      53fr 123fr 32fr 360fr 37fr
+      minmax(0, 834fr) 441fr;
+    grid-template-rows: 4.787cqw 10.851cqw 13.138cqw;
+    row-gap: 0;
+    column-gap: 0;
+    align-items: start;
+    padding: 0;
+  }
+
+  .about__card .about__nav,
+  .about__card .about__arrows,
+  .about__card .about__photo { grid-row: 1 / span 3; }
+
+  .about__card .about__nav { grid-column: 2; width: 6.543cqw; min-width: 0; margin-top: 4.362cqw; }
+
+  .about__card .about__arrows {
+    grid-column: 2;
+    margin-top: 24.68cqw;
+    min-width: 0;
+    position: relative;
+    left: 1.49cqw;
+    margin-left: 0;
+  }
+
+  .about__card .about__photo { grid-column: 4; margin-top: 3.883cqw; }
+
+  .about__card .about__info {
+    grid-column: 6 / 8;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 0;
+    padding-left: 0.9cqw;
+  }
+
+  .about__card .about__about {
+    position: relative;
+    z-index: 1;
+    grid-column: 6;
+    grid-row: 3;
+    align-self: start;
+  }
+
+  .about__name {
+    max-width: none;
+    margin: 0 0 0.798cqw;
+    font-size: var(--fs-h3);
+    line-height: 0.9167;
+  }
+
+  .about__lead {
+    max-width: 41cqw;
+    margin-left: 0.43cqw;
+    font-size: clamp(18px, 1.702cqw, 32px);
+    line-height: 1.06;
+  }
+
+  .about__badges { margin-bottom: 0.37cqw; }
+
+  .about__text {
+    max-width: none;
+    min-height: 9.255cqw;
+    padding: 1.6cqw 1.22cqw 1.6cqw 4.68cqw;
+    border-radius: 20px;
+    background:
+      url('../assets/img/about/quote.webp') 0.64cqw 1.01cqw / 1.755cqw 2.234cqw no-repeat,
+      url('../assets/img/about/quote.webp') 1.97cqw 1.01cqw / 1.755cqw 2.234cqw no-repeat,
+      var(--tint-cream-3);
+    font-size: clamp(16px, 1.436cqw, 27px);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--color-black);
+  }
+
+  .about__mascot {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    left: 75.32cqw;
+    top: 14.36cqw;
+    width: 22.82cqw;
+    height: auto;
+    pointer-events: none;
+  }
 }

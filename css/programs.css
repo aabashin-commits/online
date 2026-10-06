@@ -16,7 +16,7 @@
    Обе тянутся на одну высоту (stretch по умолчанию для grid). */
 .programs__inner {
   display: grid;
-  grid-template-columns: 1167fr 693fr;
+  grid-template-columns: 1147fr 713fr;   /* Figma 1:12442: карточка 1147, промо 713 */
   gap: var(--gap-cards);
 }
 
@@ -194,98 +194,64 @@
   letter-spacing: -0.02em;
 }
 
-/* ---------- Схема поступления (§10 ТЗ, макет «3.jpg») ----------
-
-   Три раскладки, потому что баннер трижды меняет пропорции:
-   на 1920 это узкая вертикальная карточка (693) — путь идёт колонкой;
-   на ≤1280 карточка разворачивается в широкий баннер — там змейка 3 × 2
-   из макета (01→02→03, вниз, 06←05←04);
-   на телефоне снова колонка.
-
-   Соединители — псевдоэлементы в зазоре сетки, поэтому у зазора фиксированное
-   значение (--step-gap): линию надо чем-то мерить. */
+/* ---------- Схема поступления (редизайн 06.10.2026, Figma 1:12515) ----------
+   Шесть плиток 2 × 3 (331 и 318 из 693): голубая заливка, радиус 20, слева круг 61
+   с номером, справа название шага. Вертикальной линии и розового акцента больше нет,
+   у третьего шага — розовая пилюля «бесплатно» сразу за текстом. */
 .programs__steps {
-  --step-gap: clamp(20px, 2.66cqw, 50px);
-  --step-num: clamp(36px, 3.27cqw, 62px);
-  --step-line: 2px;
-  --step-dot: 8px;
-
   position: relative;
   z-index: 2;
   grid-column: 1;
   grid-row: 2;
   display: grid;
-  gap: var(--step-gap);
+  grid-template-columns: minmax(0, 331fr) minmax(0, 318fr);
+  gap: clamp(10px, 0.9cqw, 17px) clamp(8px, 0.69cqw, 13px);
 }
 
-/* Шаг — без плашки: кружок с номером и белый текст прямо на синем (ref «Как поступить») */
 .programs__step {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: clamp(12px, 1.25cqw, 24px);
+  gap: clamp(10px, 1.1cqw, 21px);
+  min-height: clamp(64px, 5.74cqw, 108px);
+  padding: clamp(8px, 0.64cqw, 12px);
+  border-radius: 20px;
+  background: var(--tint-ice);
+  color: var(--color-black);
 }
 
 .programs__step-num {
-  position: relative;
-  z-index: 1;
   flex: none;
   display: grid;
   place-items: center;
-  width: var(--step-num);
+  width: clamp(40px, 3.27cqw, 61px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--color-white) 90%, transparent);
-  color: var(--color-blue-deep);
-  font-size: clamp(14px, 1.1cqw, 21px);
+  background: var(--tint-ice-deep);
+  color: var(--color-blue);
+  font-family: var(--font-heading);
+  font-size: clamp(15px, 1.17cqw, 22px);
   font-weight: 700;
 }
 
 .programs__step-text {
-  font-size: clamp(14px, 1.08cqw, 21px);
-  line-height: 1.25;
-  font-weight: 500;
-  color: var(--color-white);
-}
-
-.programs__step-text b { font-weight: 600; }
-
-/* Акцентный шаг — «Пройти 2 пробных дня»: розовый кружок чуть крупнее (scale, чтобы
-   не сдвигать центр колонки кружков) и розовая пилюля «бесплатно» сразу за текстом. */
-.programs__step--accent .programs__step-num {
-  background: var(--color-pink);
-  color: var(--color-white);
-  transform: scale(1.09);
+  font-size: clamp(14px, 1.17cqw, 22px);
+  line-height: 1.15;
+  font-weight: 700;
 }
 
 .programs__step-badge {
-  flex: none;
-  margin-left: calc(-0.65 * clamp(12px, 1.25cqw, 24px));   /* зазор до текста ~11 вместо 23 */
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.3em;
   padding: 0.85em 1.55em;
   border-radius: var(--radius-btn);
   background: var(--color-pink);
   font-size: clamp(9px, 0.69cqw, 13px);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-white);
-}
-
-/* Соединитель: белая линия из-под кружка вниз, на концах — точки. Лежит под
-   кружком (z-index у номера выше), центр — по центру колонки кружков. */
-.programs__step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: calc(100% - 0.5px);
-  left: calc(var(--step-num) / 2 - var(--step-dot) / 2);
-  width: var(--step-dot);
-  height: calc(var(--step-gap) + 1px);
-  background:
-    radial-gradient(circle closest-side, var(--color-white) 96%, transparent) top / 100% var(--step-dot) no-repeat,
-    radial-gradient(circle closest-side, var(--color-white) 96%, transparent) bottom / 100% var(--step-dot) no-repeat,
-    linear-gradient(var(--color-white), var(--color-white)) center / var(--step-line) 100% no-repeat;
-  opacity: 0.85;
 }
 
 /* Мальчик — экспорт из Figma (нода 1:4594), вырезка с прозрачностью.
@@ -459,6 +425,8 @@
 
   /* Мальчик уходит под схему и встаёт по центру: справа от шести плашек
      на телефоне ему места нет. */
+  .programs__steps { grid-template-columns: minmax(0, 1fr); }
+
   .programs__promo-image {
     grid-column: 1;
     grid-row: 4;
@@ -469,19 +437,22 @@
 
 }
 
-/* Десктоп (карточка справа от белой, узкая колонка) — по рефу «Как поступить в школу».
-   Масштаб рефа к нашей карточке 693 ≈ 1.12: поле 26–30, заголовок 0.9 от --fs-h2,
-   схема прижата к верху, мальчик абсолютом в правом нижнем углу (фигура занимает
-   ~64% ширины файла, поэтому справа он выходит за карточку на прозрачное поле). */
+/* Десктоп (карточка справа от белой, узкая колонка 693) — Figma 1:12515:
+   заголовок на 49 сверху и 34 слева, плитки на 15 от краёв, кнопка 371 на 81 от низа,
+   девочка 379 × 415 в правом нижнем углу выходит за край на 15 и 14. */
 @media (min-width: 1281px) {
   .programs__promo {
-    align-content: start;
-    padding: clamp(16px, 1.55cqw, 30px) clamp(16px, 1.55cqw, 30px) 0;
-    gap: clamp(16px, 2.2cqw, 42px) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 49.57cqw;
+    gap: clamp(16px, 1.6cqw, 30px);
+    padding: clamp(24px, 2.6cqw, 49px) clamp(10px, 0.8cqw, 15px) clamp(40px, 4.3cqw, 81px);
   }
 
   .programs__promo-title {
-    max-width: 8em;   /* «Как поступить / в школу» в две строки, как в рефе */
+    max-width: 8em;
+    margin-left: clamp(8px, 1cqw, 19px);
     font-size: calc(var(--fs-h2) * 0.9);
     font-family: var(--font-heading);
     font-weight: 700;
@@ -489,20 +460,32 @@
     letter-spacing: -0.01em;
   }
 
-  .programs__steps { grid-column: 1 / -1; }
+  /* Figma 1:12515: плитки 331 + 13 + 318 от x=15 — справа остаётся 36, а не 15 */
+  .programs__steps { margin-right: 1.117cqw; }
+
+  /* Текст плитки начинается на разном расстоянии от круга (Figma: 77/94/84/94/78/85 от края плитки) */
+  .programs__step:nth-child(1) { gap: 0.213cqw; }
+  .programs__step:nth-child(2) { gap: 1.064cqw; }
+  .programs__step:nth-child(3) { gap: 0.532cqw; }
+  .programs__step:nth-child(4) { gap: 0.957cqw; }
+  .programs__step:nth-child(5) { gap: 0.213cqw; }
+  .programs__step:nth-child(6) { gap: 0.532cqw; }
 
   .programs__promo-cta {
-    grid-column: 1 / -1;
-    margin-bottom: clamp(16px, 1.55cqw, 30px);   /* нижнее поле карточки — у неё padding-bottom: 0 */
+    margin-top: auto;
+    align-self: flex-start;
+    width: min(100%, 19.7cqw);
+    justify-content: center;
+    padding-inline: clamp(12px, 1cqw, 20px);
+    white-space: nowrap;
   }
 
   .programs__promo-image {
     position: absolute;
-    grid-area: auto;
     z-index: 1;
-    right: -8.7%;
-    bottom: 0;
-    width: 58.6%;
+    right: 0.261cqw;   /* Figma 1:12546: x=329.1 при ширине 713 */
+    bottom: -0.76cqw;
+    width: 20.16cqw;
     pointer-events: none;
   }
 }
