@@ -144,8 +144,16 @@
   width: 61.4cqw;
   max-width: 100%;
   font-size: clamp(32px, 4.043cqw, 76px);
-  line-height: 0.9;
+  --hl-h: 0.9em;
+  line-height: var(--hl-h);
   color: var(--color-white);
+}
+
+/* ⚠️ Швы между плашками: при дробном кегле (32 × 0,9 = 28,8px) шаг строк и
+   высота плашки округляются по-разному, и между строками видна светлая линия.
+   Где поддерживается round(), шаг и высоту плашки делаем целыми пикселями. */
+@supports (height: round(1.4px, 1px)) {
+  .universities__title { --hl-h: round(0.9em, 1px); }
 }
 
 /* Приглушённые части: «Наши выпускники» и «страны и мира» */
@@ -159,18 +167,38 @@
    поэтому плашки соседних строк наезжают друг на друга светлой полосой.
    Поэтому заливка задана картинкой с явной высотой в 0.9em (= шаг строк):
    плашки встают ровно встык, как в макете, и высота едет вместе с
-   font-size на брейкпоинтах. Скругления нет — в Figma у плашек оно 0.
+   font-size на брейкпоинтах. Скругление 4px, как у остальных плашек, собрано
+   из непересекающихся слоёв (полосы + 4 уголка): `border-radius` на фон-картинку
+   не действует, а наложение слоёв дало бы тёмные швы на полупрозрачной заливке.
    Выступ по бокам 3px — по макету (плашка от x=56.6 при тексте от x=60).
    ⚠️ backdrop-filter здесь применять нельзя, хотя в Figma у плашек стоит
    blur(20): у многострочного инлайна браузер берёт общий бокс всех строк,
    и блюр съедает соседний текст той же строки («Наши выпускники»). */
 .universities__hl {
-  background-image: linear-gradient(
-    color-mix(in srgb, var(--color-light-blue) 40%, transparent),
-    color-mix(in srgb, var(--color-light-blue) 40%, transparent)
-  );
-  background-size: 100% 0.9em;
-  background-position: 0 50%;
+  --hl-c: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+  --hl-r: 4px;
+  --hl-corner: var(--hl-r) var(--hl-r);
+  background-image:
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    radial-gradient(circle at 100% 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 0 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 100% 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 0 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r));
+  background-size:
+    100% calc(var(--hl-h) - 2 * var(--hl-r)),
+    calc(100% - 2 * var(--hl-r)) var(--hl-r),
+    calc(100% - 2 * var(--hl-r)) var(--hl-r),
+    var(--hl-corner), var(--hl-corner), var(--hl-corner), var(--hl-corner);
+  background-position:
+    0 50%,
+    var(--hl-r) calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+    var(--hl-r) calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+    0 calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+    100% calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+    0 calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+    100% calc(50% + (var(--hl-r) - var(--hl-h)) / 2);
   background-repeat: no-repeat;
   padding: 0 3px;
   margin-left: -3px;
@@ -196,6 +224,7 @@
     width: 57.37cqw;
     height: 9.17cqw;
     background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+    border-radius: 4px;
   }
 
   /* Глифы Nunito Sans уже макетных на ~6% — добираем межбуквием по ширине строк Figma */

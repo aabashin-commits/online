@@ -102,9 +102,9 @@
 .school-day__step-title {
   color: var(--color-black);
   font-family: var(--font-heading);
-  font-size: max(20px, 1.86cqw);   /* 35 */
+  font-size: max(18px, 1.5cqw);    /* ~28 при 1880: заголовок целиком влезает в колонку */
   font-weight: 700;
-  line-height: 1.577;              /* 55.2 при 35 */
+  line-height: 1.3;
 }
 
 .school-day__step-text {
@@ -134,7 +134,7 @@
 
 /* 3. Домашнее задание — белая, розовый овал, блокнот */
 .school-day__step--homework { padding-top: clamp(16px, 2.287cqw, 43px); }
-.school-day__step--homework .school-day__step-title { font-size: var(--fs-h3); line-height: 1.15; }
+.school-day__step--homework .school-day__step-title { font-size: max(18px, 1.5cqw); line-height: 1.3; }
 .school-day__step--homework .school-day__text { gap: 2.7cqw; }
 .school-day__step--homework .school-day__step-text { color: var(--color-gray-1); }
 .school-day__step--homework .school-day__img { left: 63.6%; top: 0; width: 42.3%; }
@@ -142,7 +142,7 @@
 /* 4. Проверка и оценка — кремовая, песочное пятно, скан */
 .school-day__step--check { min-height: 16.54cqw; background: var(--tint-cream); padding: clamp(16px, 2.447cqw, 46px) clamp(16px, 2.66cqw, 50px); }
 .school-day__step--check .school-day__text { max-width: 28.46cqw; gap: 1cqw; }
-.school-day__step--check .school-day__step-title { font-size: var(--fs-h3); line-height: 1.15; }
+.school-day__step--check .school-day__step-title { font-size: max(18px, 1.5cqw); line-height: 1.3; }
 .school-day__step--check .school-day__img { left: 61.8%; top: 3.9%; width: 39.6%; }
 
 /* ---------- Адаптив ---------- */
@@ -170,25 +170,39 @@
   .school-day__step--check { padding: 20px; }
 
   .school-day__text,
+  .school-day__step-text,
   .school-day__step--records .school-day__text,
   .school-day__step--records .school-day__step-text,
   .school-day__step--check .school-day__text { max-width: none; gap: 8px; }
 
   .school-day__step-title,
   .school-day__step--homework .school-day__step-title,
-  .school-day__step--check .school-day__step-title { font-size: var(--fs-h3); line-height: 1.15; }
+  .school-day__step--check .school-day__step-title { font-size: clamp(20px, 6.1vw, 26px); line-height: 1.2; }
 
-  /* Заголовок записей в Figma 664 шириной, подзаголовок 580 */
-.school-day__step--records .school-day__text { max-width: 35.3cqw; }
-.school-day__step--records .school-day__step-text { max-width: 30.85cqw; font-size: var(--fs-btn); }
+  /* Кегль подзаголовка записей на десктопе мельче — на телефоне как у остальных */
+  .school-day__step--records .school-day__step-text { font-size: var(--fs-btn); }
 
+  /* Картинка крупная, «вырастает» из нижнего края карточки; зигзаг: нечётные — вправо, чётные — влево */
   .school-day__img {
     position: relative;
     left: auto !important;
     top: auto !important;
-    width: 70% !important;
-    margin: 12px -20px -20px auto;
+    width: 88% !important;
+    margin: -4px 0 -20px auto;
   }
+  .school-day__step:nth-child(even) .school-day__img { margin-inline: 0 auto; }
 
-  .school-day__step::before { display: none; }
+  /* Круг-подложка за картинкой — снизу карточки, цвет у каждой свой; webp-овалы нарисованы под десктоп */
+  .school-day__step::before {
+    inset: auto auto -32% 50%;
+    width: 125%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--blob);
+    transform: translateX(-50%);
+  }
+  .school-day__step--live { --blob: var(--color-blue); }
+  .school-day__step--records { --blob: var(--tint-circle); }
+  .school-day__step--homework { --blob: var(--tint-pink); }
+  .school-day__step--check { --blob: var(--tint-sand); }
 }

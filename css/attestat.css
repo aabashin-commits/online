@@ -85,7 +85,7 @@
 .attestat__owl {
   position: absolute;
   left: 63.5%;
-  top: 58.6%;
+  top: 72%;
   width: 44.08%;
   height: auto;
   z-index: 2;
@@ -95,6 +95,6 @@
 @media (max-width: 767px) {
   .attestat { padding: 20px; }
   .attestat__title { font-size: var(--fs-h3); }
-  .attestat__owl { position: relative; left: auto; top: auto; width: 200px; margin: -30px -20px -20px auto; display: block; }
+  .attestat__owl { position: relative; left: auto; top: auto; width: 200px; margin: 8px -20px -20px auto; display: block; }
   .attestat__content .btn { align-self: stretch; width: auto; margin-left: 0; }
 }

@@ -77,10 +77,7 @@
    отрисованных строк — «получают» и низ первой строки уходили в кашу).
    Заливка сплошная: полупрозрачная над декор-вихрем меняла бы цвет. */
 .ege-banner__hl {
-  background-image: linear-gradient(var(--color-pink-hl), var(--color-pink-hl));
-  background-size: 100% 0.9em;
-  background-position: 0 50%;
-  background-repeat: no-repeat;
+  --hl-c: var(--color-pink-hl);
   padding: 0 3px;
   margin-left: -3px;
   box-decoration-break: clone;

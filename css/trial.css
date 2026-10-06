@@ -130,15 +130,9 @@
    встают встык, как в макете. backdrop-filter из Figma не переносим: на
    многострочном инлайне он съедает соседний текст. */
 .trial__hl {
+  --hl-c: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
   padding-inline: 3px;
   margin-inline-start: -3px;
-  background-image: linear-gradient(
-    color-mix(in srgb, var(--color-light-blue) 40%, transparent),
-    color-mix(in srgb, var(--color-light-blue) 40%, transparent)
-  );
-  background-repeat: no-repeat;
-  background-size: 100% 0.9em;
-  background-position: 0 50%;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }

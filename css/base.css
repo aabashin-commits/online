@@ -332,3 +332,40 @@ h4 { font-size: var(--fs-h4); line-height: 1.2; }
     overflow-wrap: break-word;
   }
 }
+
+/* Построчная плашка-маркер заголовка со скруглением 4px (как .hero__hl).
+   ⚠️ Обычный border-radius здесь не годится: заливка — полоса высотой 0.9em
+   (= шаг строк), а не content area инлайна, и радиус её не скруглил бы.
+   Поэтому полоса собрана без перекрытий (полупрозрачный цвет иначе удвоится):
+   средняя часть + верхняя и нижняя перемычки + четыре угла-четвертинки.
+   Цвет — в --hl-c, у каждого класса свой. Контекст: докс conventions.md. */
+.universities__hl,
+.trial__hl,
+.ege-banner__hl {
+  --hl-r: 4px;
+  background-image:
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    linear-gradient(var(--hl-c), var(--hl-c)),
+    radial-gradient(circle at 100% 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 0 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 100% 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+    radial-gradient(circle at 0 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r));
+  background-size:
+    100% calc(0.9em - 2 * var(--hl-r)),
+    calc(100% - 2 * var(--hl-r)) var(--hl-r),
+    calc(100% - 2 * var(--hl-r)) var(--hl-r),
+    var(--hl-r) var(--hl-r),
+    var(--hl-r) var(--hl-r),
+    var(--hl-r) var(--hl-r),
+    var(--hl-r) var(--hl-r);
+  background-position:
+    0 50%,
+    50% calc(50% + var(--hl-r) / 2 - 0.45em),
+    50% calc(50% + 0.45em - var(--hl-r) / 2),
+    0 calc(50% + var(--hl-r) / 2 - 0.45em),
+    100% calc(50% + var(--hl-r) / 2 - 0.45em),
+    0 calc(50% + 0.45em - var(--hl-r) / 2),
+    100% calc(50% + 0.45em - var(--hl-r) / 2);
+  background-repeat: no-repeat;
+}

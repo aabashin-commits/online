@@ -73,7 +73,7 @@
 }
 
 .curator__lead {
-  font-size: var(--fs-h4);
+  font-size: calc(var(--fs-h4) * 0.8);
   line-height: 1.35;
   font-weight: 800;
   color: var(--color-white);
@@ -263,6 +263,7 @@
     min-height: 0;
     gap: 20px;
     padding: var(--card-pad);
+    padding-bottom: calc(var(--card-pad) + 84px);   /* место под маскота: он не лежит на списке */
   }
 
   .curator__media {

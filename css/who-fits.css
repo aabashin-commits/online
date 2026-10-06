@@ -67,8 +67,6 @@
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 0.851cqw, 16px);
-  /* Левое поле заголовка из Figma: 67.68px */
-  padding-left: clamp(36px, 3.6cqw, 68px);
 }
 
 .who-fits__title {
@@ -182,8 +180,6 @@
    список 1025 прижат к правому полю и заходит на зазор колонок; ряды 109.55 / 139.55 / 161.05
    (как резиновые минимумы), поля плиток разные у левой и правой колонки, переносы в тексте — как в макете. */
 @media (min-width: 1025px) {
-  .who-fits__head { margin-left: calc(-1 * var(--card-pad)); }
-
   .who-fits__list {
     justify-self: end;
     width: 54.52cqw;
@@ -224,8 +220,6 @@
 /* Телефон: поле коробки — --card-pad (20), список в одну колонку, кнопка во всю ширину */
 @media (max-width: 767px) {
   .who-fits__box { row-gap: 20px; padding-top: var(--card-pad); }
-
-  .who-fits__head { padding-left: 40px; }
 
   .who-fits__list { grid-template-columns: minmax(0, 1fr); }
 

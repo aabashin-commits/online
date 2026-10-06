@@ -184,7 +184,7 @@
   .onschool__grid { gap: 10px; }
 
   .onschool__col,
-  .onschool__col--right { display: flex; gap: 10px; }
+  .onschool__col--right { display: flex; flex-direction: column; gap: 10px; }
 
   .onschool-card { padding: 20px; }
 
@@ -206,56 +206,66 @@
   /* Плитка аттестата: текст сверху, диплом под ним на всю ширину */
   .onschool-online { padding: 20px; }
   .onschool-online__text { max-width: none; }
-  .onschool-online__diploma { position: relative; left: auto; top: auto; width: 82%; margin: 16px auto 0; }
-  .onschool-online::before { inset: auto -10% -20% auto; width: 60%; aspect-ratio: 1; border-radius: 50%; background: var(--tint-circle); }
+  .onschool-online__title { max-width: none; font-size: 20px; }
+  .onschool-online__subtitle { max-width: none; font-size: 16px; line-height: 1.35; }
+  .onschool-online { padding-bottom: 0; }
+  .onschool-online__diploma { position: relative; left: auto; top: auto; width: min(100%, 420px); max-width: none; margin: 12px -20px 0 auto; transform: translateX(0); }
+  /* Круг центрирован по диплому: диплом прижат к правому и нижнему краю карточки
+     (вылет −20 гасит поле), ширина — min(содержимое, 420). cqw = ширина карточки
+     (контейнер .container равен ей на телефоне). Высота диплома = ширина × 380/638.
+     Сдвиг круга от центра диплома: вправо и вниз на 12% его ширины. */
+  .onschool-online {
+    --dip-w: min(100cqw - 40px, 420px);
+    --circle-w: min(92cqw, 400px);
+  }
+  .onschool-online::before {
+    inset: auto auto calc(var(--dip-w) * 0.2978 - var(--circle-w) / 2 - var(--circle-w) * 0.12) calc(100% - var(--dip-w) / 2 - var(--circle-w) / 2 + var(--circle-w) * 0.12);
+    width: var(--circle-w);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--tint-circle);
+  }
 
-  /* ── Лицензия (1:9697) — карточка 340, padding 20, скан абсолютом ──
-     Контейнер для cqw вешаем на колонку, а не на саму карточку: у карточки
-     padding 20, и единица считалась бы от 300 вместо 340 (декор уехал бы влево). */
-  .onschool__col--right { container-type: inline-size; }
-
-  /* ⚠️ min-height обязателен. В Figma у карточки vertical: hug, то есть её
-     высоту задаёт ТОЛЬКО текстовая колонка (211px), а скан лежит абсолютом и
-     в расчёт не идёт: он уходил на 54px ниже карточки и срезался её overflow
-     ровно посередине документа (жалоба клиента 21.07.2026). Пол = верх скана
-     63 + его высота + поле 20 снизу; высота скана = ширина × 1.2931
-     (пропорция исходника 696×900). На 360 даёт 285 — ровно высоту карточки
-     в PNG-макете (284). */
+  /* ── Лицензия: текст сверху на всю ширину, скан под ним справа ──
+     Та же схема, что у плитки аттестата: скан вылетает за правый и нижний
+     край карточки, лишнее срезает overflow. Прежняя раскладка (скан 156px
+     абсолютом рядом с абзацем из Figma 1:9697) давала мелкий скан и пустой
+     угол слева внизу. Высота теперь идёт по содержимому, min-height не нужен. */
   .license {
     display: block;
-    padding: 20px;
+    padding: 20px 20px 0;
     overflow: hidden;
-    min-height: calc(83px + min(59.32cqw, 258.6px));
   }
 
-  /* Колонка текста идёт во всю ширину карточки: заголовок в макете стоит
-     в ОДНУ строку — маркер 1:9699 имеет 276×30 (по растру x 25…300),
-     то есть шире 200px. Ограничение 200 — только у абзаца (нода 1:9701).
-     Внутренний зазор колонки — 10, а не 20. */
-  .license__text {
-    max-width: none;
-    gap: 10px;
+  /* Круг центрирован по скану: правый отступ = полуширина скана плюс 6px (поле 20
+     минус вылет скана 14) минус полуширина круга. Ширина скана 76% считается от содержимого
+     карточки (100% − поля 40px), а проценты в ::before — от всей карточки,
+     поэтому в формуле круга стоит 0.76 * (100% − 40px). */
+  .license {
+    --scan-w: min(76%, 320px);
+    --circle-w: min(92%, 400px);
+  }
+  .license::before {
+    inset: auto auto -30% auto;
+    right: calc(min(0.76 * (100% - 40px), 320px) / 2 + 6px - var(--circle-w) / 2);
+    width: var(--circle-w);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--tint-sand);
   }
 
-  .license .onschool-card__desc { max-width: 66.667%; }   /* 200/300 контента */
+  .license__text { max-width: none; gap: 10px; }
 
-  /* Скан 156×202 в точке (204, 63) от карточки. Вылет за ПРАВЫЙ край (204+156=360
-     при 340) оставляем — это приём макета, обрезку даёт overflow: hidden.
-     А вот низ теперь помещается целиком: см. min-height выше.
+  .license .onschool-card__desc { max-width: none; font-size: 16px; line-height: 1.35; }
 
-     ⚠️ Привязка правым краем и потолок 200px — вместо чистых долей от 360.
-     Мобильная раскладка нарисована под 360, и на чистых cqw к 767 скан
-     раздувался до 343×443 (вдвое), карточка вырастала до 602 и превращалась
-     в почти пустой белый прямоугольник. Потолок включается примерно с 456px;
-     до него всё по макету — на 360 min(45.882cqw, 200px) = 156, а right: -20
-     ставит левый край ровно в 204. */
   .license__img {
-    position: absolute;
-    top: 63px;
-    bottom: auto;
+    position: relative;
+    top: auto;
     left: auto;
-    right: -20px;
-    width: min(45.882cqw, 200px);
+    right: auto;
+    display: block;
+    width: var(--scan-w);
     height: auto;
+    margin: 6px -14px -90px auto;
   }
 }
