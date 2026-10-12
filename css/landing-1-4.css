@@ -84,7 +84,7 @@
   /* Шлейф из 11 кругов 1:9700–1:9710 (#DFECFD) одним SVG на всю плитку 914×209 */
   .landing--1-4 .onschool-online::before {
     inset: 0;
-    background: url("/assets/img/landing/1-4/circles-online.svg") 0 0 / 100% 100% no-repeat;
+    background: url("../assets/img/landing/1-4/circles-online.svg") 0 0 / 100% 100% no-repeat;
   }
   .landing--1-4 .onschool-online__text { max-width: none; }
   .landing--1-4 .onschool-online__subtitle { max-width: none; }
@@ -107,7 +107,7 @@
     bottom: calc(-48 * var(--u));
     width: 36.76%;
     aspect-ratio: 336 / 294;
-    background: url("/assets/img/landing/1-4/blob-license.svg") 0 0 / 100% 100% no-repeat;
+    background: url("../assets/img/landing/1-4/blob-license.svg") 0 0 / 100% 100% no-repeat;
   }
 }
 
