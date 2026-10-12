@@ -27,7 +27,7 @@
   const slotsOf = (program) => Math.max(...program.days.map((day) => day.length));
   const DAYS = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница'];
 
-  const PROGRAMS = [
+  const ALL_PROGRAMS = [
     {
       label: '1 класс',
       stage: 'first',
@@ -84,6 +84,11 @@
     },
   ];
 
+  // Посадочные показывают только свои ступени: <section data-stages="first,primary" data-no-routine>
+  const only = (root.dataset.stages || '').split(',').filter(Boolean);
+  const PROGRAMS = only.length ? ALL_PROGRAMS.filter((program) => only.includes(program.stage)) : ALL_PROGRAMS;
+  const noRoutine = root.hasAttribute('data-no-routine');
+
   const tabsBox = root.querySelector('.programs__tabs');
   const schedule = root.querySelector('.programs__schedule');
   const routine = root.querySelector('.programs__routine');
@@ -135,7 +140,7 @@
     schedule.replaceChildren(grid);
 
     routine.textContent = program.routine;
-    routine.hidden = !program.routine;
+    routine.hidden = noRoutine || !program.routine;
   };
 
   let currentIndex = 0;

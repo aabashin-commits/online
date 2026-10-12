@@ -8,6 +8,12 @@
   position: relative;
   overflow: hidden;
   min-height: 25.43cqw;
+  /* Сколько маскота видно над нижним краем карточки. Карточка растёт на (V − 90)
+     за счёт зазора под списком: последняя плашка кончается в ~100px от низа,
+     и маскот стоит под ней, не на ней. */
+  --owl-v: 130px;
+  display: flex;
+  flex-direction: column;
   padding: clamp(16px, 1.01cqw, 19px) clamp(16px, 1.596cqw, 30px) clamp(16px, 1.277cqw, 24px);
 }
 
@@ -17,6 +23,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: 1;
 }
 
 .attestat__title {
@@ -34,7 +41,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(6px, 0.352cqw, 6.62px);
-  margin: clamp(14px, 2.287cqw, 43px) 0 clamp(8px, 0.5cqw, 9.5px);
+  margin: clamp(14px, 2.287cqw, 43px) 0 calc(clamp(8px, 0.5cqw, 9.5px) + var(--owl-v) - 90px);
 }
 
 .attestat__fact {
@@ -68,7 +75,7 @@
 }
 
 .attestat__content .btn {
-  margin-left: 20px;
+  margin-top: auto;
   box-sizing: border-box;
   width: 284px;
   min-height: 76px;
@@ -85,7 +92,7 @@
 .attestat__owl {
   position: absolute;
   left: 63.5%;
-  top: 72%;
+  top: calc(100% - var(--owl-v));
   width: 44.08%;
   height: auto;
   z-index: 2;
@@ -95,6 +102,7 @@
 @media (max-width: 767px) {
   .attestat { padding: 20px; }
   .attestat__title { font-size: var(--fs-h3); }
+  .attestat__facts { margin-bottom: 8px; }
   .attestat__owl { position: relative; left: auto; top: auto; width: 200px; margin: 8px -20px -20px auto; display: block; }
-  .attestat__content .btn { align-self: stretch; width: auto; margin-left: 0; }
+  .attestat__content .btn { align-self: stretch; width: auto; }
 }

@@ -101,7 +101,7 @@
 .onschool-online__diploma {
   position: absolute;
   left: 65.5%;
-  top: 1.304cqw;
+  bottom: -0.32cqw;
   z-index: 1;
   width: 34.9%;
   height: auto;
@@ -209,7 +209,7 @@
   .onschool-online__title { max-width: none; font-size: 20px; }
   .onschool-online__subtitle { max-width: none; font-size: 16px; line-height: 1.35; }
   .onschool-online { padding-bottom: 0; }
-  .onschool-online__diploma { position: relative; left: auto; top: auto; width: min(100%, 420px); max-width: none; margin: 12px -20px 0 auto; transform: translateX(0); }
+  .onschool-online__diploma { position: relative; left: auto; top: auto; bottom: auto; width: min(100%, 420px); max-width: none; margin: 12px -20px 0 auto; transform: translateX(0); }
   /* Круг центрирован по диплому: диплом прижат к правому и нижнему краю карточки
      (вылет −20 гасит поле), ширина — min(содержимое, 420). cqw = ширина карточки
      (контейнер .container равен ей на телефоне). Высота диплома = ширина × 380/638.
@@ -267,5 +267,7 @@
     width: var(--scan-w);
     height: auto;
     margin: 6px -14px -90px auto;
+    transform: rotate(10deg);
+    transform-origin: 50% 60%;
   }
 }

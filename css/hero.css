@@ -205,6 +205,52 @@
 @media (max-width: 1024px) {
   .hero { padding: 12px var(--page-gap) 0; }
 
+  /* Плашка H1 ≤1024: inline-block при переносе тянулся на всю ширину колонки
+     (справа пустота при коротком тексте), а строки были теснее плашки.
+     Теперь плашка — инлайн: каждая строка получает свою, шириной в текст,
+     высотой в шаг строк (--hl-h), как .universities__hl (слои: полоса + 4 уголка). */
+  .hero__title {
+    --hl-h: 0.9em;
+    line-height: var(--hl-h);
+  }
+  @supports (height: round(1.4px, 1px)) {
+    .hero__title { --hl-h: round(0.9em, 1px); }
+  }
+  .hero__hl {
+    --hl-c: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
+    --hl-r: 4px;
+    --hl-corner: var(--hl-r) var(--hl-r);
+    display: inline;
+    padding-inline: 12px;
+    margin-left: -12px;
+    border-radius: 0;
+    background-color: transparent;
+    background-image:
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      radial-gradient(circle at 100% 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 0 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 100% 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 0 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r));
+    background-size:
+      100% calc(var(--hl-h) - 2 * var(--hl-r)),
+      calc(100% - 2 * var(--hl-r)) var(--hl-r),
+      calc(100% - 2 * var(--hl-r)) var(--hl-r),
+      var(--hl-corner), var(--hl-corner), var(--hl-corner), var(--hl-corner);
+    background-position:
+      0 50%,
+      var(--hl-r) calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+      var(--hl-r) calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      0 calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      100% calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      0 calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+      100% calc(50% + (var(--hl-r) - var(--hl-h)) / 2);
+    background-repeat: no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
   .hero__panel {
     display: flex;
     flex-direction: column;
@@ -261,6 +307,14 @@
   .hero__location img { width: 20px; height: 20px; }
 
   .hero__title { margin-top: 40px; }
+
+  /* «Онлайн-/школа» (5–9, 10–11): жёсткий перенос нужен только десктопу.
+     На телефоне он рвал H1 на четыре короткие строки с пустотой справа */
+  .hero__br { display: none; }
+  /* Кегль H1 не больше прежнего (токен + 4px), но не шире колонки: «Онлайн-школа» при 46px
+     занимает ~320px — ровно колонку на 360, поэтому рвалось на 3–4 строки */
+  .hero__title { font-size: min(calc(var(--fs-h1) + 4px), calc((100vw - 42px) * 0.14)); }
+  .hero__hl { padding-inline: 8px; margin-left: -8px; }
 
   /* Текстовые ноды 1:8375 и 1:8376 — 280 при контенте 320: по этой ширине
      ложатся переносы макета. Доля, а не px, чтобы тянулось до 767. */

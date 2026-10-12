@@ -52,8 +52,8 @@
     { name: 'Эдуард',            status: 'родитель',               slug: 'eduard',              tag: '' },
   ].map((item) => ({
     type: 'mp4',
-    src: 'assets/video/reviews/' + item.slug + '.mp4',
-    poster: 'assets/img/reviews/' + item.slug + '.webp',
+    src: '/assets/video/reviews/' + item.slug + '.mp4',
+    poster: '/assets/img/reviews/' + item.slug + '.webp',
     ...item,
   }));
 

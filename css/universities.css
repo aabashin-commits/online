@@ -221,7 +221,7 @@
     z-index: -1;
     left: -3px;
     top: -18px;
-    width: 57.37cqw;
+    width: 58.7cqw;
     height: 9.17cqw;
     background: color-mix(in srgb, var(--color-light-blue) 40%, transparent);
     border-radius: 4px;
@@ -508,11 +508,15 @@
     height: auto;
   }
 
-  /* В мобильном фрейме сетки нет (в Figma она стоит на x=603 и в кадр
-     не попадает); волна остаётся и обрезается левым краем, как в макете.
+  /* Сетка на телефоне оставлена по просьбе клиента (в мобильном фрейме её нет):
+     текст занимает всю ширину, поэтому левую маску снимаем — сетка по всему баннеру.
+     Волна обрезается левым краем, как в макете.
      Значения в px, а не cqw: container-type висит на баннере с padding,
      и на телефоне единица cqw считалась бы от 320, а не от 360. */
-  .universities__banner::before { display: none; }
+  .universities__banner::before {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 
   .universities__decor--wave {
     left: -160px;

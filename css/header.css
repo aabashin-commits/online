@@ -70,7 +70,102 @@ html { scroll-padding-top: 88px; }
 /* Figma: между «Как проходит обучение» и «Стоимость» на 2px больше, чем между
    остальными (разница рендера кернинга) — сверено попиксельно 06.10.2026. */
 @media (min-width: 1601px) {
-  .header__link:nth-child(2) { margin-right: 2px; }
+  .header__link:nth-child(3) { margin-right: 2px; }
+}
+
+/* Выпадающий список «Онлайн-школа» слева от «О школе» (правка 12.10.2026):
+   главная и три посадочных (1–4, 5–9, 10–11 классы). На главной в кнопке —
+   «Онлайн-школа», на посадочной — выбранный пункт на синей заливке (как
+   активный город в тумблере офлайн-версии). Заливка только на кнопке, а выбранного
+   пункта в списке нет совсем. Активность задаёт разметка (--active), JS не нужен. Панель открывается по
+   ховеру/фокусу в CSS; JS (header.js) добавляет только клик для тачей. */
+.header__group {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.header__switch {
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--color-light-blue);
+}
+
+.header__group-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: inherit;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.header__group:hover .header__group-btn,
+.header__group.is-open .header__group-btn { color: var(--color-blue); }
+
+.header__group--active .header__group-btn,
+.header__group--active:hover .header__group-btn,
+.header__group--active.is-open .header__group-btn {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.header__chevron { flex: none; transition: transform 0.25s ease; }
+.header__group:hover .header__chevron,
+.header__group.is-open .header__chevron { transform: rotate(180deg); }
+
+/* Панель стыкуется с низом шапки (top: 100% от растянутой группы) —
+   между кнопкой и панелью нет зазора, ховер не обрывается. */
+.header__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 0 0 16px 16px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.header__group:hover .header__dropdown,
+.header__group:focus-within .header__dropdown,
+.header__group.is-open .header__dropdown { display: flex; }
+
+.header__option {
+  padding: 10px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.header__option:hover { color: var(--color-blue); }
+
+/* Бургер-меню: те же четыре ссылки одной строкой «таблеток» над якорями */
+.header__menu-classes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.header__menu-class {
+  padding: 6px 14px;
+  border: 1px solid var(--color-white);
+  border-radius: 999px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.header__menu-class--active {
+  background: var(--color-white);
+  color: var(--color-blue);
 }
 
 /* ⚠️ 07.09.2026 выпадающие списки шапки удалены: ТЗ §4 требует семь плоских

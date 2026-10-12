@@ -11,6 +11,24 @@
   const header = document.querySelector('.header');
   if (!header) return;
 
+  // Выпадающий список «Онлайн-школа»: на десктопе открывается CSS-ховером,
+  // клик нужен для тач-устройств и клавиатуры; клик мимо и Esc закрывают.
+  const group = header.querySelector('.header__group');
+  if (group) {
+    const btn = group.querySelector('.header__group-btn');
+    const setOpen = (open) => {
+      group.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', () => setOpen(!group.classList.contains('is-open')));
+    document.addEventListener('click', (e) => {
+      if (!group.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
   const menu = header.querySelector('.header__menu');
   const burger = header.querySelector('.header__burger');
   const close = header.querySelector('.header__menu-close');

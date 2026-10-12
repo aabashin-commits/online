@@ -159,6 +159,15 @@
     },
   ];
 
+  // Посадочные 5–9 (Figma 1:5469): список «Начальной школы», но цены 35 000 / 45 000 ₽
+  // и последний пункт у тарифов с аттестацией — свой. Задаётся атрибутами .pricing.
+  const customPrices = (root.dataset.prices || '').split('|');
+  const customAttest = root.dataset.attest || '';
+  if (customPrices.length === 2) {
+    stages[0].plans[0].price = customPrices[0];
+    stages[0].plans[1].price = customPrices[1];
+  }
+
   const withExtras = (stage) => {
     const base = stage.plans[0].included;
     const records = {
@@ -338,7 +347,9 @@
       label.className = 'pricing__sr';
       label.textContent = included ? 'Входит: ' : 'Не входит: ';
 
-      feature.append(buildIcon(included), label, text);
+      const shown = included && customAttest && currentStage === stages[0]
+        && index === currentStage.features.length - 1 ? customAttest : text;
+      feature.append(buildIcon(included), label, shown);
       list.appendChild(feature);
     });
     body.appendChild(list);

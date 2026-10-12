@@ -1,0 +1,242 @@
+/* landing-1-4.css — отличия посадочной «1–4 класс» от главной. Подключается последним.
+   Эталон: Figma V3nHsKgQaovS4IJFmwRudC, фрейм «1-4 класс» 1:9595 (1920).
+   Десктопные значения — в единицах --u (1920 → 1px), ниже 1920 страница ужимается пропорционально.
+   ≤1024 — раскладка главной (hero.css / info-cards.css), здесь не переопределяется. */
+
+.landing--1-4 { --u: min(1px, calc(100vw / 1920)); }
+
+@media (min-width: 1025px) {
+  /* Hero 1:9597: панель 1880 от x=20 (у главной 1840), высота 839, карточки наезжают на 110 */
+  .landing--1-4 .hero {
+    --hero-inset: 0px;
+    padding-inline: var(--page-gap);
+  }
+  .landing--1-4 .hero__panel {
+    min-height: calc(839 * var(--u));
+    padding-top: calc(40 * var(--u));
+  }
+
+  /* H1 1:9614: две строки 72/68 (ls −0.0417em) + плашка 100/90; высота блока 305 */
+  .landing--1-4 .hero__title {
+    margin-top: calc(16 * var(--u));
+    padding: calc(48 * var(--u)) 0 calc(19 * var(--u));
+    font-size: calc(72 * var(--u));
+    line-height: calc(68 * var(--u));
+    letter-spacing: -0.0417em;
+  }
+  .landing--1-4 .hero__hl {
+    margin-top: calc(12 * var(--u));
+    padding: 0 calc(18 * var(--u)) 0 calc(12 * var(--u));
+    font-size: calc(100 * var(--u));
+    line-height: calc(90 * var(--u));
+    letter-spacing: -0.03em;
+  }
+
+  /* Фото 1:9599: 1133×823 в точке (714, 46) панели, низ срезан панелью;
+     по просьбе 12.10.2026 уменьшено на ~6% (1065×774), низ остался на месте */
+  .landing--1-4 .hero__kids {
+    top: calc(95 * var(--u));
+    right: auto;
+    bottom: auto;
+    left: calc(748 * var(--u));
+    width: calc(1065 * var(--u));
+    height: auto;
+  }
+  .landing--1-4 .hero__kid {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Инфо-карточки 1:9627: отступы ряда, зазор, высота и раскладка внутри карточки
+     — как у главной (info-cards.css), по просьбе клиента 09.10.2026; здесь только кегли */
+  .landing--1-4 .info-cards__title {
+    font-size: calc(28 * var(--u));
+    line-height: 1.2;
+  }
+  .landing--1-4 .info-cards__text {
+    font-size: calc(18 * var(--u));
+    line-height: 1.4;
+  }
+}
+
+/* Onschool 1:9655: грид 1880 = 946 + 20 + 914, высота 478 */
+@media (min-width: 1025px) {
+  /* Талисман «pink-tell» 1:9692: 266.18×209.96 в точке (680, 306) карточки 946×478 */
+  .landing--1-4 .attestat { --owl-v: 165px; }
+  .landing--1-4 .attestat__owl {
+    left: 71.88%;
+    top: calc(100% - var(--owl-v));
+    width: 28.14%;
+    max-width: none;
+    aspect-ratio: 266.18 / 209.96;
+    object-fit: fill;
+  }
+  /* Талисман «blue-4» 1:9711: 216×194 в точке (659, 14) карточки 914×209 */
+  .landing--1-4 .onschool-online__diploma {
+    left: 72.1%;
+    top: auto;
+    bottom: calc(1 * var(--u));
+    width: 23.63%;
+    max-width: none;
+    aspect-ratio: 216 / 194;
+    object-fit: fill;
+  }
+  /* Шлейф из 11 кругов 1:9700–1:9710 (#DFECFD) одним SVG на всю плитку 914×209 */
+  .landing--1-4 .onschool-online::before {
+    inset: 0;
+    background: url("/assets/img/landing/1-4/circles-online.svg") 0 0 / 100% 100% no-repeat;
+  }
+  .landing--1-4 .onschool-online__text { max-width: none; }
+  .landing--1-4 .onschool-online__subtitle { max-width: none; }
+  .landing--1-4 .onschool-online__text { width: 63.46%; }
+  /* Скан лицензии — как на главной (onschool-home.css), по просьбе 12.10.2026 */
+  .landing--1-4 .license__img {
+    left: 60.82%;
+    top: auto;
+    bottom: calc(-195.77 * var(--u));
+    width: 35.5%;
+    height: calc(419.6 * var(--u));
+    object-fit: fill;
+    transform: rotate(10deg);
+  }
+  /* Пятно 1:9718 (#FDF0DD): габарит 336×294 с центром в (738.5, 150) плитки 914×249 */
+  .landing--1-4 .license::before {
+    inset: auto;
+    left: 62.42%;
+    top: auto;
+    bottom: calc(-48 * var(--u));
+    width: 36.76%;
+    aspect-ratio: 336 / 294;
+    background: url("/assets/img/landing/1-4/blob-license.svg") 0 0 / 100% 100% no-repeat;
+  }
+}
+
+/* School-day 1:9721: шапка 62/65 + подпись 18/28.8, плитки 914×309–311, зазор 20, поле ряда 16 */
+.landing--1-4 .school-day__br { display: none; }
+@media (min-width: 1025px) {
+  .landing--1-4 .school-day { padding-top: calc(10 * var(--u)); }
+  .landing--1-4 .school-day__inner { gap: calc(40 * var(--u)); }
+  .landing--1-4 .school-day__head { gap: calc(20 * var(--u)); }
+  .landing--1-4 .school-day__title { font-size: calc(62 * var(--u)); line-height: calc(65 * var(--u)); letter-spacing: -0.01em; }
+  .landing--1-4 .school-day__subtitle {
+    max-width: calc(1100 * var(--u));
+    font-family: inherit;
+    font-size: calc(18 * var(--u));
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-gray-1);
+  }
+  .landing--1-4 .school-day__br { display: inline; }
+  .landing--1-4 .school-day__steps { align-items: start; }
+  .landing--1-4 .school-day__step { padding: calc(30 * var(--u)); }
+  .landing--1-4 .school-day__text { max-width: none; width: calc(580 * var(--u)); gap: calc(11.22 * var(--u)); }
+  .landing--1-4 .school-day__step-title { font-size: calc(35 * var(--u)); line-height: calc(55.2 * var(--u)); }
+  .landing--1-4 .school-day__step-text { max-width: none; font-size: calc(20 * var(--u)); line-height: 1.5; }
+
+  /* 1. Эфиры 309: подпись на y 207 */
+  .landing--1-4 .school-day__step--live { min-height: calc(309 * var(--u)); }
+  .landing--1-4 .school-day__step--live .school-day__img { left: 67.28%; top: 27.53%; width: 36.38%; max-width: none; }
+  /* 2. Записи 310: заголовок 664, подпись 18.7/24.3 */
+  .landing--1-4 .school-day__step--records { min-height: calc(310 * var(--u)); }
+  .landing--1-4 .school-day__step--records .school-day__text { width: calc(664 * var(--u)); }
+  .landing--1-4 .school-day__step--records .school-day__step-text { max-width: none; font-size: calc(18.7 * var(--u)); line-height: 1.3; }
+  .landing--1-4 .school-day__step--records .school-day__img { left: 71.23%; top: 12.6%; width: 32.71%; max-width: none; }
+  /* 3. Домашка 309: текст (29, 43), подпись (23, 150), 48/55.2 */
+  .landing--1-4 .school-day__step--homework { min-height: calc(309 * var(--u)); padding: calc(43 * var(--u)) calc(29 * var(--u)) calc(30 * var(--u)); }
+  .landing--1-4 .school-day__step--homework .school-day__text { gap: calc(51.8 * var(--u)); }
+  .landing--1-4 .school-day__step--homework .school-day__step-title { font-size: calc(48 * var(--u)); line-height: calc(55.2 * var(--u)); }
+  .landing--1-4 .school-day__step--homework .school-day__step-text { margin-left: calc(-6 * var(--u)); color: var(--color-gray-1); }
+  .landing--1-4 .school-day__step--homework .school-day__img { left: 63.57%; top: 0; width: 42.34%; max-width: none; }
+  /* 4. Проверка 311: текст (50, 46) шириной 535, заголовок 48/55.2, зазор 19.2 */
+  .landing--1-4 .school-day__step--check { min-height: calc(311 * var(--u)); padding: calc(46 * var(--u)) calc(50 * var(--u)) calc(30 * var(--u)); }
+  .landing--1-4 .school-day__step--check .school-day__text { width: calc(535 * var(--u)); gap: calc(19.2 * var(--u)); }
+  .landing--1-4 .school-day__step--check .school-day__step-title { font-size: calc(48 * var(--u)); line-height: calc(55.2 * var(--u)); }
+  .landing--1-4 .school-day__step--check .school-day__img { left: 61.85%; top: 3.88%; width: 39.64%; max-width: none; }
+}
+
+/* Benefits 1:9792: коробка 1880, поля 70/60/60, зазор 48; сетка 3×2 с рядами 237.58/244.17 */
+.landing--1-4 .benefits__subtitle {
+  margin-top: -0.5em;
+  font-size: var(--fs-text);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--color-white) 70%, transparent);
+}
+@media (min-width: 1025px) {
+  .landing--1-4 .benefits__box {
+    gap: calc(48 * var(--u));
+    padding: calc(70 * var(--u)) calc(60 * var(--u)) calc(60 * var(--u));
+  }
+  .landing--1-4 .benefits__title {
+    max-width: calc(1034 * var(--u));
+    font-size: calc(62 * var(--u));
+    line-height: calc(65 * var(--u));
+    letter-spacing: -0.01em;
+  }
+  .landing--1-4 .benefits__subtitle { margin-top: calc(-32 * var(--u)); font-size: calc(18 * var(--u)); }
+  .landing--1-4 .benefits__list {
+    grid-template-rows: calc(237.58 * var(--u)) calc(244.17 * var(--u));
+    gap: calc(20 * var(--u));
+  }
+  .landing--1-4 .benefits__card {
+    justify-content: flex-start;
+    gap: calc(16 * var(--u));
+    min-height: 0;
+    padding: calc(40 * var(--u));
+  }
+  .landing--1-4 .benefits__card-title { font-size: calc(28 * var(--u)); line-height: calc(33.6 * var(--u)); }
+  .landing--1-4 .benefits__card-text { max-width: calc(394.66 * var(--u)); font-size: calc(18 * var(--u)); line-height: 1.5; }
+  .landing--1-4 .benefits__icon { width: calc(118 * var(--u)); right: calc(-16 * var(--u)); bottom: calc(-17 * var(--u)); }
+}
+
+/* Curator 1:9833: панель 1837×407 со смещением 22/21 внутри ряда 1880, лид 28/37.8 (800) в три строки */
+.landing--1-4 .curator__br { display: none; }
+@media (min-width: 1025px) {
+  .landing--1-4 .curator__br { display: inline; }
+  .landing--1-4 .curator__box { margin-left: calc(22 * var(--u)); margin-right: calc(21 * var(--u)); }
+  .landing--1-4 .curator__content { max-width: calc(1344 * var(--u)); gap: calc(20 * var(--u)); }
+  .landing--1-4 .curator__lead { font-size: calc(28 * var(--u)); line-height: calc(37.8 * var(--u)); }
+  .landing--1-4 .curator__text { line-height: 1.5; }
+  .landing--1-4 .curator__tags { margin-top: calc(12 * var(--u)); }
+}
+
+/* Programs 1:10052: два таба 247×52 по центру блока 942 (отступ 214 от поля карточки); распорядок под сеткой скрыт в макете */
+@media (min-width: 1025px) {
+  .landing--1-4 .programs__tabs {
+    grid-template-columns: repeat(2, calc(247 * var(--u)));
+    gap: calc(20 * var(--u));
+    margin-left: calc(214 * var(--u));
+  }
+}
+
+/* About 1:10155: заголовок 62/65, подзаголовок в две строки (max 950), зазоры под табами 45 и 24 */
+@media (min-width: 1025px) {
+  .landing--1-4 .about__title { line-height: calc(65 * var(--u)); letter-spacing: -0.01em; }
+  .landing--1-4 .about__subtitle { max-width: calc(1000 * var(--u)); }
+  .landing--1-4 .about__head { margin-bottom: calc(45 * var(--u)); }
+  .landing--1-4 .about__tabs { margin-bottom: calc(25 * var(--u)); }
+}
+
+/* pricing (Figma 1:10230): без переключателя ступеней, шапка 62/65 + подзаголовок 18, до тарифов 48 */
+@media (min-width: 1025px) {
+  .landing--1-4 .pricing__inner { gap: calc(48 * var(--u)); }
+  .landing--1-4 .pricing__head { gap: calc(20 * var(--u)); }
+  .landing--1-4 .pricing__title { line-height: calc(65 * var(--u)); letter-spacing: -0.01em; }
+  .landing--1-4 .pricing__subtitle { max-width: calc(900 * var(--u)); font-family: var(--font-main); font-weight: 400; font-size: calc(18 * var(--u)); line-height: calc(28.8 * var(--u)); }
+}
+
+/* faq (Figma 1:11940): карточка padding 70/60, gap 48, список 1060. Высота макета 2009 завышена артефактом захвата (см. docs/landings.md) */
+@media (min-width: 1025px) {
+  .landing--1-4 .faq__card { gap: calc(48 * var(--u)); padding: calc(70 * var(--u)) calc(60 * var(--u)); }
+  .landing--1-4 .faq__list { flex: 0 1 calc(1060 * var(--u)); }
+}
+
+/* additional (Figma 1:11154): карточки 613.33×278.36, зазор колонок 20, padding 29/30/30 */
+@media (min-width: 1025px) {
+  .landing--1-4 .additional__grid { --col-gap: calc(20 * var(--u)); }
+  .landing--1-4 .additional__card { min-height: calc(278.36 * var(--u)); padding: calc(29 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u)); }
+}
+
+.landing--1-4 .pricing__stages { display: none; }
+
+/* Синий маскот «blue-4» в плитке онлайн-формата отзеркален по просьбе клиента (09.10.2026) — на всех ширинах */
+.landing--1-4 .onschool-online__diploma { transform: scaleX(-1); }

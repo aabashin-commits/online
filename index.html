@@ -39,12 +39,13 @@
 
   <link rel="stylesheet" href="css/base.css?v=8">
   <link rel="stylesheet" href="css/layout.css?v=3">
-  <link rel="stylesheet" href="css/header.css?v=11">
-  <link rel="stylesheet" href="css/hero.css?v=8">
+  <link rel="stylesheet" href="css/header.css?v=15">
+  <link rel="stylesheet" href="css/hero.css?v=11">
   <link rel="stylesheet" href="css/info-cards.css?v=8">
   <link rel="stylesheet" href="css/school-intro.css?v=2">
-  <link rel="stylesheet" href="css/onschool.css?v=12">
-  <link rel="stylesheet" href="css/attestat.css?v=10">
+  <link rel="stylesheet" href="css/onschool.css?v=14">
+  <link rel="stylesheet" href="css/onschool-home.css?v=1">
+  <link rel="stylesheet" href="css/attestat.css?v=12">
   <link rel="stylesheet" href="css/school-day.css?v=7">
   <link rel="stylesheet" href="css/benefits.css?v=2">
   <link rel="stylesheet" href="css/curator.css?v=9">
@@ -56,9 +57,9 @@
   <link rel="stylesheet" href="css/about.css?v=14">
   <link rel="stylesheet" href="css/reviews.css?v=9">
   <link rel="stylesheet" href="css/pricing.css?v=13">
-  <link rel="stylesheet" href="css/universities.css?v=6">
+  <link rel="stylesheet" href="css/universities.css?v=8">
   <link rel="stylesheet" href="css/additional.css?v=6">
-  <link rel="stylesheet" href="css/cta.css?v=5">
+  <link rel="stylesheet" href="css/cta.css?v=6">
   <link rel="stylesheet" href="css/faq.css?v=3">
   <link rel="stylesheet" href="css/footer.css?v=13">
   <link rel="stylesheet" href="css/form.css?v=5">
@@ -66,7 +67,7 @@
 
   <script src="js/main.js?v=12" defer></script>
   <script src="js/analytics.js?v=2" defer></script>
-  <script src="js/header.js?v=3" defer></script>
+  <script src="js/header.js?v=4" defer></script>
   <script src="js/mobile-cta.js?v=2" defer></script>
   <script src="js/programs.js?v=1" defer></script>
   <script src="js/classes.js?v=2" defer></script>
@@ -123,6 +124,16 @@
       </a>
 
       <nav class="header__nav" aria-label="Основное меню">
+        <div class="header__group header__group--active">
+          <div class="header__switch">
+            <button class="header__group-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-classes">Онлайн-школа<svg class="header__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="header__dropdown" id="nav-classes">
+            <a class="header__option" href="1-4-klass/">1–4&nbsp;классы</a>
+            <a class="header__option" href="5-9-klass/">5–9&nbsp;классы</a>
+            <a class="header__option" href="10-11-klass/">10–11&nbsp;классы</a>
+          </div>
+        </div>
         <a class="header__link" href="#school-intro">О&nbsp;школе</a>
         <a class="header__link" href="#school-day">Как проходит обучение</a>
         <a class="header__link" href="#pricing">Стоимость</a>
@@ -150,6 +161,12 @@
           </button>
         </div>
         <nav class="header__menu-nav" aria-label="Мобильное меню">
+          <div class="header__menu-classes">
+            <a class="header__menu-class header__menu-class--active" aria-current="page" href="./">Онлайн-школа</a>
+            <a class="header__menu-class" href="1-4-klass/">1–4&nbsp;классы</a>
+            <a class="header__menu-class" href="5-9-klass/">5–9&nbsp;классы</a>
+            <a class="header__menu-class" href="10-11-klass/">10–11&nbsp;классы</a>
+          </div>
           <a href="#school-intro">О&nbsp;школе</a>
           <a href="#school-day">Как проходит обучение</a>
           <a href="#pricing">Стоимость</a>
@@ -258,16 +275,16 @@
                   </svg>
               </a>
             </div>
-            <img class="attestat__owl" src="assets/img/onschool/owl-figma.webp" alt="" aria-hidden="true" width="834" height="422" loading="lazy" decoding="async">
+            <img class="attestat__owl" src="assets/img/landing/10-11/blue-4.webp" alt="" aria-hidden="true" width="520" height="466" loading="lazy" decoding="async">
           </article>
 
           <div class="onschool__col">
             <div class="onschool-online">
               <div class="onschool-online__text">
-                <h3 class="onschool-online__title">Московский аттестат государственного образца</h3>
-                <p class="onschool-online__subtitle">Ребёнок прикрепляется к&nbsp;аккредитованной московской школе-партнёру, которая выдаёт аттестат государственного образца. С&nbsp;ним можно поступать в колледжи и&nbsp;вузы на&nbsp;общих основаниях.</p>
+                <h3 class="onschool-online__title">Аттестат государственного образца.</h3>
+                <p class="onschool-online__subtitle">Ребёнок прикрепляется к&nbsp;аккредитованной московской школе-партнёру, которая выдаёт аттестат государственного образца. С&nbsp;ним можно поступать в&nbsp;колледжи и&nbsp;вузы на&nbsp;общих основаниях.</p>
               </div>
-              <img class="onschool-online__diploma" src="assets/img/onschool/diploma-figma.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="638" height="380" loading="lazy" decoding="async">
+              <img class="onschool-online__diploma" src="assets/img/landing/10-11/attestat.webp" alt="Аттестат о среднем общем образовании и красный диплом с отличием" width="1400" height="835" loading="lazy" decoding="async">
             </div>
 
             <article class="onschool-card license">
@@ -275,7 +292,7 @@
                 <h3 class="onschool-card__title">Государственная лицензия</h3>
                 <p class="onschool-card__desc">Школа имеет лицензию на&nbsp;преподавательскую деятельность, поэтому вы можете получить <span class="onschool-accent">налоговый вычет</span> или оплатить обучение <span class="onschool-accent">материнским капиталом.</span></p>
               </div>
-              <img class="license__img" src="assets/img/onschool/license-figma.webp" alt="Скан государственной лицензии школы" width="785" height="940" loading="lazy" decoding="async">
+              <img class="license__img" src="assets/img/landing/10-11/license.webp" alt="Скан государственной лицензии школы" width="696" height="900" loading="lazy" decoding="async">
             </article>
           </div>
         </div>
@@ -866,6 +883,9 @@
           <a class="footer__link" href="#additional">Дополнительные&nbsp;занятия</a>
           <a class="footer__link" href="#reviews">Отзывы</a>
           <a class="footer__link" href="#faq">FAQ</a>
+          <a class="footer__link" href="/1-4-klass/">1–4&nbsp;классы</a>
+          <a class="footer__link" href="/5-9-klass/">5–9&nbsp;классы</a>
+          <a class="footer__link" href="/10-11-klass/">10–11&nbsp;классы</a>
         </nav>
 
         <div class="footer__aside">

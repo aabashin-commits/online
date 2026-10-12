@@ -47,9 +47,17 @@
   max-width: 59.5cqw;
   font-size: clamp(34px, 4.14cqw, 78px);
   font-weight: 500;
-  line-height: 0.9;
+  --hl-h: 0.9em;
+  line-height: var(--hl-h);
   letter-spacing: -0.008em;
   color: var(--color-white);
+}
+
+/* ⚠️ Швы между плашками: при дробном кегле шаг строк и высота плашки округляются
+   по-разному — между строками видна светлая линия. Как в universities.css:
+   где есть round(), шаг строк (= высота плашки) делаем целым числом пикселей. */
+@supports (height: round(1.4px, 1px)) {
+  .cta-banner__title { --hl-h: round(0.9em, 1px); }
 }
 
 .cta-banner--price .cta-banner__title { padding-block: 2.07cqw; }
@@ -66,18 +74,18 @@
   letter-spacing: 0;
 }
 
-/* Figma 1:13464 / 1:13465: плашки «цены» — 297×70 и 679×95, текст внутри них
-   сидит со своими отступами, поэтому поля задаются на каждую плашку отдельно */
+/* Плашки «цены»: боковые поля свои у каждой. Высота обеих = шагу строк (0.9em),
+   поэтому нижняя встаёт вровень с верхней без наложения (как в universities.css) */
 .cta-banner--price .cta-banner__mark:nth-of-type(1) { padding: 0 0.14em 0 0; margin: 0 -0.14em 0 0; top: 0.09em; }
-.cta-banner--price .cta-banner__mark:nth-of-type(2) { padding: 0.159em 0.17em 0.159em 0.36em; margin: -0.159em -0.17em -0.159em -0.36em; top: 0.105em; }
+.cta-banner--price .cta-banner__mark:nth-of-type(2) { padding: 0 0.17em 0 0.36em; margin: 0 -0.17em 0 -0.36em; top: 0.09em; }
 
 /* Стеклянные плашки под словами (rgba(255,255,255,.2) + blur 20 в Figma) */
 .cta-banner__mark {
   display: inline-block;
   position: relative;
   z-index: -1;
-  padding: 0.1em 0.33em;
-  margin: -0.1em -0.33em;
+  padding: 0 0.33em;
+  margin: 0 -0.33em;
   border-radius: 4px;
   background: color-mix(in srgb, var(--color-white) 20%, transparent);
   -webkit-backdrop-filter: blur(20px);
@@ -131,13 +139,51 @@
   .cta-banner__sub { margin-top: 0.6em; font-size: 0.7em; line-height: 1.3; opacity: 0.9; }
   .cta-banner__sub br { display: none; }
 
+  /* Телефон: плашка — слоями с высотой в шаг строк (полосы + 4 уголка), как .universities__hl:
+     обычный background инлайна заливает content area шрифта и соседние строки наезжают */
+  .cta-banner__title,
+  .cta-banner--trial .cta-banner__title { --hl-h: 1.2em; line-height: var(--hl-h); }
+  @supports (height: round(1.4px, 1px)) {
+    .cta-banner__title,
+    .cta-banner--trial .cta-banner__title { --hl-h: round(1.2em, 1px); }
+  }
+
   .cta-banner__mark,
   .cta-banner--price .cta-banner__mark:nth-of-type(1),
   .cta-banner--price .cta-banner__mark:nth-of-type(2) {
+    --hl-c: color-mix(in srgb, var(--color-white) 20%, transparent);
+    --hl-r: 4px;
+    --hl-corner: var(--hl-r) var(--hl-r);
     display: inline;
     top: 0;
-    padding: 0.04em 0.3em;
+    padding: 0 0.3em;
     margin: 0 -0.3em;
+    border-radius: 0;
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-image:
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      linear-gradient(var(--hl-c), var(--hl-c)),
+      radial-gradient(circle at 100% 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 0 0, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 100% 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r)),
+      radial-gradient(circle at 0 100%, var(--hl-c) calc(var(--hl-r) - 0.5px), transparent var(--hl-r));
+    background-size:
+      100% calc(var(--hl-h) - 2 * var(--hl-r)),
+      calc(100% - 2 * var(--hl-r)) var(--hl-r),
+      calc(100% - 2 * var(--hl-r)) var(--hl-r),
+      var(--hl-corner), var(--hl-corner), var(--hl-corner), var(--hl-corner);
+    background-position:
+      0 50%,
+      var(--hl-r) calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+      var(--hl-r) calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      0 calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      100% calc(50% + (var(--hl-h) - var(--hl-r)) / 2),
+      0 calc(50% + (var(--hl-r) - var(--hl-h)) / 2),
+      100% calc(50% + (var(--hl-r) - var(--hl-h)) / 2);
+    background-repeat: no-repeat;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
